@@ -1,0 +1,22 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.cpp
+board.h
+/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
+
+/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
+../helpers/helpers.h
+/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.h
+vector
+-
+
+/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.h
+iostream
+-
+
