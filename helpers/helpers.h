@@ -27,15 +27,6 @@ public:
             : column(_column), row(_row) {}
 };
 
-class Move {
-    Coords startingCoord;
-    Coords endingCoord;
-    Piece piece;
-public:
-    Move(Coords _startingCoord, Coords _endingCoord, Piece _piece)
-            : startingCoord(_startingCoord), endingCoord(_endingCoord), piece(_piece) {}
-};
-
 class Square {
 public:
     const Coords coords;
@@ -49,16 +40,4 @@ public:
 
     Square(Coords _coords, SquareColor _color, Piece _piece = VUOTA)
             : coords(_coords), color(_color), piece(_piece) {}
-};
-
-class Player {
-public:
-    PlayerColor pColor;
-    std::string name;
-    int index;
-
-    Player(std::string &_name, PlayerColor _pColor)
-        : name(_name), pColor(_pColor), index(0) {}
-
-    Move moves[]; // See flexible arrays
 };
