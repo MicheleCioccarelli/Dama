@@ -97,6 +97,12 @@
 		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/main.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

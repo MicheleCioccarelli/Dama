@@ -1,1 +1,1 @@
-/usr/bin/c++ -g CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o -o MakeDamaGreatAgain 
+/usr/bin/c++ -g CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o -o MakeDamaGreatAgain 

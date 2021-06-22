@@ -7,6 +7,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.cpp" "/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o"
   "/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.cpp" "/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o"
   "/home/sedano/CLionProjects/MakeDamaGreatAgain/main.cpp" "/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o"
+  "/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.cpp" "/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

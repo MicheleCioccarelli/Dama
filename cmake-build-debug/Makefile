@@ -223,6 +223,33 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+renders/render.o: renders/render.cpp.o
+
+.PHONY : renders/render.o
+
+# target to build an object file
+renders/render.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o
+.PHONY : renders/render.cpp.o
+
+renders/render.i: renders/render.cpp.i
+
+.PHONY : renders/render.i
+
+# target to preprocess a source file
+renders/render.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.i
+.PHONY : renders/render.cpp.i
+
+renders/render.s: renders/render.cpp.s
+
+.PHONY : renders/render.s
+
+# target to generate assembly for a file
+renders/render.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s
+.PHONY : renders/render.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -241,6 +268,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... renders/render.o"
+	@echo "... renders/render.i"
+	@echo "... renders/render.s"
 .PHONY : help
 
 

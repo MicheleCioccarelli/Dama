@@ -1,20 +1,19 @@
-#include "board/board.h"
+#include "renders/render.h"
 
 int main() {
     Board a;
 
-    for (int row = 0; row < rows; row++) {
-        std::cout << std::endl;
-        for (int i = 0; i < columns; i++) {
-            if (a.board[row][i].piece == DAMA_B) {
-                std::cout << "●";
-            } else if (a.board[row][i].piece == DAMA_N) {
-                std::cout << "○";
-            } else {
-                std::cout << " ";
-            }
-        }
-    }
+    BoardTokens stdBoard(DEFAULT);
+
+    SetPieces stdPieces(DEFAULT);
+
+    BoardCoords stdCoords(DEFAULT);
+
+    StdRender stdRender(stdBoard, stdPieces, stdCoords);
+
+    a.standard_game_initialization();
+
+    stdRender.board(NERO, a);
 
     std::cout << std::endl;
 }
