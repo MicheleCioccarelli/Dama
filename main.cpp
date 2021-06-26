@@ -1,5 +1,5 @@
 #include "renders/render.h"
-#include "board/board.h"
+#include "engine/engine.h"
 
 int main() {
     GameEngine engine;
@@ -14,6 +14,3 @@ int main() {
     
     std::cout << engine.count_pieces(BIANCO) << std::endl;
 }
-
-
-// redo the project

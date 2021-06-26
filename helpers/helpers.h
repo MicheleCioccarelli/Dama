@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "../engine/engine.h"
+
 #define columns 8
 #define rows 8
 
