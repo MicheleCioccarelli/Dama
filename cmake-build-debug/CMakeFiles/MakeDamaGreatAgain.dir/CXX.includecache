@@ -6,15 +6,15 @@
 
 #IncludeRegexTransform: 
 
-/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.cpp
-board.h
-/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
-
 /home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
 ../helpers/helpers.h
 /home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.h
 vector
 -
+
+/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.h
+../board/board.h
+/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
 
 /home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.h
 iostream
@@ -23,12 +23,8 @@ iostream
 /home/sedano/CLionProjects/MakeDamaGreatAgain/main.cpp
 renders/render.h
 /home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.h
-board/board.h
-/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h
-
-/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.cpp
-render.h
-/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.h
+engine/engine.h
+/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.h
 
 /home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.h
 ../board/board.h

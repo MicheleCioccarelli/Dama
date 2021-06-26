@@ -88,6 +88,12 @@
 		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

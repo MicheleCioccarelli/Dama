@@ -5,10 +5,16 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../board/board.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../helpers/helpers.h
 
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../board/board.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../helpers/helpers.h
+
 CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o: ../helpers/helpers.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o: ../helpers/helpers.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../board/board.h
+CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../helpers/helpers.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../main.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../renders/render.h

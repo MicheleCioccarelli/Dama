@@ -169,6 +169,33 @@ board/board.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s
 .PHONY : board/board.cpp.s
 
+engine/engine.o: engine/engine.cpp.o
+
+.PHONY : engine/engine.o
+
+# target to build an object file
+engine/engine.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
+.PHONY : engine/engine.cpp.o
+
+engine/engine.i: engine/engine.cpp.i
+
+.PHONY : engine/engine.i
+
+# target to preprocess a source file
+engine/engine.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.i
+.PHONY : engine/engine.cpp.i
+
+engine/engine.s: engine/engine.cpp.s
+
+.PHONY : engine/engine.s
+
+# target to generate assembly for a file
+engine/engine.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.s
+.PHONY : engine/engine.cpp.s
+
 helpers/helpers.o: helpers/helpers.cpp.o
 
 .PHONY : helpers/helpers.o
@@ -262,6 +289,9 @@ help:
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
+	@echo "... engine/engine.o"
+	@echo "... engine/engine.i"
+	@echo "... engine/engine.s"
 	@echo "... helpers/helpers.o"
 	@echo "... helpers/helpers.i"
 	@echo "... helpers/helpers.s"
