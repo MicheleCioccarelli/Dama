@@ -1,19 +1,19 @@
 #include "renders/render.h"
+#include "board/board.h"
 
 int main() {
-    Board a;
+    GameEngine engine;
 
-    BoardTokens stdBoard(DEFAULT);
+    BoardTokens stdBoard(NORMAL);
 
-    SetPieces stdPieces(DEFAULT);
+    SetPieces stdPieces(NORMAL);
 
-    BoardCoords stdCoords(DEFAULT);
+    BoardCoords stdCoords(NORMAL);
 
     StdRender stdRender(stdBoard, stdPieces, stdCoords);
-
-    a.standard_game_initialization();
-
-    stdRender.board(NERO, a);
-
-    std::cout << std::endl;
+    
+    std::cout << engine.count_pieces(BIANCO) << std::endl;
 }
+
+
+// redo the project

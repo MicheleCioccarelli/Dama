@@ -10,15 +10,11 @@ enum Piece {
 };
 
 enum ColumnNotation {
-    A = 0, B, C, D, E, F, G, H
+    A = 0, B, C, D, E, F, G, H, Z
 };
 
 enum SquareColor {
     BIANCA, NERA
-};
-
-enum PlayerColor {
-    BIANCO, NERO
 };
 
 class Coords {
@@ -26,7 +22,7 @@ public:
     ColumnNotation column;
     int row;
 
-    Coords(ColumnNotation _column, int _row)
+    Coords(ColumnNotation _column = Z, int _row = 0)
             : column(_column), row(_row) {}
 };
 

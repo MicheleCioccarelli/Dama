@@ -12,8 +12,20 @@
  * filling = " "
  *leftBorder = "╠"
  * rightBorder "╣"
- * */
-
+ *
+ * tokens.[0] = horizontalLine
+ * tokens.[1](verticalLine);
+ * tokens.[2](topLeft);
+ * tokens.[3](topRight);
+ * tokens.[4](bottomLeft);
+ * tokens.[5](bottomRight);
+ * tokens.[6](upChain);
+ * tokens.[7](downChain);
+ * tokens.[8](rightBorder);
+ * tokens.[9](link);
+ * tokens.[10](leftBorder);
+ * tokens.[11](filling);
+*/
 // ======= RENDER =======
 std::string StdRender::square_resolve(Coords coords, Board &board) {
     switch (board.board[coords.row][coords.column].piece) {
@@ -48,19 +60,7 @@ void StdRender::first_line() {
     border(boardTokens.topRight);
     std::cout << std::endl;
 }
-/*
-            tokens.[0] = horizontalLine
-            tokens.[1](verticalLine);
-            tokens.[2](topLeft);
-            tokens.[3](topRight);
-            tokens.[4](bottomLeft);
-            tokens.[5](bottomRight);
-            tokens.[6](upChain);
-            tokens.[7](downChain);
-            tokens.[8](rightBorder);
-            tokens.[9](link);
-            tokens.[10](leftBorder);
-            tokens.[11](filling);*/
+
 void StdRender::bottom_line(PlayerColor color) {
     std::cout << "   " << boardTokens.bottomLeft;
     for (int i = 1; i < columns; i++) {
@@ -123,19 +123,9 @@ void StdRender::middle(Board &b, PlayerColor color) {
     }
 }
 
-/*      ╔═════╦═════╦═════╗
-*       ‖  ●  ‖  ●  ‖     ‖
-*       ╠═════╬═════╬═════╣*/
-
-// ‖╔╗╚╝╣╠╦╧╬●○◘◙░▓▒◊◌◦Δ▲▲‖█╩
-
-
 void StdRender::board(PlayerColor color, Board &board) {
     std::cout << std::endl << std::endl;
     first_line();
     middle(board, color);
     std::cout << std::endl << std::endl;
 }
-
-
-// See static class methods

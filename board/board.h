@@ -4,13 +4,23 @@
 
 #include <vector>
 
+enum PlayerColor {
+    BIANCO, NERO, UNINITIALIZED
+};
+
 class Move {
+public:
     Coords startingCoord;
     Coords endingCoord;
     Piece piece;
-public:
+
+    // 1 is automatically removed from the row number, so you can write it using normal notation
     Move(Coords _startingCoord, Coords _endingCoord, Piece _piece)
-            : startingCoord(_startingCoord), endingCoord(_endingCoord), piece(_piece) {}
+    {
+        startingCoord = Coords(_startingCoord.column, _startingCoord.row - 1);
+        endingCoord = Coords(_endingCoord.column, _endingCoord.row - 1);
+        piece = _piece;
+    }
 };
 
 
@@ -24,12 +34,28 @@ public:
     // Color the black squares
     void colored_game_initialization();
 
+    void execute_move(Move move);
+
     Board();
+};
+
+class Player {
+    std::vector<Move> moves;
+public:
+    PlayerColor color;
+    std::string name;
+    void add_move(Move move);
+
+    Player()
+            : name("Default name"), color(UNINITIALIZED) {}
 };
 
 class GameEngine {
     Board board;
 public:
+    Player whitePlayer;
+    Player blackPlayer;
+
     bool validate_move(Move move);
 
     void dispatch_move(Move move);
@@ -38,17 +64,5 @@ public:
 
     bool game_over();
 
-    GameEngine(Board &_board)
-            : board(_board) {}
-};
-
-class Player {
-public:
-    PlayerColor pColor;
-    std::string name;
-
-    std::vector<Move> moves;
-
-    Player(std::string &_name, PlayerColor _pColor)
-            : name(_name), pColor(_pColor) {}
+    GameEngine() {}
 };

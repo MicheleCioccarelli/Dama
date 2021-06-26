@@ -3,7 +3,7 @@
 #include "../board/board.h"
 
 enum BoardStyles {
-    DEFAULT
+    NORMAL
 };
 
 class Render {
@@ -42,7 +42,7 @@ public:
 
     explicit BoardTokens(BoardStyles style) {
         switch (style) {
-            case DEFAULT:
+            case NORMAL:
                 horizontalLine = "═";
                 verticalLine = "‖";
                 topLeft = "╔";
@@ -70,7 +70,7 @@ struct SetPieces {
 
     SetPieces(BoardStyles style) {
         switch (style) {
-            case DEFAULT:
+            case NORMAL:
                 damaB = "●";
                 damaN = "○";
                 damoneB = "▲";
@@ -94,7 +94,7 @@ struct BoardCoords {
 
     BoardCoords(BoardStyles style) {
         switch (style) {
-            case DEFAULT:
+            case NORMAL:
                 a = 'a';
                 b = 'b';
                 c = 'c';
