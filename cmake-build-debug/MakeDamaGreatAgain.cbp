@@ -106,6 +106,12 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ErrorType.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/GameStyle.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/Piece.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

@@ -21,6 +21,8 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/ErrorType.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/PlayerColor.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/SquareColor.h
@@ -33,6 +35,8 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/ErrorType.h
+CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/PlayerColor.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/SquareColor.h

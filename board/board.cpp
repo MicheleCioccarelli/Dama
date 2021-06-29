@@ -42,6 +42,19 @@ void Board::colored_game_initialization() {
     }
 }
 
+void Board::damone_piece_initialization() {
+    // Initialize pieces
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < columns; col++) {
+            if (row < 3 && board[row][col].color == NERA) {
+                board[row][col].set_piece(DAMONE_B);
+            } else if (row >= (columns - 3) && board[row][col].color == NERA) {
+                board[row][col].set_piece(DAMONE_N);
+            }
+        }
+    }
+}
+
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move move) {
     board[move.endingCoord.row][move.endingCoord.column].piece =

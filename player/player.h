@@ -14,5 +14,5 @@ public:
     void add_move(Move move);
 
     Player()
-            : name("Default name"), color(UNINITIALIZED) {}
+            : name("Default name"), color(TRASPARENTE) {}
 };

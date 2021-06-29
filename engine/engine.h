@@ -2,6 +2,8 @@
 
 #include "../board/board.h"
 #include "../player/player.h"
+#include "../enums/ErrorType.h"
+#include "../enums/GameStyle.h"
 
 class GameEngine {
     Board board;
@@ -9,7 +11,7 @@ public:
     Player whitePlayer;
     Player blackPlayer;
 
-    bool validate_move(Move move);
+    ErrorType validate_move(Move move);
 
     void dispatch_move(Move move);
 
@@ -17,5 +19,5 @@ public:
 
     bool game_over();
 
-    GameEngine();
+    GameEngine(GameStyle gameStyle);
 };
