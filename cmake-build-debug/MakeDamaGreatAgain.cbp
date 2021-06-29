@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MakeDamaGreatAgain">
-				<Option output="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug"/>
+				<Option output="/home/sedano/CLionProjects/Dama/cmake-build-debug/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -53,15 +53,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="MakeDamaGreatAgain/fast">
-				<Option output="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug"/>
+				<Option output="/home/sedano/CLionProjects/Dama/cmake-build-debug/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -75,41 +75,41 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain/fast"/>
-					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/MakeDamaGreatAgain/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain/fast"/>
+					<CompileFile command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j8 -f &quot;/home/sedano/CLionProjects/Dama/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/board/board.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/engine/engine.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/helpers/helpers.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/helpers/helpers.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/helpers/helpers.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/main.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/main.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/renders/render.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/renders/render.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/renders/render.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/MakeDamaGreatAgain/CMakeLists.txt">
+		<Unit filename="/home/sedano/CLionProjects/Dama/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>
