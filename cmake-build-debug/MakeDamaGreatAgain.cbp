@@ -94,19 +94,46 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/helpers/helpers.cpp">
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/BoardStyle.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/helpers/helpers.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/Piece.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PlayerColor.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/SquareColor.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/main.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/move/move.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/move/move.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/player/player.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/player/player.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/renders/render.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/renders/render.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/square/square.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/square/square.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/CMakeLists.txt">

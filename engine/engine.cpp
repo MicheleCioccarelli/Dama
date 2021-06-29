@@ -1,17 +1,5 @@
 #include "engine.h"
 
-// ====== MOVE ======
-Move::Move(Coords _startingCoord, Coords _endingCoord, Piece _piece) {
-    startingCoord = Coords(_startingCoord.column, _startingCoord.row - 1);
-    endingCoord = Coords(_endingCoord.column, _endingCoord.row - 1);
-    piece = _piece;
-}
-
-// ====== PLAYER ======
-void Player::add_move(Move move) {
-    moves.push_back(move);
-}
-
 // ====== GAME ENGINE ======
 GameEngine::GameEngine() {
     board.standard_game_initialization();

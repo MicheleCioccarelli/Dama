@@ -102,18 +102,18 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/board/board.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s
 
-CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
-CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o: ../helpers/helpers.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o -c /home/sedano/CLionProjects/Dama/helpers/helpers.cpp
+CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../square/square.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o -c /home/sedano/CLionProjects/Dama/square/square.cpp
 
-CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/helpers/helpers.cpp > CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.i
+CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/square/square.cpp > CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.i
 
-CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/helpers/helpers.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.s
+CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/square/square.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s
 
 CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
 CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o: ../renders/render.cpp
@@ -141,25 +141,55 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/engine/engine.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.s
 
+CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../move/move.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o -c /home/sedano/CLionProjects/Dama/move/move.cpp
+
+CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/move/move.cpp > CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.i
+
+CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/move/move.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s
+
+CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../player/player.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o -c /home/sedano/CLionProjects/Dama/player/player.cpp
+
+CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/player/player.cpp > CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.i
+
+CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/player/player.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.s
+
 # Object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_OBJECTS = \
 "CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o" \
-"CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o" \
+"CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o" \
-"CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"
+"CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o" \
+"CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o" \
+"CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
 
 # External object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_EXTERNAL_OBJECTS =
 
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o
-MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/build.make
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable MakeDamaGreatAgain"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable MakeDamaGreatAgain"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/MakeDamaGreatAgain.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

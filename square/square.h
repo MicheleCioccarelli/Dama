@@ -3,21 +3,12 @@
 #include <iostream>
 
 #include "../engine/engine.h"
+#include "../enums/ColumnNoatiton.h"
+#include "../enums/SquareColor.h"
+#include "../enums/Piece.h"
 
 #define columns 8
 #define rows 8
-
-enum Piece {
-    VUOTA, DAMA_B, DAMA_N, DAMONE_B, DAMONE_N, COLORATA
-};
-
-enum ColumnNotation {
-    A = 0, B, C, D, E, F, G, H, Z
-};
-
-enum SquareColor {
-    BIANCA, NERA
-};
 
 class Coords {
 public:

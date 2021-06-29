@@ -196,33 +196,6 @@ engine/engine.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.s
 .PHONY : engine/engine.cpp.s
 
-helpers/helpers.o: helpers/helpers.cpp.o
-
-.PHONY : helpers/helpers.o
-
-# target to build an object file
-helpers/helpers.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.o
-.PHONY : helpers/helpers.cpp.o
-
-helpers/helpers.i: helpers/helpers.cpp.i
-
-.PHONY : helpers/helpers.i
-
-# target to preprocess a source file
-helpers/helpers.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.i
-.PHONY : helpers/helpers.cpp.i
-
-helpers/helpers.s: helpers/helpers.cpp.s
-
-.PHONY : helpers/helpers.s
-
-# target to generate assembly for a file
-helpers/helpers.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/helpers/helpers.cpp.s
-.PHONY : helpers/helpers.cpp.s
-
 main.o: main.cpp.o
 
 .PHONY : main.o
@@ -249,6 +222,60 @@ main.s: main.cpp.s
 main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.s
 .PHONY : main.cpp.s
+
+move/move.o: move/move.cpp.o
+
+.PHONY : move/move.o
+
+# target to build an object file
+move/move.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o
+.PHONY : move/move.cpp.o
+
+move/move.i: move/move.cpp.i
+
+.PHONY : move/move.i
+
+# target to preprocess a source file
+move/move.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.i
+.PHONY : move/move.cpp.i
+
+move/move.s: move/move.cpp.s
+
+.PHONY : move/move.s
+
+# target to generate assembly for a file
+move/move.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s
+.PHONY : move/move.cpp.s
+
+player/player.o: player/player.cpp.o
+
+.PHONY : player/player.o
+
+# target to build an object file
+player/player.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o
+.PHONY : player/player.cpp.o
+
+player/player.i: player/player.cpp.i
+
+.PHONY : player/player.i
+
+# target to preprocess a source file
+player/player.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.i
+.PHONY : player/player.cpp.i
+
+player/player.s: player/player.cpp.s
+
+.PHONY : player/player.s
+
+# target to generate assembly for a file
+player/player.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.s
+.PHONY : player/player.cpp.s
 
 renders/render.o: renders/render.cpp.o
 
@@ -277,6 +304,33 @@ renders/render.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s
 .PHONY : renders/render.cpp.s
 
+square/square.o: square/square.cpp.o
+
+.PHONY : square/square.o
+
+# target to build an object file
+square/square.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o
+.PHONY : square/square.cpp.o
+
+square/square.i: square/square.cpp.i
+
+.PHONY : square/square.i
+
+# target to preprocess a source file
+square/square.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.i
+.PHONY : square/square.cpp.i
+
+square/square.s: square/square.cpp.s
+
+.PHONY : square/square.s
+
+# target to generate assembly for a file
+square/square.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s
+.PHONY : square/square.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -292,15 +346,21 @@ help:
 	@echo "... engine/engine.o"
 	@echo "... engine/engine.i"
 	@echo "... engine/engine.s"
-	@echo "... helpers/helpers.o"
-	@echo "... helpers/helpers.i"
-	@echo "... helpers/helpers.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... move/move.o"
+	@echo "... move/move.i"
+	@echo "... move/move.s"
+	@echo "... player/player.o"
+	@echo "... player/player.i"
+	@echo "... player/player.s"
 	@echo "... renders/render.o"
 	@echo "... renders/render.i"
 	@echo "... renders/render.s"
+	@echo "... square/square.o"
+	@echo "... square/square.i"
+	@echo "... square/square.s"
 .PHONY : help
 
 

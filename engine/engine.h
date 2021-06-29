@@ -1,27 +1,8 @@
 #pragma once
 
 #include "../board/board.h"
-
-class Move {
-public:
-    Coords startingCoord;
-    Coords endingCoord;
-    Piece piece;
-
-    // 1 is automatically removed from the row number, so you can write it using normal notation
-    Move(Coords _startingCoord, Coords _endingCoord, Piece _piece);
-};
-
-class Player {
-    std::vector<Move> moves;
-public:
-    PlayerColor color;
-    std::string name;
-    void add_move(Move move);
-
-    Player()
-        : name("Default name"), color(UNINITIALIZED) {}
-};
+#include "../player/player.h"
+#include "../move/move.h"
 
 class GameEngine {
     Board board;

@@ -1,4 +1,4 @@
-#include "helpers.h"
+#include "square.h"
 
 void Square::set_piece(Piece _piece) {
     piece = _piece;

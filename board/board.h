@@ -1,13 +1,10 @@
 #pragma once
 
-#include "../helpers/helpers.h"
+#include "../square/square.h"
+#include "../enums/PlayerColor.h"
+#include "../move/move.h"
 
 #include <vector>
-
-enum PlayerColor {
-    BIANCO, NERO, UNINITIALIZED
-};
-
 
 class Board {
 public:

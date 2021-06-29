@@ -1,10 +1,7 @@
 #pragma once
 
 #include "../board/board.h"
-
-enum BoardStyles {
-    NORMAL
-};
+#include "../enums/BoardStyles.h"
 
 class Render {
 public:
