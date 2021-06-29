@@ -94,7 +94,7 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/enums/BoardStyle.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/BoardStyles.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h">

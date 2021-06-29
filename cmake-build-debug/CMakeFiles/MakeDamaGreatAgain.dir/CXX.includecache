@@ -6,13 +6,13 @@
 
 #IncludeRegexTransform: 
 
-/home/sedano/CLionProjects/Dama/board/board.cpp
-board.h
 /home/sedano/CLionProjects/Dama/board/board.h
-
-/home/sedano/CLionProjects/Dama/board/board.h
-../helpers/helpers.h
-/home/sedano/CLionProjects/Dama/helpers/helpers.h
+../square/square.h
+/home/sedano/CLionProjects/Dama/square/square.h
+../enums/PlayerColor.h
+/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+../move/move.h
+/home/sedano/CLionProjects/Dama/move/move.h
 vector
 -
 
@@ -23,28 +23,42 @@ engine.h
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
+../player/player.h
+/home/sedano/CLionProjects/Dama/player/player.h
 
-/home/sedano/CLionProjects/Dama/helpers/helpers.cpp
-helpers.h
-/home/sedano/CLionProjects/Dama/helpers/helpers.h
+/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
 
-/home/sedano/CLionProjects/Dama/helpers/helpers.h
+/home/sedano/CLionProjects/Dama/enums/Piece.h
+
+/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+
+/home/sedano/CLionProjects/Dama/enums/SquareColor.h
+
+/home/sedano/CLionProjects/Dama/move/move.h
+../square/square.h
+/home/sedano/CLionProjects/Dama/square/square.h
+../enums/Piece.h
+/home/sedano/CLionProjects/Dama/enums/Piece.h
+
+/home/sedano/CLionProjects/Dama/player/player.cpp
+player.h
+/home/sedano/CLionProjects/Dama/player/player.h
+
+/home/sedano/CLionProjects/Dama/player/player.h
+../move/move.h
+/home/sedano/CLionProjects/Dama/move/move.h
+../enums/PlayerColor.h
+/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+vector
+-
+
+/home/sedano/CLionProjects/Dama/square/square.h
 iostream
 -
-../engine/engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-
-/home/sedano/CLionProjects/Dama/main.cpp
-renders/render.h
-/home/sedano/CLionProjects/Dama/renders/render.h
-engine/engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-
-/home/sedano/CLionProjects/Dama/renders/render.cpp
-render.h
-/home/sedano/CLionProjects/Dama/renders/render.h
-
-/home/sedano/CLionProjects/Dama/renders/render.h
-../board/board.h
-/home/sedano/CLionProjects/Dama/board/board.h
+../enums/ColumnNoatiton.h
+/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
+../enums/SquareColor.h
+/home/sedano/CLionProjects/Dama/enums/SquareColor.h
+../enums/Piece.h
+/home/sedano/CLionProjects/Dama/enums/Piece.h
 
