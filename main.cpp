@@ -1,7 +1,7 @@
-//#include "renders/render.h"
-//#include "engine/engine.h"
+#include "renders/render.h"
+#include "engine/engine.h"
 
-int main() {/*
+int main() {
     GameEngine engine;
 
     BoardTokens stdBoard(NORMAL);
@@ -12,5 +12,5 @@ int main() {/*
 
     StdRender stdRender(stdBoard, stdPieces, stdCoords);
     
-    std::cout << engine.count_pieces(BIANCO) << std::endl;*/
+    std::cout << engine.count_pieces(BIANCO) << std::endl;
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../square/square.h"
+#include "../coords/coords.h"
 #include "../enums/Piece.h"
 
 class Move {

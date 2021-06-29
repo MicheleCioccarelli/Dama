@@ -169,6 +169,33 @@ board/board.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s
 .PHONY : board/board.cpp.s
 
+coords/coords.o: coords/coords.cpp.o
+
+.PHONY : coords/coords.o
+
+# target to build an object file
+coords/coords.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o
+.PHONY : coords/coords.cpp.o
+
+coords/coords.i: coords/coords.cpp.i
+
+.PHONY : coords/coords.i
+
+# target to preprocess a source file
+coords/coords.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.i
+.PHONY : coords/coords.cpp.i
+
+coords/coords.s: coords/coords.cpp.s
+
+.PHONY : coords/coords.s
+
+# target to generate assembly for a file
+coords/coords.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.s
+.PHONY : coords/coords.cpp.s
+
 engine/engine.o: engine/engine.cpp.o
 
 .PHONY : engine/engine.o
@@ -343,6 +370,9 @@ help:
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
+	@echo "... coords/coords.o"
+	@echo "... coords/coords.i"
+	@echo "... coords/coords.s"
 	@echo "... engine/engine.o"
 	@echo "... engine/engine.i"
 	@echo "... engine/engine.s"

@@ -2,7 +2,9 @@
 
 #include "../move/move.h"
 #include "../enums/PlayerColor.h"
+
 #include <vector>
+#include <iostream>
 
 class Player {
     std::vector<Move> moves;

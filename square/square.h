@@ -2,21 +2,13 @@
 
 #include <iostream>
 
+#include "../coords/coords.h"
 #include "../enums/ColumnNoatiton.h"
 #include "../enums/SquareColor.h"
 #include "../enums/Piece.h"
 
 #define columns 8
 #define rows 8
-
-class Coords {
-public:
-    ColumnNotation column;
-    int row;
-
-    Coords(ColumnNotation _column = Z, int _row = 0)
-            : column(_column), row(_row) {}
-};
 
 class Square {
 public:
