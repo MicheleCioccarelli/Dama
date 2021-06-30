@@ -8,11 +8,10 @@ Board::Board() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             Coords currentCoords = Coords((ColumnNotation) row, col);
-
             if ((col + row) % 2 == 0) {
-                board[row].push_back(Square(currentCoords, NERA));
+                board[row].emplace_back(currentCoords, NERA);
             } else {
-                board[row].push_back(Square(currentCoords, BIANCA));
+                board[row].emplace_back(currentCoords, BIANCA);
             }
         }
     }

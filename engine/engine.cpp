@@ -15,6 +15,19 @@ GameEngine::GameEngine(GameStyle gameStyle) {
     }
 }
 
+PlayerColor GameEngine::determine_player(Move move) {
+    switch (board.board[move.startingCoord.row][move.startingCoord.column].piece) {
+        case DAMA_B:
+        case DAMONE_B:
+            return BIANCO;
+        case DAMA_N:
+        case DAMONE_N:
+            return NERO;
+        default:
+            return TRASPARENTE;
+    }
+}
+
 void GameEngine::dispatch_move(Move move) {
     Piece startingPiece = board.board[move.startingCoord.row][move.startingCoord.column].piece;
 
@@ -54,27 +67,61 @@ ErrorType GameEngine::validate_move(Move move) {
             if (endingPiece != VUOTA) {
                 return POPULATED;
             }
-            return VALID;
+            // Add the move to the respective player
+            move.moveType = MOVE;
+            if (determine_player(move) == BIANCO) {
+                whitePlayer.add_move(move);
+            } else if (determine_player(move) == NERO) {
+                blackPlayer.add_move(move);
+            }
+                return VALID;
+            }
         }
-    }
-    return TOO_FAR;
+        return TOO_FAR;
 }
 
 ErrorType GameEngine::check_eat(Move move) {
+    Square endingSquare = board.board[move.endingCoord.row][move.endingCoord.column];
+    Square startingSquare = board.board[move.startingCoord.row][move.startingCoord.column];
     int verticalDistance = move.startingCoord.row - move.endingCoord.row;
     int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
 
+    // Check piece compatibility
+    if (startingSquare.piece == endingSquare.piece) {
+        return CANNIBALISM;
+    } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
+        return TOO_BIG;
+    } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
+        return TOO_BIG;
+    } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
+        return FRIENDLY_FIRE;
+    } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
+        return FRIENDLY_FIRE;
+    }
+
     if (validate_move(move) == POPULATED) {
+        // Check if there is an empty space behind the targeted square
         if (board.board[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece == VUOTA) {
-            board.board[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece = COLORATA;
-            std::cout << "valid" << std::endl;
+            // Add the move to the respective players
+            move.moveType = EAT;
+            if (determine_player(move) == BIANCO) {
+                whitePlayer.add_move(move);
+            } else if (determine_player(move) == NERO) {
+                blackPlayer.add_move(move);
+            }
             return VALID;
         } else {
+            // There isn't any free space behind the targeted square
             return POPULATED;
         }
     } else {
+        // The targeted square doesn't have anythin on it
         return EMPTY_TARGET;
     }
+}
+
+ErrorType GameEngine::check_blow(Move move) {
+
 }
 
 int GameEngine::count_pieces(PlayerColor pColor) {

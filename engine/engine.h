@@ -11,9 +11,14 @@ public:    Board board;
     Player whitePlayer;
     Player blackPlayer;
 
+    // Returns the color of the player who performed a move
+    PlayerColor determine_player(Move move);
+
     ErrorType validate_move(Move move);
 
     ErrorType check_eat(Move move);
+
+    ErrorType check_blow(Move move);
 
     void dispatch_move(Move move);
 
