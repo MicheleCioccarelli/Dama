@@ -1,6 +1,7 @@
 #include "move.h"
 
-Move::Move(Coords _startingCoord, Coords _endingCoord) {
+Move::Move(Coords _startingCoord, Coords _endingCoord, MoveType _moveType ) {
     startingCoord = Coords(_startingCoord.column, _startingCoord.row - 1);
     endingCoord = Coords(_endingCoord.column, _endingCoord.row - 1);
+    moveType = _moveType;
 }

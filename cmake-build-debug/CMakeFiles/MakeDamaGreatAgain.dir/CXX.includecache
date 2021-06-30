@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/sedano/CLionProjects/Dama/board/board.cpp
-board.h
-/home/sedano/CLionProjects/Dama/board/board.h
-
 /home/sedano/CLionProjects/Dama/board/board.h
 ../square/square.h
 /home/sedano/CLionProjects/Dama/square/square.h
@@ -25,10 +21,6 @@ vector
 /home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
-
-/home/sedano/CLionProjects/Dama/engine/engine.cpp
-engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
@@ -48,6 +40,8 @@ engine.h
 
 /home/sedano/CLionProjects/Dama/enums/GameStyle.h
 
+/home/sedano/CLionProjects/Dama/enums/MoveType.h
+
 /home/sedano/CLionProjects/Dama/enums/Piece.h
 
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
@@ -65,6 +59,8 @@ engine/engine.h
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
+../enums/MoveType.h
+/home/sedano/CLionProjects/Dama/enums/MoveType.h
 
 /home/sedano/CLionProjects/Dama/player/player.h
 ../move/move.h
@@ -75,10 +71,6 @@ vector
 -
 iostream
 -
-
-/home/sedano/CLionProjects/Dama/renders/render.cpp
-render.h
-/home/sedano/CLionProjects/Dama/renders/render.h
 
 /home/sedano/CLionProjects/Dama/renders/render.h
 ../board/board.h

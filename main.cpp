@@ -2,7 +2,7 @@
 #include "engine/engine.h"
 
 int main() {
-    GameEngine engine(DAMONI);
+    GameEngine engine(STANDARD);
 
     BoardTokens stdBoard(NORMAL);
 
@@ -12,9 +12,12 @@ int main() {
 
     StdRender stdRender(stdBoard, stdPieces, stdCoords);
 
-    engine.dispatch_move(Move(Coords(C, 3), Coords(D, 4)));
+    engine.dispatch_move(Move(Coords(F, 6), Coords(F, 4)));
+    engine.dispatch_move(Move(Coords(H, 6), Coords(G, 5)));
 
-    engine.validate_move(Move(Coords(D, 4), Coords(C, 3)));
+    engine.check_eat(Move(Coords(G, 3), Coords(F, 4)));
+
+    stdRender.board(BIANCO, engine.board);
 
     std::cout << engine.count_pieces(BIANCO) << std::endl;
 }

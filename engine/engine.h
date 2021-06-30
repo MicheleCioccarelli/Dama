@@ -6,12 +6,14 @@
 #include "../enums/GameStyle.h"
 
 class GameEngine {
-    Board board;
-public:
+public:    Board board;
+
     Player whitePlayer;
     Player blackPlayer;
 
     ErrorType validate_move(Move move);
+
+    ErrorType check_eat(Move move);
 
     void dispatch_move(Move move);
 

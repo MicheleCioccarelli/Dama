@@ -60,6 +60,23 @@ ErrorType GameEngine::validate_move(Move move) {
     return TOO_FAR;
 }
 
+ErrorType GameEngine::check_eat(Move move) {
+    int verticalDistance = move.startingCoord.row - move.endingCoord.row;
+    int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
+
+    if (validate_move(move) == POPULATED) {
+        if (board.board[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece == VUOTA) {
+            board.board[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece = COLORATA;
+            std::cout << "valid" << std::endl;
+            return VALID;
+        } else {
+            return POPULATED;
+        }
+    } else {
+        return EMPTY_TARGET;
+    }
+}
+
 int GameEngine::count_pieces(PlayerColor pColor) {
     int returnValue = 0;
     for (int row = 0; row < rows; row++) {
