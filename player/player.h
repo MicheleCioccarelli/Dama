@@ -7,8 +7,9 @@
 #include <iostream>
 
 class Player {
-    std::vector<Move> moves;
 public:
+    std::vector<Move> moves;
+
     PlayerColor color;
     std::string name;
     void add_move(Move move);
