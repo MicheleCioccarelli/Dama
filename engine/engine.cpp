@@ -1,7 +1,8 @@
 #include "engine.h"
 
 // ====== GAME ENGINE ======
-GameEngine::GameEngine(GameStyle gameStyle) {
+GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords)
+        : render(_tokens, _pieces, _coords) {
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();
@@ -15,46 +16,39 @@ GameEngine::GameEngine(GameStyle gameStyle) {
     }
 }
 
-PlayerColor GameEngine::determine_player(Move move) {
-    switch (board.board[move.startingCoord.row][move.startingCoord.column].piece) {
-        case DAMA_B:
-        case DAMONE_B:
-            return BIANCO;
-        case DAMA_N:
-        case DAMONE_N:
-            return NERO;
-        default:
-            return TRASPARENTE;
-    }
-}
-
 void GameEngine::dispatch_move(Move move) {
     // Add the move to the respective player
-    if (determine_player(move) == BIANCO) {
+    if (move.color == BIANCO) {
         whitePlayer.add_move(move);
-    } else if (determine_player(move) == NERO) {
+    } else if (move.color == NERO) {
         blackPlayer.add_move(move);
     }
+
     board.execute_move(move);
 }
 
-ErrorType GameEngine::validate_move(Move move) {
-    Piece startingPiece = board.board[move.startingCoord.row][move.startingCoord.column].piece;
-    Piece endingPiece = board.board[move.endingCoord.row][move.endingCoord.column].piece;
-    Square endingSquare = board.board[move.endingCoord.row][move.endingCoord.column];
+MoveReturn GameEngine::validate_move(Move move) {
+    Piece startingPiece = board.matrix[move.startingCoord.row][move.startingCoord.column].piece;
+    Piece endingPiece = board.matrix[move.endingCoord.row][move.endingCoord.column].piece;
+
+    Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
+
 
     // Distance between the starting square and the ening square
     int verticalDistance = move.startingCoord.row - move.endingCoord.row;
     int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
 
+
     // Check if ou arre actually moving a piece, not just air
     if (startingPiece == VUOTA) {
         return EMPTY_START;
     }
+
     // Check if you are going in a black square
     if (endingSquare.color != NERA) {
         return WHITE_SQUARE;
     }
+
     // Check if you are moving by one square
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
@@ -66,19 +60,18 @@ ErrorType GameEngine::validate_move(Move move) {
             if (endingPiece != VUOTA) {
                 return POPULATED;
             }
-            move.moveType = MOVE;
-                return VALID;
-            }
+            return VALID;
         }
-        return TOO_FAR;
+    }
+    return TOO_FAR;
 }
 
-ErrorType GameEngine::check_eat(Move move) {
-    Square endingSquare = board.board[move.endingCoord.row][move.endingCoord.column];
-    Square startingSquare = board.board[move.startingCoord.row][move.startingCoord.column];
+MoveReturn GameEngine::check_eat(Move move) {
+    Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
+    Square startingSquare = board.matrix[move.startingCoord.row][move.startingCoord.column];
 
-    int verticalDistance    = move.startingCoord.row - move.endingCoord.row;
-    int horizontalDistance  = move.startingCoord.column - move.endingCoord.column;
+    int verticalDistance = move.startingCoord.row - move.endingCoord.row;
+    int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
 
     // Check piece compatibility
     if (startingSquare.piece == endingSquare.piece) {
@@ -95,9 +88,8 @@ ErrorType GameEngine::check_eat(Move move) {
 
     if (validate_move(move) == POPULATED) {
         // Check if there is an empty space behind the targeted square
-        if (board.board[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece == VUOTA) {
-            // Add the move to the respective players
-            move.moveType = EAT;
+        if (board.matrix[move.endingCoord.row - verticalDistance][move.endingCoord.column - horizontalDistance].piece ==
+            VUOTA) {
             return VALID;
         } else {
             // There isn't any free space behind the targeted square
@@ -109,38 +101,58 @@ ErrorType GameEngine::check_eat(Move move) {
     }
 }
 
-ErrorType GameEngine::check_blow(Move move) {
-    PlayerColor playerColor = determine_player(move);
+MoveReturn GameEngine::check_blow(Move move) {
+    PlayerColor playerColor = move.color;
 
     // Check if your opponent's last move wasn't eatig something
     if (playerColor == BIANCO) {
-        if (whitePlayer.moves.at(whitePlayer.moves.size() - 1).moveType == EAT ||
-            whitePlayer.moves.at(whitePlayer.moves.size() - 1).moveType == BLOW) {
+        if (whitePlayer.moves.at(whitePlayer.moves.size() - 1).type == EAT ||
+            whitePlayer.moves.at(whitePlayer.moves.size() - 1).type == BLOW) {
             return INVALID;
         }
     } else if (playerColor == NERO) {
-        if (blackPlayer.moves.at(blackPlayer.moves.size() - 1).moveType == EAT ||
-            blackPlayer.moves.at(blackPlayer.moves.size() - 1).moveType == BLOW) {
+        if (blackPlayer.moves.at(blackPlayer.moves.size() - 1).type == EAT ||
+            blackPlayer.moves.at(blackPlayer.moves.size() - 1).type == BLOW) {
             return INVALID;
         }
-    }
+    }/*
     board.execute_move(Move(Coords(move.endingCoord.column, move.endingCoord.row),
-                            Coords(move.startingCoord.column, move.startingCoord.row)));
-
+                            Coords(move.startingCoord.column, move.startingCoord.row)));*/
 }
 
 int GameEngine::count_pieces(PlayerColor pColor) {
     int returnValue = 0;
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
-            if(pColor == BIANCO) {
-                if (board.board[row][col].piece == DAMA_B || board.board[row][col].piece == DAMONE_B)
+            if (pColor == BIANCO) {
+                if (board.matrix[row][col].piece == DAMA_B || board.matrix[row][col].piece == DAMONE_B)
                     returnValue++;
             } else if (pColor == NERO) {
-                if (board.board[row][col].piece == DAMA_N || board.board[row][col].piece == DAMONE_N)
+                if (board.matrix[row][col].piece == DAMA_N || board.matrix[row][col].piece == DAMONE_N)
                     returnValue++;
             }
         }
     }
     return returnValue;
+}
+
+MoveReturn GameEngine::submit(Move move) {
+    MoveReturn status;
+
+    switch (move.type) {
+        case MOVE:
+            status = validate_move(move);
+            break;
+        case EAT:
+            status = check_eat(move);
+            break;
+        case BLOW:
+            status = check_blow(move);
+            break;
+    }
+
+    if (status == VALID) {
+        dispatch_move(move);
+    }
+    return status;
 }

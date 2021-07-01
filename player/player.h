@@ -2,18 +2,21 @@
 
 #include "../move/move.h"
 #include "../enums/PlayerColor.h"
+#include "../enums/MoveReturn.h"
 
 #include <vector>
 #include <iostream>
 
 class Player {
 public:
-    std::vector<Move> moves;
-
     PlayerColor color;
     std::string name;
+
+    std::vector<Move> moves;
+
     void add_move(Move move);
 
-    Player()
-            : name("Default name"), color(TRASPARENTE) {}
+    Player(): name("Default name"), color(TRASPARENTE) {}
+
+    Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}
 };

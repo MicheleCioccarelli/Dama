@@ -1,7 +1,8 @@
 #include "move.h"
 
-Move::Move(Coords _startingCoord, Coords _endingCoord, MoveType _moveType ) {
+Move::Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _moveType ) {
     startingCoord = Coords(_startingCoord.column, _startingCoord.row - 1);
     endingCoord = Coords(_endingCoord.column, _endingCoord.row - 1);
-    moveType = _moveType;
+    color = _color;
+    type = _moveType;
 }

@@ -1,7 +1,7 @@
 #pragma once
 
 // Used by GameEngine::validate_move()
-enum ErrorType {
+enum MoveReturn {
     VALID,
 
     WHITE_SQUARE,

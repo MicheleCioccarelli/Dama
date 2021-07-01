@@ -2,31 +2,30 @@
 
 #include "../board/board.h"
 #include "../player/player.h"
-#include "../enums/ErrorType.h"
+#include "../enums/MoveReturn.h"
 #include "../enums/GameStyle.h"
+#include "../render/render.h"
 
 class GameEngine {
-public:    Board board;
-
+public:
     Player whitePlayer;
     Player blackPlayer;
 
-    // Returns the color of the player who performed a move
-    PlayerColor determine_player (Move move);
+    StdRender render;
+    Board board;
 
-    ErrorType validate_move(Move move);
+    MoveReturn submit(Move move);
 
-    ErrorType check_eat(Move move);
+    MoveReturn validate_move(Move move);
 
-    // The move provided is what your opponent should have done for you not to bloe his dama
-    ErrorType check_blow(Move move);
+    MoveReturn check_eat(Move move);
+
+    // The move provided is what your opponent should have done for you not to blow his dama
+    MoveReturn check_blow(Move move);
 
     void dispatch_move(Move move);
 
     int count_pieces(PlayerColor pColor);
 
-    bool game_over();
-
-    GameEngine(GameStyle gameStyle);
-
+    GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords);
 };

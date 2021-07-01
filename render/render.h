@@ -3,25 +3,6 @@
 #include "../board/board.h"
 #include "../enums/BoardStyles.h"
 
-class Render {
-public:
-    virtual void border(std::string &lastChar) = 0;
-
-    virtual void first_line() = 0;
-
-    virtual void bottom_line(PlayerColor color) = 0;
-
-    virtual void line() = 0;
-
-    virtual void middle(Board &board, PlayerColor color) = 0;
-
-    virtual std::string square_resolve(Coords coords, Board &board) = 0;
-
-    virtual void board(PlayerColor color, Board &b) = 0;
-
-    virtual ~Render() {}
-};
-
 struct BoardTokens {
 public:
     std::string horizontalLine;
@@ -105,18 +86,18 @@ struct BoardCoords {
     }
 };
 
-class StdRender : public Render {
+class StdRender {
     BoardTokens boardTokens;
     SetPieces setPieces;
     BoardCoords boardCoords;
 public:
-    virtual void border(std::string &lastChar) override;
-    virtual void first_line() override;
-    virtual void bottom_line(PlayerColor color) override;
-    virtual void line() override;
-    virtual void middle(Board &board, PlayerColor color) override;
-    virtual std::string square_resolve(Coords coords, Board &board) override;
-    virtual void board(PlayerColor color, Board &b) override;
+    void border(std::string &lastChar);
+    void first_line();
+    void bottom_line(PlayerColor color);
+    void line();
+    void middle(Board &board, PlayerColor color);
+    std::string square_resolve(Coords coords, Board &board);
+    void render_board(PlayerColor color, Board &b);
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}

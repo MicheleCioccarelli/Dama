@@ -8,7 +8,7 @@
 
 class Board {
 public:
-    std::vector<std::vector<Square>> board;
+    std::vector<std::vector<Square>> matrix;
 
     // Put white peaces in rows 1 ~ 3 and black in the upper three
     void standard_game_initialization();
