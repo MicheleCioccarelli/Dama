@@ -2,16 +2,15 @@
 #include "engine/engine.h"
 
 int main() {
+    BoardTokens board(NORMAL);
+    SetPieces pieces(NORMAL);
+    BoardCoords coords(NORMAL);
+
+    StdRender render(board, pieces, coords);
+
+
+
     GameEngine engine(STANDARD);
-
-    BoardTokens stdBoard(NORMAL);
-
-    SetPieces stdPieces(NORMAL);
-
-    BoardCoords stdCoords(NORMAL);
-
-    StdRender stdRender(stdBoard, stdPieces, stdCoords);
-
 
     //engine.dispatch_move(Move(Coords(F, 6), Coords(F, 4)));
     //engine.dispatch_move(Move(Coords(H, 6), Coords(G, 5)));
@@ -20,7 +19,9 @@ int main() {
 
     engine.check_eat(Move(Coords(E, 3), Coords(D, 4)));
 
-    stdRender.board(BIANCO, engine.board);
+    render.board(BIANCO, engine.board);
 
     std::cout << engine.count_pieces(BIANCO) << std::endl;
 }
+
+// Put change_type in player

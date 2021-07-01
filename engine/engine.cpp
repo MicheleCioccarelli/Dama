@@ -15,7 +15,7 @@ GameEngine::GameEngine(GameStyle gameStyle) {
     }
 }
 
-PlayerColor GameEngine::determine_player(Move &move) {
+PlayerColor GameEngine::determine_player(Move move) {
     switch (board.board[move.startingCoord.row][move.startingCoord.column].piece) {
         case DAMA_B:
         case DAMONE_B:
@@ -28,7 +28,7 @@ PlayerColor GameEngine::determine_player(Move &move) {
     }
 }
 
-void GameEngine::dispatch_move(Move &move) {
+void GameEngine::dispatch_move(Move move) {
     // Add the move to the respective player
     if (determine_player(move) == BIANCO) {
         whitePlayer.add_move(move);
@@ -38,7 +38,7 @@ void GameEngine::dispatch_move(Move &move) {
     board.execute_move(move);
 }
 
-ErrorType GameEngine::validate_move(Move &move) {
+ErrorType GameEngine::validate_move(Move move) {
     Piece startingPiece = board.board[move.startingCoord.row][move.startingCoord.column].piece;
     Piece endingPiece = board.board[move.endingCoord.row][move.endingCoord.column].piece;
     Square endingSquare = board.board[move.endingCoord.row][move.endingCoord.column];
@@ -73,11 +73,12 @@ ErrorType GameEngine::validate_move(Move &move) {
         return TOO_FAR;
 }
 
-ErrorType GameEngine::check_eat(Move &move) {
+ErrorType GameEngine::check_eat(Move move) {
     Square endingSquare = board.board[move.endingCoord.row][move.endingCoord.column];
     Square startingSquare = board.board[move.startingCoord.row][move.startingCoord.column];
-    int verticalDistance = move.startingCoord.row - move.endingCoord.row;
-    int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
+
+    int verticalDistance    = move.startingCoord.row - move.endingCoord.row;
+    int horizontalDistance  = move.startingCoord.column - move.endingCoord.column;
 
     // Check piece compatibility
     if (startingSquare.piece == endingSquare.piece) {
@@ -108,7 +109,7 @@ ErrorType GameEngine::check_eat(Move &move) {
     }
 }
 
-ErrorType GameEngine::check_blow(Move &move) {
+ErrorType GameEngine::check_blow(Move move) {
     PlayerColor playerColor = determine_player(move);
 
     // Check if your opponent's last move wasn't eatig something

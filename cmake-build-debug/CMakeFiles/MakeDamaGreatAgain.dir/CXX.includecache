@@ -22,6 +22,10 @@ vector
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
 
+/home/sedano/CLionProjects/Dama/engine/engine.cpp
+engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
+
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h

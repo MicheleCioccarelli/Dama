@@ -12,16 +12,16 @@ public:    Board board;
     Player blackPlayer;
 
     // Returns the color of the player who performed a move
-    PlayerColor determine_player (Move &move);
+    PlayerColor determine_player (Move move);
 
-    ErrorType validate_move(Move &move);
+    ErrorType validate_move(Move move);
 
-    ErrorType check_eat(Move &move);
+    ErrorType check_eat(Move move);
 
     // The move provided is what your opponent should have done for you not to bloe his dama
-    ErrorType check_blow(Move &move);
+    ErrorType check_blow(Move move);
 
-    void dispatch_move(Move &move);
+    void dispatch_move(Move move);
 
     int count_pieces(PlayerColor pColor);
 
