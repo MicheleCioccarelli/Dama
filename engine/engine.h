@@ -2,20 +2,30 @@
 
 #include "../board/board.h"
 #include "../player/player.h"
+#include "../enums/MoveReturn.h"
+#include "../enums/GameStyle.h"
+#include "../render/render.h"
 
 class GameEngine {
-    Board board;
 public:
     Player whitePlayer;
     Player blackPlayer;
 
-    bool validate_move(Move move);
+    StdRender render;
+    Board board;
+
+    MoveReturn submit(Move move);
+
+    MoveReturn validate_move(Move move);
+
+    MoveReturn check_eat(Move move);
+
+    // The move provided is what your opponent should have done for you not to blow his dama
+    MoveReturn check_blow(Move move);
 
     void dispatch_move(Move move);
 
     int count_pieces(PlayerColor pColor);
 
-    bool game_over();
-
-    GameEngine();
+    GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords);
 };

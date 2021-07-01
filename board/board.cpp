@@ -2,17 +2,16 @@
 
 Board::Board() {
     // Initialize vector
-    board.resize(rows);
+    matrix.resize(rows);
 
     // Give color and coords to every square
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             Coords currentCoords = Coords((ColumnNotation) row, col);
-
             if ((col + row) % 2 == 0) {
-                board[row].push_back(Square(currentCoords, NERA));
+                matrix[row].emplace_back(currentCoords, NERA);
             } else {
-                board[row].push_back(Square(currentCoords, BIANCA));
+                matrix[row].emplace_back(currentCoords, BIANCA);
             }
         }
     }
@@ -23,10 +22,10 @@ void Board::standard_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
-            if (row < 3 && board[row][col].color == NERA) {
-                board[row][col].set_piece(DAMA_B);
-            } else if (row >= (columns - 3) && board[row][col].color == NERA) {
-                board[row][col].set_piece(DAMA_N);
+            if (row < 3 && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(DAMA_B);
+            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(DAMA_N);
             }
         }
     }
@@ -35,8 +34,21 @@ void Board::standard_game_initialization() {
 void Board::colored_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
-            if (board[row][col].color == NERA) {
-                board[row][col].piece = COLORATA;
+            if (matrix[row][col].color == NERA) {
+                matrix[row][col].piece = COLORATA;
+            }
+        }
+    }
+}
+
+void Board::damone_piece_initialization() {
+    // Initialize pieces
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < columns; col++) {
+            if (row < 3 && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(DAMONE_B);
+            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(DAMONE_N);
             }
         }
     }
@@ -44,7 +56,7 @@ void Board::colored_game_initialization() {
 
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move move) {
-    board[move.endingCoord.row][move.endingCoord.column].piece =
-            board[move.startingCoord.row][move.startingCoord.column].piece;
-    board[move.startingCoord.row][move.startingCoord.column].piece = VUOTA;
+    matrix[move.endingCoord.row][move.endingCoord.column].piece =
+            matrix[move.startingCoord.row][move.startingCoord.column].piece;
+    matrix[move.startingCoord.row][move.startingCoord.column].piece = VUOTA;
 }

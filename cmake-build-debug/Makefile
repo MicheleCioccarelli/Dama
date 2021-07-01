@@ -304,32 +304,32 @@ player/player.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.s
 .PHONY : player/player.cpp.s
 
-renders/render.o: renders/render.cpp.o
+render/render.o: render/render.cpp.o
 
-.PHONY : renders/render.o
+.PHONY : render/render.o
 
 # target to build an object file
-renders/render.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o
-.PHONY : renders/render.cpp.o
+render/render.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
+.PHONY : render/render.cpp.o
 
-renders/render.i: renders/render.cpp.i
+render/render.i: render/render.cpp.i
 
-.PHONY : renders/render.i
+.PHONY : render/render.i
 
 # target to preprocess a source file
-renders/render.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.i
-.PHONY : renders/render.cpp.i
+render/render.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.i
+.PHONY : render/render.cpp.i
 
-renders/render.s: renders/render.cpp.s
+render/render.s: render/render.cpp.s
 
-.PHONY : renders/render.s
+.PHONY : render/render.s
 
 # target to generate assembly for a file
-renders/render.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s
-.PHONY : renders/render.cpp.s
+render/render.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.s
+.PHONY : render/render.cpp.s
 
 square/square.o: square/square.cpp.o
 
@@ -385,9 +385,9 @@ help:
 	@echo "... player/player.o"
 	@echo "... player/player.i"
 	@echo "... player/player.s"
-	@echo "... renders/render.o"
-	@echo "... renders/render.i"
-	@echo "... renders/render.s"
+	@echo "... render/render.o"
+	@echo "... render/render.i"
+	@echo "... render/render.s"
 	@echo "... square/square.o"
 	@echo "... square/square.i"
 	@echo "... square/square.s"
