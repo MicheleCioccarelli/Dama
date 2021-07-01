@@ -115,18 +115,18 @@ CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/square/square.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s
 
-CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
-CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o: ../renders/render.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o -c /home/sedano/CLionProjects/Dama/renders/render.cpp
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../render/render.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o -c /home/sedano/CLionProjects/Dama/render/render.cpp
 
-CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/renders/render.cpp > CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.i
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/render/render.cpp > CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.i
 
-CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/renders/render.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.s
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/render/render.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.s
 
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
@@ -185,7 +185,7 @@ MakeDamaGreatAgain_OBJECTS = \
 "CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o" \
-"CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o" \
+"CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o" \
@@ -197,7 +197,7 @@ MakeDamaGreatAgain_EXTERNAL_OBJECTS =
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o
-MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/renders/render.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o

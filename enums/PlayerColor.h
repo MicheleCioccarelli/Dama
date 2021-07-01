@@ -1,5 +1,5 @@
 #pragma once
 
 enum PlayerColor {
-    BIANCO, NERO, UNINITIALIZED
+    BIANCO, NERO, TRASPARENTE
 };

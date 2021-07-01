@@ -22,19 +22,27 @@ vector
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
 
-/home/sedano/CLionProjects/Dama/engine/engine.cpp
-engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
 ../player/player.h
 /home/sedano/CLionProjects/Dama/player/player.h
+../enums/MoveReturn.h
+/home/sedano/CLionProjects/Dama/enums/MoveReturn.h
+../enums/GameStyle.h
+/home/sedano/CLionProjects/Dama/enums/GameStyle.h
+../render/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
 
 /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
 
 /home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
+
+/home/sedano/CLionProjects/Dama/enums/GameStyle.h
+
+/home/sedano/CLionProjects/Dama/enums/MoveReturn.h
+
+/home/sedano/CLionProjects/Dama/enums/MoveType.h
 
 /home/sedano/CLionProjects/Dama/enums/Piece.h
 
@@ -43,32 +51,38 @@ engine.h
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 
 /home/sedano/CLionProjects/Dama/main.cpp
-renders/render.h
-/home/sedano/CLionProjects/Dama/renders/render.h
+render/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
 engine/engine.h
 /home/sedano/CLionProjects/Dama/engine/engine.h
 
 /home/sedano/CLionProjects/Dama/move/move.h
+iostream
+-
+vector
+-
 ../coords/coords.h
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
-
-/home/sedano/CLionProjects/Dama/player/player.cpp
-player.h
-/home/sedano/CLionProjects/Dama/player/player.h
+../enums/MoveType.h
+/home/sedano/CLionProjects/Dama/enums/MoveType.h
+../enums/PlayerColor.h
+/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/player/player.h
 ../move/move.h
 /home/sedano/CLionProjects/Dama/move/move.h
 ../enums/PlayerColor.h
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+../enums/MoveReturn.h
+/home/sedano/CLionProjects/Dama/enums/MoveReturn.h
 vector
 -
 iostream
 -
 
-/home/sedano/CLionProjects/Dama/renders/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
 ../enums/BoardStyles.h

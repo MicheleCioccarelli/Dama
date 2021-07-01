@@ -28,7 +28,7 @@
 */
 // ======= RENDER =======
 std::string StdRender::square_resolve(Coords coords, Board &board) {
-    switch (board.board[coords.row][coords.column].piece) {
+    switch (board.matrix[coords.row][coords.column].piece) {
 
         case DAMA_B:
             return setPieces.damaB;
@@ -71,13 +71,13 @@ void StdRender::bottom_line(PlayerColor color) {
 
     if (color == BIANCO) {
         std::cout << "      " << boardCoords.a << "  " << "   " << boardCoords.b << "     "
-        << boardCoords.c << "     " << boardCoords.d << "     " << boardCoords.e
-        << "     " << boardCoords.f << "     " << boardCoords.g << "     " << boardCoords.h << std::endl;
+                  << boardCoords.c << "     " << boardCoords.d << "     " << boardCoords.e
+                  << "     " << boardCoords.f << "     " << boardCoords.g << "     " << boardCoords.h << std::endl;
     } else {
         std::cout << "      " << boardCoords.h << "  " << "   " << boardCoords.g << "     "
-        << boardCoords.f << "     "  << boardCoords.e << "     " << boardCoords.d
-        << "     " << boardCoords.c << "     " << boardCoords.b << "     " << boardCoords.a << std::endl;
-}
+                  << boardCoords.f << "     " << boardCoords.e << "     " << boardCoords.d
+                  << "     " << boardCoords.c << "     " << boardCoords.b << "     " << boardCoords.a << std::endl;
+    }
 
 }
 
@@ -97,7 +97,7 @@ void StdRender::middle(Board &b, PlayerColor color) {
                 std::cout << row + 1 << "  ";
                 for (int col = 0; col < columns; col++) {
                     std::cout << boardTokens.verticalLine << "  " <<
-                    square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
+                              square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
                 }
                 std::cout << boardTokens.verticalLine << std::endl;
                 if (row != 0) {
@@ -111,7 +111,7 @@ void StdRender::middle(Board &b, PlayerColor color) {
                 std::cout << row + 1 << "  ";
                 for (int col = columns - 1; col >= 0; col--) {
                     std::cout << boardTokens.verticalLine << "  " <<
-                    square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
+                              square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
                 }
                 std::cout << boardTokens.verticalLine << std::endl;
                 if (row != columns - 1) {
@@ -123,9 +123,9 @@ void StdRender::middle(Board &b, PlayerColor color) {
     }
 }
 
-void StdRender::board(PlayerColor color, Board &board) {
+void StdRender::render_board(PlayerColor color, Board &b) {
     std::cout << std::endl << std::endl;
     first_line();
-    middle(board, color);
+    middle(b, color);
     std::cout << std::endl << std::endl;
 }
