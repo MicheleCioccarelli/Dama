@@ -17,10 +17,14 @@ vector
 -
 
 /home/sedano/CLionProjects/Dama/coords/coords.h
-../enums/ColumnNoatiton.h
-/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
+../enums/ColumnNotatiton.h
+/home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
+
+/home/sedano/CLionProjects/Dama/engine/engine.cpp
+engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
@@ -36,7 +40,7 @@ vector
 
 /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
 
-/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
+/home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 
 /home/sedano/CLionProjects/Dama/enums/GameStyle.h
 
@@ -49,12 +53,6 @@ vector
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
-
-/home/sedano/CLionProjects/Dama/main.cpp
-render/render.h
-/home/sedano/CLionProjects/Dama/render/render.h
-engine/engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
 
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
@@ -93,8 +91,8 @@ iostream
 -
 ../coords/coords.h
 /home/sedano/CLionProjects/Dama/coords/coords.h
-../enums/ColumnNoatiton.h
-/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h
+../enums/ColumnNotatiton.h
+/home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 ../enums/SquareColor.h
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../enums/Piece.h

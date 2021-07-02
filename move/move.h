@@ -9,17 +9,18 @@
 
 class Move {
 public:
-    Coords startingCoord;
-    Coords endingCoord;
-
-    std::vector<Coords> piecesEaten;
+    /*
+     * coords' first element is always the startingCoord of a move,
+     * while the last is the ending coord.
+     * Anything in between is the coords of the pieces eaten.
+     */
+    std::vector<Coords> coords;
     Coords blownCoord;
 
     PlayerColor color;
     MoveType type;
 
-    void fill_eat(const std::vector<Coords>& coords);
+    void add_coords(const Coords & _coords);
 
-    // 1 is automatically removed from the row number, so you can write it using normal notation
-    Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _moveType);
+    Move(PlayerColor _color, MoveType _moveType = MOVE);
 };

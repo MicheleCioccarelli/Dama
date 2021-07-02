@@ -28,15 +28,34 @@ void GameEngine::dispatch_move(const Move& move) {
 }
 
 MoveReturn GameEngine::validate_move(Move move) {
-    Piece startingPiece = board.matrix[move.piecesEaten.at(0).row][move.piecesEaten.at(0).column].piece;
-    Piece endingPiece = board.matrix[move.piecesEaten.at(1).row][move.piecesEaten.at(1).column].piece;
+    Piece startingPiece;
+    Piece endingPiece;
+    Square endingSquare(Coords(Z, 10), NERA, VUOTA);
+    Square startingSquare(Coords(Z, 10), NERA, VUOTA);
+    int lastIndex = move.coords.size() - 1;
+    int horizontalDistance;
+    int verticalDistance;
 
-    Square endingSquare = board.matrix[move.piecesEaten.at(1).row][move.piecesEaten.at(1).column];
+    if (move.type == EAT) {
+        startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
+        endingPiece = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column].piece;
+        endingSquare = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column];
+        startingSquare = board.matrix[move.coords.at(0).row][move.coords.at(0).column];
+    } else {
+        startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
+        endingPiece = board.matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece;
+        endingSquare = board.matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
+        startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+    }
 
 
     // Distance between the starting square and the ening square
-    int verticalDistance = move.piecesEaten.at(0).row - move.piecesEaten.at(1).row;
-    int horizontalDistance = move.piecesEaten.at(0).column - move.piecesEaten.at(1).column;
+    if (MOVE == EAT) {
+        verticalDistance = move.coords.at(0).row - move.coords.at(lastIndex).row;
+    } else {
+        verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
+    }
+    horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
 
 
     // Check if ou arre actually moving a piece, not just air
@@ -66,45 +85,102 @@ MoveReturn GameEngine::validate_move(Move move) {
     return TOO_FAR;
 }
 
-MoveReturn GameEngine::check_eat(Move move) {
-    // bool is_simple_move = move.coords.size() == 2;
-
-    Square endingSquare = board.matrix[move.piecesEaten.at(1).row][move.piecesEaten.at(1).column];
-    Square startingSquare = board.matrix[move.piecesEaten.at(0).row][move.piecesEaten.at(0).column];
-
-    int verticalDistance = move.piecesEaten.at(0).row - move.piecesEaten.at(1).row;
-    int horizontalDistance = move.piecesEaten.at(0).column - move.piecesEaten.at(1).column;
-    Square forwardSquare = board.matrix[move.piecesEaten.at(1).row - verticalDistance][move.piecesEaten.at(1).column - horizontalDistance];
-
-    // Check piece compatibility
-    if (startingSquare.piece == endingSquare.piece) {
-        return CANNIBALISM;
-    } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
-        return TOO_BIG;
-    } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
-        return TOO_BIG;
-    } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
-        return FRIENDLY_FIRE;
-    } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
-        return FRIENDLY_FIRE;
+MoveReturn GameEngine::check_eat(const Move& move) {
+    if (move.type != EAT) {
+        return INVALID;
     }
 
-    if (validate_move(move) == POPULATED) {
-        if (forwardSquare.coords.column < 0 || forwardSquare.coords.column > 8) {
-            return OUT_OF_BOUNDS;
-        } else if (forwardSquare.coords.row > 8 || forwardSquare.coords.row < 0) {
-            return OUT_OF_BOUNDS;
+    MoveReturn returnValue = UNDEFINED;
+    Square endingSquare(Coords(Z, 9), NERA);
+    Square startingSquare(Coords(Z, 9), NERA);
+    Square forwardSquare(Coords(Z, 9), NERA);
+    int verticalDistance;
+    int horizontalDistance;
+
+    for (int i = 1; i <= move.coords.size(); i++) {
+        if (i == 1) {
+            endingSquare = board.matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
+            startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+
+            verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
+            horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
+            forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
+                    [endingSquare.coords.column - horizontalDistance];
+            // Check piece compatibility
+            if (startingSquare.piece == endingSquare.piece) {
+                return CANNIBALISM;
+            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
+                return TOO_BIG;
+            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
+                return TOO_BIG;
+            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
+                return FRIENDLY_FIRE;
+            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
+                return FRIENDLY_FIRE;
+            }
+
+            // Create a temporary move to check
+            Move moveToValidate(move.color, move.type);
+            moveToValidate.add_coords(startingSquare.coords);
+            moveToValidate.add_coords(endingSquare.coords);
+
+            if (validate_move(moveToValidate) == POPULATED) {
+                if (forwardSquare.coords.column < 0 || forwardSquare.coords.column > 8) {
+                    return OUT_OF_BOUNDS;
+                } else if (forwardSquare.coords.row > 8 || forwardSquare.coords.row < 0) {
+                    return OUT_OF_BOUNDS;
+                }
+                // Check if there is an empty space behind the targeted square
+                if (forwardSquare.piece == VUOTA) {
+                    returnValue = VALID;
+                }
+            } else {
+                // The targeted square doesn't have anything on it
+                return EMPTY_TARGET;
+            }
+        } else if (returnValue == VALID) {
+            endingSquare = board.matrix[move.coords.at(i - 1).row - 1][move.coords.at(i - 1).column];
+            startingSquare = forwardSquare;
+
+            verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
+            horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
+            forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
+                    [endingSquare.coords.column - horizontalDistance];
+
+            // Check piece compatibility
+            if (startingSquare.piece == endingSquare.piece) {
+                return CANNIBALISM;
+            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
+                return TOO_BIG;
+            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
+                return TOO_BIG;
+            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
+                return FRIENDLY_FIRE;
+            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
+                return FRIENDLY_FIRE;
+            }
+
+            if (validate_move(move) == POPULATED) {
+                if (forwardSquare.coords.column < 0 || forwardSquare.coords.column > 8) {
+                    return OUT_OF_BOUNDS;
+                } else if (forwardSquare.coords.row > 8 || forwardSquare.coords.row < 0) {
+                    return OUT_OF_BOUNDS;
+                }
+                // Check if there is an empty space behind the targeted square
+                if (forwardSquare.piece == VUOTA) {
+                    returnValue = VALID;
+                }
+            } else {
+                // The targeted square doesn't have anythin on it
+                return EMPTY_TARGET;
+            }
+        } if (returnValue == UNDEFINED) {
+            return returnValue;
         }
-        // Check if there is an empty space behind the targeted square
-        if (forwardSquare.piece ==VUOTA) {
-            return VALID;
-        }
-    } else {
-        // The targeted square doesn't have anythin on it
-        return EMPTY_TARGET;
     }
+    return returnValue;
 }
-
+/*
 MoveReturn GameEngine::check_blow(Move move) {
     Move lastWhite = whitePlayer.moves.at(whitePlayer.moves.size() - 1);
     Move lastBlack = blackPlayer.moves.at(whitePlayer.moves.size() - 1);
@@ -118,10 +194,11 @@ MoveReturn GameEngine::check_blow(Move move) {
         if (lastWhite.type == EAT || lastWhite.type == BLOW) {
             return INVALID;
         }
-    }/*
+    }
     board.execute_move(Move(Coords(move.endingCoord.column, move.endingCoord.row),
-                            Coords(move.startingCoord.column, move.startingCoord.row)));*/
+                            Coords(move.startingCoord.column, move.startingCoord.row)));
 }
+*/
 
 int GameEngine::count_pieces(PlayerColor pColor) {
     int returnValue = 0;
@@ -139,7 +216,7 @@ int GameEngine::count_pieces(PlayerColor pColor) {
     return returnValue;
 }
 
-MoveReturn GameEngine::submit(Move move) {
+MoveReturn GameEngine::submit(const Move& move) {
     MoveReturn status;
 
     switch (move.type) {
@@ -150,7 +227,7 @@ MoveReturn GameEngine::submit(Move move) {
             status = check_eat(move);
             break;
         case BLOW:
-            status = check_blow(move);
+            //status = check_blow(move);
             break;
     }
 

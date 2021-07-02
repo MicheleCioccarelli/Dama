@@ -56,39 +56,44 @@ void Board::damone_piece_initialization() {
 
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move move) {
+    Square endingSquare = matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
+    Square startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+
+    int lastIndex = move.coords.size() - 1;
     if (move.type == MOVE) {
-        matrix[move.endingCoord.row][move.endingCoord.column].piece =
-                matrix[move.startingCoord.row][move.startingCoord.column].piece;
-        matrix[move.startingCoord.row][move.startingCoord.column].piece = VUOTA;
-    }
-    else if (move.type == EAT) {
-        // A forward square is where the damina would go is it ate it's target
-        std::vector<Square> forwardSquares;
+        endingSquare.piece = startingSquare.piece;
+        startingSquare.piece = VUOTA;
+        matrix[move.coords.at(1).row - 1][move.coords.at(1).column]= endingSquare;
+        matrix[move.coords.at(0).row - 1][move.coords.at(0).column] = startingSquare;
+    } else if (move.type == EAT){
+        Square forwardSquare(Coords(Z, 9), NERA);
+        int verticalDistance;
+        int horizontalDistance;
 
-        for (int i = 0; i < move.piecesEaten.size(); i++) {
-            int verticalDistance;
-            int horizontalDistance;
-            if (i == 0) {
-                verticalDistance = move.startingCoord.row - move.piecesEaten.at(0).row;
-                horizontalDistance = move.startingCoord.column - move.piecesEaten.at(0).column;
+        for (int i = 1; i <= move.coords.size(); i++) {
+            if (i == 1) {
+                endingSquare = matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
+                startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
 
-                forwardSquares.push_back(matrix[move.piecesEaten.at(0).row - verticalDistance][move.piecesEaten.at(0).column - horizontalDistance]);
+                verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
+                horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
+                forwardSquare = matrix[endingSquare.coords.row - verticalDistance]
+                [endingSquare.coords.column - horizontalDistance];
             } else {
-                verticalDistance = forwardSquares.at(i - 1).coords.row - move.piecesEaten.at(i).row;
-                horizontalDistance = forwardSquares.at(i - 1).coords.column - move.piecesEaten.at(i).column;
-                forwardSquares.push_back(matrix[move.piecesEaten.at(i).row - verticalDistance]
-                [move.piecesEaten.at(i).column - horizontalDistance]);
+                endingSquare = matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
+                startingSquare = forwardSquare;
+
+                verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
+                horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
+                forwardSquare = matrix[endingSquare.coords.row - verticalDistance]
+                [endingSquare.coords.column - horizontalDistance];
             }
         }
         // Eat all the target pieces
-        for (auto & coord : move.piecesEaten) {
-            matrix[coord.row][coord.column].piece = VUOTA;
+        for (int i = 1; i < lastIndex; i++) {
+            matrix[move.coords.at(i).row][move.coords.at(i).column].piece = VUOTA;
         }
-        // Move the piece to its end square
-        matrix[forwardSquares.back().coords.row][forwardSquares.back().coords.column].piece
-        = matrix[move.startingCoord.row][move.startingCoord.column].piece;
-
-        matrix[move.startingCoord.row][move.startingCoord.column].piece = VUOTA;
-
+        matrix[forwardSquare.coords.row][forwardSquare.coords.column].piece =
+                matrix[move.coords[0].row][move.coords[0].column].piece;
     }
 }

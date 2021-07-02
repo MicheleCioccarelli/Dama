@@ -103,7 +103,7 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/BoardStyles.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNoatiton.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/GameStyle.h">

@@ -14,11 +14,11 @@ public:
     StdRender render;
     Board board;
 
-    MoveReturn submit(Move move);
+    MoveReturn submit(const Move& move);
 
     MoveReturn validate_move(Move move);
 
-    MoveReturn check_eat(Move move);
+    MoveReturn check_eat(const Move& move);
 
     // The move provided is what your opponent should have done for you not to blow his dama
     MoveReturn check_blow(Move move);

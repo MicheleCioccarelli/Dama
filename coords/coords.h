@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../enums/ColumnNoatiton.h"
+#include "../enums/ColumnNotatiton.h"
 #include "../enums/Piece.h"
 
 // Chess notation
@@ -9,5 +9,7 @@ public:
     ColumnNotation column;
     int row;
 
-    Coords(ColumnNotation _column = Z, int _row = 100): column(_column), row(_row) {}
+    Coords &operator=(const Coords &rhs);
+
+    Coords(ColumnNotation _column = Z, int _row = 9): column(_column), row(_row) {}
 };

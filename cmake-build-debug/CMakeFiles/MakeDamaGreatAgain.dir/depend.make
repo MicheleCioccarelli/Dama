@@ -4,7 +4,7 @@
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../board/board.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../coords/coords.h
-CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../enums/MoveType.h
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../enums/PlayerColor.h
@@ -14,7 +14,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: ../square/square.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../coords/coords.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../coords/coords.h
-CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../enums/Piece.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../board/board.h
@@ -22,7 +22,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/BoardStyles.h
-CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/MoveType.h
@@ -38,7 +38,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/BoardStyles.h
-CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/MoveType.h
@@ -52,7 +52,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../render/render.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../square/square.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../coords/coords.h
-CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../enums/MoveType.h
 CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../enums/PlayerColor.h
@@ -60,7 +60,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../move/move.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o: ../move/move.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../coords/coords.h
-CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../enums/MoveType.h
 CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../enums/Piece.h
@@ -72,7 +72,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: ../player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/BoardStyles.h
-CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/MoveType.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/PlayerColor.h
@@ -83,7 +83,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../render/render.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../square/square.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../coords/coords.h
-CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../enums/ColumnNoatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../enums/SquareColor.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: ../square/square.cpp
