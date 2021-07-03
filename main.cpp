@@ -10,26 +10,35 @@ int main() {
 
     engine.board.standard_game_initialization();
 
-    Move first (NERO, MOVE);
-    first.add_coords(Coords(B, 6));
-    first.add_coords(Coords(B, 4));
+    Move first (BIANCO, MOVE);
+    first.add_coords(Coords(C, 3));
+    first.add_coords(Coords(C, 5));
     engine.board.execute_move(first);
+/*
     Move second (NERO, MOVE);
-    second.add_coords(Coords(A, 7));
-    second.add_coords(Coords(B, 6));
+    second.add_coords(Coords(F, 6));
+    second.add_coords(Coords(E, 5));
     engine.board.execute_move(second);
-    engine.render.render_board(BIANCO, engine.board);
 
+    Move third (NERO, MOVE);
+    third.add_coords(Coords(A, 7));
+    third.add_coords(Coords(A, 1));
+    engine.board.execute_move(third);
+*/
+    engine.render.render_board(BIANCO, engine.board);
+    Move blow(BIANCO, BLOW);
+    blow.add_coords(Coords(D, 6));
+    blow.add_coords(Coords(C, 5));
+/*
     Move eat(BIANCO, EAT);
-    eat.add_coords(Coords(A, 3));
-    eat.add_coords(Coords(B, 4));
     eat.add_coords(Coords(B, 6));
-
+    eat.add_coords(Coords(B, 8));
     engine.submit(eat);
-    // RENDERING
+*/
+    if (engine.check_blow(blow) == BLOWABLE)
+        std::cout << "IEMOOO" << std::endl;
+    else
+        std::cout << "Uffa" << std::endl;
+
     engine.render.render_board(BIANCO, engine.board);
-
-    //engine.check_eat(Move(Coords(B, 8), Coords(A, 7), NERO, EAT));
-
-    //std::cout << engine.count_pieces(BIANCO) << std::endl;
 }

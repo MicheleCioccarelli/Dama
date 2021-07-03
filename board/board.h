@@ -22,5 +22,7 @@ public:
     // and the starting square is set to VUOTA
     void execute_move(Move move);
 
+    void edit(Coords coords, Piece _piece);
+
     Board();
 };

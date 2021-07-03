@@ -69,26 +69,6 @@ void Board::execute_move(Move move) {
     } else if (move.type == EAT) {
         startingSquare = matrix[move.coords[0].row - 1][move.coords[0].column];
         endingSquare = matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
-/*
-        for (int i = 1; i <= move.coords.size(); i++) {
-            if (i == 1) {
-                endingSquare = matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
-                startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
-
-                verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-                horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-                forwardSquare = matrix[endingSquare.coords.row - verticalDistance]
-                [endingSquare.coords.column - horizontalDistance];
-            } else {
-                endingSquare = matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
-                startingSquare = forwardSquare;
-
-                verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-                horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-                forwardSquare = matrix[endingSquare.coords.row - verticalDistance]
-                [endingSquare.coords.column - horizontalDistance];
-            }
-        }*/
         // Eat all the target pieces
         for (int i = 1; i < lastIndex; i++) {
             matrix[move.coords.at(i).row - 1][move.coords.at(i).column].piece = VUOTA;
@@ -101,4 +81,8 @@ void Board::execute_move(Move move) {
         matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece
             = endingSquare.piece;
     }
+}
+
+void Board::edit(Coords coords, Piece _piece) {
+    matrix[coords.row - 1][coords.column].piece = _piece;
 }

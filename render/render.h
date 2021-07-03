@@ -101,6 +101,4 @@ public:
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}
-
-    virtual ~StdRender() {}
 };

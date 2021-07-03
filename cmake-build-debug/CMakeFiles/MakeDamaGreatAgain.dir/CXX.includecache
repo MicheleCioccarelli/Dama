@@ -22,10 +22,6 @@ vector
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
 
-/home/sedano/CLionProjects/Dama/engine/engine.cpp
-engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
@@ -53,6 +49,12 @@ engine.h
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
+
+/home/sedano/CLionProjects/Dama/main.cpp
+render/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
+engine/engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
 
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
