@@ -14,11 +14,16 @@ int main() {
     first.add_coords(Coords(B, 6));
     first.add_coords(Coords(B, 4));
     engine.board.execute_move(first);
+    Move second (NERO, MOVE);
+    second.add_coords(Coords(A, 7));
+    second.add_coords(Coords(B, 6));
+    engine.board.execute_move(second);
     engine.render.render_board(BIANCO, engine.board);
 
-    Move eat (BIANCO, EAT);
+    Move eat(BIANCO, EAT);
     eat.add_coords(Coords(A, 3));
     eat.add_coords(Coords(B, 4));
+    eat.add_coords(Coords(B, 6));
 
     engine.submit(eat);
     // RENDERING

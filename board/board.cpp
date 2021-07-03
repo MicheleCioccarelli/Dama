@@ -58,18 +58,18 @@ void Board::damone_piece_initialization() {
 void Board::execute_move(Move move) {
     Square endingSquare = matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
     Square startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
-
     int lastIndex = move.coords.size() - 1;
+
     if (move.type == MOVE) {
         endingSquare.piece = startingSquare.piece;
         startingSquare.piece = VUOTA;
+
         matrix[move.coords.at(1).row - 1][move.coords.at(1).column]= endingSquare;
         matrix[move.coords.at(0).row - 1][move.coords.at(0).column] = startingSquare;
-    } else if (move.type == EAT){
-        Square forwardSquare(Coords(Z, 9), NERA);
-        int verticalDistance;
-        int horizontalDistance;
-
+    } else if (move.type == EAT) {
+        startingSquare = matrix[move.coords[0].row - 1][move.coords[0].column];
+        endingSquare = matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
+/*
         for (int i = 1; i <= move.coords.size(); i++) {
             if (i == 1) {
                 endingSquare = matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
@@ -88,12 +88,17 @@ void Board::execute_move(Move move) {
                 forwardSquare = matrix[endingSquare.coords.row - verticalDistance]
                 [endingSquare.coords.column - horizontalDistance];
             }
-        }
+        }*/
         // Eat all the target pieces
         for (int i = 1; i < lastIndex; i++) {
-            matrix[move.coords.at(i).row][move.coords.at(i).column].piece = VUOTA;
+            matrix[move.coords.at(i).row - 1][move.coords.at(i).column].piece = VUOTA;
         }
-        matrix[forwardSquare.coords.row][forwardSquare.coords.column].piece =
-                matrix[move.coords[0].row][move.coords[0].column].piece;
+        // Move the starting square's piece and null the first square out
+        endingSquare.piece = startingSquare.piece;
+        startingSquare.piece = VUOTA;
+
+        matrix[move.coords[0].row - 1][move.coords[0].column].piece = startingSquare.piece;
+        matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece
+            = endingSquare.piece;
     }
 }
