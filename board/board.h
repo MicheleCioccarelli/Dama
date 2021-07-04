@@ -16,11 +16,16 @@ public:
     // Color the black squares
     void colored_game_initialization();
 
+    // Every piece is a damone
     void damone_piece_initialization();
 
-    // The square at the starting coords' piece is copied at the eninding coords
-    // and the starting square is set to VUOTA
+    // Every square is empty
+    void empty_piece_initialization();
+
     void execute_move(Move move);
+
+    // This function puts blownCoords in the move's blownCoords and deletes the blown coords from the board
+    void blow_up(Coords blownCoord, Move& move);
 
     void edit(Coords coords, Piece _piece);
 

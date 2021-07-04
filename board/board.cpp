@@ -54,6 +54,18 @@ void Board::damone_piece_initialization() {
     }
 }
 
+void Board::empty_piece_initialization() {
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < columns; col++) {
+            if (row < 3 && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(VUOTA);
+            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+                matrix[row][col].set_piece(VUOTA);
+            }
+        }
+    }
+}
+
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move move) {
     Square endingSquare = matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
@@ -81,6 +93,11 @@ void Board::execute_move(Move move) {
         matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece
             = endingSquare.piece;
     }
+}
+
+void Board::blow_up(Coords blownCoord, Move& move) {
+    move.blownCoord = blownCoord;
+    edit(Coords(blownCoord.column, blownCoord.row), VUOTA);
 }
 
 void Board::edit(Coords coords, Piece _piece) {

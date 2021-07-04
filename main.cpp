@@ -8,37 +8,17 @@ int main() {
 
     GameEngine engine(STANDARD, board, pieces, coords);
 
-    engine.board.standard_game_initialization();
+    engine.board.empty_piece_initialization();
 
-    Move first (BIANCO, MOVE);
-    first.add_coords(Coords(C, 3));
-    first.add_coords(Coords(C, 5));
-    engine.board.execute_move(first);
-/*
-    Move second (NERO, MOVE);
-    second.add_coords(Coords(F, 6));
-    second.add_coords(Coords(E, 5));
-    engine.board.execute_move(second);
+    Move move(NERO, MOVE);
 
-    Move third (NERO, MOVE);
-    third.add_coords(Coords(A, 7));
-    third.add_coords(Coords(A, 1));
-    engine.board.execute_move(third);
-*/
+    engine.board.edit(Coords(H, 8), DAMONE_N);
+    engine.board.edit(Coords(G, 7), DAMONE_B);
     engine.render.render_board(BIANCO, engine.board);
-    Move blow(BIANCO, BLOW);
-    blow.add_coords(Coords(D, 6));
-    blow.add_coords(Coords(C, 5));
-/*
-    Move eat(BIANCO, EAT);
-    eat.add_coords(Coords(B, 6));
-    eat.add_coords(Coords(B, 8));
-    engine.submit(eat);
-*/
-    if (engine.check_blow(blow) == BLOWABLE)
-        std::cout << "IEMOOO" << std::endl;
-    else
-        std::cout << "Uffa" << std::endl;
+    if(engine.check_blow(Coords(G, 7), Coords(H, 8))
+        == BLOWABLE) {
+        engine.board.blow_up(Coords(G, 7), move);
+    }
 
     engine.render.render_board(BIANCO, engine.board);
 }

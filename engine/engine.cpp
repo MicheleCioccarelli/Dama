@@ -36,7 +36,7 @@ MoveReturn GameEngine::validate_move(Move &move) {
     int horizontalDistance;
     int verticalDistance;
 
-    if (move.type == EAT || move.type == BLOW) {
+    if (move.type == EAT) {
         startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
         endingPiece = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column].piece;
         endingSquare = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column];
@@ -49,7 +49,7 @@ MoveReturn GameEngine::validate_move(Move &move) {
     }
 
     // Distance between the starting square and the ening square
-    if (move.type == EAT || move.type == BLOW) {
+    if (move.type == EAT) {
         verticalDistance = move.coords.at(0).row - move.coords.at(lastIndex).row;
     } else {
         verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
@@ -105,9 +105,9 @@ MoveReturn GameEngine::check_eat(Move& move) {
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
 
-            if (endingSquare.coords.row <= 0 || endingSquare.coords.row >= 8) {
+            if (endingSquare.coords.row <= 0 || endingSquare.coords.row >= 7) {
                 return OUT_OF_BOUNDS;
-            } else if (endingSquare.coords.column < 1 || endingSquare.coords.row >= 8) {
+            } else if (endingSquare.coords.column < 1 || endingSquare.coords.column >= 8) {
                 return OUT_OF_BOUNDS;
             }
 
@@ -123,6 +123,10 @@ MoveReturn GameEngine::check_eat(Move& move) {
             } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
                 return FRIENDLY_FIRE;
             } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
+                return FRIENDLY_FIRE;
+            } else if (startingSquare.piece == DAMONE_B && endingSquare.piece == DAMA_B) {
+                return FRIENDLY_FIRE;
+            } else if (startingSquare.piece == DAMONE_N && endingSquare.piece == DAMA_N) {
                 return FRIENDLY_FIRE;
             }
 
@@ -196,9 +200,21 @@ MoveReturn GameEngine::check_eat(Move& move) {
     return returnValue;
 }
 
-MoveReturn GameEngine::check_blow(Move move) {
-    // Check what the last move did
-    if (check_eat(move) == VALID) return BLOWABLE;
+// You give 2 coords, then you construct a trasparent move with those coords and you check it
+MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
+    Move move = Move(_startingCoords, _endingCoords);
+    Square endingSquare = board.matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
+    Square startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+
+    if (startingSquare.piece == DAMONE_B && endingSquare.piece == DAMA_N) {
+        return ROCK_SOLID;
+    } else if (startingSquare.piece == DAMONE_N && endingSquare.piece == DAMA_B) {
+        return ROCK_SOLID;
+    }
+    // Check if the move is blowable
+    if (check_eat((Move&) move) == VALID) {
+        return BLOWABLE;
+    }
     return ROCK_SOLID;
 }
 
@@ -227,9 +243,6 @@ MoveReturn GameEngine::submit(const Move& move) {
             break;
         case EAT:
             status = check_eat((Move&)move);
-            break;
-        case BLOW:
-            //status = check_blow(move);
             break;
     }
 

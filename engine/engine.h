@@ -22,8 +22,9 @@ public:
 
     MoveReturn check_eat(Move& move);
 
-    // The move provided is what your opponent should have done for you not to blow his dama
-    MoveReturn check_blow(Move move);
+    // You have to pass in the input flagged as blowable by the user, this function tells
+    // you wheter it can be blown, if yes you should call Board::blow_up();
+    MoveReturn check_blow(Coords _startingCoords, Coords _endingCoords);
 
     void dispatch_move(const Move& move);
 

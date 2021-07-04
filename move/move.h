@@ -22,5 +22,7 @@ public:
 
     void add_coords(const Coords & _coords);
 
+    Move(Coords _startingCoords, Coords _endingCoords, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
+
     Move(PlayerColor _color, MoveType _moveType = MOVE);
 };
