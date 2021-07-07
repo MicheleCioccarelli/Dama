@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"
@@ -7,6 +8,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o"
+  "CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o"
   "MakeDamaGreatAgain"
   "MakeDamaGreatAgain.pdb"
 )

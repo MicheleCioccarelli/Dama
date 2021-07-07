@@ -16,7 +16,7 @@ public:
 
     void add_move(Move move);
 
-    Player(): name("Default name"), color(TRASPARENTE) {}
+    Player(): name("nigga"), color(TRASPARENTE) {}
 
     Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}
 };

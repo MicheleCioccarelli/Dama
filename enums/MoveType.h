@@ -1,5 +1,5 @@
 #pragma once
 
 enum MoveType {
-    MOVE, EAT
+    MOVE, EAT, BLOW
 };

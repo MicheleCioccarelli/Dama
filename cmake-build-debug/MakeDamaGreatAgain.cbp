@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/sedano/CLionProjects/Dama/Command/Command.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/Command/Command.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
@@ -124,6 +130,9 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/SquareColor.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/UiReturn.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/main.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
@@ -149,6 +158,12 @@
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/square/square.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/ui/ui.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/ui/ui.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/CMakeLists.txt">

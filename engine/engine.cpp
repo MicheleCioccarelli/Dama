@@ -8,7 +8,7 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
             board.standard_game_initialization();
             break;
         case DAMONI:
-            board.damone_piece_initialization();
+            board.damone_game_initialization();
             break;
         case COLORED:
             board.colored_game_initialization();
@@ -239,10 +239,10 @@ MoveReturn GameEngine::submit(const Move& move) {
 
     switch (move.type) {
         case MOVE:
-            status = validate_move((Move&)move);
+            status = validate_move((Move&) move);
             break;
         case EAT:
-            status = check_eat((Move&)move);
+            status = check_eat((Move&) move);
             break;
     }
 

@@ -41,7 +41,7 @@ void Board::colored_game_initialization() {
     }
 }
 
-void Board::damone_piece_initialization() {
+void Board::damone_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
@@ -54,7 +54,7 @@ void Board::damone_piece_initialization() {
     }
 }
 
-void Board::empty_piece_initialization() {
+void Board::empty_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {

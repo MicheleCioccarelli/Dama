@@ -142,6 +142,33 @@ MakeDamaGreatAgain/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/build
 .PHONY : MakeDamaGreatAgain/fast
 
+Command/Command.o: Command/Command.cpp.o
+
+.PHONY : Command/Command.o
+
+# target to build an object file
+Command/Command.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o
+.PHONY : Command/Command.cpp.o
+
+Command/Command.i: Command/Command.cpp.i
+
+.PHONY : Command/Command.i
+
+# target to preprocess a source file
+Command/Command.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.i
+.PHONY : Command/Command.cpp.i
+
+Command/Command.s: Command/Command.cpp.s
+
+.PHONY : Command/Command.s
+
+# target to generate assembly for a file
+Command/Command.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.s
+.PHONY : Command/Command.cpp.s
+
 board/board.o: board/board.cpp.o
 
 .PHONY : board/board.o
@@ -358,6 +385,33 @@ square/square.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.s
 .PHONY : square/square.cpp.s
 
+ui/ui.o: ui/ui.cpp.o
+
+.PHONY : ui/ui.o
+
+# target to build an object file
+ui/ui.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
+.PHONY : ui/ui.cpp.o
+
+ui/ui.i: ui/ui.cpp.i
+
+.PHONY : ui/ui.i
+
+# target to preprocess a source file
+ui/ui.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.i
+.PHONY : ui/ui.cpp.i
+
+ui/ui.s: ui/ui.cpp.s
+
+.PHONY : ui/ui.s
+
+# target to generate assembly for a file
+ui/ui.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.s
+.PHONY : ui/ui.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -367,6 +421,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MakeDamaGreatAgain"
+	@echo "... Command/Command.o"
+	@echo "... Command/Command.i"
+	@echo "... Command/Command.s"
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
@@ -391,6 +448,9 @@ help:
 	@echo "... square/square.o"
 	@echo "... square/square.i"
 	@echo "... square/square.s"
+	@echo "... ui/ui.o"
+	@echo "... ui/ui.i"
+	@echo "... ui/ui.s"
 .PHONY : help
 
 

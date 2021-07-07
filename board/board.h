@@ -17,10 +17,10 @@ public:
     void colored_game_initialization();
 
     // Every piece is a damone
-    void damone_piece_initialization();
+    void damone_game_initialization();
 
     // Every square is empty
-    void empty_piece_initialization();
+    void empty_game_initialization();
 
     void execute_move(Move move);
 

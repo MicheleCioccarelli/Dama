@@ -50,12 +50,6 @@ vector
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 
-/home/sedano/CLionProjects/Dama/main.cpp
-render/render.h
-/home/sedano/CLionProjects/Dama/render/render.h
-engine/engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
 -
@@ -99,4 +93,14 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
+
+/home/sedano/CLionProjects/Dama/ui/ui.cpp
+ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
+
+/home/sedano/CLionProjects/Dama/ui/ui.h
+../engine/engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
+sstream
+-
 
