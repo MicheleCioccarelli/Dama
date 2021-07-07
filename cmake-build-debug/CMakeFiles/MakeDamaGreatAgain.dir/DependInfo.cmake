@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/sedano/CLionProjects/Dama/Command/Command.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o"
   "/home/sedano/CLionProjects/Dama/board/board.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o"
+  "/home/sedano/CLionProjects/Dama/command/command.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o"
   "/home/sedano/CLionProjects/Dama/coords/coords.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o"
   "/home/sedano/CLionProjects/Dama/engine/engine.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"
   "/home/sedano/CLionProjects/Dama/main.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o"

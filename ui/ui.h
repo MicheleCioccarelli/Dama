@@ -1,12 +1,16 @@
 #pragma once
 
-#include "../engine/engine.h"
+#include "../command/command.h"
 #include <sstream>
+
+#define MAX_COMMANDS 2
 
 class UI {
 public:
-    static void get_move();
-    static Coords convert_coords(char _column, char _row);
+    static void get_move(Move& move, GameEngine& engine);
+
+    // Puts the contents of 2 commands in a move, uninitialized commands are ignored
+    static MoveType command_to_move(const std::vector<Command>& commands, Move& move);
 
     ~UI() = default;
 };

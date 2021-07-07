@@ -1,57 +1,57 @@
 #include "ui.h"
 
-
-Coords UI::convert_coords(char _column, char _row) {
-        ColumnNotation column{Z};
-        int row{9};
-
-        // Initialize startingColumn
-        switch (_column) {
-            case 'A':
-                column = A;
+MoveType UI::command_to_move(const std::vector<Command>& commands, Move &move) {
+    for (int i = 0; i < commands.size(); i++) {
+        switch (commands[i].type) {
+            case BLOW:
+                move.blownCoord = commands[i].startingCoords;
                 break;
-            case 'B':
-                column = B;
+            case MOVE:
+                move.type = MOVE;
+                move.add_coords(commands[i].startingCoords);
+                move.add_coords(commands[i].endingCoords);
+                i = commands.size();
                 break;
-            case 'C':
-                column = C;
-                break;
-            case 'D':
-                column = D;
-                break;
-            case 'E':
-                column = E;
-                break;
-            case 'F':
-                column = F;
-                break;
-            case 'G':
-                column = G;
-                break;
-            case 'H':
-                column = H;
-                break;
-            default:
-                column = Z;
+            case EAT:
+                move.type = EAT;
+                i = commands.size();
+                for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
+                    move.coords.push_back(commands[i].eatenCoords[j]);
+                }
+            case UNINITIALIZED:
+                i = commands.size();
+            case  TOO_SHORT:
+                return TOO_SHORT;
+            case WRONG_OPERATOR:
+                return WRONG_OPERATOR;
         }
-        // Initialize startingRow
-        if (_row - 48 < 0) {
-            row = 9;
-        } else {
-            row = (int) _row - 48;
-        }
-    return Coords(column, row);
+    }
+    return OK;
 }
 
-void UI::get_move() {
-    std::string input;
-    std::cout << "Halo" << std::endl;
-    getline(std::cin, input);
-    std::stringstream ss(input);
+void UI::get_move(Move& move, GameEngine& engine) {
+    std::vector<std::string> input;
+    std::vector<Command> commands;
 
-    while (ss.good()) {
-        std::string token;
-        ss >> token;
-        std::cout << token << std::endl;
+    std::string a;
+    std::cout << "Move" << std::endl;
+    getline(std::cin, a);
+    std::stringstream stream(a);
+
+    // Initializing the strings
+    input.emplace_back("~");
+    input.emplace_back("~");
+
+    for (int i = 0; i < MAX_COMMANDS; i++) {
+        stream >> input[i];
+        std::cout << input[i] << std::endl;
+
+        if (input[i].size() < 5 && input[i] != "~") {
+            move.type = TOO_SHORT;
+            return;
+        }
+        commands.emplace_back(input[i], engine);
     }
+
+    command_to_move(commands, move);
 }

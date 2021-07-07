@@ -142,33 +142,6 @@ MakeDamaGreatAgain/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/build
 .PHONY : MakeDamaGreatAgain/fast
 
-Command/Command.o: Command/Command.cpp.o
-
-.PHONY : Command/Command.o
-
-# target to build an object file
-Command/Command.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o
-.PHONY : Command/Command.cpp.o
-
-Command/Command.i: Command/Command.cpp.i
-
-.PHONY : Command/Command.i
-
-# target to preprocess a source file
-Command/Command.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.i
-.PHONY : Command/Command.cpp.i
-
-Command/Command.s: Command/Command.cpp.s
-
-.PHONY : Command/Command.s
-
-# target to generate assembly for a file
-Command/Command.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.s
-.PHONY : Command/Command.cpp.s
-
 board/board.o: board/board.cpp.o
 
 .PHONY : board/board.o
@@ -195,6 +168,33 @@ board/board.s: board/board.cpp.s
 board/board.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s
 .PHONY : board/board.cpp.s
+
+command/command.o: command/command.cpp.o
+
+.PHONY : command/command.o
+
+# target to build an object file
+command/command.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
+.PHONY : command/command.cpp.o
+
+command/command.i: command/command.cpp.i
+
+.PHONY : command/command.i
+
+# target to preprocess a source file
+command/command.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.i
+.PHONY : command/command.cpp.i
+
+command/command.s: command/command.cpp.s
+
+.PHONY : command/command.s
+
+# target to generate assembly for a file
+command/command.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.s
+.PHONY : command/command.cpp.s
 
 coords/coords.o: coords/coords.cpp.o
 
@@ -421,12 +421,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MakeDamaGreatAgain"
-	@echo "... Command/Command.o"
-	@echo "... Command/Command.i"
-	@echo "... Command/Command.s"
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
+	@echo "... command/command.o"
+	@echo "... command/command.i"
+	@echo "... command/command.s"
 	@echo "... coords/coords.o"
 	@echo "... coords/coords.i"
 	@echo "... coords/coords.s"

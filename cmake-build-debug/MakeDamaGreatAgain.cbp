@@ -82,16 +82,16 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/sedano/CLionProjects/Dama/Command/Command.cpp">
-			<Option target="MakeDamaGreatAgain"/>
-		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/Command/Command.h">
-			<Option target="MakeDamaGreatAgain"/>
-		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/coords/coords.cpp">

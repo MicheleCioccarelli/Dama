@@ -105,12 +105,6 @@ MoveReturn GameEngine::check_eat(Move& move) {
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
 
-            if (endingSquare.coords.row <= 0 || endingSquare.coords.row >= 7) {
-                return OUT_OF_BOUNDS;
-            } else if (endingSquare.coords.column < 1 || endingSquare.coords.column >= 8) {
-                return OUT_OF_BOUNDS;
-            }
-
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];
             // Check piece compatibility
@@ -145,18 +139,18 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return EMPTY_TARGET;
             }
         } else if (returnValue == VALID) {
+            if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
+                return OUT_OF_BOUNDS;
+            } else if (move.coords.at(i).column < 1 || move.coords.at(i).column >= 8) {
+                return OUT_OF_BOUNDS;
+            }
+
             endingSquare = board.matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
             startingSquare = forwardSquare;
             startingSquare.piece = startingPiece;
 
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-
-            if (endingSquare.coords.row <= 0 || endingSquare.coords.row >= 8) {
-                return OUT_OF_BOUNDS;
-            } else if (endingSquare.coords.column <= 1 || endingSquare.coords.row >= 8) {
-                return OUT_OF_BOUNDS;
-            }
 
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];

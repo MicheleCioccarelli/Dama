@@ -193,18 +193,18 @@ CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/ui/ui.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.s
 
-CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
-CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o: ../Command/Command.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o -c /home/sedano/CLionProjects/Dama/Command/Command.cpp
+CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../command/command.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o -c /home/sedano/CLionProjects/Dama/command/command.cpp
 
-CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/Command/Command.cpp > CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.i
+CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/command/command.cpp > CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.i
 
-CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/Command/Command.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.s
+CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/command/command.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.s
 
 # Object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_OBJECTS = \
@@ -217,7 +217,7 @@ MakeDamaGreatAgain_OBJECTS = \
 "CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o" \
-"CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o"
+"CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o"
 
 # External object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_EXTERNAL_OBJECTS =
@@ -231,7 +231,7 @@ MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
-MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/Command/Command.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/build.make
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Linking CXX executable MakeDamaGreatAgain"
