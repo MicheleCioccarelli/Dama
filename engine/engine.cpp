@@ -151,12 +151,8 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return EMPTY_TARGET;
             }
         } else if (returnValue == VALID) {
-            //if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
-                //return OUT_OF_BOUNDS;
-            /*} else */if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
+            if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
                 return OUT_OF_BOUNDS;
-            //} else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
-                //return OUT_OF_BOUNDS;
             } else if (move.coords.at(i).column <= 0 || move.coords.at(i).column >= 7) {
                 return OUT_OF_BOUNDS;
             }
@@ -184,7 +180,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             }
 
             Move moveToValidate(move.color, move.type);
-            board.matrix[startingSquare.coords.column][startingSquare.coords.row].piece =
+            board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
             // Square to eat
