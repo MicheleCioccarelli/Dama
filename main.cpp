@@ -9,15 +9,14 @@ int main() {
 
     engine.board.standard_game_initialization();
     engine.board.edit(Coords(B, 4), DAMA_N);
-
-    std::string input = "A3xB4xC5";
+    engine.board.edit(Coords(E, 7), VUOTA);
 
     engine.render.render_board(BIANCO, engine.board);
 
     Move move(BIANCO);
     UI::get_move(move, engine);
 
-    MoveReturn returnValue = engine.check_eat(move);
+    engine.check_eat(move);
 
     std::cout << "hallo" << std::endl;
 }

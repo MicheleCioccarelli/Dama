@@ -94,9 +94,20 @@ MoveReturn GameEngine::check_eat(Move& move) {
     Coords startingCoords;
     Coords endingCoords;
 
-    Piece startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
+    Piece startingPiece;
     for (int i = 1; i < move.coords.size(); i++) {
         if (i == 1) {
+            if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
+                return OUT_OF_BOUNDS;
+            } else if (move.coords.at(1).row - 1 <= 0 || move.coords.at(1).row - 1 >= 7) {
+                    return OUT_OF_BOUNDS;
+            } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
+                return OUT_OF_BOUNDS;
+            } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
+                return OUT_OF_BOUNDS;
+            }
+            startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
+
             startingCoords = convert_coords(move.coords[0]);
             endingCoords = convert_coords(move.coords[1]);
 
@@ -140,12 +151,15 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return EMPTY_TARGET;
             }
         } else if (returnValue == VALID) {
-            /*
-            if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
+            //if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
+                //return OUT_OF_BOUNDS;
+            /*} else */if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
                 return OUT_OF_BOUNDS;
-            } else if (move.coords.at(i).column < 1 || move.coords.at(i).column >= 8) {
+            //} else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
+                //return OUT_OF_BOUNDS;
+            } else if (move.coords.at(i).column <= 0 || move.coords.at(i).column >= 7) {
                 return OUT_OF_BOUNDS;
-            }*/
+            }
             endingCoords = convert_coords(move.coords[i]);
 
             endingSquare = board.matrix[endingCoords.row][endingCoords.column];
@@ -156,7 +170,6 @@ MoveReturn GameEngine::check_eat(Move& move) {
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];
-
             // Check piece compatibility
             if (startingSquare.piece == endingSquare.piece) {
                 return CANNIBALISM;
@@ -171,12 +184,11 @@ MoveReturn GameEngine::check_eat(Move& move) {
             }
 
             Move moveToValidate(move.color, move.type);
-            board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
-                    board.matrix[move.coords[0].row][move.coords[0].column].piece;
-            moveToValidate.add_coords(startingSquare.coords);
+            board.matrix[startingSquare.coords.column][startingSquare.coords.row].piece =
+                    startingPiece;
+            moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
             // Square to eat
             moveToValidate.add_coords(move.coords[i]);
-
             if (validate_move((Move&) moveToValidate) == POPULATED) {
                 // Check if there is an empty space behind the targeted square
                 if (forwardSquare.piece == VUOTA) {
@@ -185,6 +197,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 }
             } else {
                 // The targeted square doesn't have anythin on it
+                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = VUOTA;
                 return EMPTY_TARGET;
             }
         } if (returnValue == UNDEFINED) {
