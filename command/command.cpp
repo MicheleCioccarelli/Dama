@@ -31,7 +31,7 @@ void Command::convert_coords(const std::string& toConvert, Coords& converted) {
             converted.column = Z;
     }
     // Initialize startingRow
-    if (toConvert[1] - 48 < 0) {
+    if (toConvert[1] - 48 < 0 || toConvert[1] > 57) {
         converted.row = 9;
     } else {
         converted.row = (int) toConvert[1] - 48;
@@ -68,11 +68,12 @@ Command::Command(std::string& input, GameEngine& engine) {
                     eatenCoords.push_back(eatenCoord);
                 }
                 endingCoords = Coords();
+                startingCoords = Coords();
                 break;
             default:
                 type = WRONG_OPERATOR;
                 break;
         }
     }
-    eatenCoords.emplace_back(Coords());
+//    eatenCoords.emplace_back(Coords());
 }

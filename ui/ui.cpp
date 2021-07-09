@@ -14,10 +14,10 @@ MoveType UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                 break;
             case EAT:
                 move.type = EAT;
-                i = commands.size();
                 for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
                     move.coords.push_back(commands[i].eatenCoords[j]);
                 }
+                i = commands.size();
             case UNINITIALIZED:
                 i = commands.size();
             case  TOO_SHORT:

@@ -12,8 +12,12 @@ int main() {
 
     std::string input = "A3xB4xC5";
 
-    Move move(BIANCO);
+    engine.render.render_board(BIANCO, engine.board);
 
+    Move move(BIANCO);
     UI::get_move(move, engine);
-    std::cout << "hallo" ;
+
+    MoveReturn returnValue = engine.check_eat(move);
+
+    std::cout << "hallo" << std::endl;
 }

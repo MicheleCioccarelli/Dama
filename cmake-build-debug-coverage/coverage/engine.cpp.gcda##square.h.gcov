@@ -1,0 +1,29 @@
+        -:    0:Source:/home/sedano/CLionProjects/Dama/square/square.h
+        -:    0:Graph:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.gcno
+        -:    0:Data:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include <iostream>
+        -:    4:
+        -:    5:#include "../coords/coords.h"
+        -:    6:#include "../enums/ColumnNotatiton.h"
+        -:    7:#include "../enums/SquareColor.h"
+        -:    8:#include "../enums/Piece.h"
+        -:    9:
+        -:   10:#define columns 8
+        -:   11:#define rows 8
+        -:   12:
+        -:   13:class Square {
+        -:   14:public:
+        -:   15:    Coords coords;
+        -:   16:    SquareColor color;
+        -:   17:    Piece piece;
+        -:   18:
+        -:   19:    void set_piece(Piece _piece);
+        -:   20:
+        -:   21:    Square &operator=(const Square &rhs);
+        -:   22:
+    #####:   23:    Square(Coords _coords, SquareColor _color, Piece _piece = VUOTA)
+    #####:   24:            : coords(_coords), color(_color), piece(_piece) {}
+        -:   25:};

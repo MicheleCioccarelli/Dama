@@ -1,0 +1,26 @@
+        -:    0:Source:/home/sedano/CLionProjects/Dama/player/player.h
+        -:    0:Graph:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.gcno
+        -:    0:Data:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#pragma once
+        -:    2:
+        -:    3:#include "../move/move.h"
+        -:    4:#include "../enums/PlayerColor.h"
+        -:    5:#include "../enums/MoveReturn.h"
+        -:    6:
+        -:    7:#include <vector>
+        -:    8:#include <iostream>
+        -:    9:
+        -:   10:class Player {
+        -:   11:public:
+        -:   12:    PlayerColor color;
+        -:   13:    std::string name;
+        -:   14:
+        -:   15:    std::vector<Move> moves;
+        -:   16:
+        -:   17:    void add_move(Move move);
+        -:   18:
+        2:   19:    Player(): name("nigga"), color(TRASPARENTE) {}
+        -:   20:
+        -:   21:    Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}
+        -:   22:};

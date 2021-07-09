@@ -16,6 +16,10 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
     }
 }
 
+Coords GameEngine::convert_coords(Coords coords) {
+    return Coords(coords.column, coords.row - 1);
+}
+
 void GameEngine::dispatch_move(const Move& move) {
     // Add the move to the respective player
     if (move.color == BIANCO) {
@@ -30,32 +34,23 @@ void GameEngine::dispatch_move(const Move& move) {
 MoveReturn GameEngine::validate_move(Move &move) {
     Piece startingPiece;
     Piece endingPiece;
-    Square endingSquare(Coords(Z, 10), NERA, VUOTA);
-    Square startingSquare(Coords(Z, 10), NERA, VUOTA);
+    Square endingSquare(Coords(Z, 10), NERA);
+    Square startingSquare(Coords(Z, 10), NERA);
     int lastIndex = move.coords.size() - 1;
     int horizontalDistance;
     int verticalDistance;
 
-    if (move.type == EAT) {
-        startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
-        endingPiece = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column].piece;
-        endingSquare = board.matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column];
-        startingSquare = board.matrix[move.coords.at(0).row][move.coords.at(0).column];
-    } else {
-        startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
-        endingPiece = board.matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece;
-        endingSquare = board.matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
-        startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
-    }
+    Coords startingCoords = convert_coords(move.coords[0]);
+    Coords endingCoords = convert_coords(move.coords[lastIndex]);
+
+    startingPiece = board.matrix[startingCoords.row][startingCoords.column].piece;
+    endingPiece = board.matrix[endingCoords.row][endingCoords.column].piece;
+    endingSquare = board.matrix[endingCoords.row][endingCoords.column];
+    startingSquare = board.matrix[startingCoords.row][startingCoords.column];
 
     // Distance between the starting square and the ening square
-    if (move.type == EAT) {
-        verticalDistance = move.coords.at(0).row - move.coords.at(lastIndex).row;
-    } else {
-        verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-    }
+    verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
     horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-
 
     // Check if ou arre actually moving a piece, not just air
     if (startingPiece == VUOTA) {
@@ -96,11 +91,17 @@ MoveReturn GameEngine::check_eat(Move& move) {
     int verticalDistance;
     int horizontalDistance;
 
+    Coords startingCoords;
+    Coords endingCoords;
+
     Piece startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
     for (int i = 1; i < move.coords.size(); i++) {
         if (i == 1) {
-            endingSquare = board.matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
-            startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+            startingCoords = convert_coords(move.coords[0]);
+            endingCoords = convert_coords(move.coords[1]);
+
+            endingSquare = board.matrix[endingCoords.row][endingCoords.column];
+            startingSquare = board.matrix[startingCoords.row][startingCoords.column];
 
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
@@ -126,8 +127,8 @@ MoveReturn GameEngine::check_eat(Move& move) {
 
             // Create a temporary move to check
             Move moveToValidate(move.color, move.type);
-            moveToValidate.add_coords(startingSquare.coords);
-            moveToValidate.add_coords(endingSquare.coords);
+            moveToValidate.add_coords(move.coords[0]);
+            moveToValidate.add_coords(move.coords[1]);
 
             if (validate_move(moveToValidate) == POPULATED) {
                 // Check if there is an empty space behind the targeted square
@@ -139,19 +140,20 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return EMPTY_TARGET;
             }
         } else if (returnValue == VALID) {
+            /*
             if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
                 return OUT_OF_BOUNDS;
             } else if (move.coords.at(i).column < 1 || move.coords.at(i).column >= 8) {
                 return OUT_OF_BOUNDS;
-            }
+            }*/
+            endingCoords = convert_coords(move.coords[i]);
 
-            endingSquare = board.matrix[move.coords.at(i).row - 1][move.coords.at(i).column];
+            endingSquare = board.matrix[endingCoords.row][endingCoords.column];
             startingSquare = forwardSquare;
             startingSquare.piece = startingPiece;
 
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
             horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];
 
@@ -170,9 +172,10 @@ MoveReturn GameEngine::check_eat(Move& move) {
 
             Move moveToValidate(move.color, move.type);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
-                    board.matrix[move.coords[0].row - 1][move.coords[0].column].piece;
+                    board.matrix[move.coords[0].row][move.coords[0].column].piece;
             moveToValidate.add_coords(startingSquare.coords);
-            moveToValidate.add_coords(endingSquare.coords);
+            // Square to eat
+            moveToValidate.add_coords(move.coords[i]);
 
             if (validate_move((Move&) moveToValidate) == POPULATED) {
                 // Check if there is an empty space behind the targeted square

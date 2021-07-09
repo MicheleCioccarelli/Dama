@@ -30,6 +30,8 @@ public:
 
     int count_pieces(PlayerColor pColor);
 
+    Coords convert_coords(Coords coords);
+
     void promote();
 
     GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords);

@@ -1,0 +1,11 @@
+        -:    0:Source:/home/sedano/CLionProjects/Dama/coords/coords.cpp
+        -:    0:Graph:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.gcno
+        -:    0:Data:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include "coords.h"
+        -:    2:
+        7:    3:Coords &Coords::operator=(const Coords &rhs) {
+        7:    4:    this->row = rhs.row;
+        7:    5:    this->column = rhs.column;
+        7:    6:    return *this;
+        -:    7:}

@@ -1,0 +1,9 @@
+        -:    0:Source:/home/sedano/CLionProjects/Dama/player/player.cpp
+        -:    0:Graph:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.gcno
+        -:    0:Data:/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.gcda
+        -:    0:Runs:1
+        -:    1:#include "player.h"
+        -:    2:
+    #####:    3:void Player::add_move(Move move) {
+    #####:    4:    moves.push_back(move);
+    #####:    5:}
