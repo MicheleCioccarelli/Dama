@@ -304,6 +304,33 @@ move/move.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s
 .PHONY : move/move.cpp.s
 
+movecase/movecase.o: movecase/movecase.cpp.o
+
+.PHONY : movecase/movecase.o
+
+# target to build an object file
+movecase/movecase.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o
+.PHONY : movecase/movecase.cpp.o
+
+movecase/movecase.i: movecase/movecase.cpp.i
+
+.PHONY : movecase/movecase.i
+
+# target to preprocess a source file
+movecase/movecase.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.i
+.PHONY : movecase/movecase.cpp.i
+
+movecase/movecase.s: movecase/movecase.cpp.s
+
+.PHONY : movecase/movecase.s
+
+# target to generate assembly for a file
+movecase/movecase.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.s
+.PHONY : movecase/movecase.cpp.s
+
 player/player.o: player/player.cpp.o
 
 .PHONY : player/player.o
@@ -439,6 +466,9 @@ help:
 	@echo "... move/move.o"
 	@echo "... move/move.i"
 	@echo "... move/move.s"
+	@echo "... movecase/movecase.o"
+	@echo "... movecase/movecase.i"
+	@echo "... movecase/movecase.s"
 	@echo "... player/player.o"
 	@echo "... player/player.i"
 	@echo "... player/player.s"

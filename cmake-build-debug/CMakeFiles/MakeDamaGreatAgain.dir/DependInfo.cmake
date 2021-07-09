@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/sedano/CLionProjects/Dama/engine/engine.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"
   "/home/sedano/CLionProjects/Dama/main.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o"
   "/home/sedano/CLionProjects/Dama/move/move.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o"
+  "/home/sedano/CLionProjects/Dama/movecase/movecase.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o"
   "/home/sedano/CLionProjects/Dama/player/player.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
   "/home/sedano/CLionProjects/Dama/render/render.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o"
   "/home/sedano/CLionProjects/Dama/square/square.cpp" "/home/sedano/CLionProjects/Dama/cmake-build-debug/CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o"

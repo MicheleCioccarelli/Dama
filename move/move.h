@@ -4,7 +4,7 @@
 #include <vector>
 #include "../coords/coords.h"
 #include "../enums/Piece.h"
-#include "../enums/MoveType.h"
+#include "../movecase/movecase.h"
 #include "../enums/PlayerColor.h"
 
 class Move {
@@ -18,7 +18,7 @@ public:
     Coords blownCoord;
 
     PlayerColor color;
-    MoveType type;
+    MoveCase type;
 
     void add_coords(const Coords & _coords);
 

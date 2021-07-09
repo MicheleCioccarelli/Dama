@@ -30,7 +30,8 @@ public:
 
     int count_pieces(PlayerColor pColor);
 
-    Coords convert_coords(Coords coords);
+    // Convert coords from human notation no matrix notation
+    static Coords convert_coords(Coords coords);
 
     void promote();
 

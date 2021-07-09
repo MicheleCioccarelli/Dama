@@ -1,8 +1,8 @@
 #include "ui.h"
 
-MoveType UI::command_to_move(const std::vector<Command>& commands, Move &move) {
+MoveCase UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     for (int i = 0; i < commands.size(); i++) {
-        switch (commands[i].type) {
+        switch (commands[i].type.movetype) {
             case BLOW:
                 move.blownCoord = commands[i].startingCoords;
                 break;
@@ -20,13 +20,15 @@ MoveType UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                 i = commands.size();
             case UNINITIALIZED:
                 i = commands.size();
+        }
+        switch (commands[i].type.moveReturn) {
             case  TOO_SHORT:
-                return TOO_SHORT;
+                move.type = TOO_SHORT;
             case WRONG_OPERATOR:
-                return WRONG_OPERATOR;
+                move.type = WRONG_OPERATOR;
         }
     }
-    return OK;
+    return MoveType(VALID);
 }
 
 void UI::get_move(Move& move, GameEngine& engine) {
@@ -34,7 +36,7 @@ void UI::get_move(Move& move, GameEngine& engine) {
     std::vector<Command> commands;
 
     std::string a;
-    std::cout << "Move" << std::endl;
+    std::cout << "Move > ";
     getline(std::cin, a);
     std::stringstream stream(a);
 
@@ -53,5 +55,6 @@ void UI::get_move(Move& move, GameEngine& engine) {
         commands.emplace_back(input[i], engine);
     }
 
+    // Handle error messages here
     command_to_move(commands, move);
 }

@@ -63,10 +63,16 @@ vector
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/Piece.h
 /home/sedano/CLionProjects/Dama/enums/Piece.h
-../enums/MoveType.h
-/home/sedano/CLionProjects/Dama/enums/MoveType.h
+../movecase/movecase.h
+/home/sedano/CLionProjects/Dama/movecase/movecase.h
 ../enums/PlayerColor.h
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+
+/home/sedano/CLionProjects/Dama/movecase/movecase.h
+../enums/MoveReturn.h
+/home/sedano/CLionProjects/Dama/enums/MoveReturn.h
+../enums/MoveType.h
+/home/sedano/CLionProjects/Dama/enums/MoveType.h
 
 /home/sedano/CLionProjects/Dama/player/player.h
 ../move/move.h

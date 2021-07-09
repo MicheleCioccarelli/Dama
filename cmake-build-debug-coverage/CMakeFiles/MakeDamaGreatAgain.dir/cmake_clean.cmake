@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o"
+  "CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o"

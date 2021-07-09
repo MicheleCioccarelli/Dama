@@ -58,10 +58,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7442.42/bin/cmake/linux/bin/cmake
+CMAKE_COMMAND = /home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7628.27/bin/cmake/linux/bin/cmake
 
 # The command to remove a file.
-RM = /home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7442.42/bin/cmake/linux/bin/cmake -E rm -f
+RM = /home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7628.27/bin/cmake/linux/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -78,7 +78,7 @@ CMAKE_BINARY_DIR = /home/sedano/CLionProjects/Dama/cmake-build-debug-coverage
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7442.42/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7628.27/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -89,7 +89,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7442.42/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/211.7628.27/bin/cmake/linux/bin/cmake --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -304,6 +304,33 @@ move/move.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.s
 .PHONY : move/move.cpp.s
 
+movecase/movecase.o: movecase/movecase.cpp.o
+
+.PHONY : movecase/movecase.o
+
+# target to build an object file
+movecase/movecase.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o
+.PHONY : movecase/movecase.cpp.o
+
+movecase/movecase.i: movecase/movecase.cpp.i
+
+.PHONY : movecase/movecase.i
+
+# target to preprocess a source file
+movecase/movecase.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.i
+.PHONY : movecase/movecase.cpp.i
+
+movecase/movecase.s: movecase/movecase.cpp.s
+
+.PHONY : movecase/movecase.s
+
+# target to generate assembly for a file
+movecase/movecase.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.s
+.PHONY : movecase/movecase.cpp.s
+
 player/player.o: player/player.cpp.o
 
 .PHONY : player/player.o
@@ -439,6 +466,9 @@ help:
 	@echo "... move/move.o"
 	@echo "... move/move.i"
 	@echo "... move/move.s"
+	@echo "... movecase/movecase.o"
+	@echo "... movecase/movecase.i"
+	@echo "... movecase/movecase.s"
 	@echo "... player/player.o"
 	@echo "... player/player.i"
 	@echo "... player/player.s"

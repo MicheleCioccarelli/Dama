@@ -30,5 +30,10 @@ enum MoveReturn {
     // The square indicated cannot be blown
     ROCK_SOLID,
     // The move being checked isn't valid, but the move checker doesn't know why
-    UNDEFINED
+    UNDEFINED,
+
+    TOO_SHORT,
+
+    WRONG_OPERATOR
+
 };

@@ -43,6 +43,14 @@ MoveReturn GameEngine::validate_move(Move &move) {
     Coords startingCoords = convert_coords(move.coords[0]);
     Coords endingCoords = convert_coords(move.coords[lastIndex]);
 
+    if (startingCoords.column == Z || endingCoords.column == Z) {
+        return OUT_OF_BOUNDS;
+    } else if (startingCoords.row > 7 || startingCoords.row < 0) {
+        return OUT_OF_BOUNDS;
+    } else if (endingCoords.row > 7 || endingCoords.row < 0) {
+        return OUT_OF_BOUNDS;
+    }
+
     startingPiece = board.matrix[startingCoords.row][startingCoords.column].piece;
     endingPiece = board.matrix[endingCoords.row][endingCoords.column].piece;
     endingSquare = board.matrix[endingCoords.row][endingCoords.column];
@@ -137,7 +145,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             }
 
             // Create a temporary move to check
-            Move moveToValidate(move.color, move.type);
+            Move moveToValidate(move.color, move.type.movetype);
             moveToValidate.add_coords(move.coords[0]);
             moveToValidate.add_coords(move.coords[1]);
 
@@ -179,7 +187,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return FRIENDLY_FIRE;
             }
 
-            Move moveToValidate(move.color, move.type);
+            Move moveToValidate(move.color, move.type.movetype);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
@@ -209,6 +217,17 @@ MoveReturn GameEngine::check_eat(Move& move) {
 // You give 2 coords, then you construct a trasparent move with those coords and you check it
 MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
     Move move = Move(_startingCoords, _endingCoords);
+
+    if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(1).row - 1 <= 0 || move.coords.at(1).row - 1 >= 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
+        return OUT_OF_BOUNDS;
+    }
+
     Square endingSquare = board.matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
     Square startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
 
@@ -243,7 +262,7 @@ int GameEngine::count_pieces(PlayerColor pColor) {
 MoveReturn GameEngine::submit(const Move& move) {
     MoveReturn status;
 
-    switch (move.type) {
+    switch (move.type.movetype) {
         case MOVE:
             status = validate_move((Move&) move);
             break;
@@ -255,6 +274,7 @@ MoveReturn GameEngine::submit(const Move& move) {
     if (status == VALID) {
         dispatch_move(move);
     }
+
     return status;
 }
 
