@@ -1,11 +1,8 @@
 #include "ui.h"
 
-MoveCase UI::command_to_move(const std::vector<Command>& commands, Move &move) {
+void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     for (int i = 0; i < commands.size(); i++) {
         switch (commands[i].type.movetype) {
-            case BLOW:
-                move.blownCoord = commands[i].startingCoords;
-                break;
             case MOVE:
                 move.type = MOVE;
                 move.add_coords(commands[i].startingCoords);
@@ -18,17 +15,21 @@ MoveCase UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                     move.coords.push_back(commands[i].eatenCoords[j]);
                 }
                 i = commands.size();
+                break;
             case UNINITIALIZED:
-                i = commands.size();
+                move.type = UNINITIALIZED;
         }
         switch (commands[i].type.moveReturn) {
+            case BLOWABLE:
+                move.blownCoord = commands[i].blownCoords;
+                move.type.moveReturn = BLOWABLE;
+                break;
             case  TOO_SHORT:
                 move.type = TOO_SHORT;
             case WRONG_OPERATOR:
                 move.type = WRONG_OPERATOR;
         }
     }
-    return MoveType(VALID);
 }
 
 void UI::get_move(Move& move, GameEngine& engine) {
@@ -46,6 +47,9 @@ void UI::get_move(Move& move, GameEngine& engine) {
 
     for (int i = 0; i < MAX_COMMANDS; i++) {
         stream >> input[i];
+        if (input[i] == "~") {
+            break;
+        }
         std::cout << input[i] << std::endl;
 
         if (input[i].size() < 5 && input[i] != "~") {

@@ -40,27 +40,30 @@ void Command::convert_coords(const std::string& toConvert, Coords& converted) {
 
 Command::Command(std::string& input, GameEngine& engine) {
     if (input == "~") {
-         type = MoveCase(UNINITIALIZED);
+         type = UNINITIALIZED;
     } else {
         Coords eatenCoord;
         switch (input[2]) {
             case '-':
-                type = MoveCase(MOVE);
+                type = MOVE;
                 convert_coords(input.substr(0, 2), startingCoords);
                 convert_coords(input.substr(3, 5), endingCoords);
                 break;
             case '*':
-                type = MoveCase(BLOW);
                 convert_coords(input.substr(0, 2), startingCoords);
                 convert_coords(input.substr(3, 5), endingCoords);
                 if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
                     // If the move is invalid, uninitialize the coords;
                     startingCoords = Coords();
                     endingCoords = Coords();
+                } else {
+                    // If the move can be blown
+                    type = BLOWABLE;
+                    convert_coords(input.substr(0, 2), blownCoords);
                 }
                 break;
             case 'x':
-                type = MoveCase(EAT);
+                type = EAT;
                 convert_coords(input.substr(0, 2), startingCoords);
                 eatenCoords.push_back(startingCoords);
                 for (int i = 3; i <= input.size(); i += 3) {

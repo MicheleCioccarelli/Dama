@@ -2,7 +2,7 @@
 
 #include "../board/board.h"
 #include "../player/player.h"
-#include "../enums/MoveReturn.h"
+#include "../movecase/movecase.h"
 #include "../enums/GameStyle.h"
 #include "../render/render.h"
 
@@ -14,7 +14,7 @@ public:
     StdRender render;
     Board board;
 
-    MoveReturn submit(const Move& move);
+    MoveCase submit(const Move& move);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate

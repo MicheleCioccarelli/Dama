@@ -16,7 +16,7 @@ int main() {
     Move move(BIANCO);
     UI::get_move(move, engine);
 
-    engine.board.execute_move(move);
+    engine.submit((Move&) move);
     engine.render.render_board(BIANCO, engine.board);
 
     std::cout << "hallo" << std::endl;

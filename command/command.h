@@ -11,6 +11,7 @@ class Command {
 public:
     Coords startingCoords;
     Coords endingCoords;
+    Coords blownCoords;
     std::vector<Coords> eatenCoords;
     MoveCase type;
 

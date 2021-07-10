@@ -67,7 +67,7 @@ void Board::empty_game_initialization() {
 }
 
 // ====== MOVE EXECUTION ======
-void Board::execute_move(Move move) {
+void Board::execute_move(Move& move) {
     Square endingSquare = matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
     Square startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
     int lastIndex = move.coords.size() - 1;
@@ -95,9 +95,8 @@ void Board::execute_move(Move move) {
     }
 }
 
-void Board::blow_up(Coords blownCoord, Move& move) {
-    move.blownCoord = blownCoord;
-    edit(Coords(blownCoord.column, blownCoord.row), VUOTA);
+void Board::blow_up(Move& move) {
+    edit(Coords(move.blownCoord.column, move.blownCoord.row), VUOTA);
 }
 
 void Board::edit(Coords coords, Piece _piece) {

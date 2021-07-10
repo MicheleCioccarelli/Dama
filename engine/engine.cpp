@@ -28,7 +28,12 @@ void GameEngine::dispatch_move(const Move& move) {
         blackPlayer.add_move(move);
     }
 
-    board.execute_move(move);
+    if (move.type.moveReturn == BLOWABLE) {
+        board.blow_up((Move&) move);
+    }
+
+    render.render_board(BIANCO, board);
+    board.execute_move((Move&) move);
 }
 
 MoveReturn GameEngine::validate_move(Move &move) {
@@ -227,15 +232,12 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
     } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
         return OUT_OF_BOUNDS;
     }
+    Coords startingCoords = convert_coords(_startingCoords);
+    Coords endingCoords = convert_coords(_endingCoords);
 
-    Square endingSquare = board.matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
-    Square startingSquare = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+    Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
+    Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
 
-    if (startingSquare.piece == DAMONE_B && endingSquare.piece == DAMA_N) {
-        return ROCK_SOLID;
-    } else if (startingSquare.piece == DAMONE_N && endingSquare.piece == DAMA_B) {
-        return ROCK_SOLID;
-    }
     // Check if the move is blowable
     if (check_eat((Move&) move) == VALID) {
         return BLOWABLE;
@@ -259,8 +261,8 @@ int GameEngine::count_pieces(PlayerColor pColor) {
     return returnValue;
 }
 
-MoveReturn GameEngine::submit(const Move& move) {
-    MoveReturn status;
+MoveCase GameEngine::submit(const Move& move) {
+    MoveCase status;
 
     switch (move.type.movetype) {
         case MOVE:
@@ -269,12 +271,16 @@ MoveReturn GameEngine::submit(const Move& move) {
         case EAT:
             status = check_eat((Move&) move);
             break;
+        case UNINITIALIZED:
+            status = UNINITIALIZED;
+    }
+    if (move.type.moveReturn == BLOWABLE) {
+        status = BLOWABLE;
     }
 
-    if (status == VALID) {
+    if (status.moveReturn == VALID || status.moveReturn == BLOWABLE) {
         dispatch_move(move);
     }
-
     return status;
 }
 

@@ -22,10 +22,10 @@ public:
     // Every square is empty
     void empty_game_initialization();
 
-    void execute_move(Move move);
+    void execute_move(Move& move);
 
     // This function puts blownCoords in the move's blownCoords and deletes the blown coords from the board
-    void blow_up(Coords blownCoord, Move& move);
+    void blow_up(Move& move);
 
     void edit(Coords coords, Piece _piece);
 
