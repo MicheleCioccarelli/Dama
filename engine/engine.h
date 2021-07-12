@@ -2,7 +2,6 @@
 
 #include "../board/board.h"
 #include "../player/player.h"
-#include "../movecase/movecase.h"
 #include "../enums/GameStyle.h"
 #include "../render/render.h"
 
@@ -10,11 +9,13 @@ class GameEngine {
 public:
     Player whitePlayer;
     Player blackPlayer;
-
-    StdRender render;
     Board board;
+public:
+    StdRender render;
 
-    MoveCase submit(const Move& move);
+    MoveReturn submit(const Move& move);
+
+    PlayerColor deduce_color(const Move &move);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate
@@ -26,7 +27,7 @@ public:
     // you wheter it can be blown, if yes you should call Board::blow_up();
     MoveReturn check_blow(Coords _startingCoords, Coords _endingCoords);
 
-    void dispatch_move(const Move& move);
+    void dispatch_move(const Move& move, bool isBlown);
 
     int count_pieces(PlayerColor pColor);
 
@@ -34,6 +35,8 @@ public:
     static Coords convert_coords(Coords coords);
 
     void promote();
+
+    bool game_over();
 
     GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords);
 };

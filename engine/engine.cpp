@@ -16,11 +16,29 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
     }
 }
 
+PlayerColor GameEngine::deduce_color(const Move &move) {
+    Move temp(BIANCO);
+    temp.coords.push_back(convert_coords(move.coords[0]));
+
+    switch (board.matrix[temp.coords[0].row][temp.coords[0].column].piece) {
+        case DAMA_N:
+            return NERO;
+        case DAMONE_N:
+            return NERO;
+        case DAMA_B:
+            return BIANCO;
+        case DAMONE_B:
+            return BIANCO;
+        default:
+            return TRASPARENTE;
+    }
+}
+
 Coords GameEngine::convert_coords(Coords coords) {
     return Coords(coords.column, coords.row - 1);
 }
 
-void GameEngine::dispatch_move(const Move& move) {
+void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
     // Add the move to the respective player
     if (move.color == BIANCO) {
         whitePlayer.add_move(move);
@@ -28,11 +46,9 @@ void GameEngine::dispatch_move(const Move& move) {
         blackPlayer.add_move(move);
     }
 
-    if (move.type.moveReturn == BLOWABLE) {
+    if (isBlown == true) {
         board.blow_up((Move&) move);
     }
-
-    render.render_board(BIANCO, board);
     board.execute_move((Move&) move);
 }
 
@@ -150,7 +166,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             }
 
             // Create a temporary move to check
-            Move moveToValidate(move.color, move.type.movetype);
+            Move moveToValidate(move.color, move.type.moveType);
             moveToValidate.add_coords(move.coords[0]);
             moveToValidate.add_coords(move.coords[1]);
 
@@ -192,7 +208,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return FRIENDLY_FIRE;
             }
 
-            Move moveToValidate(move.color, move.type.movetype);
+            Move moveToValidate(move.color, move.type.moveType);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
@@ -223,6 +239,19 @@ MoveReturn GameEngine::check_eat(Move& move) {
 MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
     Move move = Move(_startingCoords, _endingCoords);
 
+    PlayerColor currentPlayer = deduce_color(move);
+
+    if (currentPlayer == BIANCO) {
+        if (whitePlayer.moves[whitePlayer.moves.size() - 1].type.moveType == EAT) {
+            return ROCK_SOLID;
+        }
+    } else if (currentPlayer == NERO) {
+        if (blackPlayer.moves[blackPlayer.moves.size() - 1].type.moveType == EAT) {
+            return ROCK_SOLID;
+        }
+    }
+
+
     if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
         return OUT_OF_BOUNDS;
     } else if (move.coords.at(1).row - 1 <= 0 || move.coords.at(1).row - 1 >= 7) {
@@ -237,6 +266,8 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
 
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
+
+
 
     // Check if the move is blowable
     if (check_eat((Move&) move) == VALID) {
@@ -261,10 +292,11 @@ int GameEngine::count_pieces(PlayerColor pColor) {
     return returnValue;
 }
 
-MoveCase GameEngine::submit(const Move& move) {
-    MoveCase status;
+MoveReturn GameEngine::submit(const Move& move) {
+    MoveReturn status;
+    bool isBlown;
 
-    switch (move.type.movetype) {
+    switch (move.type.moveType) {
         case MOVE:
             status = validate_move((Move&) move);
             break;
@@ -272,15 +304,17 @@ MoveCase GameEngine::submit(const Move& move) {
             status = check_eat((Move&) move);
             break;
         case UNINITIALIZED:
-            status = UNINITIALIZED;
-    }
-    if (move.type.moveReturn == BLOWABLE) {
-        status = BLOWABLE;
+            status = UNDEFINED;
     }
 
-    if (status.moveReturn == VALID || status.moveReturn == BLOWABLE) {
-        dispatch_move(move);
+    if (move.type.moveReturn == BLOWABLE) {
+        isBlown = true;
     }
+
+    if (status == VALID) {
+        dispatch_move(move, isBlown);
+    }
+
     return status;
 }
 
@@ -294,4 +328,13 @@ void GameEngine::promote() {
             }
         }
     }
+}
+
+bool GameEngine::game_over() {
+    if (count_pieces(BIANCO) <= 0) {
+        return true;
+    } else if (count_pieces(NERO) <= 0) {
+        return true;
+    }
+    return false;
 }

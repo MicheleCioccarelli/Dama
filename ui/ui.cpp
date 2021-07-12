@@ -2,7 +2,7 @@
 
 void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     for (int i = 0; i < commands.size(); i++) {
-        switch (commands[i].type.movetype) {
+        switch (commands[i].type.moveType) {
             case MOVE:
                 move.type = MOVE;
                 move.add_coords(commands[i].startingCoords);
@@ -17,7 +17,7 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                 i = commands.size();
                 break;
             case UNINITIALIZED:
-                move.type = UNINITIALIZED;
+                move.type.moveType = UNINITIALIZED;
         }
         switch (commands[i].type.moveReturn) {
             case BLOWABLE:
@@ -25,16 +25,18 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                 move.type.moveReturn = BLOWABLE;
                 break;
             case  TOO_SHORT:
-                move.type = TOO_SHORT;
+                move.type.moveReturn = TOO_SHORT;
             case WRONG_OPERATOR:
-                move.type = WRONG_OPERATOR;
+                move.type.moveReturn = WRONG_OPERATOR;
         }
     }
 }
 
-void UI::get_move(Move& move, GameEngine& engine) {
+void UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
     std::vector<std::string> input;
     std::vector<Command> commands;
+
+    move = Move(currentPlayer);
 
     std::string a;
     std::cout << "Move > ";
@@ -50,10 +52,10 @@ void UI::get_move(Move& move, GameEngine& engine) {
         if (input[i] == "~") {
             break;
         }
-        std::cout << input[i] << std::endl;
-
+//        std::cout << input[i] << std::endl;
         if (input[i].size() < 5 && input[i] != "~") {
             move.type = TOO_SHORT;
+            UI::log_error(move.type.moveReturn);
             return;
         }
         commands.emplace_back(input[i], engine);
@@ -61,4 +63,61 @@ void UI::get_move(Move& move, GameEngine& engine) {
 
     // Handle error messages here
     command_to_move(commands, move);
+    UI::log_error(move.type.moveReturn);
+}
+
+void UI::log_error(MoveReturn error) {
+    switch (error) {
+        case VALID:
+            return;
+        case WHITE_SQUARE:
+            std::cout << "Ti stai muovendo in una casella bianca";
+            break;
+        case TOO_FAR:
+            std::cout << "Non puoi muoverti di piu di una casella alla volta";
+            break;
+        case BEHIND:
+            std::cout << "La damina non puomuoversi indietro";
+            break;
+        case POPULATED:
+            std::cout << "La casella che vuoi occupare è occupata";
+            break;
+        case EMPTY_START:
+            std::cout << "La casella di partenza è vuota";
+            break;
+        case EMPTY_TARGET:
+            std::cout << "Non puoi mangiare il niente";
+            break;
+        case CANNIBALISM:
+            std::cout << "Non commettere cannibalismo";
+            break;
+        case TOO_BIG:
+            std::cout << "La tua damina è troppo ambiziosa";
+            break;
+        case FRIENDLY_FIRE:
+            std::cout << "Fuoco amico non attivo";
+            break;
+        case INVALID:
+            std::cout << "Qualcosa è andato storto";
+            break;
+        case OUT_OF_BOUNDS:
+            std::cout << "Andresti fuori dalla scacchiera";
+            break;
+        case ROCK_SOLID:
+            std::cout << "Non puoi soffiarla";
+            break;
+        case UNDEFINED:
+            std::cout << "Qualcosa è andato molto storto";
+            break;
+        case TOO_SHORT:
+            std::cout << "La mossa è troppo corta";
+            break;
+        case WRONG_OPERATOR:
+            std::cout << "Hai sbagliato operatore, prova a scrivere help";
+            break;
+        default:
+            std::cout << "??";
+            break;
+    }
+    std::cout << std::endl;
 }

@@ -2,12 +2,12 @@
 
 MoveCase& MoveCase::operator=(const MoveCase &rhs) {
     moveReturn = rhs.moveReturn;
-    movetype = rhs.movetype;
+    moveType = rhs.moveType;
     return *this;
 }
 
 MoveCase & MoveCase::operator=(const MoveType &rhs) {
-    movetype = rhs;
+    moveType = rhs;
     return *this;
 }
 
@@ -17,7 +17,7 @@ MoveCase & MoveCase::operator=(const MoveReturn &rhs) {
 }
 
 bool MoveCase::operator==(const MoveType &rhs) {
-    if (movetype == rhs) {
+    if (moveType == rhs) {
         return true;
     }
     return false;

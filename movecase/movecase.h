@@ -5,7 +5,7 @@
 
 class MoveCase {
 public:
-    MoveType movetype;
+    MoveType moveType;
     MoveReturn moveReturn;
 
     MoveCase& operator=(const MoveCase &rhs);
@@ -15,5 +15,5 @@ public:
     bool operator==(const MoveType &rhs);
 
     MoveCase(MoveType _movetype = UNINITIALIZED, MoveReturn _moveReturn = UNDEFINED)
-        : movetype(_movetype), moveReturn(_moveReturn) {}
+        : moveType(_movetype), moveReturn(_moveReturn) {}
 };

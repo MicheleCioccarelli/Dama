@@ -45,9 +45,10 @@ Command::Command(std::string& input, GameEngine& engine) {
         Coords eatenCoord;
         switch (input[2]) {
             case '-':
-                type = MOVE;
+                type.moveType = MOVE;
                 convert_coords(input.substr(0, 2), startingCoords);
                 convert_coords(input.substr(3, 5), endingCoords);
+                type.moveReturn = VALID;
                 break;
             case '*':
                 convert_coords(input.substr(0, 2), startingCoords);
@@ -58,12 +59,13 @@ Command::Command(std::string& input, GameEngine& engine) {
                     endingCoords = Coords();
                 } else {
                     // If the move can be blown
-                    type = BLOWABLE;
+                    type.moveReturn = BLOWABLE;
                     convert_coords(input.substr(0, 2), blownCoords);
+                    type.moveReturn = VALID;
                 }
                 break;
             case 'x':
-                type = EAT;
+                type.moveType = EAT;
                 convert_coords(input.substr(0, 2), startingCoords);
                 eatenCoords.push_back(startingCoords);
                 for (int i = 3; i <= input.size(); i += 3) {
@@ -72,6 +74,7 @@ Command::Command(std::string& input, GameEngine& engine) {
                 }
                 endingCoords = Coords();
                 startingCoords = Coords();
+                type.moveReturn = VALID;
                 break;
             default:
                 type = MoveCase(UNINITIALIZED, WRONG_OPERATOR);
