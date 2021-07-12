@@ -35,5 +35,6 @@ enum MoveReturn {
     TOO_SHORT,
 
     WRONG_OPERATOR
-
+    // You are trying to move a piece of the wrong color (white moves black pieces)
+    WRONG_COLOR
 };

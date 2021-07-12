@@ -4,13 +4,13 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     for (int i = 0; i < commands.size(); i++) {
         switch (commands[i].type.moveType) {
             case MOVE:
-                move.type = MOVE;
+                move.type.moveType = MOVE;
                 move.add_coords(commands[i].startingCoords);
                 move.add_coords(commands[i].endingCoords);
                 i = commands.size();
                 break;
             case EAT:
-                move.type = EAT;
+                move.type.moveType = EAT;
                 for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
                     move.coords.push_back(commands[i].eatenCoords[j]);
                 }
@@ -29,6 +29,26 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
             case WRONG_OPERATOR:
                 move.type.moveReturn = WRONG_OPERATOR;
         }
+    }
+}
+
+MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer) {
+    switch (currentPlayer)  {
+        case BIANCO:
+            if (GameEngine::deduce_color(move) == NERO) {
+                if (move.type.moveReturn != BLOWABLE) {
+                    move.type.moveReturn = WRONG_COLOR;
+                }
+            }
+            break;
+        case NERO:
+            if (GameEngine::deduce_color(move) == BIANCO) {
+                if (move.type.moveReturn != BLOWABLE) {
+                    move.type.moveReturn = WRONG_COLOR;
+                }
+            }
+        default:
+            break;
     }
 }
 
@@ -52,7 +72,6 @@ void UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
         if (input[i] == "~") {
             break;
         }
-//        std::cout << input[i] << std::endl;
         if (input[i].size() < 5 && input[i] != "~") {
             move.type = TOO_SHORT;
             UI::log_error(move.type.moveReturn);
@@ -61,8 +80,10 @@ void UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
         commands.emplace_back(input[i], engine);
     }
 
-    // Handle error messages here
     command_to_move(commands, move);
+
+    UI::check_color(move, currentPlayer);
+
     UI::log_error(move.type.moveReturn);
 }
 
@@ -115,8 +136,11 @@ void UI::log_error(MoveReturn error) {
         case WRONG_OPERATOR:
             std::cout << "Hai sbagliato operatore, prova a scrivere help";
             break;
+        case WRONG_COLOR:
+            std::cout << "Stai provando a muovere pezzi del colore sbagliato";
+            break;
         default:
-            std::cout << "??";
+            std::cout << "Default log_error case called";
             break;
     }
     std::cout << std::endl;
