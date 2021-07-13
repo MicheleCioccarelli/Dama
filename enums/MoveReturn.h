@@ -31,10 +31,12 @@ enum MoveReturn {
     ROCK_SOLID,
     // The move being checked isn't valid, but the move checker doesn't know why
     UNDEFINED,
-
+    // The move is too short
     TOO_SHORT,
-
-    WRONG_OPERATOR
+    // You used a wrong operator (not - * x)
+    WRONG_OPERATOR,
     // You are trying to move a piece of the wrong color (white moves black pieces)
-    WRONG_COLOR
+    WRONG_COLOR,
+    // The input received is invalid (e.g. J8-LK)
+    MISINPUT
 };

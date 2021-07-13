@@ -15,7 +15,7 @@ public:
 
     MoveReturn submit(const Move& move);
 
-    static PlayerColor deduce_color(const Move &move);
+    PlayerColor deduce_color(const Move &move);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate

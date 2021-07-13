@@ -5,26 +5,30 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
         switch (commands[i].type.moveType) {
             case MOVE:
                 move.type.moveType = MOVE;
+                if (move.type.moveReturn != BLOWABLE) {
+                    move.type.moveReturn = commands[i].type.moveReturn;
+                }
                 move.add_coords(commands[i].startingCoords);
                 move.add_coords(commands[i].endingCoords);
                 i = commands.size();
                 break;
             case EAT:
                 move.type.moveType = EAT;
+                if (move.type.moveReturn != BLOWABLE) {
+                    move.type.moveReturn = commands[i].type.moveReturn;
+                }
                 for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
                     move.coords.push_back(commands[i].eatenCoords[j]);
                 }
                 i = commands.size();
                 break;
-            case UNINITIALIZED:
-                move.type.moveType = UNINITIALIZED;
         }
         switch (commands[i].type.moveReturn) {
             case BLOWABLE:
                 move.blownCoord = commands[i].blownCoords;
                 move.type.moveReturn = BLOWABLE;
                 break;
-            case  TOO_SHORT:
+            case TOO_SHORT:
                 move.type.moveReturn = TOO_SHORT;
             case WRONG_OPERATOR:
                 move.type.moveReturn = WRONG_OPERATOR;
@@ -32,27 +36,64 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     }
 }
 
-MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer) {
+MoveReturn UI::validate_input(const Coords &coords) {
+    if (coords.column == Z) {
+        return MISINPUT;
+    } else if (coords.row < 0 || coords.row > 8) {
+        return MISINPUT;
+    } else {
+        return VALID;
+    }
+}
+
+MoveReturn UI::validate_command(const std::vector<Command>& commands) {
+    for (int i = 0; i < commands.size(); i++) {
+        switch (commands[i].type.moveType) {
+            case MOVE:
+                if (UI::validate_input(commands[i].startingCoords) == MISINPUT) {
+                    return MISINPUT;
+                } else if (UI::validate_input(commands[i].endingCoords) == MISINPUT) {
+                    return MISINPUT;
+                }
+                break;
+            case EAT:
+                for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
+                    if (validate_input(commands[i].eatenCoords[j]) == MISINPUT) {
+                        return MISINPUT;
+                    }
+                }
+                break;
+        }
+        if (commands[i].type.moveReturn == BLOWABLE) {
+            if (UI::validate_input(commands[i].blownCoords) == MISINPUT) {
+                return MISINPUT;
+            }
+        }
+    }
+    return VALID;
+}
+
+MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& engine) {
     switch (currentPlayer)  {
         case BIANCO:
-            if (GameEngine::deduce_color(move) == NERO) {
+            if (engine.deduce_color(move) == NERO) {
                 if (move.type.moveReturn != BLOWABLE) {
                     move.type.moveReturn = WRONG_COLOR;
                 }
             }
             break;
         case NERO:
-            if (GameEngine::deduce_color(move) == BIANCO) {
+            if (engine.deduce_color(move) == BIANCO) {
                 if (move.type.moveReturn != BLOWABLE) {
                     move.type.moveReturn = WRONG_COLOR;
                 }
             }
         default:
-            break;
+            return UNDEFINED;
     }
 }
 
-void UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
+MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
     std::vector<std::string> input;
     std::vector<Command> commands;
 
@@ -75,16 +116,21 @@ void UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
         if (input[i].size() < 5 && input[i] != "~") {
             move.type = TOO_SHORT;
             UI::log_error(move.type.moveReturn);
-            return;
+            return TOO_SHORT;
         }
         commands.emplace_back(input[i], engine);
     }
 
-    command_to_move(commands, move);
+    // Proceed with the program only if the coordinates are right, this should avoid segfault
+    if (validate_command(commands) == VALID) {
+        command_to_move(commands, move);
+    } else {
+        log_error(MISINPUT);
+        return MISINPUT;
+    }
 
-    UI::check_color(move, currentPlayer);
-
-    UI::log_error(move.type.moveReturn);
+    UI::check_color(move, currentPlayer, engine);
+    return VALID;
 }
 
 void UI::log_error(MoveReturn error) {
@@ -138,6 +184,9 @@ void UI::log_error(MoveReturn error) {
             break;
         case WRONG_COLOR:
             std::cout << "Stai provando a muovere pezzi del colore sbagliato";
+            break;
+        case MISINPUT:
+            std::cout << "La mossa messa in input è sbagliata";
             break;
         default:
             std::cout << "Default log_error case called";

@@ -39,6 +39,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../enums/ColumnNotatiton.
 CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: ../enums/Piece.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../board/board.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../command/command.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.h
@@ -55,6 +56,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../movecase/movecase.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../render/render.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../square/square.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../ui/ui.h
 
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../command/command.h

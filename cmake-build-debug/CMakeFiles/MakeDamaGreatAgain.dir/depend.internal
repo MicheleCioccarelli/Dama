@@ -40,6 +40,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o
  /home/sedano/CLionProjects/Dama/enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/command/command.h
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/engine/engine.cpp
  /home/sedano/CLionProjects/Dama/engine/engine.h
@@ -56,6 +57,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.h
  /home/sedano/CLionProjects/Dama/square/square.h
+ /home/sedano/CLionProjects/Dama/ui/ui.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
  /home/sedano/CLionProjects/Dama/command/command.h

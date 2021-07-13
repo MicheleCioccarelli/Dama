@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "../ui/ui.h"
 
 // ====== GAME ENGINE ======
 GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords)
@@ -18,6 +19,11 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
 
 PlayerColor GameEngine::deduce_color(const Move &move) {
     Move temp(BIANCO);
+
+    if (move.coords.size() == 0) {
+        return TRASPARENTE;
+    }
+
     temp.coords.push_back(convert_coords(move.coords[0]));
 
     switch (board.matrix[temp.coords[0].row][temp.coords[0].column].piece) {
@@ -241,6 +247,10 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
 
     PlayerColor currentPlayer = deduce_color(move);
 
+    if (whitePlayer.moves.size() == 0) {
+        return ROCK_SOLID;
+    }
+
     if (currentPlayer == BIANCO) {
         if (whitePlayer.moves[whitePlayer.moves.size() - 1].type.moveType == EAT) {
             return ROCK_SOLID;
@@ -250,7 +260,6 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
             return ROCK_SOLID;
         }
     }
-
 
     if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
         return OUT_OF_BOUNDS;
@@ -296,26 +305,32 @@ MoveReturn GameEngine::submit(const Move& move) {
     MoveReturn status;
     bool isBlown;
 
-    switch (move.type.moveType) {
-        case MOVE:
-            status = validate_move((Move&) move);
-            break;
-        case EAT:
-            status = check_eat((Move&) move);
-            break;
-        case UNINITIALIZED:
-            status = UNDEFINED;
+    if (move.type.moveReturn != VALID) {
+        if (move.type.moveReturn != BLOWABLE) {
+            return move.type.moveReturn;
+        }
     }
+        switch (move.type.moveType) {
+            case MOVE:
+                status = validate_move((Move &) move);
+                break;
+            case EAT:
+                status = check_eat((Move &) move);
+                break;
+            case UNINITIALIZED:
+                status = UNDEFINED;
+        }
 
-    if (move.type.moveReturn == BLOWABLE) {
-        isBlown = true;
-    }
+        if (move.type.moveReturn == BLOWABLE) {
+            isBlown = true;
+        }
 
-    if (status == VALID) {
-        dispatch_move(move, isBlown);
-    }
+        if (status == VALID) {
+            dispatch_move(move, isBlown);
+        }
 
-    return status;
+        UI::log_error(status);
+        return status;
 }
 
 void GameEngine::promote() {

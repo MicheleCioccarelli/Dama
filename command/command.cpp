@@ -55,13 +55,13 @@ Command::Command(std::string& input, GameEngine& engine) {
                 convert_coords(input.substr(3, 5), endingCoords);
                 if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
                     // If the move is invalid, uninitialize the coords;
+                    std::cout << "Non puoi soffiarla" << std::endl;
                     startingCoords = Coords();
                     endingCoords = Coords();
                 } else {
                     // If the move can be blown
                     type.moveReturn = BLOWABLE;
                     convert_coords(input.substr(0, 2), blownCoords);
-                    type.moveReturn = VALID;
                 }
                 break;
             case 'x':
