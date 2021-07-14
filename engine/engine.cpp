@@ -307,6 +307,7 @@ MoveReturn GameEngine::submit(const Move& move) {
 
     if (move.type.moveReturn != VALID) {
         if (move.type.moveReturn != BLOWABLE) {
+            UI::log_error(move.type.moveReturn);
             return move.type.moveReturn;
         }
     }

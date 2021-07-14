@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../command/command.h"
+#include <algorithm>
 #include <sstream>
 
 #define MAX_COMMANDS 2

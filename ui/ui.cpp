@@ -118,6 +118,8 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             UI::log_error(move.type.moveReturn);
             return TOO_SHORT;
         }
+        std::transform(input[i].begin(), input[i].end(), input[i].begin(), ::toupper);
+        std::cout << input[i] << std::endl;
         commands.emplace_back(input[i], engine);
     }
 

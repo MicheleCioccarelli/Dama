@@ -64,7 +64,7 @@ Command::Command(std::string& input, GameEngine& engine) {
                     convert_coords(input.substr(0, 2), blownCoords);
                 }
                 break;
-            case 'x':
+            case 'X':
                 type.moveType = EAT;
                 convert_coords(input.substr(0, 2), startingCoords);
                 eatenCoords.push_back(startingCoords);
