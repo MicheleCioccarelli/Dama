@@ -8,6 +8,8 @@
 
 class UI {
 public:
+    static void init(GameEngine& engine);
+
     static MoveReturn get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer);
 
     // Checks every parameter of each command and makes sure it is correct

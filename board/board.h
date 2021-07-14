@@ -8,6 +8,9 @@
 
 class Board {
 public:
+    int rows;
+    int columns;
+
     std::vector<std::vector<Square>> matrix;
 
     // Put white peaces in rows 1 ~ 3 and black in the upper three
@@ -29,5 +32,5 @@ public:
 
     void edit(Coords coords, Piece _piece);
 
-    Board();
+    Board(int _rows, int _columns);
 };

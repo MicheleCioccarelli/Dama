@@ -7,9 +7,6 @@
 #include "../enums/SquareColor.h"
 #include "../enums/Piece.h"
 
-#define columns 8
-#define rows 8
-
 class Square {
 public:
     Coords coords;

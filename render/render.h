@@ -91,13 +91,16 @@ class StdRender {
     SetPieces setPieces;
     BoardCoords boardCoords;
 public:
+    void end_screen_table(int whitePieces, int blackPieces);
     void border(std::string &lastChar);
-    void first_line();
-    void bottom_line(PlayerColor color);
-    void line();
-    void middle(Board &board, PlayerColor color);
+    void first_line(int columns);
+    void bottom_line(PlayerColor color, int columns);
+    void line(int columns);
+    void middle(Board &board, PlayerColor color, int row, int column);
     std::string square_resolve(Coords coords, Board &board);
-    void render_board(PlayerColor color, Board &b);
+    void render_board(PlayerColor color, Board &b, int rows, int columns);
+
+    void end_screen();
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}

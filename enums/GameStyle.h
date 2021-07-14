@@ -1,5 +1,5 @@
 #pragma once
 
 enum GameStyle {
-    STANDARD, COLORED, DAMONI
+    STANDARD, COLORED, DAMONI, EMPTY
 };

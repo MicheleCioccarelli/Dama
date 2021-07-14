@@ -52,7 +52,7 @@ void StdRender::border(std::string &lastChar) {
               << boardTokens.horizontalLine << boardTokens.horizontalLine << lastChar;
 }
 
-void StdRender::first_line() {
+void StdRender::first_line(int columns) {
     std::cout << "   " << boardTokens.topLeft;
     for (int i = 1; i < columns; i++) {
         border(boardTokens.upChain);
@@ -61,7 +61,7 @@ void StdRender::first_line() {
     std::cout << std::endl;
 }
 
-void StdRender::bottom_line(PlayerColor color) {
+void StdRender::bottom_line(PlayerColor color, int columns) {
     std::cout << "   " << boardTokens.bottomLeft;
     for (int i = 1; i < columns; i++) {
         border(boardTokens.downChain);
@@ -81,7 +81,7 @@ void StdRender::bottom_line(PlayerColor color) {
 
 }
 
-void StdRender::line() {
+void StdRender::line(int columns) {
     std::cout << "   " << boardTokens.leftBorder;
     for (int i = 1; i < columns; i++) {
         border(boardTokens.link);
@@ -90,42 +90,76 @@ void StdRender::line() {
     std::cout << std::endl;
 }
 
-void StdRender::middle(Board &b, PlayerColor color) {
+void StdRender::middle(Board &b, PlayerColor color, int rows, int columns) {
     switch (color) {
         case BIANCO:
-            for (int row = rows - 1; row >= 0; row--) {
-                std::cout << row + 1 << "  ";
-                for (int col = 0; col < columns; col++) {
+            for (int _row = rows - 1; _row >= 0; _row--) {
+                std::cout << _row + 1 << "  ";
+                for (int _col = 0; _col < columns; _col++) {
                     std::cout << boardTokens.verticalLine << "  " <<
-                              square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
+                              square_resolve(Coords((ColumnNotation) _col, _row), b) << "  ";
                 }
                 std::cout << boardTokens.verticalLine << std::endl;
-                if (row != 0) {
-                    line();
+                if (_row != 0) {
+                    line(columns);
                 }
             }
-            bottom_line(color);
+            bottom_line(color, columns);
             break;
         case NERO:
-            for (int row = 0; row < rows; row++) {
-                std::cout << row + 1 << "  ";
-                for (int col = columns - 1; col >= 0; col--) {
+            for (int _row = 0; _row < rows; _row++) {
+                std::cout << _row + 1 << "  ";
+                for (int _col = columns - 1; _col >= 0; _col--) {
                     std::cout << boardTokens.verticalLine << "  " <<
-                              square_resolve(Coords((ColumnNotation) col, row), b) << "  ";
+                              square_resolve(Coords((ColumnNotation) _col, _row), b) << "  ";
                 }
                 std::cout << boardTokens.verticalLine << std::endl;
-                if (row != columns - 1) {
-                    line();
+                if (_row != columns - 1) {
+                    line(columns);
                 }
             }
-            bottom_line(color);
+            bottom_line(color, columns);
             break;
     }
 }
 
-void StdRender::render_board(PlayerColor color, Board &b) {
+void StdRender::render_board(PlayerColor color, Board &b, int rows, int columns) {
     std::cout << std::endl << std::endl;
-    first_line();
-    middle(b, color);
+    first_line(columns);
+    middle(b, color, rows, columns);
     std::cout << std::endl << std::endl;
+}
+
+void StdRender::end_screen_table(int whitePieces, int blackPieces) {
+
+}
+/*  PIECES LABLE
+ * horizontalLine = "═"
+ * topLeft = "╔"
+ * topRight = "╗"
+ * bottomLeft = "╚"
+ * bottomRight = "╝"
+ * upChain = "╦"
+ * downChain = "╩"
+ * link = "╬"
+ * filling = " "
+ *leftBorder = "╠"
+ * rightBorder "╣"
+ *
+ * tokens.[0] = horizontalLine
+ * tokens.[1](verticalLine);
+ * tokens.[2](topLeft);
+ * tokens.[3](topRight);
+ * tokens.[4](bottomLeft);
+ * tokens.[5](bottomRight);
+ * tokens.[6](upChain);
+ * tokens.[7](downChain);
+ * tokens.[8](rightBorder);
+ * tokens.[9](link);
+ * tokens.[10](leftBorder);
+ * tokens.[11](filling);
+*/
+void StdRender::end_screen() {
+    std::cout << "          Gioco finito" << std::endl;
+    first_line(2);
 }

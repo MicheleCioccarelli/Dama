@@ -1,6 +1,7 @@
 #include "board.h"
 
-Board::Board() {
+Board::Board(int _rows, int _columns)
+    : rows(_rows), columns(_columns) {
     // Initialize vector
     matrix.resize(rows);
 

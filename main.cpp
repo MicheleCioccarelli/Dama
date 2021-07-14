@@ -9,12 +9,16 @@ int main() {
     BoardTokens board(NORMAL);
     SetPieces pieces(NORMAL);
     BoardCoords coords(NORMAL);
-    GameEngine engine(STANDARD, board, pieces, coords);
+    GameEngine engine(STANDARD, board, pieces, coords, 8, 8);
 
     PlayerColor currentPlayer = NERO;
 
+    engine.render.end_screen();
+
+    UI::init(engine);
+
     // Main loop
-    while (!engine.game_over()) {
+    while (!engine.game_over(8, 8)) {
         // Switch playerColor every turn
         switch (currentPlayer) {
             case BIANCO:
@@ -25,7 +29,7 @@ int main() {
                 break;
         }
 
-        engine.render.render_board(currentPlayer, engine.board);
+        engine.render.render_board(currentPlayer, engine.board, 8, 8);
         Move move(currentPlayer);
 
         // ========= GETTING INPUT ==========
@@ -35,6 +39,7 @@ int main() {
          while (engine.submit(move) != VALID) {
              UI::get_move(move, engine, currentPlayer);
          }
+         engine.promote(8, 8);
     }
 }
 

@@ -2,8 +2,9 @@
 #include "../ui/ui.h"
 
 // ====== GAME ENGINE ======
-GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces, BoardCoords _coords)
-        : render(_tokens, _pieces, _coords) {
+GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
+                       BoardCoords _coords, int rows, int columns)
+        : render(_tokens, _pieces, _coords), board(rows, columns) {
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();
@@ -13,6 +14,9 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
             break;
         case COLORED:
             board.colored_game_initialization();
+            break;
+        case EMPTY:
+            board.empty_game_initialization();
             break;
     }
 }
@@ -285,7 +289,7 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
     return ROCK_SOLID;
 }
 
-int GameEngine::count_pieces(PlayerColor pColor) {
+int GameEngine::count_pieces(PlayerColor pColor, int rows, int columns) {
     int returnValue = 0;
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
@@ -334,7 +338,7 @@ MoveReturn GameEngine::submit(const Move& move) {
         return status;
 }
 
-void GameEngine::promote() {
+void GameEngine::promote(int rows, int columns) {
     for (int row = 0; row <= rows; row += 7) {
         for (int col = 0; col < columns; col++) {
             if (board.matrix[row][col].piece == DAMA_N && row == 0) {
@@ -346,10 +350,10 @@ void GameEngine::promote() {
     }
 }
 
-bool GameEngine::game_over() {
-    if (count_pieces(BIANCO) <= 0) {
+bool GameEngine::game_over(int rows, int columns) {
+    if (count_pieces(BIANCO, rows, columns) <= 0) {
         return true;
-    } else if (count_pieces(NERO) <= 0) {
+    } else if (count_pieces(NERO, rows, columns) <= 0) {
         return true;
     }
     return false;

@@ -1,5 +1,22 @@
 #include "ui.h"
 
+void UI::init(GameEngine &engine) {
+    std::string playerName;
+    std::cout << "Benvenuto nella dama [wip]" << std::endl;
+
+    std::cout << "Chi gioca bianco?" << std::endl;
+    getline(std::cin, playerName);
+    if (playerName.size() <= 30) {
+        engine.whitePlayer.name = playerName;
+    }
+
+    std::cout << "Chi gioca nero?" << std::endl;
+    getline(std::cin, playerName);
+    if (playerName.size() <= 30) {
+        engine.blackPlayer.name = playerName;
+    }
+}
+
 void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
     for (int i = 0; i < commands.size(); i++) {
         switch (commands[i].type.moveType) {
@@ -100,7 +117,12 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
     move = Move(currentPlayer);
 
     std::string a;
-    std::cout << "Move > ";
+
+    if (currentPlayer == BIANCO) {
+        std::cout << "Mossa di " << engine.whitePlayer.name << " > ";
+    } else if (currentPlayer == NERO) {
+        std::cout << "Mossa di " << engine.blackPlayer.name << " > ";
+    }
     getline(std::cin, a);
     std::stringstream stream(a);
 
@@ -119,7 +141,6 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             return TOO_SHORT;
         }
         std::transform(input[i].begin(), input[i].end(), input[i].begin(), ::toupper);
-        std::cout << input[i] << std::endl;
         commands.emplace_back(input[i], engine);
     }
 
