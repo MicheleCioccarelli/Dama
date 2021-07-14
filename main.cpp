@@ -13,9 +13,11 @@ int main() {
 
     PlayerColor currentPlayer = NERO;
 
-    engine.render.end_screen();
-
     UI::init(engine);
+
+    engine.render.end_screen(2, 2, engine.whitePlayer, engine.blackPlayer);
+
+    std::cout << std::endl;
 
     // Main loop
     while (!engine.game_over(8, 8)) {

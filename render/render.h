@@ -2,6 +2,7 @@
 
 #include "../board/board.h"
 #include "../enums/BoardStyles.h"
+#include "../player/player.h"
 
 struct BoardTokens {
 public:
@@ -91,7 +92,6 @@ class StdRender {
     SetPieces setPieces;
     BoardCoords boardCoords;
 public:
-    void end_screen_table(int whitePieces, int blackPieces);
     void border(std::string &lastChar);
     void first_line(int columns);
     void bottom_line(PlayerColor color, int columns);
@@ -100,7 +100,9 @@ public:
     std::string square_resolve(Coords coords, Board &board);
     void render_board(PlayerColor color, Board &b, int rows, int columns);
 
-    void end_screen();
+    // Draws name on the screen center in a space as big as longerName
+    void center_name(std::string& name, int longerName);
+    void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer);
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}

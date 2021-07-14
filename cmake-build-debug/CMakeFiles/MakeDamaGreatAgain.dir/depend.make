@@ -115,6 +115,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/PlayerColor.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/SquareColor.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../move/move.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../movecase/movecase.h
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../render/render.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../render/render.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../square/square.h

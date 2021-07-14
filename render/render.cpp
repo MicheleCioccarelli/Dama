@@ -130,9 +130,6 @@ void StdRender::render_board(PlayerColor color, Board &b, int rows, int columns)
     std::cout << std::endl << std::endl;
 }
 
-void StdRender::end_screen_table(int whitePieces, int blackPieces) {
-
-}
 /*  PIECES LABLE
  * horizontalLine = "═"
  * topLeft = "╔"
@@ -159,7 +156,69 @@ void StdRender::end_screen_table(int whitePieces, int blackPieces) {
  * tokens.[10](leftBorder);
  * tokens.[11](filling);
 */
-void StdRender::end_screen() {
-    std::cout << "          Gioco finito" << std::endl;
-    first_line(2);
+
+void StdRender::center_name(std::string& name, int longerName) {
+    if (name.size() == longerName) {
+        std::cout << name;
+    } else {
+        int diff = name.size() - longerName;
+        if (diff < 0) {
+            diff = -diff;
+        }
+
+        for (int i = 0; i < diff / 2; i++) {
+            std::cout << " ";
+        }
+
+        std::cout << name;
+
+        if (diff % 2 == 0) {
+            for (int i = 0; i < diff / 2; i++) {
+                std::cout << " ";
+            }
+        } else {
+            for (int i = 0; i < (diff / 2) + (diff % 2); i++) {
+                std::cout << " ";
+            }
+        }
+    }
 }
+
+void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer) {
+    std::cout << "          Gioco finito" << std::endl;
+    // This defines the width of the table
+    int longerName;
+    if (whitePlayer.name.size() >= blackPlayer.name.size()) {
+        longerName = whitePlayer.name.size();
+    } else {
+        longerName = blackPlayer.name.size();
+    }
+
+    std::cout << boardTokens.topLeft;
+    for (int i = 0; i < longerName + 2; i++) {
+        std::cout << boardTokens.horizontalLine;
+    }
+    std::cout << boardTokens.topRight;
+
+    std::cout << std::endl << boardTokens.verticalLine << " ";
+    center_name(whitePlayer.name, longerName);
+    std::cout << " ";
+    std::cout << boardTokens.verticalLine;
+    std::cout << std::endl << boardTokens.leftBorder;
+    for (int i = 0; i < longerName + 2; i++) {
+        std::cout << boardTokens.horizontalLine;
+    }
+
+    std::cout << boardTokens.rightBorder;
+
+    std::cout << std::endl << boardTokens.verticalLine << " ";
+    center_name(blackPlayer.name, longerName);
+    std::cout << " " << boardTokens.verticalLine;
+
+    std::cout << std::endl << boardTokens.bottomLeft;
+    for (int i = 0; i < longerName + 2; i++) {
+        std::cout << boardTokens.horizontalLine;
+    }
+    std::cout << boardTokens.bottomRight;
+}
+
