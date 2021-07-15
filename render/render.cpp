@@ -201,7 +201,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     }
     std::cout << boardTokens.upChain;
     // Pieces block
-    for (int i = 0; i < 5; i ++) {
+    for (int i = 0; i < 6; i ++) {
         std::cout << boardTokens.horizontalLine;
     }
     std::cout << boardTokens.upChain;
@@ -226,7 +226,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     if (whitePlayer.moves.size() <= 9) {
         std::cout << boardTokens.verticalLine << "   " << whitePlayer.moves.size() << "  ";
     } else {
-        std::cout << boardTokens.verticalLine << "   " << whitePlayer.moves.size() << " ";
+        std::cout << boardTokens.verticalLine << "  " << whitePlayer.moves.size() << "  ";
     }
     std::cout << boardTokens.verticalLine;
 
@@ -237,7 +237,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     for (int i = 0 ; i < longerName + 2; i++) {
         std::cout << boardTokens.horizontalLine;
     } std::cout << boardTokens.link;
-    for (int i = 0 ; i < 5; i++) {
+    for (int i = 0 ; i < 6; i++) {
         std::cout << boardTokens.horizontalLine;
     } std::cout << boardTokens.link;
     for (int i = 0 ; i < 6; i++) {
@@ -251,14 +251,12 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     center_name(blackPlayer.name, longerName);
     std::cout << " " << boardTokens.verticalLine;
 
-    // White number of pieces
-    std::cout << "  " << whitePieces << "  ";
+    std::cout << "  " << blackPieces << "  ";
 
-    // White number of moves
     if (blackPlayer.moves.size() <= 9) {
         std::cout << boardTokens.verticalLine << "   " << blackPlayer.moves.size() << "  ";
     } else {
-        std::cout << boardTokens.verticalLine << "   " << blackPlayer.moves.size() << " ";
+        std::cout << boardTokens.verticalLine << "  " << blackPlayer.moves.size() << "  ";
     }
     std::cout << boardTokens.verticalLine << std::endl;
 
@@ -270,7 +268,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     }
     std::cout << boardTokens.downChain;
     // Pieces block
-    for (int i = 0; i < 5; i ++) {
+    for (int i = 0; i < 6; i ++) {
         std::cout << boardTokens.horizontalLine;
     }
     std::cout << boardTokens.downChain;
@@ -278,7 +276,36 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     for (int i = 0; i < 6; i++) {
         std::cout << boardTokens.horizontalLine;
     }
-    std::cout << boardTokens.bottomRight;
+    std::cout << boardTokens.bottomRight << std::endl;
+}
+
+void StdRender::help_page() {
+    std::cout << std::endl << "Benvenuto nella pagina di aiuto" << std::endl << std::endl;
+    std::cout << "uso: [colonna][riga][operatore][colonna][riga]" << std::endl << std::endl;
+    std::cout << "Colonne: A, B, C, D, E, F, G, H" << std::endl;
+    std::cout << "Righe:   1, 2, 3, 4, 5, 6, 7, 8" << std::endl << std::endl;
+
+    std::cout << "Operatori:" << std::endl;
+    padding(3);
+    std::cout << "*";
+    padding(3);
+    std::cout << "Soffio, deve essere il primo comando se è usato";
+    padding(2);
+    std::cout << "|  Esempio: A3*B4 C3-D4" << std::endl;
+
+    padding(3);
+    std::cout << "-";
+    padding(3);
+    std::cout << "Movimento, cambia casella di 1 alla volta";
+    padding(8);
+    std::cout << "|  Esempio: A3-B4" << std::endl;
+
+    padding(3);
+    std::cout << "x";
+    padding(3);
+    std::cout << "Mangiare";
+    padding(41);
+    std::cout << "|  Esempio: A3xB4" << std::endl;
 }
 
 /*  PIECES LABEL

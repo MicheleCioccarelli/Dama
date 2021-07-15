@@ -140,6 +140,12 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             UI::log_error(move.type.moveReturn);
             return TOO_SHORT;
         }
+        if (input[i] == "aiuto") {
+            move.type = HELP_PAGE;
+            engine.render.help_page();
+            return HELP_PAGE;
+        }
+
         std::transform(input[i].begin(), input[i].end(), input[i].begin(), ::toupper);
         commands.emplace_back(input[i], engine);
     }
@@ -161,58 +167,55 @@ void UI::log_error(MoveReturn error) {
         case VALID:
             return;
         case WHITE_SQUARE:
-            std::cout << "Ti stai muovendo in una casella bianca";
+            std::cout << "Ti stai muovendo in una casella bianca, scrivi aiuto per informazioni";
             break;
         case TOO_FAR:
-            std::cout << "Non puoi muoverti di piu di una casella alla volta";
+            std::cout << "Non puoi muoverti di piu di una casella alla volta, scrivi aiuto per informazioni";
             break;
         case BEHIND:
-            std::cout << "La damina non puomuoversi indietro";
+            std::cout << "La damina non puomuoversi indietro, scrivi aiuto per informazioni";
             break;
         case POPULATED:
-            std::cout << "La casella che vuoi occupare è occupata";
+            std::cout << "La casella che vuoi occupare è occupata, scrivi aiuto per informazioni";
             break;
         case EMPTY_START:
-            std::cout << "La casella di partenza è vuota";
+            std::cout << "La casella di partenza è vuota, scrivi aiuto per informazioni";
             break;
         case EMPTY_TARGET:
-            std::cout << "Non puoi mangiare il niente";
+            std::cout << "Non puoi mangiare il niente, scrivi aiuto per informazioni";
             break;
         case CANNIBALISM:
-            std::cout << "Non commettere cannibalismo";
+            std::cout << "Non commettere cannibalismo, scrivi aiuto per informazioni";
             break;
         case TOO_BIG:
-            std::cout << "La tua damina è troppo ambiziosa";
+            std::cout << "La tua damina è troppo ambiziosa, scrivi aiuto per informazioni";
             break;
         case FRIENDLY_FIRE:
-            std::cout << "Fuoco amico non attivo";
+            std::cout << "Fuoco amico non attivo, scrivi aiuto per informazioni";
             break;
         case INVALID:
-            std::cout << "Qualcosa è andato storto";
+            std::cout << "Qualcosa è andato storto, scrivi aiuto per informazioni";
             break;
         case OUT_OF_BOUNDS:
-            std::cout << "Andresti fuori dalla scacchiera";
+            std::cout << "Andresti fuori dalla scacchiera, scrivi aiuto per informazioni";
             break;
         case ROCK_SOLID:
-            std::cout << "Non puoi soffiarla";
+            std::cout << "Non puoi soffiarla, scrivi aiuto per informazioni";
             break;
         case UNDEFINED:
-            std::cout << "Qualcosa è andato molto storto";
+            std::cout << "Qualcosa è andato molto storto, scrivi aiuto per informazioni";
             break;
         case TOO_SHORT:
-            std::cout << "La mossa è troppo corta";
+            std::cout << "La mossa è troppo corta, scrivi aiuto per informazioni";
             break;
         case WRONG_OPERATOR:
-            std::cout << "Hai sbagliato operatore, prova a scrivere help";
+            std::cout << "Hai sbagliato operatore, prova a scrivere help, scrivi aiuto per informazioni";
             break;
         case WRONG_COLOR:
-            std::cout << "Stai provando a muovere pezzi del colore sbagliato";
+            std::cout << "Stai provando a muovere pezzi del colore sbagliato, scrivi aiuto per informazioni";
             break;
         case MISINPUT:
-            std::cout << "La mossa messa in input è sbagliata";
-            break;
-        default:
-            std::cout << "Default log_error case called";
+            std::cout << "La mossa messa in input è sbagliata, scrivi aiuto per informazioni";
             break;
     }
     std::cout << std::endl;

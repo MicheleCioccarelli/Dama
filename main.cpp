@@ -15,9 +15,7 @@ int main() {
 
     UI::init(engine);
 
-    engine.render.end_screen(2, 2, engine.whitePlayer, engine.blackPlayer);
-
-    std::cout << std::endl;
+//    engine.render.end_screen(20, 19, engine.whitePlayer, engine.blackPlayer);
 
     // Main loop
     while (!engine.game_over(8, 8)) {

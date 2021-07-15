@@ -38,5 +38,7 @@ enum MoveReturn {
     // You are trying to move a piece of the wrong color (white moves black pieces)
     WRONG_COLOR,
     // The input received is invalid (e.g. J8-LK)
-    MISINPUT
+    MISINPUT,
+    // The user used a help page
+    HELP_PAGE
 };
