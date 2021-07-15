@@ -102,7 +102,10 @@ public:
 
     // Draws name on the screen center in a space as big as longerName
     void center_name(std::string& name, int longerName);
+    static void padding(int numberOfSpaces);
     void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer);
+
+    static void help_page();
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}
