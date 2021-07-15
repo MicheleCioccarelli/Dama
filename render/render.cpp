@@ -127,7 +127,7 @@ void StdRender::render_board(PlayerColor color, Board &b, int rows, int columns)
     std::cout << std::endl << std::endl;
     first_line(columns);
     middle(b, color, rows, columns);
-    std::cout << std::endl << std::endl;
+    std::cout << std::endl;
 }
 
 void StdRender::center_name(std::string& name, int longerName) {
@@ -280,7 +280,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
 }
 
 void StdRender::help_page() {
-    std::cout << std::endl << "Benvenuto nella pagina di aiuto" << std::endl << std::endl;
+    std::cout << std::endl << "Pagina di aiuto" << std::endl << std::endl;
     std::cout << "uso: [colonna][riga][operatore][colonna][riga]" << std::endl << std::endl;
     std::cout << "Colonne: A, B, C, D, E, F, G, H" << std::endl;
     std::cout << "Righe:   1, 2, 3, 4, 5, 6, 7, 8" << std::endl << std::endl;

@@ -18,7 +18,7 @@ int main() {
 //    engine.render.end_screen(20, 19, engine.whitePlayer, engine.blackPlayer);
 
     // Main loop
-    while (!engine.game_over(8, 8)) {
+    while (engine.game_over(8, 8) == GOOD) {
         // Switch playerColor every turn
         switch (currentPlayer) {
             case BIANCO:

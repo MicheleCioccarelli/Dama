@@ -1,9 +1,7 @@
 #include "move.h"
 
-Move::Move(PlayerColor _color, MoveType _moveType) {
-    color = _color;
-    type = _moveType;
-}
+Move::Move(PlayerColor _color, MoveType _moveType)
+    :     color (_color), type (_moveType) {}
 
 Move::Move(Coords _startingCoords, Coords _endingCoords, PlayerColor _color, MoveType _type) {
     this->add_coords(_startingCoords);

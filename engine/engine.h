@@ -3,6 +3,7 @@
 #include "../board/board.h"
 #include "../player/player.h"
 #include "../enums/GameStyle.h"
+#include "../enums/GameState.h"
 #include "../render/render.h"
 
 class GameEngine {
@@ -19,7 +20,7 @@ public:
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate
-    MoveReturn validate_move(Move& move);
+    MoveReturn check_move(Move& move);
 
     MoveReturn check_eat(Move& move);
 
@@ -36,7 +37,12 @@ public:
 
     void promote(int rows, int columns);
 
-    bool game_over(int rows, int columns);
+    // These funcion are used in game_over()
+    // and check every possible move, if at least one is found they return true
+    bool simulate_damina(Piece piece, Coords coords);
+    bool simulate_damona(Piece piece, Coords coords);
+
+    GameState game_over(int rows, int columns);
 
     GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
     BoardCoords _coords, int rows, int columns);

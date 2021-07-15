@@ -2,7 +2,7 @@
 
 void UI::init(GameEngine &engine) {
     std::string playerName;
-    std::cout << "Benvenuto nella dama [wip]" << std::endl;
+    std::cout << "Benvenuto nella dama" << std::endl << std::endl;
 
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
@@ -203,7 +203,7 @@ void UI::log_error(MoveReturn error) {
             std::cout << "Non puoi soffiarla, scrivi aiuto per informazioni";
             break;
         case UNDEFINED:
-            std::cout << "Qualcosa è andato molto storto, scrivi aiuto per informazioni";
+            std::cout << "Qualcosa è andato molto storto o hai soffiato e basta, scrivi aiuto per informazioni";
             break;
         case TOO_SHORT:
             std::cout << "La mossa è troppo corta, scrivi aiuto per informazioni";
