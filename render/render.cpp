@@ -163,12 +163,27 @@ void StdRender::padding(int numberOfSpaces) {
     }
 }
 
-void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer) {
+void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
+                           Player& blackPlayer, GameState result) {
     std::vector<std::string> strings;
     strings.emplace_back("Nome");
     strings.emplace_back("Pezzi");
     strings.emplace_back("Mosse");
-    strings.emplace_back("Gioco finito");
+
+    switch (result) {
+        case WHITE_WIN:
+            strings.emplace_back("Vittoria bianca");
+            break;
+        case BLACK_WIN:
+            strings.emplace_back("Vittoria nera");
+            break;
+        case STALEMATE:
+            strings.emplace_back("Pareggio");
+            break;
+        case GOOD:
+            strings.emplace_back("Il gioco non è ancora finito in teoria");
+            break;
+    }
 
     // This defines the width of the table
     int longerName;
@@ -220,7 +235,11 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     std::cout << " " << boardTokens.verticalLine;
 
     // White number of pieces
-    std::cout << "  " << whitePieces << "  ";
+    if (whitePieces < 10) {
+        std::cout << "   " << whitePieces << "  ";
+    } else {
+        std::cout << "  " << whitePieces << "  ";
+    }
 
     // White number of moves
     if (whitePlayer.moves.size() <= 9) {
@@ -251,7 +270,11 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     center_name(blackPlayer.name, longerName);
     std::cout << " " << boardTokens.verticalLine;
 
-    std::cout << "  " << blackPieces << "  ";
+    if (blackPieces < 10) {
+        std::cout << "   " << blackPieces << "  ";
+    } else {
+        std::cout << "  " << blackPieces << "  ";
+    }
 
     if (blackPlayer.moves.size() <= 9) {
         std::cout << boardTokens.verticalLine << "   " << blackPlayer.moves.size() << "  ";

@@ -111,6 +111,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../board/board.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/ColumnNotatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/GameState.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/MoveType.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: ../enums/Piece.h

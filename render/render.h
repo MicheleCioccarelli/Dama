@@ -2,6 +2,7 @@
 
 #include "../board/board.h"
 #include "../enums/BoardStyles.h"
+#include "../enums/GameState.h"
 #include "../player/player.h"
 
 struct BoardTokens {
@@ -103,7 +104,9 @@ public:
     // Draws name on the screen center in a space as big as longerName
     void center_name(std::string& name, int longerName);
     static void padding(int numberOfSpaces);
-    void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer);
+    // Result is how the game ended/who is the winner
+    void end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
+                    Player& blackPlayer, GameState result);
 
     static void help_page();
 

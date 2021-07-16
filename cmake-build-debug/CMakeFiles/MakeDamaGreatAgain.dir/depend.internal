@@ -112,6 +112,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
  /home/sedano/CLionProjects/Dama/enums/Piece.h

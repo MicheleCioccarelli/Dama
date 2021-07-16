@@ -12,8 +12,6 @@ int main() {
 
     UI::init(engine);
 
-    engine.render.end_screen(1, 1, engine.whitePlayer, engine.blackPlayer);
-
     // Main loop
     while (engine.game_over(8, 8) == GOOD) {
         // Switch playerColor every turn
@@ -38,7 +36,10 @@ int main() {
          }
          engine.promote(8, 8);
     }
+
+    int whitePieces = engine.count_pieces(BIANCO, 8, 8);
+    int blackPieces = engine.count_pieces(NERO, 8, 8);
+
+    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
+                             engine.game_over(8, 8));
 }
-
-
-// Check if game_over() works

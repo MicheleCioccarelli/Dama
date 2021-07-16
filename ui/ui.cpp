@@ -137,7 +137,6 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
         }
         if (input[i].size() < 5 && input[i] != "~") {
             move.type = TOO_SHORT;
-            UI::log_error(move.type.moveReturn);
             return TOO_SHORT;
         }
         if (input[i] == "aiuto") {
@@ -154,7 +153,8 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
     if (validate_command(commands) == VALID) {
         command_to_move(commands, move);
     } else {
-        log_error(MISINPUT);
+        move.type.moveReturn = MISINPUT;
+        UI::log_error(MISINPUT);
         return MISINPUT;
     }
 
