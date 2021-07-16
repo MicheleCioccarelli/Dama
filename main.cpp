@@ -1,9 +1,6 @@
 #include "render/render.h"
 #include "ui/ui.h"
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wswitch"
-
 int main() {
     // Initialize board looks
     BoardTokens board(NORMAL);
@@ -15,7 +12,7 @@ int main() {
 
     UI::init(engine);
 
-//    engine.render.end_screen(20, 19, engine.whitePlayer, engine.blackPlayer);
+    engine.render.end_screen(1, 1, engine.whitePlayer, engine.blackPlayer);
 
     // Main loop
     while (engine.game_over(8, 8) == GOOD) {
@@ -43,6 +40,5 @@ int main() {
     }
 }
 
-#pragma clang diagnostic pop
 
-// Blowing has to be the first thing you do
+// Check if game_over() works

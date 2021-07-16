@@ -21,6 +21,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/ColumnNotatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/GameState.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: ../enums/MoveType.h
@@ -45,6 +46,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.cpp
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/ColumnNotatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/GameState.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: ../enums/MoveType.h
@@ -64,6 +66,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/ColumnNotatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/GameState.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: ../enums/MoveType.h
@@ -133,6 +136,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../coords/coords.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../engine/engine.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/BoardStyles.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/ColumnNotatiton.h
+CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/GameState.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/GameStyle.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/MoveReturn.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: ../enums/MoveType.h

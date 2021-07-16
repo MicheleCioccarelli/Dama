@@ -74,7 +74,9 @@ MoveReturn GameEngine::check_move(Move &move) {
     Coords startingCoords = convert_coords(move.coords[0]);
     Coords endingCoords = convert_coords(move.coords[lastIndex]);
 
-    if (startingCoords.column == Z || endingCoords.column == Z) {
+    if (startingCoords.column >= Z || startingCoords.column < A) {
+        return OUT_OF_BOUNDS;
+    } else if (endingCoords.column >= Z || endingCoords.column < A) {
         return OUT_OF_BOUNDS;
     } else if (startingCoords.row > 7 || startingCoords.row < 0) {
         return OUT_OF_BOUNDS;
@@ -355,7 +357,14 @@ bool GameEngine::simulate_damina(Piece piece, Coords coords) {
     Move move(TRASPARENTE);
     ColumnNotation col = coords.column;
     int row = coords.row;
+    // These coords are for testing purposes
+    Coords tempCoords;
 
+    /*
+     * For the damine we check what moves are in front of them
+     * (add 1 to the row for white and leave black because check_eat already subtracts 1)
+     * The damone are also checked behind
+     * */
     switch (piece) {
         case DAMA_B:
             move = Move(Coords((ColumnNotation) col, row),
@@ -484,14 +493,11 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
 }
 
 GameState GameEngine::game_over(int rows, int columns) {
-    if (count_pieces(BIANCO, rows, columns) <= 0) {
-        return BLACK_WIN;
-    } else if (count_pieces(NERO, rows, columns) <= 0) {
-        return WHITE_WIN;
-    }
-    /* Look at every piece on the board and see what moves they can do,
-    * if none is found then the game is over
-    */
+//    if (count_pieces(BIANCO, rows, columns) <= 0) {
+//        return BLACK_WIN;
+//    } else if (count_pieces(NERO, rows, columns) <= 0) {
+//        return WHITE_WIN;
+//    }
 
     // The number of possible moves for each color
     int blackMoves = 0;
@@ -499,35 +505,41 @@ GameState GameEngine::game_over(int rows, int columns) {
 
     Move move(TRASPARENTE);
 
-    for (int row = 0; row < rows; row++) {
-        // col could go on by 2?
-        for (int col = 0; col < columns; col++) {
+//    for (int row = 0; row < rows - 1; row++) {
+//        for (int col = 0; col < columns - 1; col++) {
+//    OLD LOOP
+
+    // Look at every piece on the board and see what moves they can do,
+    // if none is found then the game is over
+    for (int row = rows - 1; row > -1; row--) {
+        for (int col = columns - 1; col > -1; col--) {
             switch (board.matrix[row][col].piece) {
                 case VUOTA:
                     break;
                 case DAMA_N:
-                    if (simulate_damina(DAMA_N, Coords((ColumnNotation)col, row))) {
+                    if (simulate_damina(DAMA_N, Coords((ColumnNotation)col, row+1))) {
                         blackMoves++;
                     }
                     break;
                 case DAMA_B:
-                    if (simulate_damina(DAMA_B, Coords((ColumnNotation)col, row))) {
+                    if (simulate_damina(DAMA_B, Coords((ColumnNotation)col, row+1))) {
                         whiteMoves++;
                     }
                     break;
                 case DAMONE_B:
-                    if (simulate_damona(DAMONE_B, Coords((ColumnNotation)col, row))) {
+                    if (simulate_damona(DAMONE_B, Coords((ColumnNotation)col, row+1))) {
                         whiteMoves++;
                     }
                     break;
                 case DAMONE_N:
-                    if (simulate_damona(DAMONE_N, Coords((ColumnNotation)col, row))) {
+                    if (simulate_damona(DAMONE_N, Coords((ColumnNotation)col, row+1))) {
                         blackMoves++;
                     }
                     break;
             }
         }
     }
+    render.render_board(BIANCO, board, 8, 8);
     if (whiteMoves == 0 && blackMoves >= 0) {
         return BLACK_WIN;
     } else if (blackMoves == 0 && whiteMoves >= 0) {

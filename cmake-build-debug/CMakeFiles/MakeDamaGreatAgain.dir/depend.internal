@@ -22,6 +22,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
  /home/sedano/CLionProjects/Dama/engine/engine.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
@@ -46,6 +47,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/engine/engine.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
@@ -65,6 +67,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
  /home/sedano/CLionProjects/Dama/engine/engine.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
@@ -134,6 +137,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
  /home/sedano/CLionProjects/Dama/engine/engine.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
