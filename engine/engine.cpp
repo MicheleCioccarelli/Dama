@@ -499,11 +499,6 @@ GameState GameEngine::game_over(int rows, int columns) {
         return WHITE_WIN;
     }
 
-    if (count_pieces(BIANCO, rows, columns) == 1
-    && count_pieces(NERO, rows, columns) == 1) {
-        return STALEMATE;
-    }
-
     // The number of possible moves for each color
     int blackMoves = 0;
     int whiteMoves = 0;
@@ -540,9 +535,15 @@ GameState GameEngine::game_over(int rows, int columns) {
             }
         }
     }
-    if (whiteMoves == 0 && blackMoves >= 0) {
+    if (count_pieces(BIANCO, rows, columns) > 0 && whiteMoves == 0){
+        return STALEMATE;
+    } else if (count_pieces(NERO, rows, columns) > 0 && blackMoves == 0){
+        return STALEMATE;
+    }  else if (count_pieces(BIANCO, rows, columns) == 0
+        && count_pieces(NERO, rows, columns) > 0) {
         return BLACK_WIN;
-    } else if (blackMoves == 0 && whiteMoves >= 0) {
+    } else if (count_pieces(NERO, rows, columns) == 0
+    && count_pieces(BIANCO, rows, columns) > 0) {
         return WHITE_WIN;
     } else if (blackMoves == 0 && whiteMoves == 0) {
         return STALEMATE;

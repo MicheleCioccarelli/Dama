@@ -180,6 +180,9 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
         case STALEMATE:
             strings.emplace_back("Pareggio");
             break;
+        case PATTA:
+            strings.emplace_back("Patta");
+            break;
         case GOOD:
             strings.emplace_back("Il gioco non è ancora finito in teoria");
             break;

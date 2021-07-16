@@ -6,9 +6,15 @@ int main() {
     BoardTokens board(NORMAL);
     SetPieces pieces(NORMAL);
     BoardCoords coords(NORMAL);
-    GameEngine engine(STANDARD, board, pieces, coords, 8, 8);
+    GameEngine engine(EMPTY, board, pieces, coords, 8, 8);
 
     PlayerColor currentPlayer = NERO;
+
+    engine.board.edit(Coords(F, 6), DAMONE_B);
+    //engine.board.edit(Coords(B, 2), DAMA_B);
+    engine.board.edit(Coords(E, 7), DAMONE_N);
+    //engine.board.edit(Coords(G, 7), DAMONE_N);
+
 
     UI::init(engine);
 
@@ -36,6 +42,8 @@ int main() {
          }
          engine.promote(8, 8);
     }
+
+    engine.render.render_board(BIANCO, engine.board, 8, 8);
 
     int whitePieces = engine.count_pieces(BIANCO, 8, 8);
     int blackPieces = engine.count_pieces(NERO, 8, 8);

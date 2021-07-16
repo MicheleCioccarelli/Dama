@@ -7,5 +7,7 @@ enum GameState {
 
     WHITE_WIN,
 
-    STALEMATE
+    STALEMATE,
+
+    PATTA
 };
