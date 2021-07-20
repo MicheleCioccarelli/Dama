@@ -10,14 +10,11 @@ int main() {
 
     PlayerColor currentPlayer = NERO;
 
-    engine.board.edit(Coords(F, 6), DAMONE_B);
-    //engine.board.edit(Coords(B, 2), DAMA_B);
-    engine.board.edit(Coords(E, 7), DAMONE_N);
-    //engine.board.edit(Coords(G, 7), DAMONE_N);
-
+    engine.board.edit(Coords(B, 2), DAMA_N);
+    engine.board.edit(Coords(C, 7), DAMA_B);
 
     UI::init(engine);
-
+    engine.render.render_board(BIANCO, engine.board, 8, 8);
     // Main loop
     while (engine.game_over(8, 8) == GOOD) {
         // Switch playerColor every turn
@@ -41,6 +38,8 @@ int main() {
              UI::get_move(move, engine, currentPlayer);
          }
          engine.promote(8, 8);
+         engine.render.render_board(currentPlayer, engine.board, 8, 8);
+
     }
 
     engine.render.render_board(BIANCO, engine.board, 8, 8);

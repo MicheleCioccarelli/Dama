@@ -9,5 +9,5 @@ enum GameState {
 
     STALEMATE,
 
-    PATTA
+    DRAW
 };
