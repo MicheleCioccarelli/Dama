@@ -32,12 +32,6 @@ iostream
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 
-/home/sedano/CLionProjects/Dama/engine/engine.cpp
-engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-../ui/ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
-
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
@@ -67,6 +61,12 @@ engine.h
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
+
+/home/sedano/CLionProjects/Dama/main.cpp
+render/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
+ui/ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream

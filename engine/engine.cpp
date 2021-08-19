@@ -147,7 +147,6 @@ MoveReturn GameEngine::check_eat(Move& move) {
             if (endingSquare.piece.type == VUOTA) {
                 return EMPTY_TARGET;
             }
-            render.render_board(BIANCO, board, 8, 8);
             startingSquare = board.matrix[startingCoords.row][startingCoords.column];
 
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
@@ -165,9 +164,8 @@ MoveReturn GameEngine::check_eat(Move& move) {
             Move moveToValidate(move.color, move.type.moveType);
             moveToValidate.add_coords(move.coords[0]);
             moveToValidate.add_coords(move.coords[1]);
-            render.render_board(BIANCO, board, 8, 8);
+
             if (check_move(moveToValidate) == POPULATED) {
-                render.render_board(BIANCO, board, 8, 8);
                 // Check if there is an empty space behind the targeted square
                 if (forwardSquare.piece.type == VUOTA) {
                     returnValue = VALID;
@@ -204,10 +202,8 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return FRIENDLY_FIRE;
             }
             Move moveToValidate(move.color, move.type.moveType);
-            render.render_board(BIANCO, board, 8, 8);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
-            render.render_board(BIANCO, board, 8, 8);
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
 
             // Square to eat
@@ -215,7 +211,6 @@ MoveReturn GameEngine::check_eat(Move& move) {
             if (check_move((Move &) moveToValidate) == POPULATED) {
                 board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                         Piece();
-                render.render_board(BIANCO, board, 8, 8);
                 // Check if there is an empty space behind the targeted square
                 if (forwardSquare.piece.type == VUOTA) {
                     board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece.type = VUOTA;
