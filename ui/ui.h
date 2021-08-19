@@ -8,6 +8,9 @@
 
 class UI {
 public:
+    // Starts a standalone game
+    static void start_game();
+
     static void init(GameEngine& engine);
 
     static MoveReturn get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer);

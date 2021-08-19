@@ -534,7 +534,7 @@ GameState GameEngine::game_over(int rows, int columns) {
                 case VUOTA:
                     break;
                 case DAMA_N:
-                    board.edit(Coords(F, 5), COLORATA);
+
                     if (simulate_damina(DAMA_N, Coords((ColumnNotation)col, row+1))) {
                         blackMoves++;
                     }
