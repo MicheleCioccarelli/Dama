@@ -31,8 +31,6 @@ iostream
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
-../enums/Piece.h
-/home/sedano/CLionProjects/Dama/enums/Piece.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.cpp
 engine.h
@@ -64,7 +62,7 @@ engine.h
 
 /home/sedano/CLionProjects/Dama/enums/MoveType.h
 
-/home/sedano/CLionProjects/Dama/enums/Piece.h
+/home/sedano/CLionProjects/Dama/enums/PieceType.h
 
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
@@ -77,18 +75,22 @@ vector
 -
 ../coords/coords.h
 /home/sedano/CLionProjects/Dama/coords/coords.h
-../enums/Piece.h
-/home/sedano/CLionProjects/Dama/enums/Piece.h
+../piece/Piece.h
+/home/sedano/CLionProjects/Dama/piece/Piece.h
 ../movecase/movecase.h
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
-../enums/PlayerColor.h
-/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
 ../enums/MoveReturn.h
 /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
 ../enums/MoveType.h
 /home/sedano/CLionProjects/Dama/enums/MoveType.h
+
+/home/sedano/CLionProjects/Dama/piece/Piece.h
+../enums/PlayerColor.h
+/home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+../enums/PieceType.h
+/home/sedano/CLionProjects/Dama/enums/PieceType.h
 
 /home/sedano/CLionProjects/Dama/player/player.h
 ../move/move.h
@@ -121,12 +123,8 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 ../enums/SquareColor.h
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
-../enums/Piece.h
-/home/sedano/CLionProjects/Dama/enums/Piece.h
-
-/home/sedano/CLionProjects/Dama/ui/ui.cpp
-ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
+../piece/Piece.h
+/home/sedano/CLionProjects/Dama/piece/Piece.h
 
 /home/sedano/CLionProjects/Dama/ui/ui.h
 ../command/command.h

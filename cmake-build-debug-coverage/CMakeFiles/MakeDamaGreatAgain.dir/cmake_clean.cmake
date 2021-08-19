@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o"

@@ -5,7 +5,7 @@
 #include "../coords/coords.h"
 #include "../enums/ColumnNotatiton.h"
 #include "../enums/SquareColor.h"
-#include "../enums/Piece.h"
+#include "../piece/Piece.h"
 
 class Square {
 public:
@@ -13,10 +13,10 @@ public:
     SquareColor color;
     Piece piece;
 
-    void set_piece(Piece _piece);
+    void set_piece(PieceType _piece, PlayerColor _color);
 
     Square &operator=(const Square &rhs);
 
-    Square(Coords _coords, SquareColor _color, Piece _piece = VUOTA)
-            : coords(_coords), color(_color), piece(_piece) {}
+    Square(Coords _coords, SquareColor _color, PieceType _pieceType = VUOTA, PlayerColor _pieceColor = TRASPARENTE)
+    : coords(_coords), color(_color), piece(_pieceColor, _pieceType) {}
 };

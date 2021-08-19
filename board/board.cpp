@@ -24,9 +24,9 @@ void Board::standard_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(DAMA_B);
+                matrix[row][col].set_piece(DAMA, BIANCO);
             } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(DAMA_N);
+                matrix[row][col].set_piece(DAMA, NERO);
             }
         }
     }
@@ -36,7 +36,7 @@ void Board::colored_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (matrix[row][col].color == NERA) {
-                matrix[row][col].piece = COLORATA;
+                matrix[row][col].piece = Piece(TRASPARENTE, COLORATA);
             }
         }
     }
@@ -47,9 +47,9 @@ void Board::damone_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(DAMONE_B);
+                matrix[row][col].set_piece(DAMONE, BIANCO);
             } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(DAMONE_N);
+                matrix[row][col].set_piece(DAMONE, NERO);
             }
         }
     }
@@ -59,9 +59,9 @@ void Board::empty_game_initialization() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(VUOTA);
+                matrix[row][col].set_piece(VUOTA, TRASPARENTE);
             } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(VUOTA);
+                matrix[row][col].set_piece(VUOTA, TRASPARENTE);
             }
         }
     }
@@ -75,7 +75,7 @@ void Board::execute_move(Move& move) {
 
     if (move.type == MOVE) {
         endingSquare.piece = startingSquare.piece;
-        startingSquare.piece = VUOTA;
+        startingSquare.piece = Piece(TRASPARENTE, VUOTA);
 
         matrix[move.coords.at(1).row - 1][move.coords.at(1).column]= endingSquare;
         matrix[move.coords.at(0).row - 1][move.coords.at(0).column] = startingSquare;
@@ -84,11 +84,11 @@ void Board::execute_move(Move& move) {
         endingSquare = matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
         // Eat all the target pieces
         for (int i = 1; i < lastIndex; i++) {
-            matrix[move.coords.at(i).row - 1][move.coords.at(i).column].piece = VUOTA;
+            matrix[move.coords.at(i).row - 1][move.coords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
         }
         // Move the starting square's piece and null the first square out
         endingSquare.piece = startingSquare.piece;
-        startingSquare.piece = VUOTA;
+        startingSquare.piece = Piece(TRASPARENTE, VUOTA);
 
         matrix[move.coords[0].row - 1][move.coords[0].column].piece = startingSquare.piece;
         matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece
@@ -97,7 +97,7 @@ void Board::execute_move(Move& move) {
 }
 
 void Board::blow_up(Move& move) {
-    edit(Coords(move.blownCoord.column, move.blownCoord.row), VUOTA);
+    edit(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 
 void Board::edit(Coords coords, Piece _piece) {

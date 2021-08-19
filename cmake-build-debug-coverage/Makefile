@@ -129,6 +129,30 @@ MakeDamaGreatAgain/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/build
 .PHONY : MakeDamaGreatAgain/fast
 
+Piece/Piece.o: Piece/Piece.cpp.o
+.PHONY : Piece/Piece.o
+
+# target to build an object file
+Piece/Piece.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.o
+.PHONY : Piece/Piece.cpp.o
+
+Piece/Piece.i: Piece/Piece.cpp.i
+.PHONY : Piece/Piece.i
+
+# target to preprocess a source file
+Piece/Piece.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.i
+.PHONY : Piece/Piece.cpp.i
+
+Piece/Piece.s: Piece/Piece.cpp.s
+.PHONY : Piece/Piece.s
+
+# target to generate assembly for a file
+Piece/Piece.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.s
+.PHONY : Piece/Piece.cpp.s
+
 board/board.o: board/board.cpp.o
 .PHONY : board/board.o
 
@@ -402,6 +426,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MakeDamaGreatAgain"
+	@echo "... Piece/Piece.o"
+	@echo "... Piece/Piece.i"
+	@echo "... Piece/Piece.s"
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"

@@ -30,18 +30,7 @@ PlayerColor GameEngine::deduce_color(const Move &move) {
 
     temp.coords.push_back(convert_coords(move.coords[0]));
 
-    switch (board.matrix[temp.coords[0].row][temp.coords[0].column].piece) {
-        case DAMA_N:
-            return NERO;
-        case DAMONE_N:
-            return NERO;
-        case DAMA_B:
-            return BIANCO;
-        case DAMONE_B:
-            return BIANCO;
-        default:
-            return TRASPARENTE;
-    }
+    return board.matrix[temp.coords[0].row][temp.coords[0].column].piece.color;
 }
 
 Coords GameEngine::convert_coords(Coords coords) {
@@ -60,6 +49,7 @@ void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
         board.blow_up((Move&) move);
     }
     board.execute_move((Move&) move);
+
 }
 
 MoveReturn GameEngine::check_move(Move &move) {
@@ -94,7 +84,7 @@ MoveReturn GameEngine::check_move(Move &move) {
     horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
 
     // Check if ou arre actually moving a piece, not just air
-    if (startingPiece == VUOTA) {
+    if (startingPiece.type == VUOTA) {
         return EMPTY_START;
     }
 
@@ -107,11 +97,11 @@ MoveReturn GameEngine::check_move(Move &move) {
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
             // Check if a damina is moving forwards
-            if (startingPiece == DAMA_B && verticalDistance == 1 ||
-                startingPiece == DAMA_N && verticalDistance == -1) {
+            if (startingPiece.type == DAMA && startingPiece.color == BIANCO && verticalDistance == 1 ||
+            startingPiece.type == DAMA && startingPiece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
-            if (endingPiece != VUOTA) {
+            if (endingPiece.type != VUOTA) {
                 return POPULATED;
             }
             return VALID;
@@ -154,10 +144,10 @@ MoveReturn GameEngine::check_eat(Move& move) {
 
             endingSquare = board.matrix[endingCoords.row][endingCoords.column];
 
-            if (endingSquare.piece == VUOTA) {
+            if (endingSquare.piece.type == VUOTA) {
                 return EMPTY_TARGET;
             }
-
+            render.render_board(BIANCO, board, 8, 8);
             startingSquare = board.matrix[startingCoords.row][startingCoords.column];
 
             verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
@@ -166,30 +156,20 @@ MoveReturn GameEngine::check_eat(Move& move) {
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];
             // Check piece compatibility
-            if (startingSquare.piece == endingSquare.piece) {
-                return CANNIBALISM;
-            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
+            if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
                 return TOO_BIG;
-            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
-                return TOO_BIG;
-            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
-                return FRIENDLY_FIRE;
-            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
-                return FRIENDLY_FIRE;
-            } else if (startingSquare.piece == DAMONE_B && endingSquare.piece == DAMA_B) {
-                return FRIENDLY_FIRE;
-            } else if (startingSquare.piece == DAMONE_N && endingSquare.piece == DAMA_N) {
+            } else if (startingSquare.piece.color == endingSquare.piece.color) {
                 return FRIENDLY_FIRE;
             }
-
             // Create a temporary move to check
             Move moveToValidate(move.color, move.type.moveType);
             moveToValidate.add_coords(move.coords[0]);
             moveToValidate.add_coords(move.coords[1]);
-
+            render.render_board(BIANCO, board, 8, 8);
             if (check_move(moveToValidate) == POPULATED) {
+                render.render_board(BIANCO, board, 8, 8);
                 // Check if there is an empty space behind the targeted square
-                if (forwardSquare.piece == VUOTA) {
+                if (forwardSquare.piece.type == VUOTA) {
                     returnValue = VALID;
                 }
             } else {
@@ -208,7 +188,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             startingSquare = forwardSquare;
             startingSquare.piece = startingPiece;
 
-            if (endingSquare.piece == VUOTA) {
+            if (endingSquare.piece.type == VUOTA) {
                 return EMPTY_TARGET;
             }
 
@@ -217,43 +197,42 @@ MoveReturn GameEngine::check_eat(Move& move) {
             forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
                     [endingSquare.coords.column - horizontalDistance];
             // Check piece compatibility
-            if (startingSquare.piece == endingSquare.piece) {
-                return CANNIBALISM;
-            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_N) {
+            // Might have to add the other commented part
+            if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
                 return TOO_BIG;
-            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_B) {
-                return TOO_BIG;
-            } else if (startingSquare.piece == DAMA_B && endingSquare.piece == DAMONE_B) {
-                return FRIENDLY_FIRE;
-            } else if (startingSquare.piece == DAMA_N && endingSquare.piece == DAMONE_N) {
+            } else if (startingSquare.piece.color == endingSquare.piece.color) {
                 return FRIENDLY_FIRE;
             }
-
             Move moveToValidate(move.color, move.type.moveType);
+            render.render_board(BIANCO, board, 8, 8);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
+            render.render_board(BIANCO, board, 8, 8);
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
 
             // Square to eat
             moveToValidate.add_coords(move.coords[i]);
             if (check_move((Move &) moveToValidate) == POPULATED) {
+                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
+                        Piece();
+                render.render_board(BIANCO, board, 8, 8);
                 // Check if there is an empty space behind the targeted square
-                if (forwardSquare.piece == VUOTA) {
-                    board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = VUOTA;
+                if (forwardSquare.piece.type == VUOTA) {
+                    board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece.type = VUOTA;
                     returnValue = VALID;
                 }
             } else {
-                // The targeted square doesn't have anythin on it
-                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = VUOTA;
+                // The targeted square doesn't have anything on it
+                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece.type = VUOTA;
                 return EMPTY_TARGET;
             }
         } if (returnValue == UNDEFINED) {
             return returnValue;
         }
     }
-
-    board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = startingPiece;
     move.coords.emplace_back(Coords(forwardSquare.coords.column, forwardSquare.coords.row + 1));
+
+
     return returnValue;
 }
 
@@ -306,10 +285,10 @@ int GameEngine::count_pieces(PlayerColor pColor, int rows, int columns) {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             if (pColor == BIANCO) {
-                if (board.matrix[row][col].piece == DAMA_B || board.matrix[row][col].piece == DAMONE_B)
+                if (board.matrix[row][col].piece.color == BIANCO)
                     returnValue++;
             } else if (pColor == NERO) {
-                if (board.matrix[row][col].piece == DAMA_N || board.matrix[row][col].piece == DAMONE_N)
+                if (board.matrix[row][col].piece.color == NERO)
                     returnValue++;
             }
         }
@@ -353,10 +332,10 @@ MoveReturn GameEngine::submit(const Move& move) {
 void GameEngine::promote(int rows, int columns) {
     for (int row = 0; row <= rows; row += 7) {
         for (int col = 0; col < columns; col++) {
-            if (board.matrix[row][col].piece == DAMA_N && row == 0) {
-                board.matrix[row][col].piece = DAMONE_N;
-            } else if (row == 7 && board.matrix[row][col].piece == DAMA_B) {
-                board.matrix[row][col].piece = DAMONE_B;
+            if (board.matrix[row][col].piece.color == NERO && board.matrix[row][col].piece.type== DAMA && row == 0) {
+                board.matrix[row][col].piece.type = DAMONE;
+            } else if (board.matrix[row][col].piece.color == BIANCO && board.matrix[row][col].piece.type == DAMA && row == 7) {
+                board.matrix[row][col].piece.type = DAMONE;
             }
         }
     }
@@ -372,69 +351,72 @@ bool GameEngine::simulate_damina(Piece piece, Coords coords) {
 
     // These coords are for testing purposes
     Coords tempCoords;
-
     /*
      * For the damine we check what moves are in front of them
      * (add 1 to the row for white and leave black because check_eat already subtracts 1)
      * The damone are also checked behind
      * */
-    switch (piece) {
-        case DAMA_B:
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col - 1), row + 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col + 1), row + 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col - 1), row + 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-               whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col + 1), row + 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-               whiteMoves++;
-            }
-            if (whiteMoves > 0) {
-                return true;
+    switch (piece.color) {
+        case BIANCO:
+            if (piece.type == DAMA) {
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col - 1), row + 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation)(col + 1), row + 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col - 1), row + 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col + 1), row + 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    whiteMoves++;
+                }
+                if (whiteMoves > 0) {
+                    return true;
+                }
             }
             break;
-        case DAMA_N:
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col + 1), row - 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col - 1), row - 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col + 1), row - 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col - 1), row - 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-                blackMoves++;
-            }
-            if (blackMoves > 0) {
-                return true;
+        case NERO:
+            if (piece.type == DAMA) {
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col + 1), row - 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    blackMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation)(col - 1), row - 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    blackMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col + 1), row - 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    blackMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col - 1), row - 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    blackMoves++;
+                }
+                if (blackMoves > 0) {
+                    return true;
+                }
             }
     }
     return false;
@@ -448,72 +430,75 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
     int whiteMoves = 0;
     int blackMoves = 0;
 
-    switch (piece) {
-        case DAMONE_B:
-            if (simulate_damina(DAMA_B, coords)) {
-                whiteMoves++;
-            }
+    switch (piece.color) {
+        case BIANCO:
+            if (piece.type == DAMONE) {
+                if (simulate_damina(Piece(BIANCO, DAMA), coords)) {
+                    whiteMoves++;
+                }
 
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col + 1), row - 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col - 1), row - 1),
-                        BIANCO, MOVE);
-            if (check_move(move) == VALID) {
-                whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col + 1), row - 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-                whiteMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col - 1), row - 1),
-                        BIANCO, EAT);
-            if (check_eat(move) == VALID) {
-                whiteMoves++;
-            }
-            if (whiteMoves > 0) {
-                return true;
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation)(col + 1), row - 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation)(col - 1), row - 1),
+                            BIANCO, MOVE);
+                if (check_move(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col + 1), row - 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    whiteMoves++;
+                }
+                move = Move(Coords((ColumnNotation) col, row),
+                            Coords((ColumnNotation) (col - 1), row - 1),
+                            BIANCO, EAT);
+                if (check_eat(move) == VALID) {
+                    whiteMoves++;
+                }
+                if (whiteMoves > 0) {
+                    return true;
+                }
             }
             break;
-
-        case DAMONE_N:
-            if (simulate_damina(DAMA_N, coords)) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col + 1), row + 1),
-                        NERO, MOVE);
-            if (check_move(move) == VALID) {
-               blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation)(col - 1), row + 1),
-                        NERO, MOVE);
-            if (check_move(move) == VALID) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col + 1), row + 1),
-                        NERO, EAT);
-            if (check_eat(move) == VALID) {
-                blackMoves++;
-            }
-            move = Move(Coords((ColumnNotation) col, row),
-                        Coords((ColumnNotation) (col - 1), row + 1),
-                        NERO, EAT);
-            if (check_eat(move) == VALID) {
-                blackMoves++;
-            }
-            if (blackMoves > 0) {
-                return true;
-            }
+            case NERO:
+                if (piece.type == DAMONE) {
+                    if (simulate_damina(Piece(NERO, DAMA), coords)) {
+                        blackMoves++;
+                    }
+                    move = Move(Coords((ColumnNotation) col, row),
+                                Coords((ColumnNotation)(col + 1), row + 1),
+                                NERO, MOVE);
+                    if (check_move(move) == VALID) {
+                        blackMoves++;
+                    }
+                    move = Move(Coords((ColumnNotation) col, row),
+                                Coords((ColumnNotation)(col - 1), row + 1),
+                                NERO, MOVE);
+                    if (check_move(move) == VALID) {
+                        blackMoves++;
+                    }
+                    move = Move(Coords((ColumnNotation) col, row),
+                                Coords((ColumnNotation) (col + 1), row + 1),
+                                NERO, EAT);
+                    if (check_eat(move) == VALID) {
+                        blackMoves++;
+                    }
+                    move = Move(Coords((ColumnNotation) col, row),
+                                Coords((ColumnNotation) (col - 1), row + 1),
+                                NERO, EAT);
+                    if (check_eat(move) == VALID) {
+                        blackMoves++;
+                    }
+                    if (blackMoves > 0) {
+                        return true;
+                    }
+                }
     }
     return false;
 }
@@ -530,30 +515,40 @@ GameState GameEngine::game_over(int rows, int columns) {
     // if none is found then the game is over
     for (int row = 0; row <= rows - 1; row++) {
         for (int col = 0; col <= columns - 1; col++) {
-            switch (board.matrix[row][col].piece) {
+            switch (board.matrix[row][col].piece.type) {
                 case VUOTA:
                     break;
-                case DAMA_N:
-
-                    if (simulate_damina(DAMA_N, Coords((ColumnNotation)col, row+1))) {
-                        blackMoves++;
+                case DAMA:
+                    switch (board.matrix[row][col].piece.color) {
+                        case BIANCO:
+                            if (simulate_damina(Piece(BIANCO, DAMA),
+                                                Coords((ColumnNotation)col, row+1))) {
+                                whiteMoves++;
+                            }
+                            break;
+                        case NERO:
+                            if (simulate_damina(Piece(NERO, DAMA),
+                                                Coords((ColumnNotation)col, row+1))) {
+                                blackMoves++;
+                            }
+                            break;
                     }
                     break;
-                case DAMA_B:
-                    if (simulate_damina(DAMA_B, Coords((ColumnNotation)col, row+1))) {
-                        whiteMoves++;
+                case DAMONE:
+                    switch (board.matrix[row][col].piece.color) {
+                        case BIANCO:
+                            if (simulate_damona(Piece(BIANCO, DAMONE),
+                                                Coords((ColumnNotation)col, row+1))) {
+                                whiteMoves++;
+                            }
+                        break;
+                        case NERO:
+                            if (simulate_damona(Piece(NERO, DAMONE),
+                                                Coords((ColumnNotation)col, row+1))) {
+                                blackMoves++;
+                            }
+                            break;
                     }
-                    break;
-                case DAMONE_B:
-                    if (simulate_damona(DAMONE_B, Coords((ColumnNotation)col, row+1))) {
-                        whiteMoves++;
-                    }
-                    break;
-                case DAMONE_N:
-                    if (simulate_damona(DAMONE_N, Coords((ColumnNotation)col, row+1))) {
-                        blackMoves++;
-                    }
-                    break;
             }
         }
     }

@@ -28,22 +28,31 @@
 */
 // ======= RENDER =======
 std::string StdRender::square_resolve(Coords coords, Board &board) {
-    switch (board.matrix[coords.row][coords.column].piece) {
-
-        case DAMA_B:
-            return setPieces.damaB;
-        case DAMA_N:
-            return setPieces.damaN;
-        case DAMONE_B:
-            return setPieces.damoneB;
-        case DAMONE_N:
-            return setPieces.damoneN;
-        case VUOTA:
-            return setPieces.vuota;
-        case COLORATA:
-            return setPieces.colorata;
+    switch (board.matrix[coords.row][coords.column].piece.color) {
+        case BIANCO:
+            switch (board.matrix[coords.row][coords.column].piece.type) {
+                case DAMA:
+                    return setPieces.damaB;
+                case DAMONE:
+                    return setPieces.damoneB;
+                case VUOTA:
+                    return setPieces.vuota;
+                case COLORATA:
+                    return setPieces.colorata;
+            }
+            case NERO:
+                switch (board.matrix[coords.row][coords.column].piece.type) {
+                    case DAMA:
+                        return setPieces.damaN;
+                    case DAMONE:
+                        return setPieces.damoneN;
+                    case VUOTA:
+                        return setPieces.vuota;
+                    case COLORATA:
+                        return setPieces.colorata;
+                }
         default:
-            return "sup motherfucker";
+            return " ";
     }
 }
 

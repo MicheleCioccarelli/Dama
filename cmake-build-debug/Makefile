@@ -297,6 +297,30 @@ movecase/movecase.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.s
 .PHONY : movecase/movecase.cpp.s
 
+piece/Piece.o: piece/Piece.cpp.o
+.PHONY : piece/Piece.o
+
+# target to build an object file
+piece/Piece.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o
+.PHONY : piece/Piece.cpp.o
+
+piece/Piece.i: piece/Piece.cpp.i
+.PHONY : piece/Piece.i
+
+# target to preprocess a source file
+piece/Piece.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.i
+.PHONY : piece/Piece.cpp.i
+
+piece/Piece.s: piece/Piece.cpp.s
+.PHONY : piece/Piece.s
+
+# target to generate assembly for a file
+piece/Piece.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.s
+.PHONY : piece/Piece.cpp.s
+
 player/player.o: player/player.cpp.o
 .PHONY : player/player.o
 
@@ -423,6 +447,9 @@ help:
 	@echo "... movecase/movecase.o"
 	@echo "... movecase/movecase.i"
 	@echo "... movecase/movecase.s"
+	@echo "... piece/Piece.o"
+	@echo "... piece/Piece.i"
+	@echo "... piece/Piece.s"
 	@echo "... player/player.o"
 	@echo "... player/player.i"
 	@echo "... player/player.s"

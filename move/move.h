@@ -3,9 +3,8 @@
 #include <iostream>
 #include <vector>
 #include "../coords/coords.h"
-#include "../enums/Piece.h"
+#include "../piece/Piece.h"
 #include "../movecase/movecase.h"
-#include "../enums/PlayerColor.h"
 
 class Move {
 public:

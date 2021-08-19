@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../enums/ColumnNotatiton.h"
-#include "../enums/Piece.h"
 
 // Chess notation
 class Coords {

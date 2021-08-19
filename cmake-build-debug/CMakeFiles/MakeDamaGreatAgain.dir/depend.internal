@@ -8,11 +8,12 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/square/square.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
@@ -26,11 +27,12 @@ CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.h
  /home/sedano/CLionProjects/Dama/square/square.h
@@ -38,7 +40,6 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o
  /home/sedano/CLionProjects/Dama/coords/coords.cpp
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
  /home/sedano/CLionProjects/Dama/command/command.h
@@ -51,11 +52,12 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.h
  /home/sedano/CLionProjects/Dama/square/square.h
@@ -71,12 +73,13 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/main.cpp
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.h
  /home/sedano/CLionProjects/Dama/square/square.h
@@ -86,25 +89,32 @@ CMakeFiles/MakeDamaGreatAgain.dir/move/move.cpp.o
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/move/move.cpp
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.cpp
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
+ /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.cpp
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.cpp
  /home/sedano/CLionProjects/Dama/player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
@@ -115,11 +125,12 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
  /home/sedano/CLionProjects/Dama/enums/GameState.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.cpp
  /home/sedano/CLionProjects/Dama/render/render.h
@@ -127,8 +138,10 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
+ /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/square/square.cpp
  /home/sedano/CLionProjects/Dama/square/square.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
@@ -142,11 +155,12 @@ CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
  /home/sedano/CLionProjects/Dama/enums/GameStyle.h
  /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
  /home/sedano/CLionProjects/Dama/enums/MoveType.h
- /home/sedano/CLionProjects/Dama/enums/Piece.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
  /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
  /home/sedano/CLionProjects/Dama/enums/SquareColor.h
  /home/sedano/CLionProjects/Dama/move/move.h
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/player/player.h
  /home/sedano/CLionProjects/Dama/render/render.h
  /home/sedano/CLionProjects/Dama/square/square.h

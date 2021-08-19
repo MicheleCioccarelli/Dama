@@ -105,6 +105,7 @@ MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& en
                     move.type.moveReturn = WRONG_COLOR;
                 }
             }
+            break;
         default:
             return UNDEFINED;
     }

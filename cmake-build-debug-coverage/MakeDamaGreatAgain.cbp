@@ -82,6 +82,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/sedano/CLionProjects/Dama/Piece/Piece.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/Piece/Piece.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
@@ -124,7 +130,10 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/MoveType.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/enums/Piece.h">
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PieceColor.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PieceType.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PlayerColor.h">
