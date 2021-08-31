@@ -1,7 +1,3 @@
-//
-// Created by sedano on 31/08/21.
-//
-
 #pragma once
 
 //Regular text
@@ -86,7 +82,6 @@
 
 //Reset
 #define RESET "\e[0m"
-
 
 #define ERROR_COLOR RED
 #define PLAYER_COLOR HGRN

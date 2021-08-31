@@ -4,6 +4,8 @@
 #include "../enums/BoardStyles.h"
 #include "../enums/GameState.h"
 #include "../player/player.h"
+#include "../constants/colors_codes.h"
+#include "../color/color.h"
 
 struct BoardTokens {
 public:
@@ -99,7 +101,8 @@ public:
     void line(int columns);
     void middle(Board &board, PlayerColor color, int row, int column);
     std::string square_resolve(Coords coords, Board &board);
-    void render_board(PlayerColor color, Board &b, int rows, int columns);
+
+    void render_board(Player &currentPlayer, Board &b, int rows, int columns);
 
     // Draws name on the screen center in a space as big as longerName
     void center_name(std::string& name, int longerName);

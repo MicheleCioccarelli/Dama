@@ -9,6 +9,9 @@ public:
     int row;
 
     Coords &operator=(const Coords &rhs);
+    bool operator==(const Coords &rhs) const;
+    bool operator!=(const Coords &rhs) const;
 
-    Coords(ColumnNotation _column = Z, int _row = 9): column(_column), row(_row) {}
+    Coords(ColumnNotation _column = Z, int _row = 9)
+    : column(_column), row(_row) {}
 };

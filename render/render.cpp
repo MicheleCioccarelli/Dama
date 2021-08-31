@@ -132,10 +132,15 @@ void StdRender::middle(Board &b, PlayerColor color, int rows, int columns) {
     }
 }
 
-void StdRender::render_board(PlayerColor color, Board &b, int rows, int columns) {
+/*  If currentPlayer's move vector is empty, this is the first turn, and you should display white,
+ *  all the other times thw last layer is being passed in, so render can look at the last move made
+ *  and color the board accordingly. The board will be displayes on the opposite side because it
+ *  is now the opponent's turn
+*/
+void StdRender::render_board(Player &currentPlayer, Board &b, int rows, int columns) {
     std::cout << std::endl << std::endl;
     first_line(columns);
-    middle(b, color, rows, columns);
+    middle(b, BIANCO, rows, columns);
     std::cout << std::endl;
 }
 
@@ -315,32 +320,38 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
 }
 
 void StdRender::help_page() {
-    std::cout << std::endl << "Pagina di aiuto" << std::endl << std::endl;
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    }
+    std::cout << std::endl << HBBLU <<"Pagina di aiuto" << RESET << std::endl << std::endl;
     std::cout << "uso: [colonna][riga][operatore][colonna][riga]" << std::endl << std::endl;
     std::cout << "Colonne: A, B, C, D, E, F, G, H" << std::endl;
     std::cout << "Righe:   1, 2, 3, 4, 5, 6, 7, 8" << std::endl << std::endl;
 
     std::cout << "Operatori:" << std::endl;
     padding(3);
-    std::cout << "*";
+    std::cout << BCYN << "*" << RESET;
     padding(3);
     std::cout << "Soffio, deve essere il primo comando se è usato";
     padding(2);
     std::cout << "|  Esempio: A3*B4 C3-D4" << std::endl;
 
     padding(3);
-    std::cout << "-";
+    std::cout << BCYN << "-" << RESET;
     padding(3);
     std::cout << "Movimento, cambia casella di 1 alla volta";
     padding(8);
     std::cout << "|  Esempio: A3-B4" << std::endl;
 
     padding(3);
-    std::cout << "x";
+    std::cout << BCYN << "x" << RESET;
     padding(3);
     std::cout << "Mangiare";
     padding(41);
     std::cout << "|  Esempio: A3xB4" << std::endl;
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    } std::cout << std::endl;
 }
 
 /*  PIECES LABEL

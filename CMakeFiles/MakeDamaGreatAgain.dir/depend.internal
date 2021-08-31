@@ -15,10 +15,24 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o
  /home/sedano/CLionProjects/Dama/movecase/movecase.h
  /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/square/square.h
+CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o
+ /home/sedano/CLionProjects/Dama/color/color.cpp
+ /home/sedano/CLionProjects/Dama/color/color.h
+ /home/sedano/CLionProjects/Dama/coords/coords.h
+ /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
+ /home/sedano/CLionProjects/Dama/enums/MoveType.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
+ /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+ /home/sedano/CLionProjects/Dama/move/move.h
+ /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/color/color.h
  /home/sedano/CLionProjects/Dama/command/command.cpp
  /home/sedano/CLionProjects/Dama/command/command.h
+ /home/sedano/CLionProjects/Dama/constants/colors_codes.h
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/engine/engine.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
@@ -42,6 +56,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/color/color.h
  /home/sedano/CLionProjects/Dama/command/command.h
  /home/sedano/CLionProjects/Dama/constants/colors_codes.h
  /home/sedano/CLionProjects/Dama/coords/coords.h
@@ -65,6 +80,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o
  /home/sedano/CLionProjects/Dama/ui/ui.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/color/color.h
  /home/sedano/CLionProjects/Dama/command/command.h
  /home/sedano/CLionProjects/Dama/constants/colors_codes.h
  /home/sedano/CLionProjects/Dama/coords/coords.h
@@ -121,6 +137,8 @@ CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o
  /home/sedano/CLionProjects/Dama/player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/color/color.h
+ /home/sedano/CLionProjects/Dama/constants/colors_codes.h
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
@@ -148,6 +166,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o
  /home/sedano/CLionProjects/Dama/square/square.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o
  /home/sedano/CLionProjects/Dama/board/board.h
+ /home/sedano/CLionProjects/Dama/color/color.h
  /home/sedano/CLionProjects/Dama/command/command.h
  /home/sedano/CLionProjects/Dama/constants/colors_codes.h
  /home/sedano/CLionProjects/Dama/coords/coords.h

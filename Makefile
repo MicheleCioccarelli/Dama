@@ -67,8 +67,8 @@ CMAKE_BINARY_DIR = /home/sedano/CLionProjects/Dama
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5080.54/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
+	/home/linuxbrew/.linuxbrew/Homebrew/Cellar/cmake/3.19.6/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -152,6 +152,30 @@ board/board.s: board/board.cpp.s
 board/board.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.s
 .PHONY : board/board.cpp.s
+
+color/color.o: color/color.cpp.o
+.PHONY : color/color.o
+
+# target to build an object file
+color/color.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o
+.PHONY : color/color.cpp.o
+
+color/color.i: color/color.cpp.i
+.PHONY : color/color.i
+
+# target to preprocess a source file
+color/color.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.i
+.PHONY : color/color.cpp.i
+
+color/color.s: color/color.cpp.s
+.PHONY : color/color.s
+
+# target to generate assembly for a file
+color/color.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.s
+.PHONY : color/color.cpp.s
 
 command/command.o: command/command.cpp.o
 .PHONY : command/command.o
@@ -429,6 +453,9 @@ help:
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
+	@echo "... color/color.o"
+	@echo "... color/color.i"
+	@echo "... color/color.s"
 	@echo "... command/command.o"
 	@echo "... command/command.i"
 	@echo "... command/command.s"

@@ -10,4 +10,5 @@ add_executable(MakeDamaGreatAgain main.cpp board/board.cpp
         enums/PlayerColor.h enums/BoardStyles.h coords/coords.cpp coords/coords.h enums/MoveReturn.h
         enums/GameStyle.h enums/MoveType.h ui/ui.cpp ui/ui.h enums/UiReturn.h command/command.cpp
         command/command.h command/command.cpp command/command.h movecase/movecase.cpp
-        movecase/movecase.h enums/GameState.h enums/PieceType.h piece/Piece.cpp piece/Piece.h)
+        movecase/movecase.h enums/GameState.h enums/PieceType.h piece/Piece.cpp piece/Piece.h
+        color/color.cpp color/color.h)

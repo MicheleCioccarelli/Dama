@@ -16,6 +16,8 @@ public:
 
     void add_move(Move move);
 
+    Player& operator=(const Player &rhs);
+
     Player(): name("nigga"), color(TRASPARENTE) {}
 
     Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}

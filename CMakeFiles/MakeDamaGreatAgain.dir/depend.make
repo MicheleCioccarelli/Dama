@@ -15,10 +15,24 @@ CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o: \
  movecase/movecase.h \
  piece/Piece.h \
  square/square.h
+CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o: \
+ color/color.cpp \
+ color/color.h \
+ coords/coords.h \
+ enums/ColumnNotatiton.h \
+ enums/MoveReturn.h \
+ enums/MoveType.h \
+ enums/PieceType.h \
+ enums/PlayerColor.h \
+ move/move.h \
+ movecase/movecase.h \
+ piece/Piece.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: \
  board/board.h \
+ color/color.h \
  command/command.cpp \
  command/command.h \
+ constants/colors_codes.h \
  coords/coords.h \
  engine/engine.h \
  enums/BoardStyles.h \
@@ -42,6 +56,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: \
  enums/ColumnNotatiton.h
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: \
  board/board.h \
+ color/color.h \
  command/command.h \
  constants/colors_codes.h \
  coords/coords.h \
@@ -65,6 +80,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: \
  ui/ui.h
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: \
  board/board.h \
+ color/color.h \
  command/command.h \
  constants/colors_codes.h \
  coords/coords.h \
@@ -121,6 +137,8 @@ CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: \
  player/player.h
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: \
  board/board.h \
+ color/color.h \
+ constants/colors_codes.h \
  coords/coords.h \
  enums/BoardStyles.h \
  enums/ColumnNotatiton.h \
@@ -148,6 +166,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: \
  square/square.h
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: \
  board/board.h \
+ color/color.h \
  command/command.h \
  constants/colors_codes.h \
  coords/coords.h \

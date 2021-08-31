@@ -72,6 +72,12 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/color/color.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/color/color.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

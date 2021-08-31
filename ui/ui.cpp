@@ -11,12 +11,14 @@ void UI::init(GameEngine &engine) {
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
         engine.whitePlayer.name = playerName;
+        engine.whitePlayer.color = BIANCO;
     }
 
     std::cout << "Chi gioca nero?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
         engine.blackPlayer.name = playerName;
+        engine.blackPlayer.color = NERO;
     }
 }
 
@@ -248,7 +250,7 @@ void UI::start_game() {
                     break;
         }
 
-        engine.render.render_board(currentPlayer, engine.board, 8, 8);
+        engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
         Move move(currentPlayer);
 
         // ========= GETTING INPUT ==========
@@ -259,11 +261,11 @@ void UI::start_game() {
             UI::get_move(move, engine, currentPlayer);
         }
         engine.promote(8, 8);
-        engine.render.render_board(currentPlayer, engine.board, 8, 8);
+        engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
 
     }
 
-    engine.render.render_board(BIANCO, engine.board, 8, 8);
+    engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
 
     int whitePieces = engine.count_pieces(BIANCO, 8, 8);
     int blackPieces = engine.count_pieces(NERO, 8, 8);
