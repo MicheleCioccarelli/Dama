@@ -1,4 +1,2 @@
-/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.4746.93/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_CXX_FLAGS=--coverage -DCMAKE_C_FLAGS=--coverage -DCMAKE_DEPENDS_USE_COMPILER=FALSE -G "CodeBlocks - Unix Makefiles" /home/sedano/CLionProjects/Dama
--- Configuring done
--- Generating done
--- Build files have been written to: /home/sedano/CLionProjects/Dama/cmake-build-debug-coverage
+Cannot generate 'Debug-Coverage' into /home/sedano/CLionProjects/Dama/cmake-build-debug-coverage
+CMakeCache.txt is found in the project dir, only in-source generation will be performed.

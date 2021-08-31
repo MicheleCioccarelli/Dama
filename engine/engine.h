@@ -1,0 +1,49 @@
+#pragma once
+
+#include "../board/board.h"
+#include "../player/player.h"
+#include "../enums/GameStyle.h"
+#include "../enums/GameState.h"
+#include "../render/render.h"
+
+class GameEngine {
+public:
+    Player whitePlayer;
+    Player blackPlayer;
+    Board board;
+public:
+    StdRender render;
+
+    MoveReturn submit(const Move& move);
+
+    PlayerColor deduce_color(const Move &move);
+
+    // This tests if a move between the first and last element of coords can be performed,
+    // the move's type needs to be accurate
+    MoveReturn check_move(Move& move);
+
+    MoveReturn check_eat(Move& move);
+
+    // You have to pass in the input flagged as blowable by the user, this function tells
+    // you wheter it can be blown, if yes you should call Board::blow_up();
+    MoveReturn check_blow(Coords _startingCoords, Coords _endingCoords);
+
+    void dispatch_move(const Move& move, bool isBlown);
+
+    int count_pieces(PlayerColor pColor, int rows, int columns);
+
+    // Convert coords from human notation no matrix notation
+    static Coords convert_coords(Coords coords);
+
+    void promote(int rows, int columns);
+
+    // These funcion are used in game_over()
+    // and check every possible move, if at least one is found they return true
+    bool simulate_damina(Piece piece, Coords coords);
+    bool simulate_damona(Piece piece, Coords coords);
+
+    GameState game_over(int rows, int columns);
+
+    GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
+    BoardCoords _coords, int rows, int columns);
+};

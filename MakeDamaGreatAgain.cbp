@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="MakeDamaGreatAgain"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/sedano/CLionProjects/Dama"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/sedano/CLionProjects/Dama"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/sedano/CLionProjects/Dama"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MakeDamaGreatAgain">
+				<Option output="/home/sedano/CLionProjects/Dama/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="MakeDamaGreatAgain/fast">
+				<Option output="/home/sedano/CLionProjects/Dama/MakeDamaGreatAgain" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/sedano/CLionProjects/Dama"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 MakeDamaGreatAgain/fast"/>
+					<CompileFile command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -f &quot;/home/sedano/CLionProjects/Dama/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/coords/coords.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/coords/coords.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/engine/engine.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/BoardStyles.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/GameState.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/GameStyle.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/MoveReturn.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/MoveType.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PieceType.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/PlayerColor.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/SquareColor.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/enums/UiReturn.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/main.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/move/move.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/move/move.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/movecase/movecase.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/movecase/movecase.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/piece/Piece.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/piece/Piece.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/player/player.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/player/player.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/render/render.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/render/render.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/square/square.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/square/square.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/ui/ui.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/ui/ui.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

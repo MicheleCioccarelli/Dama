@@ -129,30 +129,6 @@ MakeDamaGreatAgain/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/build
 .PHONY : MakeDamaGreatAgain/fast
 
-Piece/Piece.o: Piece/Piece.cpp.o
-.PHONY : Piece/Piece.o
-
-# target to build an object file
-Piece/Piece.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.o
-.PHONY : Piece/Piece.cpp.o
-
-Piece/Piece.i: Piece/Piece.cpp.i
-.PHONY : Piece/Piece.i
-
-# target to preprocess a source file
-Piece/Piece.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.i
-.PHONY : Piece/Piece.cpp.i
-
-Piece/Piece.s: Piece/Piece.cpp.s
-.PHONY : Piece/Piece.s
-
-# target to generate assembly for a file
-Piece/Piece.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/Piece/Piece.cpp.s
-.PHONY : Piece/Piece.cpp.s
-
 board/board.o: board/board.cpp.o
 .PHONY : board/board.o
 
@@ -321,6 +297,30 @@ movecase/movecase.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.s
 .PHONY : movecase/movecase.cpp.s
 
+piece/Piece.o: piece/Piece.cpp.o
+.PHONY : piece/Piece.o
+
+# target to build an object file
+piece/Piece.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o
+.PHONY : piece/Piece.cpp.o
+
+piece/Piece.i: piece/Piece.cpp.i
+.PHONY : piece/Piece.i
+
+# target to preprocess a source file
+piece/Piece.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.i
+.PHONY : piece/Piece.cpp.i
+
+piece/Piece.s: piece/Piece.cpp.s
+.PHONY : piece/Piece.s
+
+# target to generate assembly for a file
+piece/Piece.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.s
+.PHONY : piece/Piece.cpp.s
+
 player/player.o: player/player.cpp.o
 .PHONY : player/player.o
 
@@ -426,9 +426,6 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MakeDamaGreatAgain"
-	@echo "... Piece/Piece.o"
-	@echo "... Piece/Piece.i"
-	@echo "... Piece/Piece.s"
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"
@@ -450,6 +447,9 @@ help:
 	@echo "... movecase/movecase.o"
 	@echo "... movecase/movecase.i"
 	@echo "... movecase/movecase.s"
+	@echo "... piece/Piece.o"
+	@echo "... piece/Piece.i"
+	@echo "... piece/Piece.s"
 	@echo "... player/player.o"
 	@echo "... player/player.i"
 	@echo "... player/player.s"

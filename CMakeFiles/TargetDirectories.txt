@@ -1,0 +1,3 @@
+/home/sedano/CLionProjects/Dama/CMakeFiles/edit_cache.dir
+/home/sedano/CLionProjects/Dama/CMakeFiles/rebuild_cache.dir
+/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir
