@@ -16,6 +16,10 @@
 vector
 -
 
+/home/sedano/CLionProjects/Dama/command/command.cpp
+command.h
+/home/sedano/CLionProjects/Dama/command/command.h
+
 /home/sedano/CLionProjects/Dama/command/command.h
 vector
 -
@@ -31,6 +35,12 @@ iostream
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+
+/home/sedano/CLionProjects/Dama/engine/engine.cpp
+engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
+../ui/ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
@@ -104,6 +114,10 @@ vector
 iostream
 -
 
+/home/sedano/CLionProjects/Dama/render/render.cpp
+render.h
+/home/sedano/CLionProjects/Dama/render/render.h
+
 /home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
@@ -125,6 +139,10 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../piece/Piece.h
 /home/sedano/CLionProjects/Dama/piece/Piece.h
+
+/home/sedano/CLionProjects/Dama/ui/ui.cpp
+ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/ui/ui.h
 ../command/command.h
