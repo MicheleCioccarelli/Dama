@@ -100,9 +100,10 @@ public:
     void border(std::string &lastChar, std::string lineColor = WHT);
 
     // This function is only given an int colorOffset because it only needs to draw
-    void first_line(int columns, int colorOffset, std::string lineColor = WHT);
-    void bottom_line(PlayerColor playerColor, int columns, int colorOffset, std::string lineColor);
-    void line(int columns, int colorOffset, std::string lineColor);
+    void first_line(int columns, int colorOffset = 0, std::string lineColor = WHT);
+
+    void bottom_line(PlayerColor playerColor, int columns, int colorOffset = 0, std::string lineColor = WHT);
+    void line(int columns, int colorOffset = 0, std::string lineColor = WHT);
     void middle(Board &board, PlayerColor playerColor, int row, int column, Color& colorOffsets, MoveType moveType);
     std::string square_resolve(Coords coords, Board &board);
 

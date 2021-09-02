@@ -1,32 +1,4 @@
 #include "render.h"
-
-/*  PIECES LABLE
- * horizontalLine = "═"
- * topLeft = "╔"
- * topRight = "╗"
- * bottomLeft = "╚"
- * bottomRight = "╝"
- * upChain = "╦"
- * downChain = "╩"
- * link = "╬"
- * filling = " "
- *leftBorder = "╠"
- * rightBorder "╣"
- *
- * tokens.[0] = horizontalLine
- * tokens.[1](verticalLine);
- * tokens.[2](topLeft);
- * tokens.[3](topRight);
- * tokens.[4](bottomLeft);
- * tokens.[5](bottomRight);
- * tokens.[6](upChain);
- * tokens.[7](downChain);
- * tokens.[8](rightBorder);
- * tokens.[9](link);
- * tokens.[10](leftBorder);
- * tokens.[11](filling);
-*/
-
 // ======= RENDER =======
 
 void StdRender::calculate_offsets(Color &color, int rows, int columns) {
@@ -158,38 +130,38 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
                             if (_row == colorOffsets.moveRows[i]) {
                                 shouldColor = true;
                                 pairing = i;
+                                break;
                             }
                         }
                         for (int _col = 0; _col < columns; _col++) {
                             if (shouldColor == true) {
-                                    if (_col == colorOffsets.moveColumns[pairing]) {
-                                        // Cancel an already colored column
-                                        colorOffsets.moveColumns[pairing] = 9;
-
-                                        CURRENT_COLOR = MOVE_COLOR;
-                                        wasColored = true;
-                                    }
-                            }
-                            // Don't color normal columns
-                            if (_col == colorOffsets.moveColumns[i]) {
-                                CURRENT_COLOR = MOVE_COLOR;
-                                wasColored = true;
+                                if (_col == colorOffsets.moveColumns[pairing]) {
+                                    // Cancel an already colored column
+                                    colorOffsets.moveColumns[pairing] = 9;
+                                    CURRENT_COLOR = MOVE_COLOR;
+                                    wasColored = true;
+                                }
                             }
                             std::cout << CURRENT_COLOR << boardTokens.verticalLine << RESET << "  " <<
                                       square_resolve(Coords((ColumnNotation) _col, _row), b) << "  ";
-                            if (wasColored &&  _col > colorOffsets.moveColumns[i] + 1) {
+                            if (wasColored && _col > colorOffsets.moveColumns[pairing] + 1) {
                                 CURRENT_COLOR = WHT;
                             }
                         }
                         std::cout << CURRENT_COLOR << boardTokens.verticalLine << RESET << std::endl;
+                        CURRENT_COLOR = WHT;
+
                         if (_row != 0) {
                             if (wasColored) {
+                                line(columns, colorOffsets.moveColumns[pairing], MOVE_COLOR);
+                            } else {
                                 line(columns);
                             }
                         }
+                        shouldColor = false;
+                        wasColored = false;
                     }
-                }
-                    bottom_line(colorOffsets, columns);
+                    bottom_line(BIANCO, columns);
                     break;
             }
         case NERO:
@@ -204,7 +176,7 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
                     line(columns);
                 }
             }
-            bottom_line(colorOffsets, columns);
+            bottom_line(NERO, columns);
             break;
     }
 }
@@ -224,8 +196,8 @@ void StdRender::render_board(Player &currentPlayer, Board &b, int rows, int colu
     }
 
     std::cout << std::endl << std::endl;
-    first_line(columns, colorOffsets);
-    middle(b, BIANCO, rows, columns, colorOffsets);
+    first_line(columns);
+    middle(b, BIANCO, rows, columns, colorOffsets, MOVE);
     std::cout << std::endl;
 }
 
