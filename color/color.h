@@ -4,6 +4,7 @@
 #include <vector>
 
 class Color {
+public:
     std::vector<int> moveRows;
     std::vector<int> moveColumns;
     std::vector<int> eatRows;
@@ -15,4 +16,6 @@ class Color {
     void paint_coords(std::vector<int>& rowCoords, std::vector<int>& columnCoords, Coords& coords);
     // This function organizes a move in all of the color class' vectors
     void paint_move(Move& move);
+
+    Color() = default;
 };

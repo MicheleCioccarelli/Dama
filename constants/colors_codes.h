@@ -85,3 +85,6 @@
 
 #define ERROR_COLOR RED
 #define PLAYER_COLOR HGRN
+#define MOVE_COLOR MAG
+#define EAT_COLOR RED
+#define BLOW_COLOR CYN

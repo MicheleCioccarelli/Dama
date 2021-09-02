@@ -95,12 +95,21 @@ class StdRender {
     SetPieces setPieces;
     BoardCoords boardCoords;
 public:
-    void border(std::string &lastChar);
-    void first_line(int columns);
-    void bottom_line(PlayerColor color, int columns);
-    void line(int columns);
-    void middle(Board &board, PlayerColor color, int row, int column);
+    // lineColor is the color in which the text is displayed, white by default, if the square being
+    // drawn was involved in movement it will be of color MOVE_COLOR, and so on
+    void border(std::string &lastChar, std::string lineColor = WHT);
+
+    // This function is only given an int colorOffset because it only needs to draw
+    void first_line(int columns, int colorOffset, std::string lineColor = WHT);
+    void bottom_line(PlayerColor playerColor, int columns, int colorOffset, std::string lineColor);
+    void line(int columns, int colorOffset, std::string lineColor);
+    void middle(Board &board, PlayerColor playerColor, int row, int column, Color& colorOffsets, MoveType moveType);
     std::string square_resolve(Coords coords, Board &board);
+
+    /* This funciton analyzes color's vectors and replaces their coordinates
+     * with offsets which can be used when drawing
+     */
+    void calculate_offsets(Color& color, int rows, int columns);
 
     void render_board(Player &currentPlayer, Board &b, int rows, int columns);
 
