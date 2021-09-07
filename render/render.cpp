@@ -3,22 +3,40 @@
 
 void StdRender::calculate_offsets(Color &color, int rows, int columns) {
     for (int i = 0; i < color.moveRows.size(); i++) {
+        if (color.moveRows[i] == 99) {
+            break;
+        }
         // This is the distance from the top of the board to the square which needs to be colored
         color.moveRows[i] = rows - color.moveRows[i];
     }
     for (int i = 0; i < color.moveColumns.size(); i++) {
-        color.moveColumns[i] = color.moveColumns[i] + 1;
+        if (color.moveColumns[i] == 99) {
+            break;
+        }
+        color.moveColumns[i] = color.moveColumns[i];
     }
     for (int i = 0; i < color.eatRows.size(); i++) {
+        if (color.eatRows[i] == 99) {
+            break;
+        }
         color.eatRows[i] = rows - color.eatRows[i];
     }
     for (int i = 0; i < color.eatColumns.size(); i++) {
+        if (color.eatColumns[i] == 99) {
+            break;
+        }
         color.eatColumns[i] = color.eatColumns[i] + 1;
     }
     for (int i = 0; i < color.blowRows.size(); i++) {
+        if (color.blowRows[i] == 99) {
+            break;
+        }
         color.blowRows[i] = rows - color.blowRows[i];
     }
     for (int i = 0; i < color.blowColumns.size(); i++) {
+        if (color.blowColumns[i] == 99) {
+            break;
+        }
         color.blowColumns[i] = color.blowColumns[i] + 1;
     }
 }
@@ -57,14 +75,10 @@ void StdRender::border(std::string &lastChar, std::string lineColor) {
               << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET << lastChar;
 }
 
-void StdRender::first_line(int columns, int colorOffset, std::string lineColor) {
+void StdRender::first_line(int columns) {
     std::cout << "   " << boardTokens.topLeft;
     for (int i = 1; i < columns; i++) {
-        if (i != colorOffset) {
-            border(boardTokens.upChain);
-        } else {
-            border(boardTokens.upChain, lineColor);
-        }
+        border(boardTokens.upChain);
     }
     border(boardTokens.topRight);
     std::cout << std::endl;
@@ -94,7 +108,7 @@ void StdRender::bottom_line(PlayerColor playerColor, int columns, int colorOffse
 
 }
 
-void StdRender::line(int columns, int colorOffset, std::string lineColor) {
+void StdRender::line(int columns, int colorOffset, const std::string& lineColor) {
     std::cout << "   " << boardTokens.leftBorder;
     for (int i = 1; i < columns; i++) {
         if (i != colorOffset) {
@@ -107,63 +121,82 @@ void StdRender::line(int columns, int colorOffset, std::string lineColor) {
     std::cout << std::endl;
 }
 
-void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns, Color& colorOffsets, MoveType moveType) {
-    std::string CURRENT_COLOR = WHT;
-    // When something in a row was colored, this becomes true
+void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns, Color colorOffsets) {
+    std::string CURRENT_COLOR = BOARD_COLOR;
+    // This is true when a square is being colored
     bool wasColored = false;
     bool shouldColor = false;
-
+    // This is for coloring the top and bottom of a square
+    bool lineColor = false;
+    int lineIndex = 0;
     // This is the place in the coloring vector of a row that should be colored, so it can be
     // paired with the corresponding column (if you found moveRow[1] you have to color moveColumn[1])
-    int pairing {};
+    int vectorPosition = 0;
 
     switch (playerColor) {
         case BIANCO:
-            switch (moveType) {
+            switch (colorOffsets.moveType) {
                 // Only check the move vectors in colorOffsets and do normal rendering
                 case MOVE:
                     for (int _row = rows - 1; _row >= 0; _row--) {
+                        for (int i = 0; i < colorOffsets.moveColumns.size(); i++) {
+                            if (colorOffsets.moveRows[i] <= 0) {
+                                // This tells the columns that this is the right row
+                                vectorPosition = i;
+                                shouldColor = true;
+                                // Exclude this index from being colored in the future
+                                colorOffsets.moveRows[i] = 9;
+                            } else {
+                                // This is the line above the one which should be printed, now we color the top
+                                if (colorOffsets.moveRows[i] == 1) {
+                                    lineColor = true;
+                                    lineIndex = i;
+                                }
+                                // moveRows says how many rows you have to count before coloring one
+                                // when you get to 0 you are on the row you should color
+                                colorOffsets.moveRows[i]--;
+
+                            }
+                        }
                         // Print row number
                         std::cout << _row + 1 << "  ";
 
-                        for (int i = 0; i < colorOffsets.moveRows.size(); i++) {
-                            if (_row == colorOffsets.moveRows[i]) {
-                                shouldColor = true;
-                                pairing = i;
-                                break;
-                            }
-                        }
                         for (int _col = 0; _col < columns; _col++) {
                             if (shouldColor == true) {
-                                if (_col == colorOffsets.moveColumns[pairing]) {
-                                    // Cancel an already colored column
-                                    colorOffsets.moveColumns[pairing] = 9;
+                                if (colorOffsets.moveColumns[vectorPosition] > 0) {
+                                    colorOffsets.moveColumns[vectorPosition]--;
+                                } else {
                                     CURRENT_COLOR = MOVE_COLOR;
                                     wasColored = true;
+                                    shouldColor = false;
                                 }
                             }
-                            std::cout << CURRENT_COLOR << boardTokens.verticalLine << RESET << "  " <<
-                                      square_resolve(Coords((ColumnNotation) _col, _row), b) << "  ";
-                            if (wasColored && _col > colorOffsets.moveColumns[pairing] + 1) {
-                                CURRENT_COLOR = WHT;
+                            std::cout << CURRENT_COLOR << boardTokens.verticalLine << RESET;
+                            if (wasColored == false) {
+                                CURRENT_COLOR = BOARD_COLOR;
                             }
+                            std::cout << "  " <<
+                                      square_resolve(Coords((ColumnNotation) _col, _row), b) << "  ";
+                            wasColored = false;
                         }
                         std::cout << CURRENT_COLOR << boardTokens.verticalLine << RESET << std::endl;
-                        CURRENT_COLOR = WHT;
+                        CURRENT_COLOR = BOARD_COLOR;
 
                         if (_row != 0) {
-                            if (wasColored) {
-                                line(columns, colorOffsets.moveColumns[pairing], MOVE_COLOR);
+                            if (lineColor) {
+                                line(columns, colorOffsets.moveColumns[lineIndex] + 1, MOVE_COLOR);
+                                lineColor = false;
                             } else {
                                 line(columns);
                             }
+                            shouldColor = false;
+                            wasColored = false;
                         }
-                        shouldColor = false;
-                        wasColored = false;
                     }
                     bottom_line(BIANCO, columns);
                     break;
             }
+            break;
         case NERO:
             for (int _row = 0; _row < rows; _row++) {
                 std::cout << _row + 1 << "  ";
@@ -191,13 +224,14 @@ void StdRender::render_board(Player &currentPlayer, Board &b, int rows, int colu
 
     // When there isn't a move there is nothing to offset
     if (!currentPlayer.moves.empty()) {
-        colorOffsets.paint_move(currentPlayer.moves[currentPlayer.moves.size() - 1]);
-        calculate_offsets(colorOffsets, rows, columns);
+        for (int i = 0; i < currentPlayer.moves.size(); i++) {
+            colorOffsets.paint_move(currentPlayer.moves[i]);
+            calculate_offsets(colorOffsets, rows, columns);
+        }
     }
-
     std::cout << std::endl << std::endl;
     first_line(columns);
-    middle(b, BIANCO, rows, columns, colorOffsets, MOVE);
+    middle(b, currentPlayer.color, rows, columns, colorOffsets);
     std::cout << std::endl;
 }
 

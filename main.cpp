@@ -35,9 +35,16 @@ int main() {
         while (engine.submit(move) != VALID) {
             UI::get_move(move, engine, currentPlayer.color);
         }
+
+        // Sync the player user in render and the one used in engine
+        if (currentPlayer.color == BIANCO) {
+            currentPlayer = engine.whitePlayer;
+        } else {
+            currentPlayer = engine.blackPlayer;
+        }
+
         engine.promote(8, 8);
         engine.render.render_board(currentPlayer, engine.board, 8, 8);
-
     }
 
     engine.render.render_board(currentPlayer, engine.board, 8, 8);
