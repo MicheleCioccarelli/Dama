@@ -40,6 +40,10 @@ iostream
 ../movecase/movecase.h
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
 
+/home/sedano/CLionProjects/Dama/constants/board_assets.h
+../enums/BoardStyles.h
+/home/sedano/CLionProjects/Dama/enums/BoardStyles.h
+
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
 
 /home/sedano/CLionProjects/Dama/coords/coords.h
@@ -131,8 +135,6 @@ render.h
 /home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
-../enums/BoardStyles.h
-/home/sedano/CLionProjects/Dama/enums/BoardStyles.h
 ../enums/GameState.h
 /home/sedano/CLionProjects/Dama/enums/GameState.h
 ../player/player.h
@@ -141,6 +143,22 @@ render.h
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
 ../color/color.h
 /home/sedano/CLionProjects/Dama/color/color.h
+../constants/board_assets.h
+/home/sedano/CLionProjects/Dama/constants/board_assets.h
+
+/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.cpp
+rendersquare.h
+/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
+
+/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
+iostream
+-
+../coords/coords.h
+/home/sedano/CLionProjects/Dama/coords/coords.h
+../constants/colors_codes.h
+/home/sedano/CLionProjects/Dama/constants/colors_codes.h
+../constants/board_assets.h
+/home/sedano/CLionProjects/Dama/constants/board_assets.h
 
 /home/sedano/CLionProjects/Dama/square/square.h
 iostream

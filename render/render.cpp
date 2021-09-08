@@ -105,18 +105,28 @@ void StdRender::bottom_line(PlayerColor playerColor, int columns, int colorOffse
                   << boardCoords.f << "     " << boardCoords.e << "     " << boardCoords.d
                   << "     " << boardCoords.c << "     " << boardCoords.b << "     " << boardCoords.a << std::endl;
     }
-
 }
 
 void StdRender::line(int columns, int colorOffset, const std::string& lineColor) {
     std::cout << "   " << boardTokens.leftBorder;
+    int topOffset = colorOffset % 10;
+    int bottomOffset = colorOffset / 10;
+    bool drawn = false;
+
     for (int i = 1; i < columns; i++) {
-        if (i != colorOffset) {
-            border(boardTokens.link);
-        } else {
+        if (i == topOffset) {
+            drawn = true;
+            border(boardTokens.link, lineColor);
+        } else if (i == bottomOffset) {
+            drawn = true;
             border(boardTokens.link, lineColor);
         }
+        if (drawn == false) {
+            border(boardTokens.link);
+        }
+        drawn = false;
     }
+    // Need to work on this
     border(boardTokens.rightBorder);
     std::cout << std::endl;
 }
@@ -127,8 +137,13 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
     bool wasColored = false;
     bool shouldColor = false;
     // This is for coloring the top and bottom of a square
-    bool lineColor = false;
-    int lineIndex = 0;
+    bool topLine = false;
+    bool bottomLine = false;
+    // This describes how to color two squares, since a line can be colored in 2 segments
+    int lineOffset = 0;
+
+    int topLineIndex = 0;
+    int bottomLineIndex = 0;
     // This is the place in the coloring vector of a row that should be colored, so it can be
     // paired with the corresponding column (if you found moveRow[1] you have to color moveColumn[1])
     int vectorPosition = 0;
@@ -144,25 +159,26 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
                                 // This tells the columns that this is the right row
                                 vectorPosition = i;
                                 shouldColor = true;
+                                bottomLine = true;
+                                bottomLineIndex = i;
                                 // Exclude this index from being colored in the future
                                 colorOffsets.moveRows[i] = 9;
                             } else {
-                                // This is the line above the one which should be printed, now we color the top
+                                // This is the line above the one which should be printed, tells the line to color the top segment
                                 if (colorOffsets.moveRows[i] == 1) {
-                                    lineColor = true;
-                                    lineIndex = i;
+                                    topLine = true;
+                                    topLineIndex = i;
                                 }
                                 // moveRows says how many rows you have to count before coloring one
                                 // when you get to 0 you are on the row you should color
                                 colorOffsets.moveRows[i]--;
-
                             }
                         }
                         // Print row number
                         std::cout << _row + 1 << "  ";
 
                         for (int _col = 0; _col < columns; _col++) {
-                            if (shouldColor == true) {
+                            if (shouldColor) {
                                 if (colorOffsets.moveColumns[vectorPosition] > 0) {
                                     colorOffsets.moveColumns[vectorPosition]--;
                                 } else {
@@ -183,9 +199,21 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
                         CURRENT_COLOR = BOARD_COLOR;
 
                         if (_row != 0) {
-                            if (lineColor) {
-                                line(columns, colorOffsets.moveColumns[lineIndex] + 1, MOVE_COLOR);
-                                lineColor = false;
+                            if (topLine) {
+                                lineOffset += colorOffsets.moveColumns[topLineIndex] + 1;
+                            }
+                            if (bottomLine) {
+                                if (colorOffsets.moveColumns[bottomLineIndex] == 0) {
+                                    lineOffset += 10;
+                                } else {
+                                    lineOffset += colorOffsets.moveColumns[bottomLineIndex] * 10;
+                                }
+                            }
+                            if (topLine || bottomLine) {
+                                line(columns, lineOffset, MOVE_COLOR);
+                                topLine = false;
+                                bottomLine = false;
+                                lineOffset = 0;
                             } else {
                                 line(columns);
                             }
@@ -247,7 +275,6 @@ void StdRender::center_name(std::string& name, int longerName) {
         for (int i = 0; i < diff / 2; i++) {
             std::cout << " ";
         }
-
         std::cout << name;
 
         if (diff % 2 == 0) {
@@ -269,7 +296,7 @@ void StdRender::padding(int numberOfSpaces) {
 }
 
 void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
-                           Player& blackPlayer, GameState result) {
+                           Player& blackPlayer, GameState result) const {
     std::vector<std::string> strings;
     strings.emplace_back("Nome");
     strings.emplace_back("Pezzi");

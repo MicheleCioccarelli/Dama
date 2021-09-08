@@ -32,6 +32,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: \
  color/color.h \
  command/command.cpp \
  command/command.h \
+ constants/board_assets.h \
  constants/colors_codes.h \
  coords/coords.h \
  engine/engine.h \
@@ -58,6 +59,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: \
  board/board.h \
  color/color.h \
  command/command.h \
+ constants/board_assets.h \
  constants/colors_codes.h \
  coords/coords.h \
  engine/engine.cpp \
@@ -82,6 +84,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: \
  board/board.h \
  color/color.h \
  command/command.h \
+ constants/board_assets.h \
  constants/colors_codes.h \
  coords/coords.h \
  engine/engine.h \
@@ -138,6 +141,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: \
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: \
  board/board.h \
  color/color.h \
+ constants/board_assets.h \
  constants/colors_codes.h \
  coords/coords.h \
  enums/BoardStyles.h \
@@ -155,6 +159,14 @@ CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: \
  render/render.cpp \
  render/render.h \
  square/square.h
+CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o: \
+ constants/board_assets.h \
+ constants/colors_codes.h \
+ coords/coords.h \
+ enums/BoardStyles.h \
+ enums/ColumnNotatiton.h \
+ rendersquare/rendersquare.cpp \
+ rendersquare/rendersquare.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: \
  coords/coords.h \
  enums/ColumnNotatiton.h \
@@ -168,6 +180,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: \
  board/board.h \
  color/color.h \
  command/command.h \
+ constants/board_assets.h \
  constants/colors_codes.h \
  coords/coords.h \
  engine/engine.h \

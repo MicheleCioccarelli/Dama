@@ -19,6 +19,7 @@ set(CMAKE_DEPENDS_CHECK_CXX
   "/home/sedano/CLionProjects/Dama/piece/Piece.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o"
   "/home/sedano/CLionProjects/Dama/player/player.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o"
   "/home/sedano/CLionProjects/Dama/render/render.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o"
+  "/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o"
   "/home/sedano/CLionProjects/Dama/square/square.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o"
   "/home/sedano/CLionProjects/Dama/ui/ui.cpp" "/home/sedano/CLionProjects/Dama/CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o"
   )

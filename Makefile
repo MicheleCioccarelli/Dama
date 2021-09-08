@@ -67,8 +67,8 @@ CMAKE_BINARY_DIR = /home/sedano/CLionProjects/Dama
 
 # Special rule for the target edit_cache
 edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake cache editor..."
-	/home/linuxbrew/.linuxbrew/Homebrew/Cellar/cmake/3.19.6/bin/ccmake -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/home/sedano/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/212.5080.54/bin/cmake/linux/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -393,6 +393,30 @@ render/render.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.s
 .PHONY : render/render.cpp.s
 
+rendersquare/rendersquare.o: rendersquare/rendersquare.cpp.o
+.PHONY : rendersquare/rendersquare.o
+
+# target to build an object file
+rendersquare/rendersquare.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o
+.PHONY : rendersquare/rendersquare.cpp.o
+
+rendersquare/rendersquare.i: rendersquare/rendersquare.cpp.i
+.PHONY : rendersquare/rendersquare.i
+
+# target to preprocess a source file
+rendersquare/rendersquare.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.i
+.PHONY : rendersquare/rendersquare.cpp.i
+
+rendersquare/rendersquare.s: rendersquare/rendersquare.cpp.s
+.PHONY : rendersquare/rendersquare.s
+
+# target to generate assembly for a file
+rendersquare/rendersquare.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.s
+.PHONY : rendersquare/rendersquare.cpp.s
+
 square/square.o: square/square.cpp.o
 .PHONY : square/square.o
 
@@ -483,6 +507,9 @@ help:
 	@echo "... render/render.o"
 	@echo "... render/render.i"
 	@echo "... render/render.s"
+	@echo "... rendersquare/rendersquare.o"
+	@echo "... rendersquare/rendersquare.i"
+	@echo "... rendersquare/rendersquare.s"
 	@echo "... square/square.o"
 	@echo "... square/square.i"
 	@echo "... square/square.s"
