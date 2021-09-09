@@ -165,6 +165,13 @@ CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o
  /home/sedano/CLionProjects/Dama/coords/coords.h
  /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
  /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+ /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
+ /home/sedano/CLionProjects/Dama/enums/MoveType.h
+ /home/sedano/CLionProjects/Dama/enums/PieceType.h
+ /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
+ /home/sedano/CLionProjects/Dama/move/move.h
+ /home/sedano/CLionProjects/Dama/movecase/movecase.h
+ /home/sedano/CLionProjects/Dama/piece/Piece.h
  /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.cpp
  /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o

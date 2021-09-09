@@ -7,6 +7,7 @@
 #include "../coords/coords.h"
 #include "../constants/colors_codes.h"
 #include "../constants/board_assets.h"
+#include "../constants/number_constants.h"
 
 class RenderSquare {
 public:
@@ -28,7 +29,7 @@ public:
     RenderSquare(const BoardTokens& tokens, Coords _coords);
 };
 
-class RenderBoard {
+class ColorMatrix {
     int rows;
     int columns;
 
@@ -42,5 +43,5 @@ class RenderBoard {
     // Set every square's color to white
     void clear();
 
-    RenderBoard(int _rows, int _columns, const BoardTokens& tokens, const Coords coords);
+    ColorMatrix(const BoardTokens& tokens, const Coords coords);
 };

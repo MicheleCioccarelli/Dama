@@ -87,6 +87,9 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/constants/board_assets.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/constants/number_constants.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/coords/coords.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

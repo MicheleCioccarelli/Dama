@@ -2,11 +2,41 @@
 
 RenderSquare::RenderSquare(const BoardTokens& tokens, Coords _coords) {
     _coords = coords;
-
-    topLeftCorner = tokens.topLeft;
-    topRightCorner = tokens.topRight;
-    bottomLeftCorner = tokens.bottomLeft;
-    bottomRightCorner = tokens.bottomRight;
+    // Format special squares depending on their position in the board
+    switch (coords.row) {
+        case 0:
+            if (coords.column == 0) {
+                bottomLeftCorner = tokens.bottomLeft;
+                bottomRightCorner = tokens.downChain;
+            } else if (coords.column == COLUMNS - 1) {
+                bottomRightCorner = tokens.bottomRight;
+                bottomLeftCorner = tokens.downChain;
+            } else {
+                bottomLeftCorner = tokens.downChain;
+            }
+            break;
+        case ROWS - 1:
+            if (coords.column == 0) {
+                topLeftCorner = tokens.topLeft;
+                topRightCorner = tokens.upChain;
+                bottomRightCorner = tokens.leftBorder;
+            } else if (coords.column == COLUMNS - 1) {
+                topRightCorner = tokens.topRight;
+                topLeftCorner = tokens.upChain;
+                bottomRightCorner = tokens.rightBorder;
+            } else {
+                topRightCorner = tokens.upChain;
+            }
+            break;
+        default:
+            if (coords.column == 0) {
+                bottomLeftCorner = tokens.leftBorder;
+            } else if (coords.column == COLUMNS - 1) {
+                bottomRightCorner = tokens.rightBorder;
+                break;
+            }
+            bottomLeftCorner = tokens.link;
+    }
 }
 
 void RenderSquare::paint(const std::string &color) {
@@ -16,16 +46,15 @@ void RenderSquare::paint(const std::string &color) {
     south_side = color;
 }
 
-RenderBoard::RenderBoard(int _rows, int _columns, const BoardTokens& tokens, const Coords coords)
-    : rows(_rows), columns(_columns){
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+ColorMatrix::ColorMatrix(const BoardTokens& tokens, const Coords coords) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             matrix[row][col] = RenderSquare(tokens, Coords((ColumnNotation)col, row));
         }
     }
 }
 
-void RenderBoard::clear() {
+void ColorMatrix::clear() {
     for (int row = 0; row < rows; row++) {
         for (int col = 0; col < columns; col++) {
             matrix[row][col].east_side = BOARD_COLOR;
@@ -36,7 +65,7 @@ void RenderBoard::clear() {
     }
 }
 
-void RenderBoard::paint_square(Coords coords, std::string& color) {
+void ColorMatrix::paint_square(Coords coords, std::string& color) {
     // If the square isn't at the top of the board
     if (coords.column < columns - 1) {
         // Since the board is drawn from top to bottom the square above the one being colored has its southern side painted
@@ -45,7 +74,7 @@ void RenderBoard::paint_square(Coords coords, std::string& color) {
     matrix[coords.row][coords.column].paint(color);
 }
 
-void RenderBoard::color_board(Move &move) {
+void ColorMatrix::color_board(Move &move) {
     Coords currentCoords = move.coords[0];
 
     // Painting the first square of the move as a moving square

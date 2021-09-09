@@ -165,6 +165,13 @@ CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o: \
  coords/coords.h \
  enums/BoardStyles.h \
  enums/ColumnNotatiton.h \
+ enums/MoveReturn.h \
+ enums/MoveType.h \
+ enums/PieceType.h \
+ enums/PlayerColor.h \
+ move/move.h \
+ movecase/movecase.h \
+ piece/Piece.h \
  rendersquare/rendersquare.cpp \
  rendersquare/rendersquare.h
 CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: \
