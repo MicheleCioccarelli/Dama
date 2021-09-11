@@ -3,8 +3,8 @@
 
 // ====== GAME ENGINE ======
 GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
-                       BoardCoords _coords, int rows, int columns)
-        : render(_tokens, _pieces, _coords), board(rows, columns) {
+                       BoardCoords _coords)
+        : render(_tokens, _pieces, _coords), board() {
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();
@@ -275,10 +275,10 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
     return ROCK_SOLID;
 }
 
-int GameEngine::count_pieces(PlayerColor pColor, int rows, int columns) {
+int GameEngine::count_pieces(PlayerColor pColor) {
     int returnValue = 0;
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (pColor == BIANCO) {
                 if (board.matrix[row][col].piece.color == BIANCO)
                     returnValue++;
@@ -324,9 +324,9 @@ MoveReturn GameEngine::submit(const Move& move) {
         return status;
 }
 
-void GameEngine::promote(int rows, int columns) {
-    for (int row = 0; row <= rows; row += 7) {
-        for (int col = 0; col < columns; col++) {
+void GameEngine::promote() {
+    for (int row = 0; row <= ROWS; row += 7) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (board.matrix[row][col].piece.color == NERO && board.matrix[row][col].piece.type== DAMA && row == 0) {
                 board.matrix[row][col].piece.type = DAMONE;
             } else if (board.matrix[row][col].piece.color == BIANCO && board.matrix[row][col].piece.type == DAMA && row == 7) {
@@ -498,7 +498,7 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
     return false;
 }
 
-GameState GameEngine::game_over(int rows, int columns) {
+GameState GameEngine::game_over() {
 
     // The number of possible moves for each color
     int blackMoves = 0;
@@ -508,8 +508,8 @@ GameState GameEngine::game_over(int rows, int columns) {
 
     // Look at every piece on the board and see what moves they can do,
     // if none is found then the game is over
-    for (int row = 0; row <= rows - 1; row++) {
-        for (int col = 0; col <= columns - 1; col++) {
+    for (int row = 0; row <= ROWS - 1; row++) {
+        for (int col = 0; col <= COLUMNS - 1; col++) {
             switch (board.matrix[row][col].piece.type) {
                 case VUOTA:
                     break;
@@ -548,15 +548,15 @@ GameState GameEngine::game_over(int rows, int columns) {
         }
     }
 
-    if (count_pieces(BIANCO, rows, columns) > 0 && whiteMoves == 0){
+    if (count_pieces(BIANCO) > 0 && whiteMoves == 0){
         return STALEMATE;
-    } else if (count_pieces(NERO, rows, columns) > 0 && blackMoves == 0){
+    } else if (count_pieces(NERO) > 0 && blackMoves == 0){
         return STALEMATE;
-    }  else if (count_pieces(BIANCO, rows, columns) == 0
-        && count_pieces(NERO, rows, columns) > 0) {
+    }  else if (count_pieces(BIANCO) == 0
+        && count_pieces(NERO) > 0) {
         return BLACK_WIN;
-    } else if (count_pieces(NERO, rows, columns) == 0
-        && count_pieces(BIANCO, rows, columns) > 0) {
+    } else if (count_pieces(NERO) == 0
+        && count_pieces(BIANCO) > 0) {
         return WHITE_WIN;
     } else if (blackMoves == 0 && whiteMoves == 0) {
         return STALEMATE;

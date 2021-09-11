@@ -13,10 +13,10 @@ class RenderSquare {
 public:
     Coords coords;
     // The color of each side
-    std::string north_side = BOARD_COLOR;
-    std::string south_side = BOARD_COLOR;
-    std::string east_side = BOARD_COLOR;
-    std::string west_side = BOARD_COLOR;
+    std::string northColor = BOARD_COLOR;
+    std::string southColor = BOARD_COLOR;
+    std::string eastColor = BOARD_COLOR;
+    std::string westColor = BOARD_COLOR;
 
     std::string topLeftCorner;
     std::string topRightCorner;
@@ -26,13 +26,13 @@ public:
     // Colors all of the square's sides in the color
     void paint(const std::string& color);
 
+    RenderSquare& operator=(const RenderSquare& rhs);
+
     RenderSquare(const BoardTokens& tokens, Coords _coords);
 };
 
 class ColorMatrix {
-    int rows;
-    int columns;
-
+public:
     std::vector<std::vector<RenderSquare>> matrix;
 
     void paint_square(Coords coords, std::string& color);
@@ -43,5 +43,7 @@ class ColorMatrix {
     // Set every square's color to white
     void clear();
 
-    ColorMatrix(const BoardTokens& tokens, const Coords coords);
+    ColorMatrix() = default;
+
+    ColorMatrix(const BoardTokens& tokens);
 };

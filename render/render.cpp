@@ -1,6 +1,151 @@
 #include "render.h"
-// ======= RENDER =======
 
+// RENDER V2
+
+RenderV2::RenderV2(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
+    : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {
+    colorMatrix = ColorMatrix(boardTokens);
+}
+
+void RenderV2::render_top(int row, PlayerColor color) {
+    if (color == BIANCO) {
+        for (int i = 0; i < COLUMNS; i++) {
+            RenderSquare currentSquare = colorMatrix.matrix[row][i];
+
+            std::cout << BOARD_COLOR << currentSquare.topLeftCorner << RESET;
+
+            std::cout << currentSquare.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+                      boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
+        }
+    } else {
+        // When you draw black side you have to flip the contents of the squares but keep the corners untouched
+        // so you draw corners like before but flip the color in the middle
+        for (int i = 0, colorRow = 7 - row; i < COLUMNS; i++) {
+            RenderSquare currentCorner = colorMatrix.matrix[row][i];
+            RenderSquare currentColor = colorMatrix.matrix[colorRow][i];
+
+            std::cout << BOARD_COLOR << currentCorner.topLeftCorner << RESET;
+
+            std::cout << currentColor.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+                      boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
+        }
+    }
+    std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].topRightCorner << RESET;
+}
+
+void RenderV2::render_bottom(int row) {
+    for (int i = 0; i < COLUMNS; i++) {
+        RenderSquare currentSquare = colorMatrix.matrix[row][i];
+
+        std::cout << BOARD_COLOR << currentSquare.bottomLeftCorner << RESET;
+
+        std::cout << currentSquare.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+                  boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
+    }
+    std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].bottomRightCorner << RESET;
+}
+
+void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
+    if (color == BIANCO) {
+        for (int i = 0; i < COLUMNS; i++) {
+            RenderSquare currentColor = colorMatrix.matrix[row][i];
+            std::string currentPiece = square_resolve(Coords(ColumnNotation(i), row), board);
+
+            std::cout << currentColor.westColor << boardTokens.verticalLine << RESET;
+            std::cout << boardTokens.filling << boardTokens.filling;
+            //Note for future (if you want to color pieces) this is where you render pieces
+            std::cout << PIECE_COLOR << currentPiece << RESET;
+            std::cout << boardTokens.filling << boardTokens.filling;
+        }
+        std::cout << colorMatrix.matrix[row][COLUMNS - 1].eastColor << boardTokens.verticalLine << RESET;
+    } else { // Doing the same thing as in RenderV2::render_top()
+        for (int i = 0, colorRow = 7 - row; i < COLUMNS; i++) {
+            RenderSquare currentCorner = colorMatrix.matrix[row][i];
+            RenderSquare currentColor = colorMatrix.matrix[colorRow][i];
+
+            std::string currentPiece = square_resolve(Coords(ColumnNotation(i), colorRow), board);
+
+            std::cout << currentCorner.westColor << boardTokens.verticalLine << RESET;
+            std::cout << boardTokens.filling << boardTokens.filling;
+            //Note for future (if you want to color pieces) this is where you render pieces
+            std::cout << BOARD_COLOR << currentPiece << RESET;
+            std::cout << boardTokens.filling << boardTokens.filling;
+        }
+        std::cout << colorMatrix.matrix[7 - row][COLUMNS - 1].eastColor << boardTokens.verticalLine << RESET;
+    }
+}
+
+void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
+    // If move.color is TRASPARENTE the move wasn't provided and the board should be white, otherwize color according to the move
+    if (move.color != TRASPARENTE) {
+        colorMatrix.color_board(move);
+    }
+
+    switch(color) {
+        case BIANCO:
+            render_top(ROWS - 1, BIANCO);
+            std::cout << std::endl;
+            for (int row = ROWS - 1; row >= 0; row--) {
+                render_middle(row, board, BIANCO);
+                std::cout << std::endl;
+                render_bottom(row);
+                std::cout << std::endl;
+            }
+            break;
+        case NERO:
+            render_top(ROWS - 1, NERO);
+            std::cout << std::endl;
+            for (int row = ROWS - 1; row >= 0; row--) {
+                render_middle(row, board, NERO);
+                std::cout << std::endl;
+                render_bottom(row);
+                std::cout << std::endl;
+            }
+    }
+}
+
+std::string RenderV2::square_resolve(Coords coords, Board &board) {
+    switch (board.matrix[coords.row][coords.column].piece.color) {
+        case BIANCO:
+            switch (board.matrix[coords.row][coords.column].piece.type) {
+                case DAMA:
+                    return setPieces.damaB;
+                case DAMONE:
+                    return setPieces.damoneB;
+                case VUOTA:
+                    return setPieces.vuota;
+                case COLORATA:
+                    return setPieces.colorata;
+            }
+        case NERO:
+            switch (board.matrix[coords.row][coords.column].piece.type) {
+                case DAMA:
+                    return setPieces.damaN;
+                case DAMONE:
+                    return setPieces.damoneN;
+                case VUOTA:
+                    return setPieces.vuota;
+                case COLORATA:
+                    return setPieces.colorata;
+            }
+        default:
+            return " ";
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ======= RENDER =======
 void StdRender::calculate_offsets(Color &color, int rows, int columns) {
     for (int i = 0; i < color.moveRows.size(); i++) {
         if (color.moveRows[i] == 99) {

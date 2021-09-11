@@ -1,13 +1,12 @@
 #include "board.h"
 
-Board::Board(int _rows, int _columns)
-    : rows(_rows), columns(_columns) {
+Board::Board() {
     // Initialize vector
-    matrix.resize(rows);
+    matrix.resize(ROWS);
 
     // Give color and coords to every square
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             Coords currentCoords = Coords((ColumnNotation) col, row);
             if ((col + row) % 2 == 0) {
                 matrix[row].emplace_back(currentCoords, NERA);
@@ -21,11 +20,11 @@ Board::Board(int _rows, int _columns)
 // ======= PIECE INITIALIZATION =======
 void Board::standard_game_initialization() {
     // Initialize pieces
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMA, BIANCO);
-            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMA, NERO);
             }
         }

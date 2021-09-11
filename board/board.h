@@ -4,6 +4,8 @@
 #include "../enums/PlayerColor.h"
 #include "../move/move.h"
 
+#include "../constants/number_constants.h"
+
 #include <vector>
 
 class Board {
@@ -32,5 +34,5 @@ public:
 
     void edit(Coords coords, Piece _piece);
 
-    Board(int _rows, int _columns);
+    Board();
 };

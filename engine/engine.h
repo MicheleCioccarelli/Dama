@@ -30,20 +30,20 @@ public:
 
     void dispatch_move(const Move& move, bool isBlown);
 
-    int count_pieces(PlayerColor pColor, int rows, int columns);
+    int count_pieces(PlayerColor pColor);
 
     // Convert coords from human notation no matrix notation
     static Coords convert_coords(Coords coords);
 
-    void promote(int rows, int columns);
+    void promote();
 
     // These funcion are used in game_over()
     // and check every possible move, if at least one is found they return true
     bool simulate_damina(Piece piece, Coords coords);
     bool simulate_damona(Piece piece, Coords coords);
 
-    GameState game_over(int rows, int columns);
+    GameState game_over();
 
     GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
-    BoardCoords _coords, int rows, int columns);
+    BoardCoords _coords);
 };

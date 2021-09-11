@@ -86,6 +86,8 @@
 #define ERROR_COLOR RED
 #define PLAYER_COLOR HGRN
 #define BOARD_COLOR HWHT
+#define PIECE_COLOR CYN
+
 #define MOVE_COLOR HBLU
 #define EAT_COLOR RED
 #define BLOW_COLOR CYN
