@@ -104,7 +104,7 @@ void ColorMatrix::clear() {
     }
 }
 
-void ColorMatrix::paint_square(Coords coords, std::string& color) {
+void ColorMatrix::paint_square(Coords coords, std::string color) {
     // If the square isn't at the top of the board
     if (coords.row < ROWS - 1) {
         // Since the board is drawn from top to bottom the square above the one being colored has its southern side painted
@@ -119,26 +119,27 @@ void ColorMatrix::paint_square(Coords coords, std::string& color) {
 }
 
 void ColorMatrix::color_board(Move &move) {
+    Coords actualCoords = Coords(move.coords)
     Coords currentCoords = move.coords[0];
 
     // Painting the first square of the move as a moving square
-    paint_square(currentCoords, (std::string &) MOVE_COLOR);
+    paint_square(currentCoords, MOVE_COLOR);
 
     currentCoords = move.coords[1];
     switch (move.type.moveType) {
         case MOVE:
-            paint_square(currentCoords, (std::string &) MOVE_COLOR);
+            paint_square(currentCoords, MOVE_COLOR);
             break;
         case EAT:
-            paint_square(currentCoords, (std::string &) EAT_COLOR);
+            paint_square(currentCoords, EAT_COLOR);
             // If there are multiple eatings
             for (int i = 2; i < move.coords.size(); i++) {
                 currentCoords = move.coords[i];
 
                 if (i % 2 == 0) {
-                    paint_square(currentCoords, (std::string &) MOVE_COLOR);
+                    paint_square(currentCoords, MOVE_COLOR);
                 } else {
-                    paint_square(currentCoords, (std::string &) EAT_COLOR);
+                    paint_square(currentCoords, EAT_COLOR);
                 }
             }
             break;

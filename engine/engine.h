@@ -32,9 +32,6 @@ public:
 
     int count_pieces(PlayerColor pColor);
 
-    // Convert coords from human notation no matrix notation
-    static Coords convert_coords(Coords coords);
-
     void promote();
 
     // These funcion are used in game_over()

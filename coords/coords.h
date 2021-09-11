@@ -12,6 +12,9 @@ public:
     bool operator==(const Coords &rhs) const;
     bool operator!=(const Coords &rhs) const;
 
+    // Convert coords from human notation to matrix notation
+    static Coords convert_coords(Coords coords);
+
     Coords(ColumnNotation _column = Z, int _row = 9)
     : column(_column), row(_row) {}
 };

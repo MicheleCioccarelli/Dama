@@ -35,7 +35,7 @@ class ColorMatrix {
 public:
     std::vector<std::vector<RenderSquare>> matrix;
 
-    void paint_square(Coords coords, std::string& color);
+    void paint_square(Coords coords, std::string color);
 
     // Color the right squares according to the given move
     void color_board(Move& move);

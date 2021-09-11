@@ -33,10 +33,6 @@ PlayerColor GameEngine::deduce_color(const Move &move) {
     return board.matrix[temp.coords[0].row][temp.coords[0].column].piece.color;
 }
 
-Coords GameEngine::convert_coords(Coords coords) {
-    return Coords(coords.column, coords.row - 1);
-}
-
 void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
     // Add the move to the respective player
     if (move.color == BIANCO) {
