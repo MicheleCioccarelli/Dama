@@ -21,14 +21,14 @@ GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _piec
     }
 }
 
-PlayerColor GameEngine::deduce_color(const Move &move) {
+PlayerColor GameEngine::deduce_color(Move &move) {
     Move temp(BIANCO);
 
     if (move.coords.size() == 0) {
         return TRASPARENTE;
     }
 
-    temp.coords.push_back(convert_coords(move.coords[0]));
+    temp.coords.push_back(move.coords[0].convert_coords());
 
     return board.matrix[temp.coords[0].row][temp.coords[0].column].piece.color;
 }
@@ -57,8 +57,8 @@ MoveReturn GameEngine::check_move(Move &move) {
     int horizontalDistance;
     int verticalDistance;
 
-    Coords startingCoords = convert_coords(move.coords[0]);
-    Coords endingCoords = convert_coords(move.coords[lastIndex]);
+    Coords startingCoords = move.coords[0].convert_coords();
+    Coords endingCoords = move.coords[lastIndex].convert_coords();
 
     if (startingCoords.column >= Z || startingCoords.column < A) {
         return OUT_OF_BOUNDS;
@@ -135,8 +135,8 @@ MoveReturn GameEngine::check_eat(Move& move) {
             }
             startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
 
-            startingCoords = convert_coords(move.coords[0]);
-            endingCoords = convert_coords(move.coords[1]);
+            startingCoords = move.coords[0].convert_coords();
+            endingCoords = move.coords[1].convert_coords();
 
             endingSquare = board.matrix[endingCoords.row][endingCoords.column];
 
@@ -176,7 +176,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             } else if (move.coords.at(i).column <= 0 || move.coords.at(i).column >= 7) {
                 return OUT_OF_BOUNDS;
             }
-            endingCoords = convert_coords(move.coords[i]);
+            endingCoords = move.coords[i].convert_coords();
 
             endingSquare = board.matrix[endingCoords.row][endingCoords.column];
             startingSquare = forwardSquare;
@@ -256,8 +256,8 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
     } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
         return OUT_OF_BOUNDS;
     }
-    Coords startingCoords = convert_coords(_startingCoords);
-    Coords endingCoords = convert_coords(_endingCoords);
+    Coords startingCoords = _startingCoords.convert_coords();
+    Coords endingCoords = _endingCoords.convert_coords();
 
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];

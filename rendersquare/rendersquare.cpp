@@ -119,13 +119,12 @@ void ColorMatrix::paint_square(Coords coords, std::string color) {
 }
 
 void ColorMatrix::color_board(Move &move) {
-    Coords actualCoords = Coords(move.coords)
-    Coords currentCoords = move.coords[0];
+    Coords currentCoords = move.coords[0].convert_coords();
 
     // Painting the first square of the move as a moving square
     paint_square(currentCoords, MOVE_COLOR);
 
-    currentCoords = move.coords[1];
+    currentCoords = move.coords[1].convert_coords();
     switch (move.type.moveType) {
         case MOVE:
             paint_square(currentCoords, MOVE_COLOR);
@@ -134,7 +133,7 @@ void ColorMatrix::color_board(Move &move) {
             paint_square(currentCoords, EAT_COLOR);
             // If there are multiple eatings
             for (int i = 2; i < move.coords.size(); i++) {
-                currentCoords = move.coords[i];
+                currentCoords = move.coords[i].convert_coords();
 
                 if (i % 2 == 0) {
                     paint_square(currentCoords, MOVE_COLOR);
