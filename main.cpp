@@ -8,8 +8,6 @@ int main() {
 
     GameEngine engine(STANDARD, board, pieces, coords);
 
-    //engine.board.standard_game_initialization();
-
     RenderV2 render(board, pieces, coords);
 
     Move hope(Coords(A, 3), Coords(B, 4), BIANCO, MOVE);

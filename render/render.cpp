@@ -92,7 +92,6 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
         render_bottom(row);
         std::cout << std::endl;
     }
-
     render_columns(color);
 }
 
@@ -127,13 +126,13 @@ std::string RenderV2::square_resolve(Coords coords, Board &board) {
 
 void RenderV2::render_rows(PlayerColor color, int row) {
     if (color == BIANCO) {
-        std::cout << row + 1 << "   ";
+        std::cout << BOARD_COLOR << row + 1 << "   " << RESET;
     } else {
-        std::cout << 8 - row << "   ";
+        std::cout << BOARD_COLOR << 8 - row << "   " << RESET;
     }
 }
 
-void RenderV2::render_columns(PlayerColor color) {
+void RenderV2::render_columns(PlayerColor color) const {
     int k;
 
     std::cout << "       ";
@@ -145,31 +144,31 @@ void RenderV2::render_columns(PlayerColor color) {
         }
         switch (k) {
             case 0:
-                std::cout << boardCoords.a;
+                std::cout << BOARD_COLOR << boardCoords.a << RESET;
                 break;
             case 1:
-                std::cout << boardCoords.b;
+                std::cout << BOARD_COLOR << boardCoords.b << RESET;
                 break;
             case 2:
-                std::cout << boardCoords.c;
+                std::cout << BOARD_COLOR << boardCoords.c << RESET;
                 break;
             case 3:
-                std::cout << boardCoords.d;
+                std::cout << BOARD_COLOR << boardCoords.d << RESET;
                 break;
             case 4:
-                std::cout << boardCoords.e;
+                std::cout << BOARD_COLOR << boardCoords.e << RESET;
                 break;
             case 5:
-                std::cout << boardCoords.f;
+                std::cout << BOARD_COLOR << boardCoords.f << RESET;
                 break;
             case 6:
-                std::cout << boardCoords.g;
+                std::cout << BOARD_COLOR << boardCoords.g << RESET;
                 break;
             case 7:
-                std::cout << boardCoords.h;
+                std::cout << BOARD_COLOR << boardCoords.h << RESET;
                 break;
             default:
-                std::cout << "?";
+                std::cout << BOARD_COLOR << "?" << RESET;
         }
         std::cout << "     ";
     }

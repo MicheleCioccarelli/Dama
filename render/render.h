@@ -64,7 +64,7 @@ public:
     // Renders a board on the right side, if no move is provided the result is all BOARD_COLOR (see constants/color_codes.h)
     void render_board(Board& board, PlayerColor color, Move move = Move());
     // Renders the right row number based on color
-    void render_rows(PlayerColor color, int row);
+    static void render_rows(PlayerColor color, int row);
     // Draws A ~ H on the bottom of the board
-    void render_columns(PlayerColor color);
+    void render_columns(PlayerColor color) const;
 };
