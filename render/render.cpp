@@ -1,7 +1,6 @@
 #include "render.h"
 
 // RENDER V2
-
 RenderV2::RenderV2(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
     : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {
     colorMatrix = ColorMatrix(boardTokens);
@@ -81,27 +80,20 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
         colorMatrix.color_board(move);
     }
 
-    switch(color) {
-        case BIANCO:
-            render_top(ROWS - 1, BIANCO);
-            std::cout << std::endl;
-            for (int row = ROWS - 1; row >= 0; row--) {
-                render_middle(row, board, BIANCO);
-                std::cout << std::endl;
-                render_bottom(row);
-                std::cout << std::endl;
-            }
-            break;
-        case NERO:
-            render_top(ROWS - 1, NERO);
-            std::cout << std::endl;
-            for (int row = ROWS - 1; row >= 0; row--) {
-                render_middle(row, board, NERO);
-                std::cout << std::endl;
-                render_bottom(row);
-                std::cout << std::endl;
-            }
+    std::cout << "    ";
+    render_top(ROWS - 1, color);
+    std::cout << std::endl;
+
+    for (int row = ROWS - 1; row >= 0; row--) {
+        render_rows(color, row);
+        render_middle(row, board, color);
+        std::cout << std::endl;
+        std::cout << "    ";
+        render_bottom(row);
+        std::cout << std::endl;
     }
+
+    render_columns(color);
 }
 
 std::string RenderV2::square_resolve(Coords coords, Board &board) {
@@ -133,7 +125,55 @@ std::string RenderV2::square_resolve(Coords coords, Board &board) {
     }
 }
 
+void RenderV2::render_rows(PlayerColor color, int row) {
+    if (color == BIANCO) {
+        std::cout << row + 1 << "   ";
+    } else {
+        std::cout << 8 - row << "   ";
+    }
+}
 
+void RenderV2::render_columns(PlayerColor color) {
+    int k;
+
+    std::cout << "       ";
+    for (int i = 0; i < COLUMNS; i++) {
+        if (color == NERO) {
+            k = 7 - i;
+        } else {
+            k = i;
+        }
+        switch (k) {
+            case 0:
+                std::cout << boardCoords.a;
+                break;
+            case 1:
+                std::cout << boardCoords.b;
+                break;
+            case 2:
+                std::cout << boardCoords.c;
+                break;
+            case 3:
+                std::cout << boardCoords.d;
+                break;
+            case 4:
+                std::cout << boardCoords.e;
+                break;
+            case 5:
+                std::cout << boardCoords.f;
+                break;
+            case 6:
+                std::cout << boardCoords.g;
+                break;
+            case 7:
+                std::cout << boardCoords.h;
+                break;
+            default:
+                std::cout << "?";
+        }
+        std::cout << "     ";
+    }
+}
 
 
 
