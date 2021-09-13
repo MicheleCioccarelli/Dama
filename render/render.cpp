@@ -7,7 +7,6 @@ RenderV2::RenderV2(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords
 }
 
 void RenderV2::render_top(int row, PlayerColor color) {
-    if (color == BIANCO) {
         for (int i = 0; i < COLUMNS; i++) {
             RenderSquare currentSquare = colorMatrix.matrix[row][i];
 
@@ -15,19 +14,6 @@ void RenderV2::render_top(int row, PlayerColor color) {
 
             std::cout << currentSquare.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
                       boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
-        }
-    } else {
-        // When you draw black side you have to flip the contents of the squares but keep the corners untouched
-        // so you draw corners like before but flip the color in the middle
-        for (int i = 0, colorRow = 7 - row; i < COLUMNS; i++) {
-            RenderSquare currentCorner = colorMatrix.matrix[row][i];
-            RenderSquare currentColor = colorMatrix.matrix[colorRow][i];
-
-            std::cout << BOARD_COLOR << currentCorner.topLeftCorner << RESET;
-
-            std::cout << currentColor.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
-                      boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
-        }
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].topRightCorner << RESET;
 }
@@ -38,14 +24,13 @@ void RenderV2::render_bottom(int row) {
 
         std::cout << BOARD_COLOR << currentSquare.bottomLeftCorner << RESET;
 
-        std::cout << currentSquare.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+        std::cout << currentSquare.southColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
                   boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].bottomRightCorner << RESET;
 }
 
 void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
-    if (color == BIANCO) {
         for (int i = 0; i < COLUMNS; i++) {
             RenderSquare currentColor = colorMatrix.matrix[row][i];
             std::string currentPiece = square_resolve(Coords(ColumnNotation(i), row), board);
@@ -57,27 +42,16 @@ void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
             std::cout << boardTokens.filling << boardTokens.filling;
         }
         std::cout << colorMatrix.matrix[row][COLUMNS - 1].eastColor << boardTokens.verticalLine << RESET;
-    } else { // Doing the same thing as in RenderV2::render_top()
-        for (int i = 0, colorRow = 7 - row; i < COLUMNS; i++) {
-            RenderSquare currentCorner = colorMatrix.matrix[row][i];
-            RenderSquare currentColor = colorMatrix.matrix[colorRow][i];
-
-            std::string currentPiece = square_resolve(Coords(ColumnNotation(i), colorRow), board);
-
-            std::cout << currentCorner.westColor << boardTokens.verticalLine << RESET;
-            std::cout << boardTokens.filling << boardTokens.filling;
-            //Note for future (if you want to color pieces) this is where you render pieces
-            std::cout << BOARD_COLOR << currentPiece << RESET;
-            std::cout << boardTokens.filling << boardTokens.filling;
-        }
-        std::cout << colorMatrix.matrix[7 - row][COLUMNS - 1].eastColor << boardTokens.verticalLine << RESET;
-    }
 }
 
 void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // If move.color is TRASPARENTE the move wasn't provided and the board should be white, otherwize color according to the move
     if (move.color != TRASPARENTE) {
         colorMatrix.color_board(move);
+    }
+
+    if (color == NERO) {
+        colorMatrix.flip_board();
     }
 
     std::cout << "    ";
@@ -182,7 +156,7 @@ void RenderV2::render_columns(PlayerColor color) const {
 
 
 
-
+/*
 
 // ======= RENDER =======
 void StdRender::calculate_offsets(Color &color, int rows, int columns) {
@@ -430,7 +404,7 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
  *  all the other times thw last layer is being passed in, so render can look at the last move made
  *  and color the board accordingly. The board will be displayes on the opposite side because it
  *  is now the opponent's turn
-*/
+*//*
 void StdRender::render_board(Player &currentPlayer, Board &b, int rows, int columns) {
     Color colorOffsets = Color();
 

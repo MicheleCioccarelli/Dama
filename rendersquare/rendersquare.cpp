@@ -62,19 +62,16 @@ RenderSquare::RenderSquare(const BoardTokens& tokens, Coords _coords) {
     }
 }
 
-void RenderSquare::paint(const std::string &color) {
-    northColor = color;
-    eastColor =  color;
-    westColor =  color;
-    southColor = color;
+void RenderSquare::paint(std::string &_color) {
+    this->color = _color;
 }
 
 RenderSquare &RenderSquare::operator=(const RenderSquare &rhs) {
     coords = rhs.coords;
-    northColor = rhs.northColor;
-    southColor = rhs.southColor;
-    eastColor = rhs.eastColor;
-    westColor = rhs.westColor;
+    color.northColor = rhs.color.northColor;
+    color.southColor = rhs.color.southColor;
+    color.eastColor = rhs.color.eastColor;
+    color.westColor = rhs.color.westColor;
     topLeftCorner = rhs.topLeftCorner;
     topRightCorner = rhs.topRightCorner;
     bottomLeftCorner = rhs.bottomLeftCorner;
@@ -96,10 +93,7 @@ ColorMatrix::ColorMatrix(const BoardTokens& tokens) {
 void ColorMatrix::clear() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            matrix[row][col].eastColor = BOARD_COLOR;
-            matrix[row][col].northColor = BOARD_COLOR;
-            matrix[row][col].westColor = BOARD_COLOR;
-            matrix[row][col].southColor = BOARD_COLOR;
+            matrix[row][col].color = (std::string &)BOARD_COLOR;
         }
     }
 }
@@ -108,14 +102,30 @@ void ColorMatrix::paint_square(Coords coords, std::string color) {
     // If the square isn't at the top of the board
     if (coords.row < ROWS - 1) {
         // Since the board is drawn from top to bottom the square above the one being colored has its southern side painted
-        matrix[coords.row + 1][coords.column].southColor = color;
+        matrix[coords.row + 1][coords.column].color.southColor = color;
     }
     if (coords.column < COLUMNS - 1) {
         // Same as before because the board is drawn kinda from right to left
-        matrix[coords.row][coords.column + 1].westColor = color;
+        matrix[coords.row][coords.column + 1].color.westColor = color;
     }
 
     matrix[coords.row][coords.column].paint(color);
+}
+
+void ColorMatrix::flip_board() {
+    std::vector<std::vector<RenderSquare>> tempMatrix = matrix;
+    // if you are not on the border don't add one
+    for (int row = 0; row < ROWS; row++) {
+        for(int col = 0; col < COLUMNS; col++) {
+            RenderSquare currentSquare = matrix[row][col];
+            int diff = ROWS - row;
+            if (row != ROWS - 1 && row != 0) {
+                diff++;
+            }
+            tempMatrix[row][col].color = matrix[diff][col].color;
+        }
+    }
+    matrix = tempMatrix;
 }
 
 void ColorMatrix::color_board(Move &move) {
