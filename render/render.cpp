@@ -12,7 +12,7 @@ void RenderV2::render_top(int row, PlayerColor color) {
 
             std::cout << BOARD_COLOR << currentSquare.topLeftCorner << RESET;
 
-            std::cout << currentSquare.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+            std::cout << currentSquare.color.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
                       boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].topRightCorner << RESET;
@@ -24,7 +24,7 @@ void RenderV2::render_bottom(int row) {
 
         std::cout << BOARD_COLOR << currentSquare.bottomLeftCorner << RESET;
 
-        std::cout << currentSquare.southColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
+        std::cout << currentSquare.color.southColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
                   boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].bottomRightCorner << RESET;
@@ -35,13 +35,13 @@ void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
             RenderSquare currentColor = colorMatrix.matrix[row][i];
             std::string currentPiece = square_resolve(Coords(ColumnNotation(i), row), board);
 
-            std::cout << currentColor.westColor << boardTokens.verticalLine << RESET;
+            std::cout << currentColor.color.westColor << boardTokens.verticalLine << RESET;
             std::cout << boardTokens.filling << boardTokens.filling;
             //Note for future (if you want to color pieces) this is where you render pieces
             std::cout << PIECE_COLOR << currentPiece << RESET;
             std::cout << boardTokens.filling << boardTokens.filling;
         }
-        std::cout << colorMatrix.matrix[row][COLUMNS - 1].eastColor << boardTokens.verticalLine << RESET;
+        std::cout << colorMatrix.matrix[row][COLUMNS - 1].color.eastColor << boardTokens.verticalLine << RESET;
 }
 
 void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
@@ -446,13 +446,13 @@ void StdRender::center_name(std::string& name, int longerName) {
         }
     }
 }
-
+*/
 void StdRender::padding(int numberOfSpaces) {
     for (int i = 0; i < numberOfSpaces; i++) {
         std::cout << " ";
     }
 }
-
+/*
 void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
                            Player& blackPlayer, GameState result) const {
     std::vector<std::string> strings;
@@ -594,7 +594,7 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     }
     std::cout << boardTokens.bottomRight << std::endl;
 }
-
+*/
 void StdRender::help_page() {
     for (int i = 1; i < 22; i++) {
         std::cout << "════";

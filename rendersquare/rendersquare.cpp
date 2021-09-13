@@ -118,7 +118,7 @@ void ColorMatrix::flip_board() {
     for (int row = 0; row < ROWS; row++) {
         for(int col = 0; col < COLUMNS; col++) {
             RenderSquare currentSquare = matrix[row][col];
-            int diff = ROWS - row;
+            int diff = ROWS - 1 - row;
             if (row != ROWS - 1 && row != 0) {
                 diff++;
             }

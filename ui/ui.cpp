@@ -228,7 +228,7 @@ void UI::log_error(MoveReturn error) {
     std::cout << std::endl;
 }
 
-void UI::start_game() {
+void UI::start_game() {/*
     // Initialize board looks
     BoardTokens board(NORMAL);
     SetPieces pieces(NORMAL);
@@ -271,5 +271,5 @@ void UI::start_game() {
     int blackPieces = engine.count_pieces(NERO);
 
     engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
-                             engine.game_over());
+                             engine.game_over());*/
 }
