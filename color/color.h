@@ -14,5 +14,5 @@ public:
 
     Color& operator=(Color& rhs);
 
-    Color() = default;
+    Color();
 };

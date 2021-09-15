@@ -1,5 +1,12 @@
 #include "color.h"
 
+Color::Color() {
+    northColor = BOARD_COLOR;
+    southColor = BOARD_COLOR;
+    eastColor = BOARD_COLOR;
+    westColor = BOARD_COLOR;
+}
+
 Color &Color::operator=(Color &rhs) {
     northColor = rhs.northColor;
     southColor = rhs.southColor;

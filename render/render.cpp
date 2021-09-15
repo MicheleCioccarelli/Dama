@@ -48,10 +48,9 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // If move.color is TRASPARENTE the move wasn't provided and the board should be white, otherwize color according to the move
     if (move.color != TRASPARENTE) {
         colorMatrix.color_board(move);
-    }
-
-    if (color == NERO) {
-        colorMatrix.flip_board();
+        if (color == NERO) {
+            colorMatrix.flip_board();
+        }
     }
 
     std::cout << "    ";
