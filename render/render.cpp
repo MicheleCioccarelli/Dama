@@ -52,7 +52,6 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
             colorMatrix.flip_board();
         }
     }
-
     std::cout << "    ";
     render_top(ROWS - 1, color);
     std::cout << std::endl;
@@ -66,6 +65,8 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
         std::cout << std::endl;
     }
     render_columns(color);
+    // Take away all the colors from the board
+    colorMatrix.clear();
 }
 
 std::string RenderV2::square_resolve(Coords coords, Board &board) {
@@ -107,7 +108,6 @@ void RenderV2::render_rows(PlayerColor color, int row) {
 
 void RenderV2::render_columns(PlayerColor color) const {
     int k;
-
     std::cout << "       ";
     for (int i = 0; i < COLUMNS; i++) {
         if (color == NERO) {
@@ -146,13 +146,6 @@ void RenderV2::render_columns(PlayerColor color) const {
         std::cout << "     ";
     }
 }
-
-
-
-
-
-
-
 
 
 /*

@@ -62,16 +62,10 @@ RenderSquare::RenderSquare(const BoardTokens& tokens, Coords _coords) {
     }
 }
 
-void RenderSquare::paint(std::string &_color) {
-    this->color = _color;
-}
-
 RenderSquare &RenderSquare::operator=(const RenderSquare &rhs) {
     coords = rhs.coords;
-    color.northColor = rhs.color.northColor;
-    color.southColor = rhs.color.southColor;
-    color.eastColor = rhs.color.eastColor;
-    color.westColor = rhs.color.westColor;
+    color = rhs.color;
+    // Wasn't like this before
     topLeftCorner = rhs.topLeftCorner;
     topRightCorner = rhs.topRightCorner;
     bottomLeftCorner = rhs.bottomLeftCorner;
@@ -80,7 +74,6 @@ RenderSquare &RenderSquare::operator=(const RenderSquare &rhs) {
 }
 
 ColorMatrix::ColorMatrix(const BoardTokens& tokens) {
-
     matrix.resize(ROWS);
 
     for (int row = 0; row < ROWS; row++) {
@@ -90,10 +83,17 @@ ColorMatrix::ColorMatrix(const BoardTokens& tokens) {
     }
 }
 
+void RenderSquare::paint(std::string &_color) {
+    this->color = _color;
+}
+
 void ColorMatrix::clear() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            matrix[row][col].color = (std::string &)BOARD_COLOR;
+            matrix[row][col].color.northColor = BOARD_COLOR;
+            matrix[row][col].color.southColor = BOARD_COLOR;
+            matrix[row][col].color.eastColor = BOARD_COLOR;
+            matrix[row][col].color.westColor = BOARD_COLOR;
         }
     }
 }
@@ -210,7 +210,7 @@ void ColorMatrix::color_board(Move &move) {
             break;
     }
     if (move.blownCoord != Coords(Z, 9)) {
-        currentCoords = move.blownCoord;
-        paint_square(currentCoords, (std::string &) BLOW_COLOR);
+        currentCoords = move.blownCoord.convert_coords();
+        paint_square(currentCoords, BLOW_COLOR);
     }
 }

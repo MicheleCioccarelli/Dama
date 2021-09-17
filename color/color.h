@@ -11,6 +11,7 @@ public:
     std::string westColor = BOARD_COLOR;
 
     void operator=(std::string& rhs);
+    Color& operator=(const Color &rhs);
 
     Color& operator=(Color& rhs);
 

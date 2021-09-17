@@ -10,10 +10,12 @@ int main() {
 
     RenderV2 render(board, pieces, coords);
 
-    Move hope(BIANCO, MOVE);
+    Move hope(BIANCO, EAT);
 
     hope.add_coords(Coords(A, 3));
     hope.add_coords(Coords(B, 4));
+    hope.add_coords(Coords(C, 5));
+    hope.blownCoord = Coords(D, 4);
 
     render.render_board(engine.board, NERO, hope);
 

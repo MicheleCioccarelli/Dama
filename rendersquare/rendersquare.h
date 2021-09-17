@@ -12,13 +12,7 @@
 class RenderSquare {
 public:
     Coords coords;
-    /*
-    // The color of each side
-    std::string northColor = BOARD_COLOR;
-    std::string southColor = BOARD_COLOR;
-    std::string eastColor = BOARD_COLOR;
-    std::string westColor = BOARD_COLOR;
-    */
+
     // Stores information about what the sides of the square should look like
     Color color;
 
