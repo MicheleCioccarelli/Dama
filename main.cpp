@@ -17,6 +17,8 @@ int main() {
 
     render.render_board(engine.board, NERO, hope);
 
+    render.help_page();
+
 /*
 // Initialize board looks
     BoardTokens board(NORMAL);

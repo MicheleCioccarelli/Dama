@@ -54,7 +54,7 @@ public:
     RenderV2(BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle);
 
     // Returns a symbol corresponding to the piece held at a square from board in coords
-    std::string square_resolve(Coords coords, Board &board);
+    std::string square_resolve(Coords coords, Board &board) const;
     // Draw the top part of the squares in row, according to colorMatrix
     void render_top(int row, PlayerColor color);
     // Renders the contents of the middle of the squares of board in row

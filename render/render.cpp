@@ -80,7 +80,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     colorMatrix.clear();
 }
 
-std::string RenderV2::square_resolve(Coords coords, Board &board) {
+std::string RenderV2::square_resolve(Coords coords, Board &board) const {
     switch (board.matrix[coords.row][coords.column].piece.color) {
         case BIANCO:
             switch (board.matrix[coords.row][coords.column].piece.type) {
@@ -159,7 +159,7 @@ void RenderV2::render_columns(PlayerColor color) const {
 }
 
 void RenderV2::help_page() {
-    /*
+    std::cout << std::endl;
     for (int i = 1; i < 22; i++) {
         std::cout << "════";
     }
@@ -192,7 +192,6 @@ void RenderV2::help_page() {
     for (int i = 1; i < 22; i++) {
         std::cout << "════";
     } std::cout << std::endl;
-     */
 }
 
 /*
