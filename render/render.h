@@ -38,7 +38,7 @@ public:
     void end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
                     Player& blackPlayer, GameState result) const;
 
-    static void help_page();
+    static void end_screen();
 
     StdRender(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
         : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {}
@@ -51,7 +51,7 @@ class RenderV2 {
 
     ColorMatrix colorMatrix;
 public:
-    RenderV2(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords);
+    RenderV2(BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle);
 
     // Returns a symbol corresponding to the piece held at a square from board in coords
     std::string square_resolve(Coords coords, Board &board);
@@ -67,4 +67,8 @@ public:
     static void render_rows(PlayerColor color, int row);
     // Draws A ~ H on the bottom of the board
     void render_columns(PlayerColor color) const;
+
+    void padding(int numberOfSpaces);
+
+    void help_page();
 };

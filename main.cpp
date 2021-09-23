@@ -6,16 +6,14 @@ int main() {
     SetPieces pieces(NORMAL);
     BoardCoords coords(NORMAL);
 
-    GameEngine engine(STANDARD, board, pieces, coords);
+    GameEngine engine(STANDARD, NORMAL, NORMAL, NORMAL);
 
-    RenderV2 render(board, pieces, coords);
+    RenderV2 render(NORMAL, NORMAL, NORMAL);
 
-    Move hope(BIANCO, EAT);
+    Move hope(BIANCO, MOVE);
 
     hope.add_coords(Coords(A, 3));
     hope.add_coords(Coords(B, 4));
-    hope.add_coords(Coords(C, 5));
-    hope.blownCoord = Coords(D, 4);
 
     render.render_board(engine.board, NERO, hope);
 

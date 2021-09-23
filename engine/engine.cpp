@@ -2,9 +2,8 @@
 #include "../ui/ui.h"
 
 // ====== GAME ENGINE ======
-GameEngine::GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
-                       BoardCoords _coords)
-        : render(_tokens, _pieces, _coords), board() {
+GameEngine::GameEngine(GameStyle gameStyle, BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle)
+        : render(tokenStyle, pieceStyle, coordStyle), board() {
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();

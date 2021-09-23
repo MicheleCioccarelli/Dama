@@ -1,9 +1,15 @@
 #include "render.h"
 
 // RENDER V2
-RenderV2::RenderV2(BoardTokens &_boardTokens, SetPieces &_setPieces, BoardCoords &_boardcoords)
-    : boardTokens(_boardTokens), setPieces(_setPieces), boardCoords(_boardcoords) {
+RenderV2::RenderV2(BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle)
+    : boardTokens(tokenStyle), setPieces(pieceStyle), boardCoords(coordStyle) {
     colorMatrix = ColorMatrix(boardTokens);
+}
+
+void RenderV2::padding(int numberOfSpaces) {
+    for (int i = 0; i < numberOfSpaces; i++) {
+        std::cout << " ";
+    }
 }
 
 void RenderV2::render_top(int row, PlayerColor color) {
@@ -33,7 +39,12 @@ void RenderV2::render_bottom(int row) {
 void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
         for (int i = 0; i < COLUMNS; i++) {
             RenderSquare currentColor = colorMatrix.matrix[row][i];
-            std::string currentPiece = square_resolve(Coords(ColumnNotation(i), row), board);
+            std::string currentPiece;
+            if (color == BIANCO) {
+                currentPiece = square_resolve(Coords(ColumnNotation(i), row), board);
+            } else {
+                currentPiece = square_resolve(Coords(ColumnNotation(7 - i), 7 - row), board);
+            }
 
             std::cout << currentColor.color.westColor << boardTokens.verticalLine << RESET;
             std::cout << boardTokens.filling << boardTokens.filling;
@@ -147,6 +158,42 @@ void RenderV2::render_columns(PlayerColor color) const {
     }
 }
 
+void RenderV2::help_page() {
+    /*
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    }
+    std::cout << std::endl << HBBLU <<"Pagina di aiuto" << RESET << std::endl << std::endl;
+    std::cout << "uso: [colonna][riga][operatore][colonna][riga]" << std::endl << std::endl;
+    std::cout << "Colonne: A, B, C, D, E, F, G, H" << std::endl;
+    std::cout << "Righe:   1, 2, 3, 4, 5, 6, 7, 8" << std::endl << std::endl;
+
+    std::cout << "Operatori:" << std::endl;
+    padding(3);
+    std::cout << BLOW_COLOR << "*" << RESET;
+    padding(3);
+    std::cout << "Soffio, deve essere il primo comando se è usato";
+    padding(2);
+    std::cout << "|  Esempio: A3*B4 C3-D4" << std::endl;
+
+    padding(3);
+    std::cout << MOVE_COLOR << "-" << RESET;
+    padding(3);
+    std::cout << "Movimento, cambia casella di 1 alla volta";
+    padding(8);
+    std::cout << "|  Esempio: A3-B4" << std::endl;
+
+    padding(3);
+    std::cout << EAT_COLOR << "x" << RESET;
+    padding(3);
+    std::cout << "Mangiare";
+    padding(41);
+    std::cout << "|  Esempio: A3xB4" << std::endl;
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    } std::cout << std::endl;
+     */
+}
 
 /*
 
@@ -396,7 +443,7 @@ void StdRender::middle(Board &b, PlayerColor playerColor, int rows, int columns,
  *  all the other times thw last layer is being passed in, so render can look at the last move made
  *  and color the board accordingly. The board will be displayes on the opposite side because it
  *  is now the opponent's turn
-*//*
+
 void StdRender::render_board(Player &currentPlayer, Board &b, int rows, int columns) {
     Color colorOffsets = Color();
 
@@ -439,11 +486,7 @@ void StdRender::center_name(std::string& name, int longerName) {
     }
 }
 */
-void StdRender::padding(int numberOfSpaces) {
-    for (int i = 0; i < numberOfSpaces; i++) {
-        std::cout << " ";
-    }
-}
+
 /*
 void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer,
                            Player& blackPlayer, GameState result) const {
@@ -587,40 +630,6 @@ void StdRender::end_screen(int whitePieces, int blackPieces, Player& whitePlayer
     std::cout << boardTokens.bottomRight << std::endl;
 }
 */
-void StdRender::help_page() {
-    for (int i = 1; i < 22; i++) {
-        std::cout << "════";
-    }
-    std::cout << std::endl << HBBLU <<"Pagina di aiuto" << RESET << std::endl << std::endl;
-    std::cout << "uso: [colonna][riga][operatore][colonna][riga]" << std::endl << std::endl;
-    std::cout << "Colonne: A, B, C, D, E, F, G, H" << std::endl;
-    std::cout << "Righe:   1, 2, 3, 4, 5, 6, 7, 8" << std::endl << std::endl;
-
-    std::cout << "Operatori:" << std::endl;
-    padding(3);
-    std::cout << BCYN << "*" << RESET;
-    padding(3);
-    std::cout << "Soffio, deve essere il primo comando se è usato";
-    padding(2);
-    std::cout << "|  Esempio: A3*B4 C3-D4" << std::endl;
-
-    padding(3);
-    std::cout << BCYN << "-" << RESET;
-    padding(3);
-    std::cout << "Movimento, cambia casella di 1 alla volta";
-    padding(8);
-    std::cout << "|  Esempio: A3-B4" << std::endl;
-
-    padding(3);
-    std::cout << BCYN << "x" << RESET;
-    padding(3);
-    std::cout << "Mangiare";
-    padding(41);
-    std::cout << "|  Esempio: A3xB4" << std::endl;
-    for (int i = 1; i < 22; i++) {
-        std::cout << "════";
-    } std::cout << std::endl;
-}
 
 /*  PIECES LABEL
  * horizontalLine = "═"

@@ -12,7 +12,7 @@ public:
     Player blackPlayer;
     Board board;
 public:
-    StdRender render;
+    RenderV2 render;
 
     MoveReturn submit(const Move& move);
 
@@ -41,6 +41,5 @@ public:
 
     GameState game_over();
 
-    GameEngine(GameStyle gameStyle, BoardTokens _tokens, SetPieces _pieces,
-    BoardCoords _coords);
+    GameEngine(GameStyle gameStyle, BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle);
 };
