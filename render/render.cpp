@@ -76,7 +76,11 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
         std::cout << std::endl;
     }
     render_columns(color);
-    // Take away all the colors from the board
+    std::cout << std::endl;
+    clear();
+}
+
+void RenderV2::clear() {
     colorMatrix.clear();
 }
 
@@ -156,6 +160,11 @@ void RenderV2::render_columns(PlayerColor color) const {
         }
         std::cout << "     ";
     }
+}
+
+void
+RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer, Player &blackPlayer, GameState result) {
+    std::cout << "The game just ended :)" << std::endl;
 }
 
 void RenderV2::help_page() {

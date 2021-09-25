@@ -18,6 +18,9 @@ public:
 
     Player& operator=(const Player &rhs);
 
+    // If the player is BIANCO returns NERO and vice versa
+    PlayerColor other_color();
+
     Player(): name("nigga"), color(TRASPARENTE) {}
 
     Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}

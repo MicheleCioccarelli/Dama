@@ -67,8 +67,12 @@ public:
     static void render_rows(PlayerColor color, int row);
     // Draws A ~ H on the bottom of the board
     void render_columns(PlayerColor color) const;
+    // Clear all the colors from the board
+    void clear();
 
     void padding(int numberOfSpaces);
+
+    void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result);
 
     void help_page();
 };
