@@ -11,12 +11,11 @@
 
 class UI {
 public:
-    // Starts a standalone game
-    static void start_game();
-
     static void init(GameEngine& engine);
 
     static MoveReturn get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer);
+
+    static MoveReturn check_input(const std::string& input);
 
     // Checks every parameter of each command and makes sure it is correct
     static MoveReturn validate_command(const std::vector<Command>& commands);

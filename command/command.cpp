@@ -39,46 +39,69 @@ void Command::convert_coords(const std::string& toConvert, Coords& converted) {
 }
 
 Command::Command(std::string& input, GameEngine& engine) {
-    if (input == "~") {
-         type = UNINITIALIZED;
-    } else {
-        Coords eatenCoord;
-        switch (input[2]) {
-            case '-':
-                type.moveType = MOVE;
-                convert_coords(input.substr(0, 2), startingCoords);
-                convert_coords(input.substr(3, 5), endingCoords);
-                type.moveReturn = VALID;
+    Coords eatenCoord;
+    switch (input[2]) {
+        case '-':
+            type.moveType = MOVE;
+
+            type.moveReturn = UI::check_input(input);
+
+            convert_coords(input.substr(0, 2), startingCoords);
+            if (startingCoords.column == Z || startingCoords.row == 9) {
+                type.moveReturn = MISINPUT;
                 break;
-            case '*':
-                convert_coords(input.substr(0, 2), startingCoords);
-                convert_coords(input.substr(3, 5), endingCoords);
-                if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
-                    // If the move is invalid, uninitialize the coords;
-                    std::cout << "Non puoi soffiarla" << std::endl;
-                    startingCoords = Coords();
-                    endingCoords = Coords();
-                } else {
-                    // If the move can be blown
-                    type.moveReturn = BLOWABLE;
-                    convert_coords(input.substr(0, 2), blownCoords);
-                }
+            }
+            convert_coords(input.substr(3, 5), endingCoords);
+            if (endingCoords.column == Z || endingCoords.row == 9) {
+                type.moveReturn = MISINPUT;
                 break;
-            case 'X':
-                type.moveType = EAT;
-                convert_coords(input.substr(0, 2), startingCoords);
-                eatenCoords.push_back(startingCoords);
-                for (int i = 3; i <= input.size(); i += 3) {
-                    convert_coords(input.substr(i, i + 1), eatenCoord);
-                    eatenCoords.push_back(eatenCoord);
-                }
-                endingCoords = Coords();
+            }
+            type.moveReturn = VALID;
+            break;
+        case '*':
+            convert_coords(input.substr(0, 2), startingCoords);
+            if (startingCoords.column == Z || startingCoords.row == 9) {
+                type.moveReturn = MISINPUT;
+                break;
+            }
+            convert_coords(input.substr(3, 5), endingCoords);
+            if (endingCoords.column == Z || endingCoords.row == 9) {
+                type.moveReturn = MISINPUT;
+                break;
+            }
+            if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
+                // If the move is invalid, uninitialize the coords;
+                std::cout << "Non puoi soffiarla" << std::endl;
                 startingCoords = Coords();
-                type.moveReturn = VALID;
+                endingCoords = Coords();
+            } else {
+                // If the move can be blown
+                type.moveReturn = BLOWABLE;
+                convert_coords(input.substr(0, 2), blownCoords);
+            }
+            break;
+        case 'X':
+            type.moveType = EAT;
+            convert_coords(input.substr(0, 2), startingCoords);
+            if (startingCoords.column == Z || startingCoords.row == 9) {
+                type.moveReturn = MISINPUT;
                 break;
-            default:
-                type = MoveCase(UNINITIALIZED, WRONG_OPERATOR);
-                break;
-        }
+            }
+            eatenCoords.push_back(startingCoords);
+            for (int i = 3; i <= input.size(); i += 3) {
+                convert_coords(input.substr(i, i + 1), eatenCoord);
+                if (eatenCoord.column == Z || eatenCoord.row == 9) {
+                    type.moveReturn = MISINPUT;
+                    break;
+                }
+                eatenCoords.push_back(eatenCoord);
+            }
+            endingCoords = Coords();
+            startingCoords = Coords();
+            type.moveReturn = VALID;
+            break;
+        default:
+            type = MoveCase(UNINITIALIZED, WRONG_OPERATOR);
+            break;
     }
 }

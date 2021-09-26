@@ -198,6 +198,8 @@ void RenderV2::help_page() {
     std::cout << "Mangiare";
     padding(41);
     std::cout << "|  Esempio: A3xB4" << std::endl;
+    std::cout << "COMANDI" << std::endl;
+    std::cout << "resign";
     for (int i = 1; i < 22; i++) {
         std::cout << "════";
     } std::cout << std::endl;

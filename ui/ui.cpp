@@ -5,8 +5,6 @@ void UI::init(GameEngine &engine) {
 
     std::cout << MAG << "Benvenuto nella dama" << RESET << std::endl << std::endl;;
 
-    //std::cout << "Benvenuto nella dama" << std::endl << std::endl;
-
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
@@ -116,44 +114,65 @@ MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& en
     }
 }
 
+MoveReturn UI::check_input(const std::string &input) {
+    // User typed spaces separate inputs
+    if (input == "~") {
+        // The user typed nothing
+        return EMPTY_MOVE;
+    } else if (input == "resign") {
+        return RESIGNED;
+    } else if (input == "aiuto") {
+        return HELP_PAGE;
+    }
+    // The move wasn't empty nor was it a command
+    if (input.size() < 5) {
+        return TOO_SHORT;
+    }
+    return VALID;
+}
+
 MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
     std::vector<std::string> input;
     std::vector<Command> commands;
 
     move = Move(currentPlayer);
 
-    std::string a;
+    std::string raw_input;
 
     if (currentPlayer == BIANCO) {
         std::cout << "Mossa di " << PLAYER_COLOR << engine.whitePlayer.name << RESET << " > ";
     } else if (currentPlayer == NERO) {
         std::cout << "Mossa di " << PLAYER_COLOR << engine.blackPlayer.name << RESET << " > ";
     }
-    getline(std::cin, a);
-    std::stringstream stream(a);
+    getline(std::cin, raw_input);
+    std::stringstream stream(raw_input);
 
     // Initializing the strings
     input.emplace_back("~");
     input.emplace_back("~");
 
+    // Check input
     for (int i = 0; i < MAX_COMMANDS; i++) {
         stream >> input[i];
-        if (input[i] == "~") {
-            break;
-        }
-        if (input[i].size() < 5 && input[i] != "~") {
-            move.type = TOO_SHORT;
-            return TOO_SHORT;
-        }
-        if (input[i] == "aiuto") {
-            move.type = HELP_PAGE;
-            engine.render.help_page();
-            return HELP_PAGE;
-        }
-
+//        if (input[i] == "~") {
+//            break;
+//        }
+//        if (input[i].size() < 5 && input[i] != "~") {
+//            move.type = TOO_SHORT;
+//            return TOO_SHORT;
+//        }
+//        if (input[i] == "aiuto") {
+//            move.type = HELP_PAGE;
+//            engine.render.help_page();
+//            return HELP_PAGE;
+//        }
         std::transform(input[i].begin(), input[i].end(), input[i].begin(), ::toupper);
+        check_input(input[i]);
         commands.emplace_back(input[i], engine);
-    }
+        // Now the move has been checked, if it is wrong you end the function
+       // if (commands[i].type)
+    //}
+
 
     // Proceed with the program only if the coordinates are right, this should avoid segfault
     if (validate_command(commands) == VALID) {
@@ -226,50 +245,4 @@ void UI::log_error(MoveReturn error) {
             break;
     }
     std::cout << std::endl;
-}
-
-void UI::start_game() {/*
-    // Initialize board looks
-    BoardTokens board(NORMAL);
-    SetPieces pieces(NORMAL);
-    BoardCoords coords(NORMAL);
-    GameEngine engine(STANDARD, board, pieces, coords);
-
-    PlayerColor currentPlayer = NERO;
-
-    UI::init(engine);
-    // Main loop
-    while (engine.game_over() == GOOD) {
-        // Switch playerColor every turn
-        switch (currentPlayer) {
-            case BIANCO:
-                currentPlayer = NERO;
-                break;
-                case NERO:
-                    currentPlayer = BIANCO;
-                    break;
-        }
-
-        engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
-        Move move(currentPlayer);
-
-        // ========= GETTING INPUT ==========
-        // get_move returns MISINPUT if the move provided is very wrong (e.g. A9-KH)
-        while (UI::get_move(move, engine, currentPlayer) == MISINPUT) {
-        }
-        while (engine.submit(move) != VALID) {
-            UI::get_move(move, engine, currentPlayer);
-        }
-        engine.promote();
-        engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
-
-    }
-
-    engine.render.render_board((Player&)currentPlayer, engine.board, 8, 8);
-
-    int whitePieces = engine.count_pieces(BIANCO);
-    int blackPieces = engine.count_pieces(NERO);
-
-    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
-                             engine.game_over());*/
 }

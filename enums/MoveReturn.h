@@ -3,6 +3,7 @@
 // Used by GameEngine::validate_move()
 enum MoveReturn {
     VALID,
+    // These are used by checking funcions in GameEngine
     // You are trying to move into a white square
     WHITE_SQUARE,
     // You are trying to move by more than one square
@@ -31,6 +32,14 @@ enum MoveReturn {
     ROCK_SOLID,
     // The move being checked isn't valid, but the move checker doesn't know why
     UNDEFINED,
+
+
+    // These are returned by UI::check_input()
+
+    // You tyoed nothing
+    EMPTY_MOVE,
+    // A player resigned
+    RESIGNED,
     // The move is too short
     TOO_SHORT,
     // You used a wrong operator (not - * x)
