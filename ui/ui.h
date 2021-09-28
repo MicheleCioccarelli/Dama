@@ -1,11 +1,9 @@
 #pragma once
 
 #include "../command/command.h"
-
+#include "../constants/colors_codes.h"
 #include <algorithm>
 #include <sstream>
-
-#include "../constants/colors_codes.h"
 
 #define MAX_COMMANDS 2
 
@@ -25,7 +23,11 @@ public:
     //Given a certain player color check if the move is correct (White player can't move black pieces, ...)
     static MoveReturn check_color(Move& move, PlayerColor currentPlayer, GameEngine& engine);
 
+    // Explains the error to the user
     static void log_error(MoveReturn error);
+
+    // Returns true if the input was actually a command
+    static bool dispatch_command(GameEngine& engine, std::string& command, PlayerColor currentPlayer, Move& move);
 
     // Puts the contents of 2 commands in a move, uninitialized commands are ignored
     static void command_to_move(const std::vector<Command>& commands, Move& move);

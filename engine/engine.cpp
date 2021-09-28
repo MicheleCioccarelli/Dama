@@ -306,15 +306,12 @@ MoveReturn GameEngine::submit(const Move& move) {
             case UNINITIALIZED:
                 status = UNDEFINED;
         }
-
         if (move.type.moveReturn == BLOWABLE) {
             isBlown = true;
         }
-
         if (status == VALID) {
             dispatch_move(move, isBlown);
         }
-
         UI::log_error(status);
         return status;
 }
@@ -322,9 +319,9 @@ MoveReturn GameEngine::submit(const Move& move) {
 void GameEngine::promote() {
     for (int row = 0; row <= ROWS; row += 7) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (board.matrix[row][col].piece.color == NERO && board.matrix[row][col].piece.type== DAMA && row == 0) {
+            if (board.matrix[row][col].piece.color == NERO && board.matrix[row][col].piece.type == DAMA && row == 0)
                 board.matrix[row][col].piece.type = DAMONE;
-            } else if (board.matrix[row][col].piece.color == BIANCO && board.matrix[row][col].piece.type == DAMA && row == 7) {
+            else if (board.matrix[row][col].piece.color == BIANCO && board.matrix[row][col].piece.type == DAMA && row == 7) {
                 board.matrix[row][col].piece.type = DAMONE;
             }
         }
@@ -350,26 +347,22 @@ bool GameEngine::simulate_damina(Piece piece, Coords coords) {
         case BIANCO:
             if (piece.type == DAMA) {
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col - 1), row + 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation) (col - 1), row + 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col + 1), row + 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation)(col + 1), row + 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col - 1), row + 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col - 1), row + 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col + 1), row + 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col + 1), row + 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     whiteMoves++;
                 }
@@ -381,26 +374,22 @@ bool GameEngine::simulate_damina(Piece piece, Coords coords) {
         case NERO:
             if (piece.type == DAMA) {
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col + 1), row - 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation) (col + 1), row - 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     blackMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col - 1), row - 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation)(col - 1), row - 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     blackMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col + 1), row - 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col + 1), row - 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     blackMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col - 1), row - 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col - 1), row - 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     blackMoves++;
                 }
@@ -428,26 +417,22 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
                 }
 
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col + 1), row - 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation)(col + 1), row - 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col - 1), row - 1),
-                            BIANCO, MOVE);
+                            Coords((ColumnNotation)(col - 1), row - 1),BIANCO, MOVE);
                 if (check_move(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col + 1), row - 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col + 1), row - 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     whiteMoves++;
                 }
                 move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col - 1), row - 1),
-                            BIANCO, EAT);
+                            Coords((ColumnNotation) (col - 1), row - 1),BIANCO, EAT);
                 if (check_eat(move) == VALID) {
                     whiteMoves++;
                 }
@@ -462,26 +447,22 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
                         blackMoves++;
                     }
                     move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation)(col + 1), row + 1),
-                                NERO, MOVE);
+                                Coords((ColumnNotation)(col + 1), row + 1),NERO, MOVE);
                     if (check_move(move) == VALID) {
                         blackMoves++;
                     }
                     move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation)(col - 1), row + 1),
-                                NERO, MOVE);
+                                Coords((ColumnNotation)(col - 1), row + 1),NERO, MOVE);
                     if (check_move(move) == VALID) {
                         blackMoves++;
                     }
                     move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation) (col + 1), row + 1),
-                                NERO, EAT);
+                                Coords((ColumnNotation) (col + 1), row + 1),NERO, EAT);
                     if (check_eat(move) == VALID) {
                         blackMoves++;
                     }
                     move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation) (col - 1), row + 1),
-                                NERO, EAT);
+                                Coords((ColumnNotation) (col - 1), row + 1),NERO, EAT);
                     if (check_eat(move) == VALID) {
                         blackMoves++;
                     }
@@ -493,7 +474,14 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
     return false;
 }
 
-GameState GameEngine::game_over() {
+GameState GameEngine::game_over(PlayerColor winner) {
+    if (winner != TRASPARENTE) {
+        if (winner == BIANCO) {
+            return WHITE_WIN;
+        } else if (winner == NERO) {
+            return BLACK_WIN;
+        }
+    }
 
     // The number of possible moves for each color
     int blackMoves = 0;
@@ -511,14 +499,12 @@ GameState GameEngine::game_over() {
                 case DAMA:
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
-                            if (simulate_damina(Piece(BIANCO, DAMA),
-                                                Coords((ColumnNotation)col, row+1))) {
+                            if (simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row+1))) {
                                 whiteMoves++;
                             }
                             break;
                         case NERO:
-                            if (simulate_damina(Piece(NERO, DAMA),
-                                                Coords((ColumnNotation)col, row+1))) {
+                            if (simulate_damina(Piece(NERO, DAMA),Coords((ColumnNotation)col, row+1))) {
                                 blackMoves++;
                             }
                             break;
@@ -527,14 +513,12 @@ GameState GameEngine::game_over() {
                 case DAMONE:
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
-                            if (simulate_damona(Piece(BIANCO, DAMONE),
-                                                Coords((ColumnNotation)col, row+1))) {
+                            if (simulate_damona(Piece(BIANCO, DAMONE),Coords((ColumnNotation)col, row+1))) {
                                 whiteMoves++;
                             }
                         break;
                         case NERO:
-                            if (simulate_damona(Piece(NERO, DAMONE),
-                                                Coords((ColumnNotation)col, row+1))) {
+                            if (simulate_damona(Piece(NERO, DAMONE),Coords((ColumnNotation)col, row+1))) {
                                 blackMoves++;
                             }
                             break;
@@ -557,4 +541,18 @@ GameState GameEngine::game_over() {
         return STALEMATE;
     }
     return GOOD;
+}
+
+void GameEngine::execute_command(MoveReturn command) {
+    switch (command) {
+        case HELP_PAGE:
+            render.help_page();
+            break;
+        case WHITE_RESIGN:
+            game_over(NERO);
+            break;
+        case BLACK_RESIGN:
+            game_over(BIANCO);
+            break;
+    }
 }

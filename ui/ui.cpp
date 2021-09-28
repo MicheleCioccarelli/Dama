@@ -119,9 +119,9 @@ MoveReturn UI::check_input(const std::string &input) {
     if (input == "~") {
         // The user typed nothing
         return EMPTY_MOVE;
-    } else if (input == "resign") {
+    } else if (input == "RESIGN") {
         return RESIGNED;
-    } else if (input == "aiuto") {
+    } else if (input == "AIUTO") {
         return HELP_PAGE;
     }
     // The move wasn't empty nor was it a command
@@ -129,6 +129,21 @@ MoveReturn UI::check_input(const std::string &input) {
         return TOO_SHORT;
     }
     return VALID;
+}
+
+bool UI::dispatch_command(GameEngine& engine, std::string &command, PlayerColor currentPlayer, Move& move) {
+    if (command == "AIUTO") {
+        engine.execute_command(HELP_PAGE);
+        move.type.moveReturn = HELP_PAGE;
+    } else if (command == "RESIGN") {
+        if (currentPlayer == BIANCO) {
+            engine.execute_command(WHITE_RESIGN);
+            move.type.moveReturn = WHITE_RESIGN;
+        } else if (currentPlayer == NERO) {
+            engine.execute_command(BLACK_RESIGN);
+            move.type.moveReturn = BLACK_RESIGN;
+        }
+    }
 }
 
 MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
@@ -154,36 +169,25 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
     // Check input
     for (int i = 0; i < MAX_COMMANDS; i++) {
         stream >> input[i];
-//        if (input[i] == "~") {
-//            break;
-//        }
-//        if (input[i].size() < 5 && input[i] != "~") {
-//            move.type = TOO_SHORT;
-//            return TOO_SHORT;
-//        }
-//        if (input[i] == "aiuto") {
-//            move.type = HELP_PAGE;
-//            engine.render.help_page();
-//            return HELP_PAGE;
-//        }
+
         std::transform(input[i].begin(), input[i].end(), input[i].begin(), ::toupper);
-        check_input(input[i]);
-        commands.emplace_back(input[i], engine);
-        // Now the move has been checked, if it is wrong you end the function
-       // if (commands[i].type)
-    //}
 
-
-    // Proceed with the program only if the coordinates are right, this should avoid segfault
-    if (validate_command(commands) == VALID) {
-        command_to_move(commands, move);
-    } else {
-        move.type.moveReturn = MISINPUT;
-        UI::log_error(MISINPUT);
-        return MISINPUT;
+        if (check_input(input[i]) == VALID) {
+            // If the input passed basic checks
+            commands.emplace_back(input[i], engine);
+        } else {
+            // The input was either a command or wrong
+            if (!dispatch_command(engine, input[i], currentPlayer, move)) {
+                // If the move was not a command it was too short/non existent
+                move.type.moveReturn = TOO_SHORT;
+            }
+        }
     }
-
+    // If the move's type is VALID, engine will execute it, or log the error and ask for more input
+    command_to_move(commands, move);
+    // Check if the move's color is correct
     UI::check_color(move, currentPlayer, engine);
+
     return VALID;
 }
 
@@ -192,7 +196,6 @@ void UI::log_error(MoveReturn error) {
         case VALID:
             return;
         case WHITE_SQUARE:
-
             std::cout << ERROR_COLOR << "Ti stai muovendo in una casella bianca, scrivi aiuto per informazioni" << RESET;
             break;
         case TOO_FAR:
@@ -229,19 +232,19 @@ void UI::log_error(MoveReturn error) {
             std::cout << ERROR_COLOR << "Non puoi soffiarla, scrivi aiuto per informazioni" << RESET;
             break;
         case UNDEFINED:
-            std::cout << ERROR_COLOR << "Qualcosa è andato molto storto o hai soffiato e basta, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Hai soffiato e basta, scrivi aiuto per informazioni" << RESET;
             break;
         case TOO_SHORT:
             std::cout << ERROR_COLOR << "La mossa è troppo corta, scrivi aiuto per informazioni" << RESET;
             break;
         case WRONG_OPERATOR:
-            std::cout << ERROR_COLOR << "Hai sbagliato operatore, prova a scrivere help, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Hai sbagliato operatore, scrivi aiuto per informazioni" << RESET;
             break;
         case WRONG_COLOR:
             std::cout << ERROR_COLOR << "Stai provando a muovere pezzi del colore sbagliato, scrivi aiuto per informazioni" << RESET;
             break;
         case MISINPUT:
-            std::cout << ERROR_COLOR << "La mossa messa in input è sbagliata, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Le coordinate della messa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
             break;
     }
     std::cout << std::endl;

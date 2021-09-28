@@ -36,6 +36,10 @@ enum MoveReturn {
 
     // These are returned by UI::check_input()
 
+    // White resigned
+    WHITE_RESIGN,
+    // Black resigned
+    BLACK_RESIGN,
     // You tyoed nothing
     EMPTY_MOVE,
     // A player resigned

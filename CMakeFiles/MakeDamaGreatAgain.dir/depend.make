@@ -45,8 +45,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: \
  player/player.h \
  render/render.h \
  rendersquare/rendersquare.h \
- square/square.h \
- ui/ui.h
+ square/square.h
 CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: \
  coords/coords.cpp \
  coords/coords.h \

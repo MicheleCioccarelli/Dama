@@ -10,7 +10,9 @@ int main() {
     currentPlayer.color = NERO;
 
     UI::init(engine);
+
     engine.render.render_board(engine.board, BIANCO);
+
     // Main loop
     while (engine.game_over() == GOOD) {
         // Switch player every turn, used both for colors and for move logs
@@ -22,11 +24,13 @@ int main() {
                 currentPlayer = engine.whitePlayer;
                 break;
         }
+        // Switch player colors
         Move move(currentPlayer.color);
 
-        // get_move returns MISINPUT if the move provided is very wrong (e.g. A9-KH)
-        while (UI::get_move(move, engine, currentPlayer.color) == MISINPUT) {
-        }
+        // Get player input
+        UI::get_move(move, engine, currentPlayer.color);
+
+        // If the move was invalid/was a command ask for another move
         while (engine.submit(move) != VALID) {
             UI::get_move(move, engine, currentPlayer.color);
         }

@@ -35,8 +35,6 @@ iostream
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../movecase/movecase.h
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
-../ui/ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/constants/board_assets.h
 ../enums/BoardStyles.h
@@ -163,10 +161,10 @@ ui.h
 /home/sedano/CLionProjects/Dama/ui/ui.h
 ../command/command.h
 /home/sedano/CLionProjects/Dama/command/command.h
+../constants/colors_codes.h
+/home/sedano/CLionProjects/Dama/constants/colors_codes.h
 algorithm
 -
 sstream
 -
-../constants/colors_codes.h
-/home/sedano/CLionProjects/Dama/constants/colors_codes.h
 

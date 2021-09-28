@@ -43,9 +43,6 @@ Command::Command(std::string& input, GameEngine& engine) {
     switch (input[2]) {
         case '-':
             type.moveType = MOVE;
-
-            type.moveReturn = UI::check_input(input);
-
             convert_coords(input.substr(0, 2), startingCoords);
             if (startingCoords.column == Z || startingCoords.row == 9) {
                 type.moveReturn = MISINPUT;
