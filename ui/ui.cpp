@@ -123,6 +123,8 @@ MoveReturn UI::check_input(const std::string &input) {
         return RESIGNED;
     } else if (input == "AIUTO") {
         return HELP_PAGE;
+    } else if (input == "SUMMARY") {
+        return SUMMARY;
     }
     // The move wasn't empty nor was it a command
     if (input.size() < 5) {
@@ -144,6 +146,10 @@ bool UI::dispatch_command(GameEngine& engine, std::string &command, PlayerColor 
             move.type.moveReturn = BLACK_RESIGN;
             return true;
         }
+    } else if (command == "SUMMARY") {
+        engine.execute_command(SUMMARY);
+        move.type.moveReturn = SUMMARY;
+        return true;
     }
     return false;
 }

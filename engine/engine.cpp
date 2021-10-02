@@ -4,6 +4,7 @@
 // ====== GAME ENGINE ======
 GameEngine::GameEngine(GameStyle gameStyle, BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle)
         : render(tokenStyle, pieceStyle, coordStyle), board() {
+    start = time(0);
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();
@@ -482,9 +483,9 @@ void GameEngine::resign(Move& move) {
     int blackPieces = count_pieces(NERO);
 
     if (move.type.moveReturn == WHITE_RESIGN) {
-        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED);
+        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED, start);
     } else if (move.type.moveReturn == BLACK_RESIGN) {
-        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED);
+        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED, start);
     }
 }
 
@@ -562,5 +563,7 @@ void GameEngine::execute_command(MoveReturn command) {
         case HELP_PAGE:
             render.help_page();
             break;
+        case SUMMARY:
+            render.end_screen(count_pieces(BIANCO), count_pieces(NERO), whitePlayer, blackPlayer, GOOD, start);
     }
 }

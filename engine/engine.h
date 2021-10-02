@@ -8,6 +8,7 @@
 
 class GameEngine {
 public:
+    time_t start;
     Player whitePlayer;
     Player blackPlayer;
     Board board;

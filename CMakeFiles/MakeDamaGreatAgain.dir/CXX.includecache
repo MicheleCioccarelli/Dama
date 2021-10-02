@@ -24,18 +24,6 @@ iostream
 ../constants/colors_codes.h
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
 
-/home/sedano/CLionProjects/Dama/command/command.h
-vector
--
-iostream
--
-../engine/engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-../coords/coords.h
-/home/sedano/CLionProjects/Dama/coords/coords.h
-../movecase/movecase.h
-/home/sedano/CLionProjects/Dama/movecase/movecase.h
-
 /home/sedano/CLionProjects/Dama/constants/board_assets.h
 ../enums/BoardStyles.h
 /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
@@ -48,25 +36,11 @@ iostream
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 
-/home/sedano/CLionProjects/Dama/engine/engine.h
-../board/board.h
-/home/sedano/CLionProjects/Dama/board/board.h
-../player/player.h
-/home/sedano/CLionProjects/Dama/player/player.h
-../enums/GameStyle.h
-/home/sedano/CLionProjects/Dama/enums/GameStyle.h
-../enums/GameState.h
-/home/sedano/CLionProjects/Dama/enums/GameState.h
-../render/render.h
-/home/sedano/CLionProjects/Dama/render/render.h
-
 /home/sedano/CLionProjects/Dama/enums/BoardStyles.h
 
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 
 /home/sedano/CLionProjects/Dama/enums/GameState.h
-
-/home/sedano/CLionProjects/Dama/enums/GameStyle.h
 
 /home/sedano/CLionProjects/Dama/enums/MoveReturn.h
 
@@ -114,6 +88,10 @@ vector
 iostream
 -
 
+/home/sedano/CLionProjects/Dama/render/render.cpp
+render.h
+/home/sedano/CLionProjects/Dama/render/render.h
+
 /home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
@@ -125,6 +103,8 @@ iostream
 /home/sedano/CLionProjects/Dama/color/color.h
 ../rendersquare/rendersquare.h
 /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
+time.h
+-
 
 /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
 iostream
@@ -153,18 +133,4 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../piece/Piece.h
 /home/sedano/CLionProjects/Dama/piece/Piece.h
-
-/home/sedano/CLionProjects/Dama/ui/ui.cpp
-ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
-
-/home/sedano/CLionProjects/Dama/ui/ui.h
-../command/command.h
-/home/sedano/CLionProjects/Dama/command/command.h
-../constants/colors_codes.h
-/home/sedano/CLionProjects/Dama/constants/colors_codes.h
-algorithm
--
-sstream
--
 

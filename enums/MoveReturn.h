@@ -33,7 +33,6 @@ enum MoveReturn {
     // The move being checked isn't valid, but the move checker doesn't know why
     UNDEFINED,
 
-
     // These are returned by UI::check_input()
 
     // White resigned
@@ -53,5 +52,7 @@ enum MoveReturn {
     // The input received is invalid (e.g. J8-LK)
     MISINPUT,
     // The user used a help page
-    HELP_PAGE
+    HELP_PAGE,
+    // The player has requested a summary command
+    SUMMARY
 };

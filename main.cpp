@@ -53,7 +53,6 @@ int main() {
     int whitePieces = engine.count_pieces(BIANCO);
     int blackPieces = engine.count_pieces(NERO);
 
-    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
-                             engine.game_over());
+    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(), engine.start);
     return 0;
 }
