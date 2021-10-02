@@ -68,9 +68,9 @@ Command::Command(std::string& input, GameEngine& engine) {
             }
             if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
                 // If the move is invalid, uninitialize the coords;
-                std::cout << "Non puoi soffiarla" << std::endl;
                 startingCoords = Coords();
                 endingCoords = Coords();
+                type.moveReturn = ROCK_SOLID;
             } else {
                 // If the move can be blown
                 type.moveReturn = BLOWABLE;

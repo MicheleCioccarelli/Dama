@@ -232,7 +232,10 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
 
     PlayerColor currentPlayer = deduce_color(move);
 
-    if (whitePlayer.moves.size() == 0) {
+    if (whitePlayer.moves.empty()) {
+        return ROCK_SOLID;
+    }
+    if (blackPlayer.moves.empty()) {
         return ROCK_SOLID;
     }
 

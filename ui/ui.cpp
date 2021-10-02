@@ -182,11 +182,17 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             if (dispatch_command(engine, input[i], currentPlayer, move)) {
                 // The move was a command
                 return move.type.moveReturn;
-                break;
-            } else {
+            } else if (check_input(input[i]) != EMPTY_MOVE){
                 // If the move was not a command it was too short/non existent
                 move.type.moveReturn = TOO_SHORT;
+                return TOO_SHORT;
             }
+        }
+        // Check if the Command constructor founs anything strange
+        if (commands[i].type.moveReturn != VALID) {
+            // If something went wrong
+            move.type = commands[i].type;
+            return move.type.moveReturn;
         }
     }
     // If the move's type is VALID, engine will execute it, or log the error and ask for more input
@@ -235,10 +241,10 @@ void UI::log_error(MoveReturn error) {
             std::cout << ERROR_COLOR << "Andresti fuori dalla scacchiera, scrivi aiuto per informazioni" << RESET;
             break;
         case ROCK_SOLID:
-            std::cout << ERROR_COLOR << "Non puoi soffiarla, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi soffiare in questo caso, scrivi aiuto per informazioni" << RESET;
             break;
         case UNDEFINED:
-            std::cout << ERROR_COLOR << "Hai soffiato e basta, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi soffiare e basta, scrivi aiuto per informazioni sulla sintassi delle mosse" << RESET;
             break;
         case TOO_SHORT:
             std::cout << ERROR_COLOR << "La mossa è troppo corta, scrivi aiuto per informazioni" << RESET;
