@@ -189,10 +189,14 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
                 // The move was a command
                 return move.type.moveReturn;
             } else if (check_input(input[i]) != EMPTY_MOVE){
-                // If the move was not a command it was too short/non existent
+                // If the move was not a command, it was too short
                 move.type.moveReturn = TOO_SHORT;
                 return TOO_SHORT;
             }
+        }
+        if (commands.empty()) {
+            move.type.moveReturn = NO_MOVE;
+            return NO_MOVE;
         }
         // Check if the Command constructor founs anything strange
         if (commands[i].type.moveReturn != VALID) {
@@ -263,6 +267,9 @@ void UI::log_error(MoveReturn error) {
             break;
         case MISINPUT:
             std::cout << ERROR_COLOR << "Le coordinate della messa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
+            break;
+        case NO_MOVE:
+            std::cout << ERROR_COLOR << "Non hai inserito nessuna mossa" << RESET;
             break;
     }
     std::cout << std::endl;

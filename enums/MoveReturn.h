@@ -32,6 +32,8 @@ enum MoveReturn {
     ROCK_SOLID,
     // The move being checked isn't valid, but the move checker doesn't know why
     UNDEFINED,
+    // The user is a bitch and tried to segfault
+    NO_MOVE,
 
     // These are returned by UI::check_input()
 
