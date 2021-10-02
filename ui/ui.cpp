@@ -138,11 +138,9 @@ bool UI::dispatch_command(GameEngine& engine, std::string &command, PlayerColor 
         return true;
     } else if (command == "RESIGN") {
         if (currentPlayer == BIANCO) {
-            engine.execute_command(WHITE_RESIGN);
             move.type.moveReturn = WHITE_RESIGN;
             return true;
         } else if (currentPlayer == NERO) {
-            engine.execute_command(BLACK_RESIGN);
             move.type.moveReturn = BLACK_RESIGN;
             return true;
         }
@@ -183,6 +181,7 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             // The input was either a command or wrong
             if (dispatch_command(engine, input[i], currentPlayer, move)) {
                 // The move was a command
+                return move.type.moveReturn;
                 break;
             } else {
                 // If the move was not a command it was too short/non existent

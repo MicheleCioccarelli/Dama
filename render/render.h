@@ -73,7 +73,7 @@ public:
     static void padding(int numberOfSpaces);
 
     // Used in end_screen() to put names in the middle of the table
-    void center_name(std::string& name, int longerName);
+    void center_name(std::string& name, int longerName, std::string color = BOARD_COLOR);
 
     void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result);
 

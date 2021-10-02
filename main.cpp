@@ -24,13 +24,6 @@ int main() {
                 currentPlayer = engine.whitePlayer;
                 break;
         }
-
-        int whitePieces = engine.count_pieces(BIANCO);
-        int blackPieces = engine.count_pieces(NERO);
-
-        engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
-                                 engine.game_over());
-
         // Switch player colors
         Move move(currentPlayer.color);
 
@@ -39,6 +32,10 @@ int main() {
 
         // If the move was invalid/was a command ask for another move
         while (engine.submit(move) != VALID) {
+            if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
+                engine.resign(move);
+                return 1;
+            }
             UI::get_move(move, engine, currentPlayer.color);
         }
 
@@ -58,4 +55,5 @@ int main() {
 
     engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
                              engine.game_over());
+    return 0;
 }

@@ -474,6 +474,17 @@ bool GameEngine::simulate_damona(Piece piece, Coords coords) {
     return false;
 }
 
+void GameEngine::resign(Move& move) {
+    int whitePieces = count_pieces(BIANCO);
+    int blackPieces = count_pieces(NERO);
+
+    if (move.type.moveReturn == WHITE_RESIGN) {
+        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED);
+    } else if (move.type.moveReturn == BLACK_RESIGN) {
+        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED);
+    }
+}
+
 GameState GameEngine::game_over(PlayerColor winner) {
     if (winner != TRASPARENTE) {
         if (winner == BIANCO) {
@@ -547,12 +558,6 @@ void GameEngine::execute_command(MoveReturn command) {
     switch (command) {
         case HELP_PAGE:
             render.help_page();
-            break;
-        case WHITE_RESIGN:
-            game_over(NERO);
-            break;
-        case BLACK_RESIGN:
-            game_over(BIANCO);
             break;
     }
 }

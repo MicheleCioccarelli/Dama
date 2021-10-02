@@ -162,9 +162,9 @@ void RenderV2::render_columns(PlayerColor color) const {
     }
 }
 
-void RenderV2::center_name(std::string& name, int longerName) {
+void RenderV2::center_name(std::string& name, int longerName, std::string color) {
     if (name.size() == longerName) {
-        std::cout << name;
+        std::cout << color << name << RESET;
     } else {
         int diff = name.size() - longerName;
         if (diff < 0) {
@@ -174,7 +174,7 @@ void RenderV2::center_name(std::string& name, int longerName) {
         for (int i = 0; i < diff / 2; i++) {
             std::cout << " ";
         }
-        std::cout << name;
+        std::cout << color <<  name << RESET;
 
         if (diff % 2 == 0) {
             for (int i = 0; i < diff / 2; i++) {
@@ -194,27 +194,38 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
      strings.emplace_back("Pezzi");
      strings.emplace_back("Mosse");
 
+     std::string WHITE_COLOR = WINNER_COLOR;
+     std::string BLACK_COLOR = WINNER_COLOR;
+
      switch (result) {
          case WHITE_RESIGNED:
              strings.emplace_back("Il bianco si è arreso");
+             WHITE_COLOR = LOSER_COLOR;
              break;
-             case BLACK_RESIGNED:
-                 strings.emplace_back("Il nero si è arreso");
+         case BLACK_RESIGNED:
+             strings.emplace_back("Il nero si è arreso");
+             BLACK_COLOR = LOSER_COLOR;
              break;
-             case WHITE_WIN:
-                 strings.emplace_back("Vittoria bianca");
+         case WHITE_WIN:
+             strings.emplace_back("Vittoria bianca");
+             BLACK_COLOR = LOSER_COLOR;
              break;
-             case BLACK_WIN:
-                 strings.emplace_back("Vittoria nera");
+         case BLACK_WIN:
+             strings.emplace_back("Vittoria nera");
+             WHITE_COLOR = LOSER_COLOR;
              break;
-             case STALEMATE:
-                 strings.emplace_back("Pareggio");
+         case STALEMATE:
+             strings.emplace_back("Pareggio");
+             WHITE_COLOR = DRAW_COLOR;
+             BLACK_COLOR = DRAW_COLOR;
              break;
-             case DRAW:
-                 strings.emplace_back("Patta");
+         case DRAW:
+             strings.emplace_back("Patta");
+             WHITE_COLOR = DRAW_COLOR;
+             BLACK_COLOR = DRAW_COLOR;
              break;
-             case GOOD:
-                 strings.emplace_back("Il gioco non è ancora finito in teoria");
+         case GOOD:
+             strings.emplace_back("Il gioco non è ancora finito in teoria");
              break;
      }
 
@@ -264,7 +275,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
      std::cout << std::endl;
      padding(5);
      std::cout << boardTokens.verticalLine << " ";
-     center_name(whitePlayer.name, longerName);
+     center_name(whitePlayer.name, longerName, WHITE_COLOR);
      std::cout << " " << boardTokens.verticalLine;
 
      // White number of pieces
@@ -300,7 +311,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
      std::cout << std::endl;
      padding(5);
      std::cout << boardTokens.verticalLine << " ";
-     center_name(blackPlayer.name, longerName);
+     center_name(blackPlayer.name, longerName, BLACK_COLOR);
      std::cout << " " << boardTokens.verticalLine;
 
      if (blackPieces < 10) {

@@ -38,6 +38,9 @@ public:
 
     void promote();
 
+    // End the game
+    void resign(Move& move);
+
     // These funcion are used in game_over()
     // and check every possible move, if at least one is found they return true
     bool simulate_damina(Piece piece, Coords coords);

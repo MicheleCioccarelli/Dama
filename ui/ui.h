@@ -26,7 +26,7 @@ public:
     // Explains the error to the user
     static void log_error(MoveReturn error);
 
-    // Returns true if the input was actually a command
+    // Returns true if the input was actually a command and assigns the right MoveReturn to it
     static bool dispatch_command(GameEngine& engine, std::string& command, PlayerColor currentPlayer, Move& move);
 
     // Puts the contents of 2 commands in a move, uninitialized commands are ignored
