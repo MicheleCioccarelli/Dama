@@ -199,7 +199,7 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             return NO_MOVE;
         }
         // Check if the Command constructor founs anything strange
-        if (commands[i].type.moveReturn != VALID) {
+        if (commands[i].type.moveReturn != VALID && commands.empty()) {
             // If something went wrong
             move.type = commands[i].type;
             return move.type.moveReturn;

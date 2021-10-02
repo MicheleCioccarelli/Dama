@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/sedano/CLionProjects/Dama/board/board.cpp
-board.h
-/home/sedano/CLionProjects/Dama/board/board.h
-
 /home/sedano/CLionProjects/Dama/board/board.h
 ../square/square.h
 /home/sedano/CLionProjects/Dama/square/square.h
@@ -27,10 +23,6 @@ iostream
 -
 ../constants/colors_codes.h
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
-
-/home/sedano/CLionProjects/Dama/command/command.cpp
-command.h
-/home/sedano/CLionProjects/Dama/command/command.h
 
 /home/sedano/CLionProjects/Dama/command/command.h
 vector
@@ -55,12 +47,6 @@ iostream
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
-
-/home/sedano/CLionProjects/Dama/engine/engine.cpp
-engine.h
-/home/sedano/CLionProjects/Dama/engine/engine.h
-../ui/ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
@@ -92,16 +78,6 @@ engine.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 
-/home/sedano/CLionProjects/Dama/main.cpp
-render/render.h
-/home/sedano/CLionProjects/Dama/render/render.h
-ui/ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
-
-/home/sedano/CLionProjects/Dama/move/move.cpp
-move.h
-/home/sedano/CLionProjects/Dama/move/move.h
-
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
 -
@@ -112,10 +88,6 @@ vector
 ../piece/Piece.h
 /home/sedano/CLionProjects/Dama/piece/Piece.h
 ../movecase/movecase.h
-/home/sedano/CLionProjects/Dama/movecase/movecase.h
-
-/home/sedano/CLionProjects/Dama/movecase/movecase.cpp
-movecase.h
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
 
 /home/sedano/CLionProjects/Dama/movecase/movecase.h
@@ -130,10 +102,6 @@ movecase.h
 ../enums/PieceType.h
 /home/sedano/CLionProjects/Dama/enums/PieceType.h
 
-/home/sedano/CLionProjects/Dama/player/player.cpp
-player.h
-/home/sedano/CLionProjects/Dama/player/player.h
-
 /home/sedano/CLionProjects/Dama/player/player.h
 ../move/move.h
 /home/sedano/CLionProjects/Dama/move/move.h
@@ -145,10 +113,6 @@ vector
 -
 iostream
 -
-
-/home/sedano/CLionProjects/Dama/render/render.cpp
-render.h
-/home/sedano/CLionProjects/Dama/render/render.h
 
 /home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
@@ -163,10 +127,6 @@ render.h
 /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
 time.h
 -
-
-/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.cpp
-rendersquare.h
-/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
 
 /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
 iostream
