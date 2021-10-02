@@ -24,6 +24,13 @@ int main() {
                 currentPlayer = engine.whitePlayer;
                 break;
         }
+
+        int whitePieces = engine.count_pieces(BIANCO);
+        int blackPieces = engine.count_pieces(NERO);
+
+        engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer,
+                                 engine.game_over());
+
         // Switch player colors
         Move move(currentPlayer.color);
 

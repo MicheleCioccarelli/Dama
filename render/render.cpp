@@ -162,9 +162,177 @@ void RenderV2::render_columns(PlayerColor color) const {
     }
 }
 
-void
-RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer, Player &blackPlayer, GameState result) {
-    std::cout << "The game just ended :)" << std::endl;
+void RenderV2::center_name(std::string& name, int longerName) {
+    if (name.size() == longerName) {
+        std::cout << name;
+    } else {
+        int diff = name.size() - longerName;
+        if (diff < 0) {
+            diff = -diff;
+        }
+
+        for (int i = 0; i < diff / 2; i++) {
+            std::cout << " ";
+        }
+        std::cout << name;
+
+        if (diff % 2 == 0) {
+            for (int i = 0; i < diff / 2; i++) {
+                std::cout << " ";
+            }
+        } else {
+            for (int i = 0; i < (diff / 2) + (diff % 2); i++) {
+                std::cout << " ";
+            }
+        }
+    }
+}
+
+void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer, Player &blackPlayer, GameState result) {
+     std::vector<std::string> strings;
+     strings.emplace_back("Nome");
+     strings.emplace_back("Pezzi");
+     strings.emplace_back("Mosse");
+
+     switch (result) {
+         case WHITE_RESIGNED:
+             strings.emplace_back("Il bianco si è arreso");
+             break;
+             case BLACK_RESIGNED:
+                 strings.emplace_back("Il nero si è arreso");
+             break;
+             case WHITE_WIN:
+                 strings.emplace_back("Vittoria bianca");
+             break;
+             case BLACK_WIN:
+                 strings.emplace_back("Vittoria nera");
+             break;
+             case STALEMATE:
+                 strings.emplace_back("Pareggio");
+             break;
+             case DRAW:
+                 strings.emplace_back("Patta");
+             break;
+             case GOOD:
+                 strings.emplace_back("Il gioco non è ancora finito in teoria");
+             break;
+     }
+
+     // This defines the width of the table
+     int longerName;
+     if (whitePlayer.name.size() >= blackPlayer.name.size()) {
+         longerName = whitePlayer.name.size();
+     } else {
+         longerName = blackPlayer.name.size();
+     }
+     if (longerName < 5) {
+         longerName = 5;
+     }
+
+     padding(7);
+     center_name(strings[3], longerName + 13);
+     std::cout << std::endl << std::endl;
+
+     padding(5);
+     // Drawing the names
+     std::cout << " ";
+     center_name(strings[0], longerName + 2);
+     center_name(strings[1], 7);
+     center_name(strings[2], 8);
+     std::cout << std::endl;
+
+     padding(5);
+     // Top line
+     std::cout << boardTokens.topLeft;
+     for (int i = 0; i < longerName + 2; i++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.upChain;
+     // Pieces block
+     for (int i = 0; i < 6; i ++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.upChain;
+     // Number of moves
+     for (int i = 0; i < 6; i++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.topRight;
+
+     padding(5);
+     // White name
+     std::cout << std::endl;
+     padding(5);
+     std::cout << boardTokens.verticalLine << " ";
+     center_name(whitePlayer.name, longerName);
+     std::cout << " " << boardTokens.verticalLine;
+
+     // White number of pieces
+     if (whitePieces < 10) {
+         std::cout << "   " << whitePieces << "  ";
+     } else {
+         std::cout << "  " << whitePieces << "  ";
+     }
+
+     // White number of moves
+     if (whitePlayer.moves.size() <= 9) {
+         std::cout << boardTokens.verticalLine << "   " << whitePlayer.moves.size() << "  ";
+     } else {
+         std::cout << boardTokens.verticalLine << "  " << whitePlayer.moves.size() << "  ";
+     }
+     std::cout << boardTokens.verticalLine;
+
+     // Middle line
+     std::cout << std::endl,
+     padding(5);
+     std::cout << boardTokens.leftBorder;
+     for (int i = 0 ; i < longerName + 2; i++) {
+         std::cout << boardTokens.horizontalLine;
+     } std::cout << boardTokens.link;
+     for (int i = 0 ; i < 6; i++) {
+         std::cout << boardTokens.horizontalLine;
+     } std::cout << boardTokens.link;
+     for (int i = 0 ; i < 6; i++) {
+         std::cout << boardTokens.horizontalLine;
+     } std::cout << boardTokens.rightBorder;
+
+     // Black information
+     std::cout << std::endl;
+     padding(5);
+     std::cout << boardTokens.verticalLine << " ";
+     center_name(blackPlayer.name, longerName);
+     std::cout << " " << boardTokens.verticalLine;
+
+     if (blackPieces < 10) {
+         std::cout << "   " << blackPieces << "  ";
+     } else {
+         std::cout << "  " << blackPieces << "  ";
+     }
+
+     if (blackPlayer.moves.size() <= 9) {
+         std::cout << boardTokens.verticalLine << "   " << blackPlayer.moves.size() << "  ";
+     } else {
+         std::cout << boardTokens.verticalLine << "  " << blackPlayer.moves.size() << "  ";
+     }
+     std::cout << boardTokens.verticalLine << std::endl;
+
+     padding(5);
+     // Closing line
+     std::cout << boardTokens.bottomLeft;
+     for (int i = 0; i < longerName + 2; i++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.downChain;
+     // Pieces block
+     for (int i = 0; i < 6; i ++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.downChain;
+     // Number of moves
+     for (int i = 0; i < 6; i++) {
+         std::cout << boardTokens.horizontalLine;
+     }
+     std::cout << boardTokens.bottomRight << std::endl;
 }
 
 void RenderV2::help_page() {
@@ -200,6 +368,7 @@ void RenderV2::help_page() {
     std::cout << "|  Esempio: A3xB4" << std::endl;
     std::cout << "COMANDI" << std::endl;
     std::cout << "resign";
+    std::cout << std::endl;
     for (int i = 1; i < 22; i++) {
         std::cout << "════";
     } std::cout << std::endl;

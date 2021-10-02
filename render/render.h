@@ -70,9 +70,12 @@ public:
     // Clear all the colors from the board
     void clear();
 
-    void padding(int numberOfSpaces);
+    static void padding(int numberOfSpaces);
+
+    // Used in end_screen() to put names in the middle of the table
+    void center_name(std::string& name, int longerName);
 
     void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result);
 
-    void help_page();
+    static void help_page();
 };

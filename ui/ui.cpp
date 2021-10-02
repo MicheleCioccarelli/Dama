@@ -135,15 +135,19 @@ bool UI::dispatch_command(GameEngine& engine, std::string &command, PlayerColor 
     if (command == "AIUTO") {
         engine.execute_command(HELP_PAGE);
         move.type.moveReturn = HELP_PAGE;
+        return true;
     } else if (command == "RESIGN") {
         if (currentPlayer == BIANCO) {
             engine.execute_command(WHITE_RESIGN);
             move.type.moveReturn = WHITE_RESIGN;
+            return true;
         } else if (currentPlayer == NERO) {
             engine.execute_command(BLACK_RESIGN);
             move.type.moveReturn = BLACK_RESIGN;
+            return true;
         }
     }
+    return false;
 }
 
 MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer) {
@@ -177,7 +181,10 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             commands.emplace_back(input[i], engine);
         } else {
             // The input was either a command or wrong
-            if (!dispatch_command(engine, input[i], currentPlayer, move)) {
+            if (dispatch_command(engine, input[i], currentPlayer, move)) {
+                // The move was a command
+                break;
+            } else {
                 // If the move was not a command it was too short/non existent
                 move.type.moveReturn = TOO_SHORT;
             }

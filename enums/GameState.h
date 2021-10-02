@@ -9,5 +9,9 @@ enum GameState {
 
     STALEMATE,
 
+    WHITE_RESIGNED,
+
+    BLACK_RESIGNED,
+
     DRAW
 };
