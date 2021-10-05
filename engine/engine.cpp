@@ -60,16 +60,6 @@ MoveReturn GameEngine::check_move(Move &move) {
     Coords startingCoords = move.coords[0].convert_coords();
     Coords endingCoords = move.coords[lastIndex].convert_coords();
 
-    if (startingCoords.column >= Z || startingCoords.column < A) {
-        return OUT_OF_BOUNDS;
-    } else if (endingCoords.column >= Z || endingCoords.column < A) {
-        return OUT_OF_BOUNDS;
-    } else if (startingCoords.row > 7 || startingCoords.row < 0) {
-        return OUT_OF_BOUNDS;
-    } else if (endingCoords.row > 7 || endingCoords.row < 0) {
-        return OUT_OF_BOUNDS;
-    }
-
     startingPiece = board.matrix[startingCoords.row][startingCoords.column].piece;
     endingPiece = board.matrix[endingCoords.row][endingCoords.column].piece;
     endingSquare = board.matrix[endingCoords.row][endingCoords.column];
