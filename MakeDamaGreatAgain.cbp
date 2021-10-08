@@ -66,6 +66,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/home/sedano/CLionProjects/Dama/apium/scoredmove/scoredmove.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/apium/scoredmove/scoredmove.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/board/board.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

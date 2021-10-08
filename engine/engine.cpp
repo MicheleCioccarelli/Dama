@@ -330,8 +330,6 @@ bool GameEngine::simulate_damina(Piece piece, Coords coords) {
     int whiteMoves = 0;
     int blackMoves = 0;
 
-    // These coords are for testing purposes
-    Coords tempCoords;
     /*
      * For the damine we check what moves are in front of them
      * (add 1 to the row for white and leave black because check_eat already subtracts 1)

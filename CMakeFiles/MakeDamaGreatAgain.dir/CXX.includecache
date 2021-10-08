@@ -48,6 +48,12 @@ iostream
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
 
+/home/sedano/CLionProjects/Dama/engine/engine.cpp
+engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
+../ui/ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
+
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
 /home/sedano/CLionProjects/Dama/board/board.h
@@ -155,10 +161,6 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../piece/Piece.h
 /home/sedano/CLionProjects/Dama/piece/Piece.h
-
-/home/sedano/CLionProjects/Dama/ui/ui.cpp
-ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/ui/ui.h
 ../command/command.h
