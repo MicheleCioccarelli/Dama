@@ -248,18 +248,18 @@ CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/rendersquare/rendersquare.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.s
 
-CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
-CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o: apium/scoredmove/scoredmove.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o -c /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredmove.cpp
+CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o: CMakeFiles/MakeDamaGreatAgain.dir/flags.make
+CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o: apium/scoredmove/scoredMove.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/sedano/CLionProjects/Dama/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o -c /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.cpp
 
-CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredmove.cpp > CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.i
+CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.cpp > CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.i
 
-CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredmove.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.s
+CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.cpp -o CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.s
 
 # Object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_OBJECTS = \
@@ -277,7 +277,7 @@ MakeDamaGreatAgain_OBJECTS = \
 "CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o" \
 "CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o" \
-"CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o"
+"CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o"
 
 # External object files for target MakeDamaGreatAgain
 MakeDamaGreatAgain_EXTERNAL_OBJECTS =
@@ -296,7 +296,7 @@ MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/movecase/movecase.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/piece/Piece.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/rendersquare/rendersquare.cpp.o
-MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o
+MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/build.make
 MakeDamaGreatAgain: CMakeFiles/MakeDamaGreatAgain.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/sedano/CLionProjects/Dama/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable MakeDamaGreatAgain"

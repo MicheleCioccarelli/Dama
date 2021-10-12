@@ -129,29 +129,29 @@ MakeDamaGreatAgain/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/build
 .PHONY : MakeDamaGreatAgain/fast
 
-apium/scoredmove/scoredmove.o: apium/scoredmove/scoredmove.cpp.o
-.PHONY : apium/scoredmove/scoredmove.o
+apium/scoredmove/scoredMove.o: apium/scoredmove/scoredMove.cpp.o
+.PHONY : apium/scoredmove/scoredMove.o
 
 # target to build an object file
-apium/scoredmove/scoredmove.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.o
-.PHONY : apium/scoredmove/scoredmove.cpp.o
+apium/scoredmove/scoredMove.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o
+.PHONY : apium/scoredmove/scoredMove.cpp.o
 
-apium/scoredmove/scoredmove.i: apium/scoredmove/scoredmove.cpp.i
-.PHONY : apium/scoredmove/scoredmove.i
+apium/scoredmove/scoredMove.i: apium/scoredmove/scoredMove.cpp.i
+.PHONY : apium/scoredmove/scoredMove.i
 
 # target to preprocess a source file
-apium/scoredmove/scoredmove.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.i
-.PHONY : apium/scoredmove/scoredmove.cpp.i
+apium/scoredmove/scoredMove.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.i
+.PHONY : apium/scoredmove/scoredMove.cpp.i
 
-apium/scoredmove/scoredmove.s: apium/scoredmove/scoredmove.cpp.s
-.PHONY : apium/scoredmove/scoredmove.s
+apium/scoredmove/scoredMove.s: apium/scoredmove/scoredMove.cpp.s
+.PHONY : apium/scoredmove/scoredMove.s
 
 # target to generate assembly for a file
-apium/scoredmove/scoredmove.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredmove.cpp.s
-.PHONY : apium/scoredmove/scoredmove.cpp.s
+apium/scoredmove/scoredMove.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.s
+.PHONY : apium/scoredmove/scoredMove.cpp.s
 
 board/board.o: board/board.cpp.o
 .PHONY : board/board.o
@@ -498,9 +498,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... MakeDamaGreatAgain"
-	@echo "... apium/scoredmove/scoredmove.o"
-	@echo "... apium/scoredmove/scoredmove.i"
-	@echo "... apium/scoredmove/scoredmove.s"
+	@echo "... apium/scoredmove/scoredMove.o"
+	@echo "... apium/scoredmove/scoredMove.i"
+	@echo "... apium/scoredmove/scoredMove.s"
 	@echo "... board/board.o"
 	@echo "... board/board.i"
 	@echo "... board/board.s"

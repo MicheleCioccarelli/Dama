@@ -6,6 +6,14 @@
 
 #IncludeRegexTransform: 
 
+/home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.cpp
+scoredMove.h
+/home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.h
+
+/home/sedano/CLionProjects/Dama/apium/scoredmove/scoredMove.h
+../../move/move.h
+/home/sedano/CLionProjects/Dama/move/move.h
+
 /home/sedano/CLionProjects/Dama/board/board.h
 ../square/square.h
 /home/sedano/CLionProjects/Dama/square/square.h
@@ -23,6 +31,10 @@ iostream
 -
 ../constants/colors_codes.h
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
+
+/home/sedano/CLionProjects/Dama/command/command.cpp
+command.h
+/home/sedano/CLionProjects/Dama/command/command.h
 
 /home/sedano/CLionProjects/Dama/command/command.h
 vector
@@ -84,6 +96,12 @@ engine.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 
+/home/sedano/CLionProjects/Dama/main.cpp
+render/render.h
+/home/sedano/CLionProjects/Dama/render/render.h
+ui/ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
+
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
 -
@@ -119,6 +137,10 @@ vector
 -
 iostream
 -
+
+/home/sedano/CLionProjects/Dama/render/render.cpp
+render.h
+/home/sedano/CLionProjects/Dama/render/render.h
 
 /home/sedano/CLionProjects/Dama/render/render.h
 ../board/board.h
@@ -161,6 +183,10 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
 ../piece/Piece.h
 /home/sedano/CLionProjects/Dama/piece/Piece.h
+
+/home/sedano/CLionProjects/Dama/ui/ui.cpp
+ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/ui/ui.h
 ../command/command.h

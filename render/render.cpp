@@ -224,7 +224,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
              WHITE_COLOR = DRAW_COLOR;
              BLACK_COLOR = DRAW_COLOR;
              break;
-         case GOOD:
+         case GAME_NOT_OVER:
              strings.emplace_back("");
              break;
      }

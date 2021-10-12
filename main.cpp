@@ -14,7 +14,7 @@ int main() {
     engine.render.render_board(engine.board, BIANCO);
 
     // Main loop
-    while (engine.game_over() == GOOD) {
+    while (engine.game_over() == GAME_NOT_OVER) {
         // Switch player every turn, used both for colors and for move logs
         switch (currentPlayer.color) {
             case BIANCO:

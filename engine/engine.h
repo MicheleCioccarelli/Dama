@@ -42,10 +42,11 @@ public:
     // End the game
     void resign(Move& move);
 
-    // These funcion are used in game_over()
-    // and check every possible move, if at least one is found they return true
-    bool simulate_damina(Piece piece, Coords coords);
-    bool simulate_damona(Piece piece, Coords coords);
+
+    // Given a certain piece, looks for all possible moves and returns them in a vector
+    std::vector<Move> simulate_damina(Piece piece, Coords coords);
+    // Returns a vectors with all the moves the damona could make
+    std::vector<Move> simulate_damona(Piece piece, Coords coords);
 
     // The color passed in wins, used when resigning
     GameState game_over(PlayerColor winner = TRASPARENTE);
