@@ -47,12 +47,12 @@ int main() {
         engine.render.render_board( engine.board, currentPlayer.other_color(), move);
     }
 
-    // Needs to be re-written
+    // When the game is over
     engine.render.render_board( engine.board, currentPlayer.color);
 
     int whitePieces = engine.count_pieces(BIANCO);
     int blackPieces = engine.count_pieces(NERO);
-
     engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(), engine.start);
+
     return 0;
 }
