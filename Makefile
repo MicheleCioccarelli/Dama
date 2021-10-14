@@ -201,6 +201,30 @@ color/color.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.s
 .PHONY : color/color.cpp.s
 
+colorMatrix/colorMatrix.o: colorMatrix/colorMatrix.cpp.o
+.PHONY : colorMatrix/colorMatrix.o
+
+# target to build an object file
+colorMatrix/colorMatrix.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/colorMatrix/colorMatrix.cpp.o
+.PHONY : colorMatrix/colorMatrix.cpp.o
+
+colorMatrix/colorMatrix.i: colorMatrix/colorMatrix.cpp.i
+.PHONY : colorMatrix/colorMatrix.i
+
+# target to preprocess a source file
+colorMatrix/colorMatrix.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/colorMatrix/colorMatrix.cpp.i
+.PHONY : colorMatrix/colorMatrix.cpp.i
+
+colorMatrix/colorMatrix.s: colorMatrix/colorMatrix.cpp.s
+.PHONY : colorMatrix/colorMatrix.s
+
+# target to generate assembly for a file
+colorMatrix/colorMatrix.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/MakeDamaGreatAgain.dir/build.make CMakeFiles/MakeDamaGreatAgain.dir/colorMatrix/colorMatrix.cpp.s
+.PHONY : colorMatrix/colorMatrix.cpp.s
+
 command/command.o: command/command.cpp.o
 .PHONY : command/command.o
 
@@ -507,6 +531,9 @@ help:
 	@echo "... color/color.o"
 	@echo "... color/color.i"
 	@echo "... color/color.s"
+	@echo "... colorMatrix/colorMatrix.o"
+	@echo "... colorMatrix/colorMatrix.i"
+	@echo "... colorMatrix/colorMatrix.s"
 	@echo "... command/command.o"
 	@echo "... command/command.i"
 	@echo "... command/command.s"

@@ -32,9 +32,28 @@ CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o: \
  color/color.cpp \
  color/color.h \
  constants/colors_codes.h
+CMakeFiles/MakeDamaGreatAgain.dir/colorMatrix/colorMatrix.cpp.o: \
+ color/color.h \
+ colorMatrix/colorMatrix.cpp \
+ colorMatrix/colorMatrix.h \
+ constants/board_assets.h \
+ constants/colors_codes.h \
+ constants/number_constants.h \
+ coords/coords.h \
+ enums/BoardStyles.h \
+ enums/ColumnNotatiton.h \
+ enums/MoveReturn.h \
+ enums/MoveType.h \
+ enums/PieceType.h \
+ enums/PlayerColor.h \
+ move/move.h \
+ movecase/movecase.h \
+ piece/Piece.h \
+ rendersquare/rendersquare.h
 CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o: \
  board/board.h \
  color/color.h \
+ colorMatrix/colorMatrix.h \
  command/command.cpp \
  command/command.h \
  constants/board_assets.h \
@@ -65,6 +84,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o: \
 CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: \
  board/board.h \
  color/color.h \
+ colorMatrix/colorMatrix.h \
  command/command.h \
  constants/board_assets.h \
  constants/colors_codes.h \
@@ -92,6 +112,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o: \
 CMakeFiles/MakeDamaGreatAgain.dir/main.cpp.o: \
  board/board.h \
  color/color.h \
+ colorMatrix/colorMatrix.h \
  command/command.h \
  constants/board_assets.h \
  constants/colors_codes.h \
@@ -152,6 +173,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/player/player.cpp.o: \
 CMakeFiles/MakeDamaGreatAgain.dir/render/render.cpp.o: \
  board/board.h \
  color/color.h \
+ colorMatrix/colorMatrix.h \
  constants/board_assets.h \
  constants/colors_codes.h \
  constants/number_constants.h \
@@ -201,6 +223,7 @@ CMakeFiles/MakeDamaGreatAgain.dir/square/square.cpp.o: \
 CMakeFiles/MakeDamaGreatAgain.dir/ui/ui.cpp.o: \
  board/board.h \
  color/color.h \
+ colorMatrix/colorMatrix.h \
  command/command.h \
  constants/board_assets.h \
  constants/colors_codes.h \

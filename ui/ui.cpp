@@ -205,9 +205,6 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
                 move.type = commands[i].type;
                 return move.type.moveReturn;
             }
-//            // If the user didn't enter any move
-//                move.type = commands[i].type;
-//                return move.type.moveReturn;
         }
     }
     // If the move's type is VALID, engine will execute it, or log the error and ask for more input

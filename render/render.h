@@ -4,7 +4,7 @@
 #include "../enums/GameState.h"
 #include "../player/player.h"
 #include "../color/color.h"
-#include "../rendersquare/rendersquare.h"
+#include "../colorMatrix/colorMatrix.h"
 
 #include <time.h>
 

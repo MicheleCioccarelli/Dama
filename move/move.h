@@ -13,10 +13,14 @@ public:
      * while the last is the ending coord.
      * Anything in between is the coords of the pieces eaten.
      */
+
+    // This operator is only used when rhs is an lvalue
+    Move& operator= (Move rhs);
+
     std::vector<Coords> coords;
     Coords blownCoord;
 
-    PlayerColor color;
+    PlayerColor playerColor;
     MoveCase type;
 
     void add_coords(const Coords & _coords);

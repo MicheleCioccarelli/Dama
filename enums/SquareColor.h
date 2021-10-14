@@ -1,5 +1,5 @@
 #pragma once
 
 enum SquareColor {
-    BIANCA, NERA
+    BIANCA, NERA,
 };

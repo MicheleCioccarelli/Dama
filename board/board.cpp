@@ -32,8 +32,8 @@ void Board::standard_game_initialization() {
 }
 
 void Board::colored_game_initialization() {
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (matrix[row][col].color == NERA) {
                 matrix[row][col].piece = Piece(TRASPARENTE, COLORATA);
             }
@@ -43,11 +43,11 @@ void Board::colored_game_initialization() {
 
 void Board::damone_game_initialization() {
     // Initialize pieces
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMONE, BIANCO);
-            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMONE, NERO);
             }
         }
@@ -55,11 +55,11 @@ void Board::damone_game_initialization() {
 }
 
 void Board::empty_game_initialization() {
-    for (int row = 0; row < rows; row++) {
-        for (int col = 0; col < columns; col++) {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
             if (row < 3 && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(VUOTA, TRASPARENTE);
-            } else if (row >= (columns - 3) && matrix[row][col].color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(VUOTA, TRASPARENTE);
             }
         }
@@ -68,30 +68,30 @@ void Board::empty_game_initialization() {
 
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move& move) {
-    Square endingSquare = matrix[move.coords.at(1).row - 1][move.coords.at(1).column];
-    Square startingSquare = matrix[move.coords.at(0).row - 1][move.coords.at(0).column];
+    // Input is assumed as matrix-notation
+    Square endingSquare = matrix[move.coords.at(1).row][move.coords.at(1).column];
+    Square startingSquare = matrix[move.coords.at(0).row][move.coords.at(0).column];
     int lastIndex = move.coords.size() - 1;
 
     if (move.type == MOVE) {
         endingSquare.piece = startingSquare.piece;
         startingSquare.piece = Piece(TRASPARENTE, VUOTA);
 
-        matrix[move.coords.at(1).row - 1][move.coords.at(1).column]= endingSquare;
-        matrix[move.coords.at(0).row - 1][move.coords.at(0).column] = startingSquare;
+        matrix[move.coords.at(1).row][move.coords.at(1).column]= endingSquare;
+        matrix[move.coords.at(0).row][move.coords.at(0).column] = startingSquare;
     } else if (move.type == EAT) {
-        startingSquare = matrix[move.coords[0].row - 1][move.coords[0].column];
-        endingSquare = matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column];
+        startingSquare = matrix[move.coords[0].row][move.coords[0].column];
+        endingSquare = matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column];
         // Eat all the target pieces
         for (int i = 1; i < lastIndex; i++) {
-            matrix[move.coords.at(i).row - 1][move.coords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
+            matrix[move.coords.at(i).row][move.coords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
         }
         // Move the starting square's piece and null the first square out
         endingSquare.piece = startingSquare.piece;
         startingSquare.piece = Piece(TRASPARENTE, VUOTA);
 
-        matrix[move.coords[0].row - 1][move.coords[0].column].piece = startingSquare.piece;
-        matrix[move.coords.at(lastIndex).row - 1][move.coords.at(lastIndex).column].piece
-            = endingSquare.piece;
+        matrix[move.coords[0].row][move.coords[0].column].piece = startingSquare.piece;
+        matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column].piece = endingSquare.piece;
     }
 }
 

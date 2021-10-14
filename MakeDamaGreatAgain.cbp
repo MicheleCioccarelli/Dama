@@ -84,6 +84,12 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/color/color.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/colorMatrix/colorMatrix.cpp">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
+		<Unit filename="/home/sedano/CLionProjects/Dama/colorMatrix/colorMatrix.h">
+			<Option target="MakeDamaGreatAgain"/>
+		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/command/command.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

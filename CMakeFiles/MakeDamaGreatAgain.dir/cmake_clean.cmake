@@ -2,6 +2,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/MakeDamaGreatAgain.dir/apium/scoredmove/scoredMove.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/board/board.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/color/color.cpp.o"
+  "CMakeFiles/MakeDamaGreatAgain.dir/colorMatrix/colorMatrix.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/command/command.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/coords/coords.cpp.o"
   "CMakeFiles/MakeDamaGreatAgain.dir/engine/engine.cpp.o"

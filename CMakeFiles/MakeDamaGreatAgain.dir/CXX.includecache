@@ -24,6 +24,10 @@ iostream
 ../constants/colors_codes.h
 /home/sedano/CLionProjects/Dama/constants/colors_codes.h
 
+/home/sedano/CLionProjects/Dama/colorMatrix/colorMatrix.h
+../rendersquare/rendersquare.h
+/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
+
 /home/sedano/CLionProjects/Dama/command/command.h
 vector
 -
@@ -47,6 +51,12 @@ iostream
 /home/sedano/CLionProjects/Dama/coords/coords.h
 ../enums/ColumnNotatiton.h
 /home/sedano/CLionProjects/Dama/enums/ColumnNotatiton.h
+
+/home/sedano/CLionProjects/Dama/engine/engine.cpp
+engine.h
+/home/sedano/CLionProjects/Dama/engine/engine.h
+../ui/ui.h
+/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/engine/engine.h
 ../board/board.h
@@ -77,12 +87,6 @@ iostream
 /home/sedano/CLionProjects/Dama/enums/PlayerColor.h
 
 /home/sedano/CLionProjects/Dama/enums/SquareColor.h
-
-/home/sedano/CLionProjects/Dama/main.cpp
-render/render.h
-/home/sedano/CLionProjects/Dama/render/render.h
-ui/ui.h
-/home/sedano/CLionProjects/Dama/ui/ui.h
 
 /home/sedano/CLionProjects/Dama/move/move.h
 iostream
@@ -129,8 +133,8 @@ iostream
 /home/sedano/CLionProjects/Dama/player/player.h
 ../color/color.h
 /home/sedano/CLionProjects/Dama/color/color.h
-../rendersquare/rendersquare.h
-/home/sedano/CLionProjects/Dama/rendersquare/rendersquare.h
+../colorMatrix/colorMatrix.h
+/home/sedano/CLionProjects/Dama/colorMatrix/colorMatrix.h
 time.h
 -
 
