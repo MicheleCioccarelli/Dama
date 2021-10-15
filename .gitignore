@@ -9,6 +9,7 @@ CMakeLists.txt
 MakeDamaGreatAgain.cbp
 CMakeCache.txt
 Makefile
+Testing
 
 # User-specific stuff
 .idea/**/workspace.xml
