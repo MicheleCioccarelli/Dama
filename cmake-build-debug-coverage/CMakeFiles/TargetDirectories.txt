@@ -1,3 +1,0 @@
-/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/edit_cache.dir
-/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/rebuild_cache.dir
-/home/sedano/CLionProjects/Dama/cmake-build-debug-coverage/CMakeFiles/MakeDamaGreatAgain.dir

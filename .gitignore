@@ -4,6 +4,9 @@
 
 #Deleted from Sedano
 cmake_install.cmake
+CMakeFiles
+
+
 
 # User-specific stuff
 .idea/**/workspace.xml
