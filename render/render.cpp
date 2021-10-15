@@ -1,9 +1,8 @@
 #include "render.h"
 
 // RENDER V2
-RenderV2::RenderV2(BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle)
-    : boardTokens(tokenStyle), setPieces(pieceStyle), boardCoords(coordStyle) {
-    colorMatrix = ColorMatrix(boardTokens);
+RenderV2::RenderV2() {
+    colorMatrix = ColorMatrix(RenderV2::boardTokens);
 }
 
 void RenderV2::padding(int numberOfSpaces) {

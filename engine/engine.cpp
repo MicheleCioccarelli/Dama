@@ -2,8 +2,8 @@
 #include "../ui/ui.h"
 
 // ====== GAME ENGINE ======
-GameEngine::GameEngine(GameStyle gameStyle, BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle)
-        : render(tokenStyle, pieceStyle, coordStyle), board() {
+GameEngine::GameEngine(GameStyle gameStyle)
+        : render(), board() {
     start = time(0);
     switch (gameStyle) {
         case STANDARD:

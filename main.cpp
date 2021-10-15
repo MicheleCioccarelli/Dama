@@ -2,9 +2,7 @@
 #include "ui/ui.h"
 
 int main() {
-    BoardTokens board(NORMAL);
-
-    GameEngine engine(DAMONI, NORMAL, NORMAL, NORMAL);
+    GameEngine engine(STANDARD);
 
     Player currentPlayer;
     currentPlayer.color = NERO;

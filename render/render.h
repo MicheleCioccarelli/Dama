@@ -15,7 +15,7 @@ class RenderV2 {
 
     ColorMatrix colorMatrix;
 public:
-    RenderV2(BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle);
+    RenderV2();
 
     // Returns a symbol corresponding to the piece held at a square from board in coords
     std::string square_resolve(Coords coords, Board &board) const;

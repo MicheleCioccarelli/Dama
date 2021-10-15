@@ -51,5 +51,5 @@ public:
     // The color passed in wins, used when resigning
     GameState game_over(PlayerColor winner = TRASPARENTE);
 
-    GameEngine(GameStyle gameStyle, BoardStyles tokenStyle, BoardStyles pieceStyle, BoardStyles coordStyle);
+    GameEngine(GameStyle gameStyle);
 };
