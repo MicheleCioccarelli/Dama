@@ -5,8 +5,10 @@
 #Deleted from Sedano
 cmake_install.cmake
 CMakeFiles
-
-
+CMakeLists.txt
+MakeDamaGreatAgain.cbp
+CMakeCache.txt
+Makefile
 
 # User-specific stuff
 .idea/**/workspace.xml
@@ -76,3 +78,5 @@ fabric.properties
 
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
+
+MakeDamaGreatAgain*
