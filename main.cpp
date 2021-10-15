@@ -4,7 +4,7 @@
 int main() {
     BoardTokens board(NORMAL);
 
-    GameEngine engine(STANDARD, NORMAL, NORMAL, NORMAL);
+    GameEngine engine(DAMONI, NORMAL, NORMAL, NORMAL);
 
     Player currentPlayer;
     currentPlayer.color = NERO;
@@ -28,7 +28,7 @@ int main() {
         Move move(currentPlayer.color);
 
         // FOR TESTING PURPOSES
-        //engine.render.render_board(engine.board, BIANCO);
+        engine.render.render_board(engine.board, BIANCO);
 
         // Get player input
         UI::get_move(move, engine, currentPlayer.color);

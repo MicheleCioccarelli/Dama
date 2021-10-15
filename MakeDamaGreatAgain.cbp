@@ -141,9 +141,6 @@
 		<Unit filename="/home/sedano/CLionProjects/Dama/enums/SquareColor.h">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>
-		<Unit filename="/home/sedano/CLionProjects/Dama/enums/UiReturn.h">
-			<Option target="MakeDamaGreatAgain"/>
-		</Unit>
 		<Unit filename="/home/sedano/CLionProjects/Dama/main.cpp">
 			<Option target="MakeDamaGreatAgain"/>
 		</Unit>

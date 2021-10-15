@@ -60,6 +60,16 @@ MoveReturn GameEngine::check_move(Move &move) {
     int horizontalDistance;
     int verticalDistance;
 
+    if (move.coords.at(0).row  < 0 || move.coords.at(0).row > 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(1).row < 0 || move.coords.at(1).row > 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
+        return OUT_OF_BOUNDS;
+    } else if (move.coords.at(1).column < 0 || move.coords.at(1).column > 7) {
+        return OUT_OF_BOUNDS;
+    }
+
     Coords startingCoords = move.coords[0];
     Coords endingCoords = move.coords[lastIndex];
 
@@ -90,7 +100,7 @@ MoveReturn GameEngine::check_move(Move &move) {
             startingPiece.type == DAMA && startingPiece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
-            if (endingPiece.type != VUOTA) {
+            if (endingPiece.type != VUOTA && endingPiece.type != COLORATA) {
                 return POPULATED;
             }
             return VALID;
@@ -392,71 +402,59 @@ std::vector<Move> GameEngine::simulate_damina(Piece piece, Coords coords) {
 }
 
 std::vector<Move> GameEngine::simulate_damona(Piece piece, Coords coords) {
+    // This move is constantly changed, it simulates a movement
     Move move(TRASPARENTE);
     ColumnNotation col = coords.column;
     int row = coords.row;
 
     std::vector<Move> movesFound;
 
-    switch (piece.color) {
-        case BIANCO:
-            if (piece.type == DAMONE) {
-                if (!simulate_damina(Piece(BIANCO, DAMA), coords).empty()) {
-                    // If damina moves are available, put them in the vector
-                    movesFound = simulate_damina(Piece(BIANCO, DAMA), coords);
-                }
-                move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col + 1), row - 1),BIANCO, MOVE);
-                if (check_move(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
-                    movesFound.push_back(move);
-                }
-                move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation)(col - 1), row - 1),BIANCO, MOVE);
-                if (check_move(move) == VALID) {
-                    movesFound.push_back(move);
-                }
-                move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col + 1), row - 1),BIANCO, EAT);
-                if (check_eat(move) == VALID) {
-                    movesFound.push_back(move);
-                }
-                move = Move(Coords((ColumnNotation) col, row),
-                            Coords((ColumnNotation) (col - 1), row - 1),BIANCO, EAT);
-                if (check_eat(move) == VALID) {
-                    movesFound.push_back(move);
-                }
-                return movesFound;
-            }
-            break;
-            case NERO:
-                if (piece.type == DAMONE) {
-                    if (!simulate_damina(Piece(NERO, DAMA), coords).empty()) {
-                        movesFound.push_back(move);
-                    }
-                    move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation)(col + 1), row + 1),NERO, MOVE);
-                    if (check_move(move) == VALID) {
-                        movesFound.push_back(move);
-                    }
-                    move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation)(col - 1), row + 1),NERO, MOVE);
-                    if (check_move(move) == VALID) {
-                        movesFound.push_back(move);
-                    }
-                    move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation) (col + 1), row + 1),NERO, EAT);
-                    if (check_eat(move) == VALID) {
-                        movesFound.push_back(move);
-                    }
-                    move = Move(Coords((ColumnNotation) col, row),
-                                Coords((ColumnNotation) (col - 1), row + 1),NERO, EAT);
-                    if (check_eat(move) == VALID) {
-                        movesFound.push_back(move);
-                    }
-                    return movesFound;
-                }
+    if (piece.type == DAMONE) {
+        // Check if you can move in any of the four directions
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col + 1), row + 1),piece.color, MOVE);
+        if (check_move(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col - 1), row + 1),piece.color, MOVE);
+        if (check_move(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col + 1), row - 1),piece.color, MOVE);
+        if (check_move(move) == VALID) {
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation) (col - 1), row - 1),piece.color, EAT);
+        if (check_move(move) == VALID) {
+            movesFound.push_back(move);
+        }
+
+        // Check if you can eat in any of the four directions
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col + 1), row + 1),piece.color, MOVE);
+        if (check_eat(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col - 1), row + 1),piece.color, MOVE);
+        if (check_eat(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation)(col + 1), row - 1),piece.color, MOVE);
+        if (check_eat(move) == VALID) {
+            movesFound.push_back(move);
+        }
+        move = Move(Coords((ColumnNotation) col, row),
+                    Coords((ColumnNotation) (col - 1), row - 1),piece.color, EAT);
+        if (check_eat(move) == VALID) {
+            movesFound.push_back(move);
+        }
+        return movesFound;
     }
-    return movesFound;
 }
 
 void GameEngine::resign(Move& move) {
@@ -497,23 +495,23 @@ GameState GameEngine::game_over(PlayerColor winner) {
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
                             if (!simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row)).empty()) {
-//      TESTING                   std::vector<Move> moves = simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row));
-//                                for (Move i : moves) {
-//                                    Coords usable = i.coords[1].convert_coords();
-//                                    board.matrix[usable.row][usable.column].piece.type = COLORATA;
-//                                    board.matrix[usable.row][usable.column].piece.color = BIANCO;
-//                                }
+                                std::vector<Move> moves = simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row));
+                                for (Move i : moves) {
+                                    Coords usable = i.coords[1].convert_coords();
+                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
+                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
+                                }
                                 whiteMoves++;
                             }
                             break;
                         case NERO:
                             if (!simulate_damina(Piece(NERO, DAMA),Coords((ColumnNotation)col, row)).empty()) {
-//      TESTING                   std::vector<Move> moves = simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row+1));
-//                                for (Move i : moves) {
-//                                    Coords usable = i.coords[1].convert_coords();
-//                                    board.matrix[usable.row][usable.column].piece.type = COLORATA;
-//                                    board.matrix[usable.row][usable.column].piece.color = BIANCO;
-//                                }
+                                std::vector<Move> moves = simulate_damina(Piece(NERO, DAMA),Coords((ColumnNotation)col, row));
+                                for (Move i : moves) {
+                                    Coords usable = i.coords[1].convert_coords();
+                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
+                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
+                                }
                                 blackMoves++;
                             }
                             break;
@@ -523,11 +521,23 @@ GameState GameEngine::game_over(PlayerColor winner) {
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
                             if (!simulate_damona(Piece(BIANCO, DAMONE),Coords((ColumnNotation)col, row)).empty()) {
+                                std::vector<Move> moves = simulate_damona(Piece(BIANCO, DAMONE),Coords((ColumnNotation)col, row));
+                                for (Move i : moves) {
+                                    Coords usable = i.coords[1].convert_coords();
+                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
+                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
+                                }
                                 whiteMoves++;
                             }
                         break;
                         case NERO:
                             if (!simulate_damona(Piece(NERO, DAMONE),Coords((ColumnNotation)col, row)).empty()) {
+                                std::vector<Move> moves = simulate_damona(Piece(NERO, DAMONE),Coords((ColumnNotation)col, row));
+                                for (Move i : moves) {
+                                    Coords usable = i.coords[1].convert_coords();
+                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
+                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
+                                }
                                 blackMoves++;
                             }
                             break;
