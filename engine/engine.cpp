@@ -495,23 +495,11 @@ GameState GameEngine::game_over(PlayerColor winner) {
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
                             if (!simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row)).empty()) {
-                                std::vector<Move> moves = simulate_damina(Piece(BIANCO, DAMA),Coords((ColumnNotation)col, row));
-                                for (Move i : moves) {
-                                    Coords usable = i.coords[1].convert_coords();
-                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
-                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
-                                }
                                 whiteMoves++;
                             }
                             break;
                         case NERO:
                             if (!simulate_damina(Piece(NERO, DAMA),Coords((ColumnNotation)col, row)).empty()) {
-                                std::vector<Move> moves = simulate_damina(Piece(NERO, DAMA),Coords((ColumnNotation)col, row));
-                                for (Move i : moves) {
-                                    Coords usable = i.coords[1].convert_coords();
-                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
-                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
-                                }
                                 blackMoves++;
                             }
                             break;
@@ -521,23 +509,11 @@ GameState GameEngine::game_over(PlayerColor winner) {
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
                             if (!simulate_damona(Piece(BIANCO, DAMONE),Coords((ColumnNotation)col, row)).empty()) {
-                                std::vector<Move> moves = simulate_damona(Piece(BIANCO, DAMONE),Coords((ColumnNotation)col, row));
-                                for (Move i : moves) {
-                                    Coords usable = i.coords[1].convert_coords();
-                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
-                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
-                                }
                                 whiteMoves++;
                             }
                         break;
                         case NERO:
                             if (!simulate_damona(Piece(NERO, DAMONE),Coords((ColumnNotation)col, row)).empty()) {
-                                std::vector<Move> moves = simulate_damona(Piece(NERO, DAMONE),Coords((ColumnNotation)col, row));
-                                for (Move i : moves) {
-                                    Coords usable = i.coords[1].convert_coords();
-                                    board.matrix[usable.row + 1][usable.column].piece.type = COLORATA;
-                                    board.matrix[usable.row + 1][usable.column].piece.color = BIANCO;
-                                }
                                 blackMoves++;
                             }
                             break;

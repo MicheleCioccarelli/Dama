@@ -25,9 +25,6 @@ int main() {
         // Switch player colors
         Move move(currentPlayer.color);
 
-        // FOR TESTING PURPOSES
-        engine.render.render_board(engine.board, BIANCO);
-
         // Get player input
         UI::get_move(move, engine, currentPlayer.color);
 
