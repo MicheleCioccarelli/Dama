@@ -66,7 +66,7 @@ Command::Command(std::string& input, GameEngine& engine) {
                 type.moveReturn = MISINPUT;
                 break;
             }
-            if (engine.check_blow(startingCoords, endingCoords) != BLOWABLE) {
+            if (engine.check_blow(startingCoords.convert_coords(), endingCoords.convert_coords()) != BLOWABLE) {
                 // If the move is invalid, uninitialize the coords;
                 startingCoords = Coords();
                 endingCoords = Coords();

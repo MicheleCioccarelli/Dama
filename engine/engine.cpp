@@ -263,9 +263,6 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
     } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
         return OUT_OF_BOUNDS;
     }
-    Coords startingCoords = _startingCoords;
-    Coords endingCoords = _endingCoords;
-
     // Check if the move is blowable
     if (check_eat((Move&) move) == VALID) {
         return BLOWABLE;
