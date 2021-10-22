@@ -124,16 +124,27 @@ void ColorMatrix::color_board(Move &move) {
             paint_square(currentCoords, MOVE_COLOR);
             break;
         case EAT:
-            paint_square(currentCoords, EAT_COLOR);
+            int horizontalDistance = 0;
+            int verticalDistance = 0;
             // If there are multiple eatings
-            for (int i = 2; i < move.coords.size(); i++) {
+            for (int i = 1; i < move.coords.size(); i++) {
+                // See wiki for a detailed explanation
                 currentCoords = move.coords[i].convert_coords();
+                Coords previousCoords = move.coords[i - 1].convert_coords();
 
-                if (i % 2 == 0) {
-                    paint_square(currentCoords, MOVE_COLOR);
+                // Used to calculate where the damina ends up (also used in check_eat)
+                if (i == 1) {
+                    horizontalDistance = (currentCoords.row - previousCoords.row);
+                    verticalDistance = (currentCoords.column - previousCoords.column);
                 } else {
-                    paint_square(currentCoords, EAT_COLOR);
+                    horizontalDistance = (currentCoords.row - previousCoords.row) / 2;
+                    verticalDistance = (currentCoords.column - previousCoords.column) / 2;
                 }
+                Coords forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column - horizontalDistance),
+                                              currentCoords.row - verticalDistance);
+
+                paint_square(forwardCoords, MOVE_COLOR);
+                paint_square(currentCoords, EAT_COLOR);
             }
             break;
     }

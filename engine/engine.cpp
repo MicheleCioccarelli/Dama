@@ -137,7 +137,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
             } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
                 return OUT_OF_BOUNDS;
             }
-            startingPiece = board.matrix[move.coords.at(0).row - 1][move.coords.at(0).column].piece;
+            startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
 
             startingCoords = move.coords[0];
             endingCoords = move.coords[1];
@@ -161,11 +161,11 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return FRIENDLY_FIRE;
             }
             // Create a temporary move to check
-//            Move moveToValidate(move.playerColor, move.type.moveType);
-//            moveToValidate.add_coords(move.coords[0]);
-//            moveToValidate.add_coords(move.coords[1]);
+            Move moveToValidate(move.playerColor, move.type.moveType);
+            moveToValidate.add_coords(move.coords[0]);
+            moveToValidate.add_coords(move.coords[1]);
 //              POSSIBLE ERROR
-            if (check_move(move) == POPULATED) {
+            if (check_move(moveToValidate) == POPULATED) {
                 // Check if there is an empty space behind the targeted square
                 if (forwardSquare.piece.type == VUOTA) {
                     returnValue = VALID;
@@ -175,9 +175,9 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return EMPTY_TARGET;
             }
         } else if (returnValue == VALID) {
-            if (move.coords.at(i).row - 1 <= 0 || move.coords.at(i).row - 1 >= 7) {
+            if (move.coords.at(i).row - 1 < 0 || move.coords.at(i).row - 1 > 7) {
                 return OUT_OF_BOUNDS;
-            } else if (move.coords.at(i).column <= 0 || move.coords.at(i).column >= 7) {
+            } else if (move.coords.at(i).column < 0 || move.coords.at(i).column > 7) {
                 return OUT_OF_BOUNDS;
             }
             endingCoords = move.coords[i];
@@ -204,10 +204,10 @@ MoveReturn GameEngine::check_eat(Move& move) {
             Move moveToValidate(move.playerColor, move.type.moveType);
             board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                     startingPiece;
-            moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row + 1));
-
+            moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row));
             // Square to eat
             moveToValidate.add_coords(move.coords[i]);
+
             if (check_move((Move &) moveToValidate) == POPULATED) {
                 board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
                         Piece();

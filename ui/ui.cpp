@@ -10,12 +10,18 @@ void UI::init(GameEngine &engine) {
     if (playerName.size() <= 30) {
         engine.whitePlayer.name = playerName;
         engine.whitePlayer.color = BIANCO;
+    } else {
+        engine.whitePlayer.name = "Nope";
+        engine.whitePlayer.color = BIANCO;
     }
 
     std::cout << "Chi gioca nero?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
         engine.blackPlayer.name = playerName;
+        engine.blackPlayer.color = NERO;
+    } else {
+        engine.blackPlayer.name = "Nope";
         engine.blackPlayer.color = NERO;
     }
 }
