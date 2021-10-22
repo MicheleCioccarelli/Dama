@@ -202,8 +202,7 @@ MoveReturn GameEngine::check_eat(Move& move) {
                 return FRIENDLY_FIRE;
             }
             Move moveToValidate(move.playerColor, move.type.moveType);
-            board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
-                    startingPiece;
+            board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = startingPiece;
             moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row));
             // Square to eat
             moveToValidate.add_coords(move.coords[i]);

@@ -124,6 +124,7 @@ void ColorMatrix::color_board(Move &move) {
             paint_square(currentCoords, MOVE_COLOR);
             break;
         case EAT:
+            int direction = STILL;
             int horizontalDistance = 0;
             int verticalDistance = 0;
             // If there are multiple eatings
@@ -134,14 +135,45 @@ void ColorMatrix::color_board(Move &move) {
 
                 // Used to calculate where the damina ends up (also used in check_eat)
                 if (i == 1) {
-                    horizontalDistance = (currentCoords.row - previousCoords.row);
-                    verticalDistance = (currentCoords.column - previousCoords.column);
+                    verticalDistance = (currentCoords.row - previousCoords.row);
+                    horizontalDistance = (currentCoords.column - previousCoords.column);
                 } else {
-                    horizontalDistance = (currentCoords.row - previousCoords.row) / 2;
-                    verticalDistance = (currentCoords.column - previousCoords.column) / 2;
+                    verticalDistance = (currentCoords.row - previousCoords.row) / 2;
+                    horizontalDistance = (currentCoords.column - previousCoords.column) / 2;
                 }
-                Coords forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column - horizontalDistance),
-                                              currentCoords.row - verticalDistance);
+                if (horizontalDistance == 1 && verticalDistance == 1) {
+                    direction = UP_RIGHT;
+                } else if (horizontalDistance == 1 && verticalDistance == -1) {
+                    direction = DOWN_RIGHT;
+                } else if (horizontalDistance == -1 && verticalDistance == 1) {
+                    direction = UP_LEFT;
+                } else if (horizontalDistance == -1 && verticalDistance == -1) {
+                    direction = DOWN_LEFT;
+                }
+
+                Coords forwardCoords;
+
+                switch (direction) {
+                    case UP_RIGHT:
+                        forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+                                                      currentCoords.row + verticalDistance);
+                        break;
+                    case DOWN_RIGHT:
+                        forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+                                                      currentCoords.row + verticalDistance);
+                        break;
+                    case UP_LEFT:
+                        forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+                                               currentCoords.row + verticalDistance);
+                        break;
+                    case DOWN_LEFT:
+                        forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+                                               currentCoords.row + verticalDistance);
+                    break;
+                    default:
+                        forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column),
+                                               currentCoords.row);
+                }
 
                 paint_square(forwardCoords, MOVE_COLOR);
                 paint_square(currentCoords, EAT_COLOR);
