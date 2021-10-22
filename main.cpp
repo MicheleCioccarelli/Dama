@@ -2,18 +2,12 @@
 #include "ui/ui.h"
 
 int main() {
-    GameEngine engine(EMPTY);
+    GameEngine engine(STANDARD);
 
     Player currentPlayer;
     currentPlayer.color = NERO;
 
     UI::init(engine);
-
-    engine.board.edit(Coords(G, 3), Piece(BIANCO, DAMA));
-    engine.board.edit(Coords(F, 4), Piece(NERO, DAMA));
-    engine.board.edit(Coords(D, 6), Piece(NERO, DAMA));
-    engine.board.edit(Coords(A, 3), Piece(NERO, DAMA));
-
 
     engine.render.render_board(engine.board, BIANCO);
 
