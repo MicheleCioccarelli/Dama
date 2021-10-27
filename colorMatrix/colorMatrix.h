@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../rendersquare/rendersquare.h"
-#include "../constants/directions.h"
 
 class ColorMatrix {
 public:
