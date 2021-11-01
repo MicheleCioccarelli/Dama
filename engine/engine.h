@@ -42,14 +42,14 @@ public:
     // End the game
     void resign(Move& move);
 
+    // The color passed in wins, used when resigning. By default checks how many moves are available,
+    // if nothing can be done the game is over
+    GameState game_over(PlayerColor winner = TRASPARENTE);
 
     // Given a certain piece, looks for all possible moves and returns them in a vector
     std::vector<Move> simulate_damina(Piece piece, Coords coords);
     // Returns a vectors with all the moves the damona could make
     std::vector<Move> simulate_damona(Piece piece, Coords coords);
-
-    // The color passed in wins, used when resigning
-    GameState game_over(PlayerColor winner = TRASPARENTE);
 
     GameEngine(GameStyle gameStyle);
 };

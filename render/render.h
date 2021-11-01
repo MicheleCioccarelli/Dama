@@ -31,9 +31,11 @@ public:
     static void render_rows(PlayerColor color, int row);
     // Draws A ~ H on the bottom of the board
     void render_columns(PlayerColor color) const;
-    // Clear all the colors from the board
+
+    // Clear all the colors from the board (everything becomes BOARD_COLOR)
     void clear();
 
+    // Render a number of spaces
     static void padding(int numberOfSpaces);
 
     // Used in end_screen() to put names in the middle of the table
@@ -41,5 +43,9 @@ public:
 
     void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result, time_t start);
 
+    // Called when the executable receives wrong command line arguments
+    static void cli_help_page();
+
+    // Called when in a game someone types "aiuto"
     static void help_page();
 };

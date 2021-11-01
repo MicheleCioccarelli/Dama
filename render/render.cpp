@@ -355,6 +355,16 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
     std::cout << secondsElapsed << "s" << std::endl;
 }
 
+void RenderV2::cli_help_page() {
+    std::cout << "\nComandi:" << std::endl;
+    std::cout << "-apium";
+    padding(10);
+    std::cout << "| Gioca contro Apium" << std::endl;
+    std::cout << "Nessun comando";
+    padding(2);
+    std::cout << "| Gioca contro un'altra persona" << std::endl;
+}
+
 void RenderV2::help_page() {
     std::cout << std::endl << std::endl << std::endl;
     for (int i = 1; i < 22; i++) {
