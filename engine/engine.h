@@ -51,5 +51,5 @@ public:
     // Returns a vectors with all the moves the damona could make
     std::vector<Move> simulate_damona(Piece piece, Coords coords);
 
-    GameEngine(GameStyle gameStyle);
+    GameEngine(GameStyle gameStyle = STANDARD);
 };
