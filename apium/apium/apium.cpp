@@ -1,6 +1,7 @@
 #include "apium.h"
 
-Apium::Apium(Board &board) {
+Apium::Apium(Board &board, GameEngine& engine) {
+    this->engine = engine;
     // Fill up pieceCoords
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
@@ -10,4 +11,8 @@ Apium::Apium(Board &board) {
             }
         }
     }
+}
+
+void Apium::evaluate_moves() {
+    // Work for tomorrow :) (or the day after that)
 }

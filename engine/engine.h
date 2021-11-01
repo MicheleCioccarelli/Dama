@@ -12,18 +12,18 @@ public:
     Player whitePlayer;
     Player blackPlayer;
     Board board;
-public:
-    RenderV2 render;
 
     // Does all the checking regarding the move and logs erros if needed
     MoveReturn submit(const Move& move);
-
-    PlayerColor deduce_color(Move &move);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate
     MoveReturn check_move(Move& move);
 
+    // Given a move returns the color of the player who made it
+    PlayerColor deduce_color(Move &move);
+
+    // Handles command execution (help page, resigning, summary)
     void execute_command(MoveReturn command);
 
     MoveReturn check_eat(Move& move);
@@ -34,6 +34,7 @@ public:
 
     // Adds the move to the respective player's log and executes it
     void dispatch_move(const Move& move, bool isBlown);
+    RenderV2 render;
 
     int count_pieces(PlayerColor pColor);
 

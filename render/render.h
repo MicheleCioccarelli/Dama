@@ -30,7 +30,7 @@ public:
     // Renders the right row number based on color
     static void render_rows(PlayerColor color, int row);
     // Draws A ~ H on the bottom of the board
-    void render_columns(PlayerColor color) const;
+    static void render_columns(PlayerColor color) ;
 
     // Clear all the colors from the board (everything becomes BOARD_COLOR)
     void clear();

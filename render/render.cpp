@@ -120,7 +120,7 @@ void RenderV2::render_rows(PlayerColor color, int row) {
     }
 }
 
-void RenderV2::render_columns(PlayerColor color) const {
+void RenderV2::render_columns(PlayerColor color) {
     int k;
     std::cout << "       ";
     for (int i = 0; i < COLUMNS; i++) {
@@ -129,34 +129,9 @@ void RenderV2::render_columns(PlayerColor color) const {
         } else {
             k = i;
         }
-        switch (k) {
-            case 0:
-                std::cout << BOARD_COLOR << boardCoords.a << RESET;
-                break;
-            case 1:
-                std::cout << BOARD_COLOR << boardCoords.b << RESET;
-                break;
-            case 2:
-                std::cout << BOARD_COLOR << boardCoords.c << RESET;
-                break;
-            case 3:
-                std::cout << BOARD_COLOR << boardCoords.d << RESET;
-                break;
-            case 4:
-                std::cout << BOARD_COLOR << boardCoords.e << RESET;
-                break;
-            case 5:
-                std::cout << BOARD_COLOR << boardCoords.f << RESET;
-                break;
-            case 6:
-                std::cout << BOARD_COLOR << boardCoords.g << RESET;
-                break;
-            case 7:
-                std::cout << BOARD_COLOR << boardCoords.h << RESET;
-                break;
-            default:
-                std::cout << BOARD_COLOR << "?" << RESET;
-        }
+        // a ASCII's value is 97
+        char currentLetter = 'a' + k;
+        std::cout << BOARD_COLOR << currentLetter << RESET;
         std::cout << "     ";
     }
 }

@@ -10,6 +10,7 @@ int main(int argc, char* argv[]) {
             GameHandler::cli_error(WRONG_ARGUMENT);
         } else {
             // Play against Apium
+            // Remember to keep Apium's game engine up to date
         }
     } else {
         GameEngine engine(STANDARD);
