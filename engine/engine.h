@@ -26,7 +26,7 @@ public:
     // Handles command execution (help page, resigning, summary)
     void execute_command(MoveReturn command);
 
-    MoveReturn check_eat(Move& move);
+    MoveReturn check_eat(Move move);
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();
@@ -48,9 +48,12 @@ public:
     GameState game_over(PlayerColor winner = TRASPARENTE);
 
     // Given a certain piece, looks for all possible moves and returns them in a vector
-    std::vector<Move> simulate_damina(Piece piece, Coords coords);
+    std::vector<Move> simulate_damina(PlayerColor color, Coords coords);
     // Returns a vectors with all the moves the damona could make
-    std::vector<Move> simulate_damona(Piece piece, Coords coords);
+    std::vector<Move> simulate_damona(PlayerColor color, Coords coords);
+    // Used by simulate damina, given a direction (offsets) and starting position calculates if
+    // it can move/eat in that direction and returns what it can do. Also works for damone
+    std::vector<Move> branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset);
 
     GameEngine(GameStyle gameStyle = STANDARD);
 };
