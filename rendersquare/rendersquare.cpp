@@ -1,63 +1,63 @@
 #include "rendersquare.h"
 
-RenderSquare::RenderSquare(const BoardTokens& tokens, Coords _coords) {
+RenderSquare::RenderSquare(Coords _coords) {
     coords = _coords;
     // Format special squares depending on their position in the board
     switch (coords.row) {
         case 0:
             if (coords.column == 0) {
-                bottomLeftCorner = tokens.bottomLeft;
-                bottomRightCorner = tokens.downChain;
-                topLeftCorner = tokens.leftBorder;
-                topRightCorner = tokens.link;
+                bottomLeftCorner = BOTTOM_LEFT;
+                bottomRightCorner = DOWN_CHAIN;
+                topLeftCorner = LEFT_BORDER;
+                topRightCorner = LINK;
             } else if (coords.column == COLUMNS - 1) {
-                bottomRightCorner = tokens.bottomRight;
-                bottomLeftCorner = tokens.downChain;
-                topLeftCorner = tokens.link;
-                topRightCorner = tokens.rightBorder;
+                bottomRightCorner = BOTTOM_RIGHT;
+                bottomLeftCorner = DOWN_CHAIN;
+                topLeftCorner = LINK;
+                topRightCorner = RIGHT_BORDER;
             } else {
-                bottomLeftCorner = tokens.downChain;
-                bottomRightCorner = tokens.downChain;
-                topLeftCorner = tokens.link;
-                topRightCorner = tokens.link;
+                bottomLeftCorner = DOWN_CHAIN;
+                bottomRightCorner = DOWN_CHAIN;
+                topLeftCorner = LINK;
+                topRightCorner = LINK;
             }
             break;
         case ROWS - 1:
             if (coords.column == 0) {
-                topLeftCorner = tokens.topLeft;
-                topRightCorner = tokens.upChain;
-                bottomRightCorner = tokens.link;
-                bottomLeftCorner = tokens.leftBorder;
+                topLeftCorner = TOP_LEFT;
+                topRightCorner = UP_CHAIN;
+                bottomRightCorner = LINK;
+                bottomLeftCorner = LEFT_BORDER;
             } else if (coords.column == COLUMNS - 1) {
-                topRightCorner = tokens.topRight;
-                topLeftCorner = tokens.upChain;
-                bottomRightCorner = tokens.rightBorder;
-                bottomLeftCorner = tokens.link;
+                topRightCorner = TOP_RIGHT;
+                topLeftCorner = UP_CHAIN;
+                bottomRightCorner = RIGHT_BORDER;
+                bottomLeftCorner = LINK;
             } else {
-                topRightCorner = tokens.upChain;
-                topLeftCorner = tokens.upChain;
-                bottomRightCorner = tokens.link;
-                bottomLeftCorner = tokens.link;
+                topRightCorner = UP_CHAIN;
+                topLeftCorner = UP_CHAIN;
+                bottomRightCorner = LINK;
+                bottomLeftCorner = LINK;
             }
             break;
         default:
             if (coords.column == 0) {
-                topLeftCorner = tokens.leftBorder;
-                topRightCorner = tokens.link;
-                bottomLeftCorner = tokens.leftBorder;
-                bottomRightCorner = tokens.link;
+                topLeftCorner = LEFT_BORDER;
+                topRightCorner = LINK;
+                bottomLeftCorner = LEFT_BORDER;
+                bottomRightCorner = LINK;
                 break;
             } else if (coords.column == COLUMNS - 1) {
-                topLeftCorner = tokens.link;
-                topRightCorner = tokens.rightBorder;
-                bottomRightCorner = tokens.rightBorder;
-                bottomLeftCorner = tokens.link;
+                topLeftCorner = LINK;
+                topRightCorner = RIGHT_BORDER;
+                bottomRightCorner = RIGHT_BORDER;
+                bottomLeftCorner =  LINK;
                 break;
             }
-            topLeftCorner = tokens.link;
-            topRightCorner = tokens.link;
-            bottomRightCorner = tokens.link;
-            bottomLeftCorner = tokens.link;
+            topLeftCorner = LINK;
+            topRightCorner = LINK;
+            bottomRightCorner = LINK;
+            bottomLeftCorner = LINK;
             break;
     }
 }

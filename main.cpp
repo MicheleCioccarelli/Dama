@@ -2,11 +2,11 @@
 #include <cstring>
 
 int main(int argc, char* argv[]) {
-
     if (argc != 1) {
         if (argc - 1 > 1) {
             GameHandler::cli_error(TOO_MANY_ARGUMENTS);
         } else if (strcmp(argv[1], "-apium") != 0) {
+            // The only available argument at the moment is -apium
             GameHandler::cli_error(WRONG_ARGUMENT);
         } else {
             // Play against Apium
@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
 
         UI::init(engine);
 
-        GameHandler::two_player_game(engine);
+        GameHandler::debug(engine);
     }
     return 0;
 }

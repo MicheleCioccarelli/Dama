@@ -3,7 +3,7 @@
 void GameHandler::cli_error(cliCase error) {
     switch (error) {
         case TOO_MANY_ARGUMENTS:
-            std::cout << ERROR_COLOR << "Too many arguments" << RESET;
+            std::cout << ERROR_COLOR << "Troppi argomenti" << RESET;
             RenderV2::cli_help_page();
         case WRONG_ARGUMENT:
             std::cout << ERROR_COLOR << "Comando non valido" << RESET;
@@ -12,27 +12,19 @@ void GameHandler::cli_error(cliCase error) {
 }
 
 int GameHandler::two_player_game(GameEngine& engine) {
-    Player currentPlayer;
-    currentPlayer.color = NERO;
+    PlayerColor current_color = BIANCO;
 
     engine.render.render_board(engine.board, BIANCO);
 
-    // Main loop
+    Move move = Move(BIANCO);
+
     while (engine.game_over() == GAME_NOT_OVER) {
-    // Switch player every turn, used both for colors and for move logs
-        switch (currentPlayer.color) {
-            case BIANCO:
-                currentPlayer = engine.blackPlayer;
-                break;
-            case NERO:
-                currentPlayer = engine.whitePlayer;
-                break;
-        }
+        // Could make this a pointer and pass it around
         // Switch player colors
-        Move move(currentPlayer.color);
+        move.playerColor = current_color;
 
         // Get player input
-        UI::get_move(move, engine, currentPlayer.color);
+        UI::get_move(move, engine, current_color);
 
         // If the move was invalid/was a command ask for another move
         while (engine.submit(move) != VALID) {
@@ -40,36 +32,47 @@ int GameHandler::two_player_game(GameEngine& engine) {
                 engine.resign(move);
                 return 1;
             }
-            UI::get_move(move, engine, currentPlayer.color);
+            UI::get_move(move, engine, current_color);
         }
 
         // See if a piece has gotten to the end, if so promote it
         engine.promote();
 
         // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
-        engine.render.render_board(engine.board, currentPlayer.color, move);
-        engine.render.render_board(engine.board, currentPlayer.other_color(), move);
+        engine.render.render_board(engine.board, current_color, move);
+        // Switch player every turn, used both for colors and for move logs
+        switch (current_color) {
+            case BIANCO:
+                current_color = engine.blackPlayer.color;
+                break;
+            case NERO:
+                current_color = engine.whitePlayer.color;
+                break;
+            default:
+                break;
+        }
+        engine.render.render_board(engine.board, current_color, move);
     }
 
     // When the game is over
-    engine.render.render_board(engine.board, currentPlayer.color);
+    engine.render.render_board(engine.board, current_color);
 
     int whitePieces = engine.count_pieces(BIANCO);
     int blackPieces = engine.count_pieces(NERO);
-    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
+    return 0;
 }
 
 void GameHandler::debug(GameEngine &engine) {
     // Requires empty Engine initialization
     Player currentPlayer;
-    currentPlayer.color = BIANCO;
+    currentPlayer.color = NERO;
 
-    engine.board.edit(Coords(A, 1), Piece(NERO, DAMONE));
-    engine.board.edit(Coords(B, 2), Piece(BIANCO, DAMA));
     engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
-    engine.board.edit(Coords(F, 6), Piece(BIANCO, DAMA));
-
+    engine.board.edit(Coords(E, 5), Piece(NERO, DAMA));
+//    engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
+//    engine.board.edit(Coords(F, 6), Piece(BIANCO, DAMA));
     engine.render.render_board(engine.board, BIANCO);
 
 // Main loop
@@ -81,6 +84,8 @@ void GameHandler::debug(GameEngine &engine) {
                 break;
             case NERO:
                 currentPlayer = engine.whitePlayer;
+                break;
+            default:
                 break;
         }
 // Switch player colors
@@ -111,6 +116,6 @@ void GameHandler::debug(GameEngine &engine) {
 
     int whitePieces = engine.count_pieces(BIANCO);
     int blackPieces = engine.count_pieces(NERO);
-    engine.render.end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
 }

@@ -1,12 +1,12 @@
 #include "colorMatrix.h"
 
 
-ColorMatrix::ColorMatrix(const BoardTokens& tokens) {
+ColorMatrix::ColorMatrix() {
     matrix.resize(ROWS);
 
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            matrix[row].emplace_back(RenderSquare(tokens, Coords((ColumnNotation)col, row)));
+            matrix[row].emplace_back(RenderSquare(Coords((ColumnNotation)col, row)));
         }
     }
 }

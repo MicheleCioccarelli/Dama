@@ -26,5 +26,5 @@ public:
 
     RenderSquare& operator=(const RenderSquare& rhs);
 
-    RenderSquare(const BoardTokens& tokens, Coords _coords);
+    RenderSquare(Coords _coords);
 };

@@ -1,8 +1,10 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cppcoreguidelines-narrowing-conversions"
 #include "render.h"
 
 // RENDER V2
 RenderV2::RenderV2() {
-    colorMatrix = ColorMatrix(RenderV2::boardTokens);
+    colorMatrix = ColorMatrix();
 }
 
 void RenderV2::padding(int numberOfSpaces) {
@@ -11,14 +13,14 @@ void RenderV2::padding(int numberOfSpaces) {
     }
 }
 
-void RenderV2::render_top(int row, PlayerColor color) {
+void RenderV2::render_top(int row) {
         for (int i = 0; i < COLUMNS; i++) {
             RenderSquare currentSquare = colorMatrix.matrix[row][i];
 
             std::cout << BOARD_COLOR << currentSquare.topLeftCorner << RESET;
 
-            std::cout << currentSquare.color.northColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
-                      boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
+            std::cout << currentSquare.color.northColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
+                      HORIZONTAL_LINE << HORIZONTAL_LINE << HORIZONTAL_LINE << RESET;
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].topRightCorner << RESET;
 }
@@ -29,8 +31,8 @@ void RenderV2::render_bottom(int row) {
 
         std::cout << BOARD_COLOR << currentSquare.bottomLeftCorner << RESET;
 
-        std::cout << currentSquare.color.southColor << boardTokens.horizontalLine << boardTokens.horizontalLine <<
-                  boardTokens.horizontalLine << boardTokens.horizontalLine << boardTokens.horizontalLine << RESET;
+        std::cout << currentSquare.color.southColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
+                  HORIZONTAL_LINE << HORIZONTAL_LINE << HORIZONTAL_LINE << RESET;
     }
     std::cout << BOARD_COLOR << colorMatrix.matrix[row][COLUMNS - 1].bottomRightCorner << RESET;
 }
@@ -45,13 +47,13 @@ void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
                 currentPiece = square_resolve(Coords(ColumnNotation(7 - i), 7 - row), board);
             }
 
-            std::cout << currentColor.color.westColor << boardTokens.verticalLine << RESET;
-            std::cout << boardTokens.filling << boardTokens.filling;
+            std::cout << currentColor.color.westColor << VERTICAL_LINE << RESET;
+            std::cout << FILLING << FILLING;
             //Note for future (if you want to color pieces) this is where you render pieces
             std::cout << PIECE_COLOR << currentPiece << RESET;
-            std::cout << boardTokens.filling << boardTokens.filling;
+            std::cout << FILLING << FILLING;
         }
-        std::cout << colorMatrix.matrix[row][COLUMNS - 1].color.eastColor << boardTokens.verticalLine << RESET;
+        std::cout << colorMatrix.matrix[row][COLUMNS - 1].color.eastColor << VERTICAL_LINE << RESET;
 }
 
 void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
@@ -63,7 +65,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
         }
     }
     std::cout << "    ";
-    render_top(ROWS - 1, color);
+    render_top(ROWS - 1);
     std::cout << std::endl;
 
     for (int row = ROWS - 1; row >= 0; row--) {
@@ -83,29 +85,29 @@ void RenderV2::clear() {
     colorMatrix.clear();
 }
 
-std::string RenderV2::square_resolve(Coords coords, Board &board) const {
+std::string RenderV2::square_resolve(Coords coords, Board &board) {
     switch (board.matrix[coords.row][coords.column].piece.color) {
         case BIANCO:
             switch (board.matrix[coords.row][coords.column].piece.type) {
                 case DAMA:
-                    return setPieces.damaB;
+                    return "●";
                 case DAMONE:
-                    return setPieces.damoneB;
+                    return "▲";
                 case VUOTA:
-                    return setPieces.vuota;
+                    return " ";
                 case COLORATA:
-                    return setPieces.colorata;
+                    return "█";
             }
         case NERO:
             switch (board.matrix[coords.row][coords.column].piece.type) {
                 case DAMA:
-                    return setPieces.damaN;
+                    return "○";
                 case DAMONE:
-                    return setPieces.damoneN;
+                    return "Δ";
                 case VUOTA:
-                    return setPieces.vuota;
+                    return " ";
                 case COLORATA:
-                    return setPieces.colorata;
+                    return "█";
             }
         default:
             return " ";
@@ -136,7 +138,7 @@ void RenderV2::render_columns(PlayerColor color) {
     }
 }
 
-void RenderV2::center_name(std::string& name, int longerName, std::string color) {
+void RenderV2::center_name(std::string& name, int longerName, const std::string& color) {
     if (name.size() == longerName) {
         std::cout << color << name << RESET;
     } else {
@@ -228,29 +230,29 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
 
      padding(5);
      // Top line
-     std::cout << boardTokens.topLeft;
+     std::cout << TOP_LEFT;
      for (int i = 0; i < longerName + 2; i++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.upChain;
+     std::cout << UP_CHAIN;
      // Pieces block
      for (int i = 0; i < 6; i ++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.upChain;
+     std::cout << UP_CHAIN;
      // Number of moves
      for (int i = 0; i < 6; i++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.topRight;
+     std::cout << TOP_RIGHT;
 
      padding(5);
      // White name
      std::cout << std::endl;
      padding(5);
-     std::cout << boardTokens.verticalLine << " ";
+     std::cout << VERTICAL_LINE << " ";
      center_name(whitePlayer.name, longerName, WHITE_COLOR);
-     std::cout << " " << boardTokens.verticalLine;
+     std::cout << " " << VERTICAL_LINE;
 
      // White number of pieces
      if (whitePieces < 10) {
@@ -261,32 +263,33 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
 
      // White number of moves
      if (whitePlayer.moves.size() <= 9) {
-         std::cout << boardTokens.verticalLine << "   " << whitePlayer.moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "   " << whitePlayer.moves.size() << "  ";
      } else {
-         std::cout << boardTokens.verticalLine << "  " << whitePlayer.moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "  " << whitePlayer.moves.size() << "  ";
      }
-     std::cout << boardTokens.verticalLine;
+     std::cout << VERTICAL_LINE;
 
      // Middle line
      std::cout << std::endl,
      padding(5);
-     std::cout << boardTokens.leftBorder;
+     std::cout << LEFT_BORDER;
+
      for (int i = 0 ; i < longerName + 2; i++) {
-         std::cout << boardTokens.horizontalLine;
-     } std::cout << boardTokens.link;
+         std::cout << HORIZONTAL_LINE;
+     } std::cout << LINK;
      for (int i = 0 ; i < 6; i++) {
-         std::cout << boardTokens.horizontalLine;
-     } std::cout << boardTokens.link;
+         std::cout << HORIZONTAL_LINE;
+     } std::cout << LINK;
      for (int i = 0 ; i < 6; i++) {
-         std::cout << boardTokens.horizontalLine;
-     } std::cout << boardTokens.rightBorder;
+         std::cout << HORIZONTAL_LINE;
+     } std::cout << RIGHT_BORDER;
 
      // Black information
      std::cout << std::endl;
      padding(5);
-     std::cout << boardTokens.verticalLine << " ";
+     std::cout << VERTICAL_LINE << " ";
      center_name(blackPlayer.name, longerName, BLACK_COLOR);
-     std::cout << " " << boardTokens.verticalLine;
+     std::cout << " " << VERTICAL_LINE;
 
      if (blackPieces < 10) {
          std::cout << "   " << blackPieces << "  ";
@@ -295,34 +298,34 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
      }
 
      if (blackPlayer.moves.size() <= 9) {
-         std::cout << boardTokens.verticalLine << "   " << blackPlayer.moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "   " << blackPlayer.moves.size() << "  ";
      } else {
-         std::cout << boardTokens.verticalLine << "  " << blackPlayer.moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "  " << blackPlayer.moves.size() << "  ";
      }
-     std::cout << boardTokens.verticalLine << std::endl;
+     std::cout << VERTICAL_LINE << std::endl;
 
      padding(5);
      // Closing line
-     std::cout << boardTokens.bottomLeft;
+     std::cout << BOTTOM_LEFT;
      for (int i = 0; i < longerName + 2; i++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.downChain;
+     std::cout << DOWN_CHAIN;
      // Pieces block
      for (int i = 0; i < 6; i ++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.downChain;
+     std::cout << DOWN_CHAIN;
      // Number of moves
      for (int i = 0; i < 6; i++) {
-         std::cout << boardTokens.horizontalLine;
+         std::cout << HORIZONTAL_LINE;
      }
-     std::cout << boardTokens.bottomRight << std::endl;
+     std::cout << BOTTOM_RIGHT << std::endl;
 
     // Print out the time elapsed since the start of the game
     std::cout << std::endl << "Tempo passato: ";
-    int minutesElapsed = difftime( time(0), start) / 60;
-    double secondsElapsed = difftime( time(0), start);
+    int minutesElapsed = difftime( time(nullptr), start) / 60;
+    double secondsElapsed = difftime( time(nullptr), start);
     if (minutesElapsed > 0) {
         std::cout << minutesElapsed << "m";
         secondsElapsed -= minutesElapsed*60;

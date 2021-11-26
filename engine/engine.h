@@ -13,6 +13,17 @@ public:
     Player blackPlayer;
     Board board;
 
+    MoveReturn recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 1);
+
+    // Sees if the move can be performed, if not returns the reason
+    MoveReturn inspect_damina(Coords startingCoords, Coords endingCoords);
+
+    // Determines if a coordinate isn't out of the board
+    static bool is_in_bounds(Coords coords);
+
+    // Given two squares calculates forwardSquare's coords, see GameEngine::check_eat() to see its main use
+    static Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
+
     // Does all the checking regarding the move and logs erros if needed
     MoveReturn submit(const Move& move);
 
@@ -50,10 +61,12 @@ public:
     // Given a certain piece, looks for all possible moves and returns them in a vector
     std::vector<Move> simulate_damina(PlayerColor color, Coords coords);
     // Returns a vectors with all the moves the damona could make
-    std::vector<Move> simulate_damona(PlayerColor color, Coords coords);
-    // Used by simulate damina, given a direction (offsets) and starting position calculates if
-    // it can move/eat in that direction and returns what it can do. Also works for damone
+    std::vector<Move> simulate_damona(Coords coords);
+    /* Used by simulate damina, given a direction (offsets) and starting position calculates if
+     * it can move/eat in that direction and returns what it can do. It does calculations based on the piece
+     * in board at the coordinates + offsets
+     */
     std::vector<Move> branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset);
 
-    GameEngine(GameStyle gameStyle = STANDARD);
+    explicit GameEngine(GameStyle gameStyle = STANDARD);
 };

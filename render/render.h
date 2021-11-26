@@ -9,18 +9,14 @@
 #include <time.h>
 
 class RenderV2 {
-    BoardTokens boardTokens;
-    SetPieces setPieces;
-    BoardCoords boardCoords;
-
     ColorMatrix colorMatrix;
 public:
     RenderV2();
 
     // Returns a symbol corresponding to the piece held at a square from board in coords
-    std::string square_resolve(Coords coords, Board &board) const;
+    static std::string square_resolve(Coords coords, Board &board) ;
     // Draw the top part of the squares in row, according to colorMatrix
-    void render_top(int row, PlayerColor color);
+    void render_top(int row);
     // Renders the contents of the middle of the squares of board in row
     void render_middle(int row, Board& board, PlayerColor color);
     // Renders the bottom corners along with horizontal lines of square from colorMatrix at a certain row
@@ -39,9 +35,9 @@ public:
     static void padding(int numberOfSpaces);
 
     // Used in end_screen() to put names in the middle of the table
-    void center_name(std::string& name, int longerName, std::string color = BOARD_COLOR);
+    static void center_name(std::string& name, int longerName, const std::string& color = BOARD_COLOR);
 
-    void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result, time_t start);
+    static void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result, time_t start) ;
 
     // Called when the executable receives wrong command line arguments
     static void cli_help_page();

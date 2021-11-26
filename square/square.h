@@ -17,6 +17,8 @@ public:
 
     Square &operator=(const Square &rhs);
 
+    Square() = default;
+
     Square(Coords _coords, SquareColor _color, PieceType _pieceType = VUOTA, PlayerColor _pieceColor = TRASPARENTE)
     : coords(_coords), color(_color), piece(_pieceColor, _pieceType) {}
 };

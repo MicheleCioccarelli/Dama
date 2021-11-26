@@ -1,13 +1,16 @@
 #include "coords.h"
 
-Coords Coords::convert_coords() {
-    return Coords(column, row - 1);
+Coords Coords::convert_coords() const {
+    return {column, row - 1};
 }
 
-Coords &Coords::operator=(const Coords &rhs) {
-    this->row = rhs.row;
-    this->column = rhs.column;
-    return *this;
+Coords &Coords::operator=(const Coords &rhs) = default;
+
+bool Coords::is_uninitialized() {
+    if (row == 9 && column == Z) {
+        return true;
+    }
+    return false;
 }
 
 bool Coords::operator==(const Coords &rhs) const {

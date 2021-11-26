@@ -3,7 +3,7 @@
 void UI::init(GameEngine &engine) {
     std::string playerName;
 
-    std::cout << MAG << "Benvenuto nella dama" << RESET << std::endl << std::endl;;
+    std::cout << MAG << "Benvenuto nella dama" << RESET << std::endl << std::endl;
 
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
@@ -43,8 +43,8 @@ void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
                 if (move.type.moveReturn != BLOWABLE) {
                     move.type.moveReturn = commands[i].type.moveReturn;
                 }
-                for (int j = 0; j < commands[i].eatenCoords.size(); j++) {
-                    move.coords.push_back(commands[i].eatenCoords[j]);
+                for (const auto & eatenCoord : commands[i].eatenCoords) {
+                    move.coords.push_back(eatenCoord);
                 }
                 i = commands.size();
                 break;
@@ -204,7 +204,7 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             move.type.moveReturn = NO_MOVE;
             return NO_MOVE;
         }
-        // Check if the Command constructor founs anything strange
+        // Check if the Command constructor found anything strange
         if (commands[i].type.moveReturn != VALID && commands.empty()) {
             // If something went wrong
             if (commands[i].type.moveReturn == UNDEFINED) {
@@ -217,7 +217,7 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, PlayerColor currentPlaye
             return move.type.moveReturn;
         }
     }
-    // If the move's type is VALID, engine will execute it, or log the error and ask for more input
+    // If the move's type is VALID, engine will execute it, otherwize log the error and ask for more input
     command_to_move(commands, move);
     // Check if the move's color is correct
     UI::check_color(move, currentPlayer, engine);

@@ -17,7 +17,7 @@ public:
     // Set every square's color to white
     void clear();
 
-    ColorMatrix() = default;
+//    ColorMatrix() = default;
 
-    ColorMatrix(const BoardTokens& tokens);
+    ColorMatrix();
 };

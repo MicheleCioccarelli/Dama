@@ -15,6 +15,12 @@ Move &Move::operator=(Move rhs) {
     return *this;
 }
 
+Move::Move(Coords _startingCoords, Coords _endingCoords, MoveType _type) {
+    this->add_coords(_startingCoords);
+    this->add_coords(_endingCoords);
+    playerColor = TRASPARENTE;
+    type = _type;
+}
 
 Move::Move(Coords _startingCoords, Coords _endingCoords, PlayerColor _color, MoveType _type) {
     this->add_coords(_startingCoords);

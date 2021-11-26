@@ -1,10 +1,12 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "bugprone-branch-clone"
 #include "engine.h"
 #include "../ui/ui.h"
 
 // ====== GAME ENGINE ======
 GameEngine::GameEngine(GameStyle gameStyle)
         : render(), board() {
-    start = time(0);
+    start = time(nullptr);
     switch (gameStyle) {
         case STANDARD:
             board.standard_game_initialization();
@@ -21,10 +23,17 @@ GameEngine::GameEngine(GameStyle gameStyle)
     }
 }
 
+Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords &endingCoords) {
+    int verticalDistance = startingCoords.row - endingCoords.row;
+    int horizontalDistance = startingCoords.column - endingCoords.column;
+
+    return {(ColumnNotation)(endingCoords.column - horizontalDistance), endingCoords.row - verticalDistance};
+}
+
 PlayerColor GameEngine::deduce_color(Move &move) {
     Move temp(BIANCO);
 
-    if (move.coords.size() == 0) {
+    if (move.coords.empty()) {
         return TRASPARENTE;
     }
 
@@ -50,6 +59,15 @@ void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
 
 }
 
+bool GameEngine::is_in_bounds(Coords coords) {
+    if (coords.row  < 0 || coords.row > 7) {
+        return false;
+    } else if (coords.column < 0 || coords.column > 7) {
+        return false;
+    }
+    return true;
+}
+
 MoveReturn GameEngine::check_move(Move &move) {
     // Has to assume matrix-notation, then fix simulate_damina
     Piece startingPiece;
@@ -60,13 +78,7 @@ MoveReturn GameEngine::check_move(Move &move) {
     int horizontalDistance;
     int verticalDistance;
 
-    if (move.coords.at(0).row  < 0 || move.coords.at(0).row > 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(1).row < 0 || move.coords.at(1).row > 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(1).column < 0 || move.coords.at(1).column > 7) {
+    if (!is_in_bounds(move.coords.at(0)) || !is_in_bounds(move.coords.at(1))) {
         return OUT_OF_BOUNDS;
     }
 
@@ -109,11 +121,45 @@ MoveReturn GameEngine::check_move(Move &move) {
     return TOO_FAR;
 }
 
+MoveReturn GameEngine::inspect_damina(Coords startingCoords, Coords endingCoords) {
+    Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
+    Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
+
+    if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
+        return TOO_BIG;
+    } else if (startingSquare.piece.color == endingSquare.piece.color) {
+        return FRIENDLY_FIRE;
+    }
+    if (endingSquare.piece.type == VUOTA) {
+        return EMPTY_TARGET;
+    }
+    return VALID;
+}
+
+MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
+    // Assumes a move with valid syntax and matrix notation
+    if (index == 0) {
+        // This is the first call
+        startingCoords = move.coords[0];
+    } else if () {
+        // You are at the end of the move.coords vector
+    }
+    // Index defaults to 1
+    Coords forwardSquare = calculate_forward(startingCoords, move.coords[index]);
+    if (is_in_bounds(forwardSquare)) {
+        if (inspect_damina(startingCoords, move.coords[index]) == VALID) {
+            Move move = Move(startingCoords,move.coords[index], EAT);
+            if (check_move(move) == VALID) {
+                return recursive_check_eat(move, forwardSquare, index + 1);
+            }
+        } else {
+
+        }
+    }
+}
+
 MoveReturn GameEngine::check_eat(Move move) {
     // Assumes matrix-notation coordinates
-    if (move.type == MOVE) {
-        return INVALID;
-    }
 
     MoveReturn returnValue = UNDEFINED;
     Square endingSquare(Coords(Z, 9), NERA);
@@ -125,18 +171,10 @@ MoveReturn GameEngine::check_eat(Move move) {
     Coords startingCoords;
     Coords endingCoords;
 
-
-
     Piece startingPiece;
     for (int i = 1; i < move.coords.size(); i++) {
         if (i == 1) {
-            if (move.coords.at(0).row < 0 || move.coords.at(0).row > 7) {
-                return OUT_OF_BOUNDS;
-            } else if (move.coords.at(1).row < 0 || move.coords.at(1).row > 7) {
-                    return OUT_OF_BOUNDS;
-            } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
-                return OUT_OF_BOUNDS;
-            } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
+            if (!is_in_bounds(move.coords.at(0)) || !is_in_bounds(move.coords.at(1))) {
                 return OUT_OF_BOUNDS;
             }
             startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
@@ -167,6 +205,8 @@ MoveReturn GameEngine::check_eat(Move move) {
             moveToValidate.add_coords(move.coords[0]);
             moveToValidate.add_coords(move.coords[1]);
 //              POSSIBLE ERROR
+//              si dice FIXME
+// TODO
             if (check_move(moveToValidate) == POPULATED) {
                 // Check if there is an empty space behind the targeted square
                 if (forwardSquare.piece.type == VUOTA) {
@@ -232,7 +272,7 @@ MoveReturn GameEngine::check_eat(Move move) {
     return returnValue;
 }
 
-// You give 2 coords, then you construct a trasparent move with those coords and you check it
+// You give 2 coords, then you construct a trasparent move with those coords, and you check it
 MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
     Move move = Move(_startingCoords, _endingCoords);
 
@@ -338,34 +378,14 @@ void GameEngine::promote() {
 
 std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset) {
     std::vector<Move> movesFound;
-    Move move = Move(startingCoords,Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset),
-                           startingCoords.row + verticalOffset),
-                    color, MOVE);
+    Coords endingCoords = Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset),
+                                 startingCoords.row + verticalOffset);
+    Move move = Move(startingCoords, endingCoords, color, MOVE);
         if (check_move(move) == VALID) {
             movesFound.push_back(move);
-        }
-        // Check all possible eat moves, an 8x8 board can only fit 3 consecutive eatings
-        move.type = EAT;
-        for (int i = 0; check_eat(move) == VALID; i++) {
-            switch(i) {
-                case 0:
-                    break;
-                case 1:
-                    // If we get here you could eat with the first offset, so you save it
-                    movesFound.push_back(move);
-                    board.matrix[startingCoords.row+verticalOffset][startingCoords.column+horizontalOffset].piece.type = COLORATA;
-                    // If you will eat 2 enemies in a row, the second damina will be 3 squares away
-                    move = Move(startingCoords, Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset*3),
-                                       startingCoords.row + verticalOffset*3), color, EAT);
-                    break;
-                case 2:
-                    movesFound.push_back(move);
-                    move = Move(startingCoords, Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset*5),
-                                       startingCoords.row + verticalOffset*5), color, EAT);
-                    break;
-                default:
-                    break;
-            }
+        } else {
+            // Check all possible eat moves, a 8x8 board can only fit 3 consecutive eatings
+            move.type = EAT;
         }
     return movesFound;
 }
@@ -418,21 +438,13 @@ std::vector<Move> GameEngine::simulate_damina(PlayerColor color, Coords coords) 
     return movesFound;
 }
 
-std::vector<Move> GameEngine::simulate_damona(PlayerColor color, Coords coords) {
+std::vector<Move> GameEngine::simulate_damona(Coords coords) {
     // This move is constantly changed, it simulates a movement
     Move move(TRASPARENTE);
-    ColumnNotation col = coords.column;
-    int row = coords.row;
 
     std::vector<Move> movesFound;
     std::vector<Move> tempMoves;
 
-//        // Check if you can move in any of the four directions
-//        move = Move(coords,
-//                    Coords((ColumnNotation)(col + 1), row + 1), color, MOVE);
-//        if (check_move(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
-//            movesFound.push_back(move);
-//        }
     tempMoves = simulate_damina(BIANCO, coords);
     if (!tempMoves.empty()) {
         for (const auto &i: tempMoves) {
@@ -445,45 +457,6 @@ std::vector<Move> GameEngine::simulate_damona(PlayerColor color, Coords coords) 
             movesFound.push_back(i);
         }
     }
-
-//
-//        move = Move(coords,
-//                    Coords((ColumnNotation)(col - 1), row + 1), color, MOVE);
-//        if (check_move(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
-//            movesFound.push_back(move);
-//        }
-//        move = Move(coords,
-//                    Coords((ColumnNotation)(col + 1), row - 1), color, MOVE);
-//        if (check_move(move) == VALID) {
-//            movesFound.push_back(move);
-//        }
-//        move = Move(coords,
-//                    Coords((ColumnNotation) (col - 1), row - 1), color, EAT);
-//        if (check_move(move) == VALID) {
-//            movesFound.push_back(move);
-//        }
-//
-//        // Check if you can eat in any of the four directions
-//        move = Move(Coords((ColumnNotation) col, row),
-//                    Coords((ColumnNotation)(col + 1), row + 1),piece.color, MOVE);
-//        if (check_eat(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
-//            movesFound.push_back(move);
-//        }
-//        move = Move(Coords((ColumnNotation) col, row),
-//                    Coords((ColumnNotation)(col - 1), row + 1),piece.color, MOVE);
-//        if (check_eat(move) == VALID) { // See if you could move behind [simulate_damina(Piece(NERO, DAMA), coords);]
-//            movesFound.push_back(move);
-//        }
-//        move = Move(Coords((ColumnNotation) col, row),
-//                    Coords((ColumnNotation)(col + 1), row - 1),piece.color, MOVE);
-//        if (check_eat(move) == VALID) {
-//            movesFound.push_back(move);
-//        }
-//        move = Move(Coords((ColumnNotation) col, row),
-//                    Coords((ColumnNotation) (col - 1), row - 1),piece.color, EAT);
-//        if (check_eat(move) == VALID) {
-//            movesFound.push_back(move);
-//        }
         return movesFound;
 }
 
@@ -492,9 +465,9 @@ void GameEngine::resign(Move& move) {
     int blackPieces = count_pieces(NERO);
 
     if (move.type.moveReturn == WHITE_RESIGN) {
-        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED, start);
+        RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED, start);
     } else if (move.type.moveReturn == BLACK_RESIGN) {
-        render.end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED, start);
+        RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED, start);
     }
 }
 
@@ -538,12 +511,12 @@ GameState GameEngine::game_over(PlayerColor winner) {
                 case DAMONE:
                     switch (board.matrix[row][col].piece.color) {
                         case BIANCO:
-                            if (!simulate_damona(BIANCO, Coords((ColumnNotation)col, row)).empty()) {
+                            if (!simulate_damona(Coords((ColumnNotation)col, row)).empty()) {
                                 whiteMoves++;
                             }
                         break;
                         case NERO:
-                            if (!simulate_damona(NERO, Coords((ColumnNotation)col, row)).empty()) {
+                            if (!simulate_damona(Coords((ColumnNotation)col, row)).empty()) {
                                 blackMoves++;
                             }
                             break;
@@ -571,9 +544,11 @@ GameState GameEngine::game_over(PlayerColor winner) {
 void GameEngine::execute_command(MoveReturn command) {
     switch (command) {
         case HELP_PAGE:
-            render.help_page();
+            RenderV2::help_page();
             break;
         case SUMMARY:
-            render.end_screen(count_pieces(BIANCO), count_pieces(NERO), whitePlayer, blackPlayer, GAME_NOT_OVER, start);
+            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO), whitePlayer, blackPlayer, GAME_NOT_OVER, start);
+        default:
+            break;
     }
 }
