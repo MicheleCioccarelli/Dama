@@ -54,17 +54,7 @@ void Board::damone_game_initialization() {
     }
 }
 
-void Board::empty_game_initialization() {
-    for (int row = 0; row < ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
-            if (row < 3 && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(VUOTA, TRASPARENTE);
-            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
-                matrix[row][col].set_piece(VUOTA, TRASPARENTE);
-            }
-        }
-    }
-}
+void Board::empty_game_initialization() {}
 
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move& move) {

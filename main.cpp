@@ -13,7 +13,7 @@ int main(int argc, char* argv[]) {
             // Remember to keep Apium's game engine up to date
         }
     } else {
-        GameEngine engine(STANDARD);
+        GameEngine engine(EMPTY);
 
         UI::init(engine);
 

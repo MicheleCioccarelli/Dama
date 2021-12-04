@@ -132,7 +132,7 @@ void RenderV2::render_columns(PlayerColor color) {
             k = i;
         }
         // a ASCII's value is 97
-        char currentLetter = 'a' + k;
+        char currentLetter = 'A' + k;
         std::cout << BOARD_COLOR << currentLetter << RESET;
         std::cout << "     ";
     }

@@ -70,10 +70,14 @@ void GameHandler::debug(GameEngine &engine) {
     currentPlayer.color = NERO;
 
     engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
-    engine.board.edit(Coords(E, 5), Piece(NERO, DAMA));
-//    engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
-//    engine.board.edit(Coords(F, 6), Piece(BIANCO, DAMA));
+    engine.board.edit(Coords(C, 3), Piece(NERO, DAMA));
+    engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
+    engine.board.edit(Coords(F, 6), Piece(BIANCO, DAMA));
     engine.render.render_board(engine.board, BIANCO);
+
+    Move move (Coords(C, 2), Coords(D, 3), EAT);
+    move.add_coords(Coords(F, 5));
+    engine.recursive_check_eat(move);
 
 // Main loop
     while (engine.game_over() == GAME_NOT_OVER) {

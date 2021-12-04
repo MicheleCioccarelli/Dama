@@ -1,5 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "bugprone-branch-clone"
 #include "engine.h"
 #include "../ui/ui.h"
 
@@ -121,40 +119,78 @@ MoveReturn GameEngine::check_move(Move &move) {
     return TOO_FAR;
 }
 
-MoveReturn GameEngine::inspect_damina(Coords startingCoords, Coords endingCoords) {
+MoveReturn GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
+    // Check square-specific details
+    if (endingSquare.piece.type == VUOTA) {
+        return EMPTY_TARGET;
+    } else if (startingSquare.piece.type == VUOTA && dirt == false) {
+        return EMPTY_START;
+    }
+    if (startingSquare.color == BIANCA || endingSquare.color == BIANCA) {
+        return WHITE_SQUARE;
+    }
+    // COLORATA is used for debugging purposes and will not show up in a regular game
+    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
+        return POPULATED;
+    }
 
+    // Check pieces compatibility
     if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
         return TOO_BIG;
     } else if (startingSquare.piece.color == endingSquare.piece.color) {
         return FRIENDLY_FIRE;
     }
-    if (endingSquare.piece.type == VUOTA) {
-        return EMPTY_TARGET;
+
+    int verticalDistance = startingCoords.row - endingCoords.row;
+    int horizontalDistance = startingCoords.column - endingCoords.column;
+    // Check if you are moving by one square
+    if (verticalDistance == 1 || verticalDistance == -1) {
+        if (horizontalDistance == 1 || horizontalDistance == -1) {
+            // Check if a damina is moving forwards
+            if (startingSquare.piece.type == DAMA && startingSquare.piece.color == BIANCO && verticalDistance == 1 ||
+                startingSquare.piece.type == DAMA && startingSquare.piece.color == NERO && verticalDistance == -1) {
+                return BEHIND;
+            }
+            return VALID;
+        } else {
+            return TOO_FAR;
+        }
+    } else {
+        return TOO_FAR;
     }
-    return VALID;
 }
 
 MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
     // Assumes a move with valid syntax and matrix notation
-    if (index == 0) {
-        // This is the first call
+    /* When you check for multiple eatings the position you start from is actually empty because
+     * this function doesn't move pieces around, dirt tells inspect_dama() to ignore the emptiness
+     */
+    bool dirt = true;
+    if (index == 1) {
+        // This is the first call as index defaults to 1
         startingCoords = move.coords[0];
-    } else if () {
-        // You are at the end of the move.coords vector
+        dirt = false;
+    } else if (index == move.coords.size()) {
+        // You are at the end of the move.coords vector, everything went fine (base case)
+        return VALID;
     }
-    // Index defaults to 1
+    // This is where the dama would go if it ate endingcoords
     Coords forwardSquare = calculate_forward(startingCoords, move.coords[index]);
     if (is_in_bounds(forwardSquare)) {
-        if (inspect_damina(startingCoords, move.coords[index]) == VALID) {
-            Move move = Move(startingCoords,move.coords[index], EAT);
-            if (check_move(move) == VALID) {
-                return recursive_check_eat(move, forwardSquare, index + 1);
-            }
+        // Check if the move doesn't break the rules of the game
+        MoveReturn result = inspect_dama(startingCoords, move.coords[index], dirt);
+        // If there is a dama to be eaten
+        if (result == POPULATED) {
+            return recursive_check_eat(move, forwardSquare, index + 1);
         } else {
-
+            // inspect_dama failed
+            return result;
         }
+    } else {
+        // ForwardSquare is out of bounds
+        return OUT_OF_BOUNDS;
     }
 }
 
@@ -305,7 +341,7 @@ MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) 
         return OUT_OF_BOUNDS;
     }
     // Check if the move is blowable
-    if (check_eat((Move&) move) == VALID) {
+    if (recursive_check_eat((Move&) move) == VALID) {
         return BLOWABLE;
     }
     return ROCK_SOLID;
@@ -349,7 +385,7 @@ MoveReturn GameEngine::submit(const Move& move) {
             status = check_move(tempMove);
             break;
         case EAT:
-            status = check_eat(tempMove);
+            status = recursive_check_eat(tempMove);
             break;
         case UNINITIALIZED:
             status = UNDEFINED;
@@ -548,6 +584,7 @@ void GameEngine::execute_command(MoveReturn command) {
             break;
         case SUMMARY:
             RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO), whitePlayer, blackPlayer, GAME_NOT_OVER, start);
+            break;
         default:
             break;
     }

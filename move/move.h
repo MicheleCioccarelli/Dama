@@ -29,7 +29,7 @@ public:
 
     Move(Coords _startingCoords, Coords _endingCoords, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
 
-    Move(Coords _startingCoords, Coords _endingCoords, MoveType _type = EAT);
+    Move(Coords _startingCoords, Coords _endingCoords, MoveType _type);
 
     explicit Move(PlayerColor _color, MoveType _moveType = UNINITIALIZED);
 };

@@ -15,8 +15,9 @@ public:
 
     MoveReturn recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 1);
 
-    // Sees if the move can be performed, if not returns the reason
-    MoveReturn inspect_damina(Coords startingCoords, Coords endingCoords);
+    // Check all the general parameters for a move (squares must not be white, must move by 1, ...)
+    // For more info on the dirt see recursive_check_eat()
+    MoveReturn inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
 
     // Determines if a coordinate isn't out of the board
     static bool is_in_bounds(Coords coords);
@@ -41,6 +42,7 @@ public:
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();
+    // TODO Blow occours even when the enemy's last move was eating
     MoveReturn check_blow(Coords _startingCoords, Coords _endingCoords);
 
     // Adds the move to the respective player's log and executes it
