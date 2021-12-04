@@ -12,6 +12,7 @@ Makefile
 Testing
 
 .idea/*
+.cmake/*
 
 # User-specific stuff
 .idea/**/workspace.xml

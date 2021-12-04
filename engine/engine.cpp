@@ -66,6 +66,14 @@ bool GameEngine::is_in_bounds(Coords coords) {
     return true;
 }
 
+Coords GameEngine::calculate_forward(const Move &move) {
+    Coords tempForward = calculate_forward(move.coords[0], move.coords[1]);
+    for (int i = 2; i < move.coords.size(); i++) {
+        tempForward = calculate_forward(tempForward, move.coords[i]);
+    }
+    return tempForward;
+}
+
 MoveReturn GameEngine::check_move(Move &move) {
     // Has to assume matrix-notation, then fix simulate_damina
     Piece startingPiece;
@@ -194,120 +202,6 @@ MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int
     }
 }
 
-MoveReturn GameEngine::check_eat(Move move) {
-    // Assumes matrix-notation coordinates
-
-    MoveReturn returnValue = UNDEFINED;
-    Square endingSquare(Coords(Z, 9), NERA);
-    Square startingSquare(Coords(Z, 9), NERA);
-    Square forwardSquare(Coords(Z, 9), NERA);
-    int verticalDistance;
-    int horizontalDistance;
-
-    Coords startingCoords;
-    Coords endingCoords;
-
-    Piece startingPiece;
-    for (int i = 1; i < move.coords.size(); i++) {
-        if (i == 1) {
-            if (!is_in_bounds(move.coords.at(0)) || !is_in_bounds(move.coords.at(1))) {
-                return OUT_OF_BOUNDS;
-            }
-            startingPiece = board.matrix[move.coords.at(0).row][move.coords.at(0).column].piece;
-
-            startingCoords = move.coords[0];
-            endingCoords = move.coords[1];
-
-            endingSquare = board.matrix[endingCoords.row][endingCoords.column];
-
-            if (endingSquare.piece.type == VUOTA) {
-                return EMPTY_TARGET;
-            }
-            startingSquare = board.matrix[startingCoords.row][startingCoords.column];
-
-            verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-            horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-
-            forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
-                    [endingSquare.coords.column - horizontalDistance];
-            // Check piece compatibility
-            if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
-                return TOO_BIG;
-            } else if (startingSquare.piece.color == endingSquare.piece.color) {
-                return FRIENDLY_FIRE;
-            }
-            // Create a temporary move to check
-            Move moveToValidate(move.playerColor, move.type.moveType);
-            moveToValidate.add_coords(move.coords[0]);
-            moveToValidate.add_coords(move.coords[1]);
-//              POSSIBLE ERROR
-//              si dice FIXME
-// TODO
-            if (check_move(moveToValidate) == POPULATED) {
-                // Check if there is an empty space behind the targeted square
-                if (forwardSquare.piece.type == VUOTA) {
-                    returnValue = VALID;
-                }
-            } else {
-                // The targeted square doesn't have anything on it
-                return EMPTY_TARGET;
-            }
-        } else if (returnValue == VALID) {
-            if (move.coords.at(i).row < 0 || move.coords.at(i).row > 7) {
-                return OUT_OF_BOUNDS;
-            } else if (move.coords.at(i).column < 0 || move.coords.at(i).column > 7) {
-                return OUT_OF_BOUNDS;
-            }
-            endingCoords = move.coords[i];
-
-            endingSquare = board.matrix[endingCoords.row][endingCoords.column];
-            startingSquare = forwardSquare;
-            startingSquare.piece = startingPiece;
-
-            if (endingSquare.piece.type == VUOTA) {
-                return EMPTY_TARGET;
-            }
-
-            verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-            horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-            forwardSquare = board.matrix[endingSquare.coords.row - verticalDistance]
-                    [endingSquare.coords.column - horizontalDistance];
-            // Check piece compatibility
-            // Might have to add the other commented part
-            if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
-                return TOO_BIG;
-            } else if (startingSquare.piece.color == endingSquare.piece.color) {
-                return FRIENDLY_FIRE;
-            }
-            Move moveToValidate(move.playerColor, move.type.moveType);
-            board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece = startingPiece;
-            moveToValidate.add_coords(Coords(startingSquare.coords.column, startingSquare.coords.row));
-            // Square to eat
-            moveToValidate.add_coords(move.coords[i]);
-
-            if (check_move((Move &) moveToValidate) == POPULATED) {
-                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece =
-                        Piece();
-                // Check if there is an empty space behind the targeted square
-                if (forwardSquare.piece.type == VUOTA) {
-                    board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece.type = VUOTA;
-                    returnValue = VALID;
-                }
-            } else {
-                // The targeted square doesn't have anything on it
-                board.matrix[startingSquare.coords.row][startingSquare.coords.column].piece.type = VUOTA;
-                return EMPTY_TARGET;
-            }
-        } if (returnValue == UNDEFINED) {
-            return returnValue;
-        }
-    }
-    move.coords.emplace_back(Coords(forwardSquare.coords.column, forwardSquare.coords.row));
-
-
-    return returnValue;
-}
-
 // You give 2 coords, then you construct a trasparent move with those coords, and you check it
 MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
     Move move = Move(_startingCoords, _endingCoords);
@@ -394,6 +288,10 @@ MoveReturn GameEngine::submit(const Move& move) {
         isBlown = true;
     }
     if (status == VALID) {
+        // more DIRT
+        if (tempMove.type.moveType == EAT) {
+            tempMove.add_coords(calculate_forward(tempMove));
+        }
         dispatch_move(tempMove, isBlown);
     }
     UI::log_error(status);
@@ -419,9 +317,9 @@ std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor c
     Move move = Move(startingCoords, endingCoords, color, MOVE);
         if (check_move(move) == VALID) {
             movesFound.push_back(move);
-        } else {
-            // Check all possible eat moves, a 8x8 board can only fit 3 consecutive eatings
+        } else if (recursive_check_eat(move) == VALID){
             move.type = EAT;
+            movesFound.push_back(move);
         }
     return movesFound;
 }

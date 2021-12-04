@@ -25,6 +25,9 @@ public:
     // Given two squares calculates forwardSquare's coords, see GameEngine::check_eat() to see its main use
     static Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
 
+    // Given an eat type move calculates where the damina will end up in the end
+    Coords calculate_forward(const Move& move);
+
     // Does all the checking regarding the move and logs erros if needed
     MoveReturn submit(const Move& move);
 
@@ -37,8 +40,6 @@ public:
 
     // Handles command execution (help page, resigning, summary)
     void execute_command(MoveReturn command);
-
-    MoveReturn check_eat(Move move);
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();

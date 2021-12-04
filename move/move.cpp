@@ -7,6 +7,8 @@ Move::Move() {
     playerColor = TRASPARENTE;
 }
 
+
+
 Move &Move::operator=(Move rhs) {
     coords = rhs.coords;
     blownCoord = rhs.blownCoord;

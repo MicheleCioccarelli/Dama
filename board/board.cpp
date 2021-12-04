@@ -66,7 +66,6 @@ void Board::execute_move(Move& move) {
     if (move.type == MOVE) {
         endingSquare.piece = startingSquare.piece;
         startingSquare.piece = Piece(TRASPARENTE, VUOTA);
-
         matrix[move.coords.at(1).row][move.coords.at(1).column]= endingSquare;
         matrix[move.coords.at(0).row][move.coords.at(0).column] = startingSquare;
     } else if (move.type == EAT) {
