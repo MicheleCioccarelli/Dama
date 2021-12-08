@@ -1,6 +1,7 @@
 #pragma once
 
-#include "../command/command.h"
+#include "../enums/MoveReturn.h"
+#include "../engine/engine.h"
 #include "../constants/colors_codes.h"
 #include <algorithm>
 #include <sstream>
@@ -9,14 +10,18 @@
 
 class UI {
 public:
+    // Initialize engine's names
     static void init(GameEngine& engine);
 
-    static MoveReturn get_move(Move& move, GameEngine& engine, PlayerColor currentPlayer);
-
+    static MoveReturn get_move(Move& move, GameEngine& engine, const PlayerColor& currentPlayer);
+    // Check input lenght and see wether it is a command
     static MoveReturn check_input(const std::string& input);
 
-    // Checks every parameter of each command and makes sure it is correct
-    static MoveReturn validate_command(const std::vector<Command>& commands);
+    static void input_to_move(const std::string& input, Move& move);
+
+    // Interpret the coords contained in toConvert and returns them
+    static Coords convert_coords(const std::string& toConvert);
+
     // CHecks if a coordinate is legitimate
     static MoveReturn validate_input (const Coords& coords);
 
@@ -26,11 +31,11 @@ public:
     // Explains the error to the user
     static void log_error(MoveReturn error);
 
-    // Returns true if the input was actually a command and assigns the right MoveReturn to it
-    static bool dispatch_command(GameEngine& engine, std::string& command, PlayerColor currentPlayer, Move& move);
+    // Returns true if the input was actually a command and assigns the right MoveReturn to move
+    static bool validate_command(std::string& command, PlayerColor currentPlayer, Move& move);
 
     // Puts the contents of 2 commands in a move, uninitialized commands are ignored
-    static void command_to_move(const std::vector<Command>& commands, Move& move);
+    //static void command_to_move(const std::vector<Command>& commands, Move& move);
 
     ~UI() = default;
 };

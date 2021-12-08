@@ -3,7 +3,6 @@
 // Used by GameEngine::validate_move()
 enum MoveReturn {
     VALID,
-    // These are used by checking funcions in GameEngine
     // You are trying to move into a white square
     WHITE_SQUARE,
     // You are trying to move by more than one square
@@ -32,11 +31,15 @@ enum MoveReturn {
     ROCK_SOLID,
     // The move being checked isn't valid, but the move checker doesn't know why
     UNDEFINED,
-    // The user is a bitch and tried to segfault
+    // The user tried to segfault
     NO_MOVE,
 
     // These are returned by UI::check_input()
 
+    // The move was too short
+    TOO_SHORT,
+    // You tried to move or eat twice in one move
+    DOUBLE_EVENT,
     // White resigned
     WHITE_RESIGN,
     // Black resigned
@@ -45,8 +48,6 @@ enum MoveReturn {
     EMPTY_MOVE,
     // A player resigned
     RESIGNED,
-    // The move is too short
-    TOO_SHORT,
     // You used a wrong operator (not - * x)
     WRONG_OPERATOR,
     // You are trying to move a piece of the wrong color (white moves black pieces)
@@ -56,5 +57,13 @@ enum MoveReturn {
     // The user used a help page
     HELP_PAGE,
     // The player has requested a summary command
-    SUMMARY
+    SUMMARY,
+    // Someone has offered a draw
+    DRAW_OFFER,
+    // White has offered a draw
+    W_DRAW_OFFER,
+    // Black offered a draw
+    B_DRAW_OFFER,
+    // The user wrote a move with the wrong lenght
+    LENGHT_ERROR
 };

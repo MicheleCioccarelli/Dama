@@ -19,8 +19,6 @@ int GameHandler::two_player_game(GameEngine& engine) {
     Move move = Move(BIANCO);
 
     while (engine.game_over() == GAME_NOT_OVER) {
-        // Could make this a pointer and pass it around
-        // Switch player colors
         move.playerColor = current_color;
 
         // Get player input
@@ -31,6 +29,8 @@ int GameHandler::two_player_game(GameEngine& engine) {
             if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
                 engine.resign(move);
                 return 1;
+            } if (move.type.moveReturn == DRAW_OFFER) {
+                // Someone has offered a draw
             }
             UI::get_move(move, engine, current_color);
         }
@@ -40,6 +40,7 @@ int GameHandler::two_player_game(GameEngine& engine) {
 
         // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
         engine.render.render_board(engine.board, current_color, move);
+
         // Switch player every turn, used both for colors and for move logs
         switch (current_color) {
             case BIANCO:

@@ -29,15 +29,12 @@ Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords 
 }
 
 PlayerColor GameEngine::deduce_color(Move &move) {
-    Move temp(BIANCO);
-
     if (move.coords.empty()) {
         return TRASPARENTE;
     }
+    Coords tempCoords = move.coords[0].convert_coords();
 
-    temp.coords.push_back(move.coords[0].convert_coords());
-
-    return board.matrix[temp.coords[0].row][temp.coords[0].column].piece.color;
+    return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
 void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
@@ -202,43 +199,40 @@ MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int
     }
 }
 
-// You give 2 coords, then you construct a trasparent move with those coords, and you check it
-MoveReturn GameEngine::check_blow(Coords _startingCoords, Coords _endingCoords) {
-    Move move = Move(_startingCoords, _endingCoords);
-
-    PlayerColor currentPlayer = deduce_color(move);
-
+MoveReturn GameEngine::check_blow(const Coords& startingCoords, const Coords& endingCoords) {
+    // Assumes in-bounds matrix-notation input
     if (whitePlayer.moves.empty()) {
         return ROCK_SOLID;
     }
     if (blackPlayer.moves.empty()) {
         return ROCK_SOLID;
     }
+    PlayerColor currentPlayer = board.matrix[endingCoords.row][endingCoords.column].piece.color;
+    PlayerColor enemyPlayer = board.matrix[startingCoords.row][startingCoords.column].piece.color;
 
-    if (currentPlayer == BIANCO) {
-        if (whitePlayer.moves[whitePlayer.moves.size() - 1].type.moveType == EAT) {
-            return ROCK_SOLID;
-        }
-    } else if (currentPlayer == NERO) {
-        if (blackPlayer.moves[blackPlayer.moves.size() - 1].type.moveType == EAT) {
-            return ROCK_SOLID;
-        }
+    // You can't blow your own pieces
+    if (currentPlayer == enemyPlayer) {
+        return ROCK_SOLID;
     }
-
-    if (move.coords.at(0).row - 1 < 0 || move.coords.at(0).row - 1 > 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(1).row - 1 <= 0 || move.coords.at(1).row - 1 >= 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(0).column < 0 || move.coords.at(0).column > 7) {
-        return OUT_OF_BOUNDS;
-    } else if (move.coords.at(1).column <= 0 || move.coords.at(1).column >= 7) {
-        return OUT_OF_BOUNDS;
+    // You can only blow if the player didn't eat as it's last move
+    switch (currentPlayer) {
+        case BIANCO:
+            if (blackPlayer.moves[blackPlayer.moves.size() - 1].type.moveType == EAT) {
+                return ROCK_SOLID;
+            }
+            break;
+        case NERO:
+            if (whitePlayer.moves[whitePlayer.moves.size() - 1].type.moveType == EAT) {
+                return ROCK_SOLID;
+            }
+            break;
+        default:
+            return ROCK_SOLID;
     }
-    // Check if the move is blowable
-    if (recursive_check_eat((Move&) move) == VALID) {
+    if (recursive_check_eat(Move(startingCoords, endingCoords, EAT)) == VALID) {
         return BLOWABLE;
-    }
-    return ROCK_SOLID;
+    } else
+        return ROCK_SOLID;
 }
 
 int GameEngine::count_pieces(PlayerColor pColor) {
@@ -281,7 +275,7 @@ MoveReturn GameEngine::submit(const Move& move) {
         case EAT:
             status = recursive_check_eat(tempMove);
             break;
-        case UNINITIALIZED:
+        default:
             status = UNDEFINED;
     }
     if (tempMove.type.moveReturn == BLOWABLE) {

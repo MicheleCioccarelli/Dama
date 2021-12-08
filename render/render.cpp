@@ -196,7 +196,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer,
              BLACK_COLOR = DRAW_COLOR;
              break;
          case DRAW:
-             strings.emplace_back("Patta");
+             strings.emplace_back("Draw");
              WHITE_COLOR = DRAW_COLOR;
              BLACK_COLOR = DRAW_COLOR;
              break;
