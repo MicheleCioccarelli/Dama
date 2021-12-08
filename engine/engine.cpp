@@ -199,7 +199,7 @@ MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int
     }
 }
 
-MoveReturn GameEngine::check_blow(const Coords& startingCoords, const Coords& endingCoords) {
+MoveReturn GameEngine::check_blow(const Coords startingCoords, const Coords endingCoords) {
     // Assumes in-bounds matrix-notation input
     if (whitePlayer.moves.empty()) {
         return ROCK_SOLID;

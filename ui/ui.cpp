@@ -36,19 +36,21 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, const PlayerColor& curre
                 }
             }
             if (_position == -1) {
-                input_to_move(input, move);
+                input_to_move(input, move, engine);
             } else {
                 // Separate the 2 moves
                 // Potential segfault
-                input_to_move(input.substr(0, _position), move);
-                input_to_move(input.substr(_position + 1, input.size() - _position), move);
+                input_to_move(input.substr(0, _position), move, engine);
+                input_to_move(input.substr(_position + 1, input.size() - _position), move, engine);
             }
             // Now a move has been created with the input provided, if there are problems they are in move.type.moveReturn
             break;
         case EMPTY_MOVE:
-            UI::log_error(EMPTY_MOVE);
-            return EMPTY_MOVE;
+            move.type.moveReturn = EMPTY_MOVE;
+            UI::log_error(NO_MOVE);
+            return NO_MOVE;
         case TOO_SHORT:
+            move.type.moveReturn = TOO_SHORT;
             UI::log_error(TOO_SHORT);
             return TOO_SHORT;
         default:
@@ -78,11 +80,12 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, const PlayerColor& curre
         }
     }
     switch (move.type.moveReturn) {
-
         case MISINPUT:
             return MISINPUT;
         case NO_MOVE:
             return NO_MOVE;
+        default:
+            break;
     }
     // Check if the move's color is correct
     UI::check_color(move, currentPlayer, engine);
@@ -115,6 +118,9 @@ void UI::init(GameEngine &engine) {
         engine.blackPlayer.color = NERO;
     }
 }
+
+MoveReturn UI::validate_input(const Coords &coords) {
+    if (coords.column == Z) {
 //
 //void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
 //    for (int i = 0; i < commands.size(); i++) {
@@ -151,9 +157,6 @@ void UI::init(GameEngine &engine) {
 //        }
 //    }
 //}
-
-MoveReturn UI::validate_input(const Coords &coords) {
-    if (coords.column == Z) {
         return MISINPUT;
     } else if (coords.row < 0 || coords.row > 8) {
         return MISINPUT;
@@ -162,7 +165,7 @@ MoveReturn UI::validate_input(const Coords &coords) {
     }
 }
 
-void UI::input_to_move(const std::string &input, Move &move) {
+void UI::input_to_move(const std::string &input, Move &move, GameEngine& engine) {
     switch (input[2]) {
         case '-':
             if (move.type.moveType != UNINITIALIZED) {
@@ -181,16 +184,26 @@ void UI::input_to_move(const std::string &input, Move &move) {
             }
 
             move.type.moveType = EAT;
-            move.coords[0] = convert_coords(input.substr(0, 2));
-            for (int i = 3, j = 1; i <= input.size(); i += 3, j++) {
+            move.coords.push_back(convert_coords(input.substr(0, 2)));
+            for (int i = 3; i <= input.size(); i += 3) {
                 // You can eat up to 3 pieces at a time
-                move.coords[j] = convert_coords(input.substr(i, i + 1));
+                move.coords.push_back(convert_coords(input.substr(i, i + 1)));
             }
             break;
+        case '*':
+            if (engine.check_blow(convert_coords(input.substr(0, 2)),
+                                  convert_coords(input.substr(3, 5))) == BLOWABLE) {
+                move.blownCoord = convert_coords(input.substr(3, 5));
+            } else {
+                move.type.moveReturn = ROCK_SOLID;
+                return;
+            }
         default:
             break;
         }
-    move.type.moveReturn = VALID;
+    if (move.type.moveReturn != ROCK_SOLID) {
+        move.type.moveReturn = VALID;
+    }
     for (Coords currentCoord : move.coords) {
         if (currentCoord.is_uninitialized()) {
             move.type.moveReturn = MISINPUT;
@@ -327,9 +340,6 @@ void UI::log_error(MoveReturn error) {
             break;
         case EMPTY_TARGET:
             std::cout << ERROR_COLOR << "Non puoi mangiare il niente, scrivi aiuto per informazioni" << RESET;
-            break;
-        case EMPTY_MOVE:
-            std::cout << ERROR_COLOR << "Non hai scritto niente, scrivi aiuto per informazioni" << RESET;
             break;
         case CANNIBALISM:
             std::cout << ERROR_COLOR << "Non commettere cannibalismo, scrivi aiuto per informazioni" << RESET;

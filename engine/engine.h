@@ -45,7 +45,7 @@ public:
     // you wheter it can be blown, if yes you should call Board::blow_up();
     // TODO Blow occours even when the enemy's last move was eating
     // BUG: segfault when you try to move in a square that you blew
-    MoveReturn check_blow(const Coords& startingCoords, const Coords& endingCoords);
+    MoveReturn check_blow(const Coords startingCoords, const Coords endingCoords);
 
     // Adds the move to the respective player's log and executes it
     void dispatch_move(const Move& move, bool isBlown);

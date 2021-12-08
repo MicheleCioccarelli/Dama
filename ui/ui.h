@@ -17,7 +17,7 @@ public:
     // Check input lenght and see wether it is a command
     static MoveReturn check_input(const std::string& input);
 
-    static void input_to_move(const std::string& input, Move& move);
+    static void input_to_move(const std::string& input, Move& move, GameEngine& engine);
 
     // Interpret the coords contained in toConvert and returns them
     static Coords convert_coords(const std::string& toConvert);
