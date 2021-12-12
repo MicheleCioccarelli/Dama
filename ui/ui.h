@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../enums/MoveReturn.h"
+#include "../enums/MoveData.h"
 #include "../engine/engine.h"
 #include "../constants/colors_codes.h"
 #include <algorithm>
@@ -13,9 +13,9 @@ public:
     // Initialize engine's names
     static void init(GameEngine& engine);
 
-    static MoveReturn get_move(Move& move, GameEngine& engine, const PlayerColor& currentPlayer);
+    static MoveData get_move(Move& move, GameEngine& engine, const PlayerColor& currentPlayer);
     // Check input lenght and see wether it is a command
-    static MoveReturn check_input(const std::string& input);
+    static MoveData check_input(const std::string& input);
 
     static void input_to_move(const std::string& input, Move& move, GameEngine& engine);
 
@@ -23,13 +23,13 @@ public:
     static Coords convert_coords(const std::string& toConvert);
 
     // CHecks if a coordinate is legitimate
-    static MoveReturn validate_input (const Coords& coords);
+    static MoveData validate_input (const Coords& coords);
 
     //Given a certain player color check if the move is correct (White player can't move black pieces, ...)
-    static MoveReturn check_color(Move& move, PlayerColor currentPlayer, GameEngine& engine);
+    static MoveData check_color(Move& move, PlayerColor currentPlayer, GameEngine& engine);
 
     // Explains the error to the user
-    static void log_error(MoveReturn error);
+    static void log_error(MoveData error);
 
     // Returns true if the input was actually a command and assigns the right MoveReturn to move
     static bool validate_command(std::string& command, PlayerColor currentPlayer, Move& move);

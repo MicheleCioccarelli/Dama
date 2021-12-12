@@ -1,35 +1,34 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 #include "../coords/coords.h"
 #include "../piece/Piece.h"
-#include "../movecase/movecase.h"
+#include "../enums/MoveType.h"
+#include "../enums/MoveData.h"
 
 class Move {
 public:
-    /*
-     * coords' first element is always the startingCoord of a move,
-     * while the last is the ending coord.
-     * Anything in between is the coords of the pieces eaten.
-     */
+    std::vector<Coords> eatenCoords;
+    // New pieces are added by move check functions
+    std::vector<Piece> eatenPieces;
 
-    // This operator is only used when rhs is an lvalue
-    Move& operator= (Move rhs);
+    Coords startingCoord;
+    Coords endingCoord;
 
-    std::vector<Coords> coords;
     Coords blownCoord;
 
     PlayerColor playerColor;
-    MoveCase type;
 
+    MoveType type;
+    MoveData status;
+    // Add a coordinate to eatenCoords
     void add_coords(const Coords & _coords);
 
     Move();
 
-    Move(Coords _startingCoords, Coords _endingCoords, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
+    Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
 
-    Move(Coords _startingCoords, Coords _endingCoords, MoveType _type);
+    explicit Move(PlayerColor _color, MoveType _type = UNINITIALIZED);
 
-    explicit Move(PlayerColor _color, MoveType _moveType = UNINITIALIZED);
+    Move& operator= (const Move& rhs);
 };

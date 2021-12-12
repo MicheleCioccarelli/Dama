@@ -13,11 +13,14 @@ public:
     Player blackPlayer;
     Board board;
 
-    MoveReturn recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 1);
+    // Repeats the moves vector backwards
+    void timeTravel(int depth, Board& _board, const std::vector<Move>& moves);
+
+    MoveData recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 1);
 
     // Check all the general parameters for a move (squares must not be white, must move by 1, ...)
     // For more info on the dirt see recursive_check_eat()
-    MoveReturn inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
+    MoveData inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
 
     // Determines if a coordinate isn't out of the board
     static bool is_in_bounds(Coords coords);
@@ -29,23 +32,23 @@ public:
     static Coords calculate_forward(const Move& move);
 
     // Does all the checking regarding the move and logs erros if needed
-    MoveReturn submit(const Move& move);
+    MoveData submit(const Move& move);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate
-    MoveReturn check_move(Move& move);
+    MoveData check_move(Move& move);
 
     // Given a move returns the color of the player who made it
     PlayerColor deduce_color(Move &move);
 
     // Handles command execution (help page, resigning, summary)
-    void execute_command(MoveReturn command);
+    void execute_command(MoveData command);
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();
     // TODO Blow occours even when the enemy's last move was eating
     // BUG: segfault when you try to move in a square that you blew
-    MoveReturn check_blow(const Coords startingCoords, const Coords endingCoords);
+    MoveData check_blow(const Coords startingCoords, const Coords endingCoords);
 
     // Adds the move to the respective player's log and executes it
     void dispatch_move(const Move& move, bool isBlown);

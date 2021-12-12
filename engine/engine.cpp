@@ -71,7 +71,11 @@ Coords GameEngine::calculate_forward(const Move &move) {
     return tempForward;
 }
 
-MoveReturn GameEngine::check_move(Move &move) {
+void GameEngine::timeTravel(int depth, Board &_board, const std::vector<Move>& moves) {
+
+}
+
+MoveData GameEngine::check_move(Move &move) {
     // Has to assume matrix-notation, then fix simulate_damina
     Piece startingPiece;
     Piece endingPiece;
@@ -124,7 +128,7 @@ MoveReturn GameEngine::check_move(Move &move) {
     return TOO_FAR;
 }
 
-MoveReturn GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
+MoveData GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     // Check square-specific details
@@ -167,7 +171,7 @@ MoveReturn GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, 
     }
 }
 
-MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
+MoveData GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
     // Assumes a move with valid syntax and matrix notation
     /* When you check for multiple eatings the position you start from is actually empty because
      * this function doesn't move pieces around, dirt tells inspect_dama() to ignore the emptiness
@@ -185,7 +189,7 @@ MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int
     Coords forwardSquare = calculate_forward(startingCoords, move.coords[index]);
     if (is_in_bounds(forwardSquare)) {
         // Check if the move doesn't break the rules of the game
-        MoveReturn result = inspect_dama(startingCoords, move.coords[index], dirt);
+        MoveData result = inspect_dama(startingCoords, move.coords[index], dirt);
         // If there is a dama to be eaten
         if (result == POPULATED) {
             return recursive_check_eat(move, forwardSquare, index + 1);
@@ -199,7 +203,8 @@ MoveReturn GameEngine::recursive_check_eat(Move move, Coords startingCoords, int
     }
 }
 
-MoveReturn GameEngine::check_blow(const Coords startingCoords, const Coords endingCoords) {
+MoveData GameEngine::check_blow(const Coords startingCoords, const Coords endingCoords) {
+    // GUARDA SE AL TURNO PRECEDENTE SI POTEVA FARE QUELLA MOSSA
     // Assumes in-bounds matrix-notation input
     if (whitePlayer.moves.empty()) {
         return ROCK_SOLID;
@@ -251,8 +256,8 @@ int GameEngine::count_pieces(PlayerColor pColor) {
     return returnValue;
 }
 
-MoveReturn GameEngine::submit(const Move& move) {
-    MoveReturn status;
+MoveData GameEngine::submit(const Move& move) {
+    MoveData status;
     bool isBlown;
 
     if (move.type.moveReturn != VALID) {
@@ -469,7 +474,7 @@ GameState GameEngine::game_over(PlayerColor winner) {
     return GAME_NOT_OVER;
 }
 
-void GameEngine::execute_command(MoveReturn command) {
+void GameEngine::execute_command(MoveData command) {
     switch (command) {
         case HELP_PAGE:
             RenderV2::help_page();

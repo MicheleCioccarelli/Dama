@@ -1,8 +1,7 @@
 #pragma once
 
-// Used by GameEngine::validate_move()
-enum MoveReturn {
-    VALID,
+// Used by move check functions to validate a certain move
+enum MoveIssue {
     // You are trying to move into a white square
     WHITE_SQUARE,
     // You are trying to move by more than one square
@@ -17,7 +16,7 @@ enum MoveReturn {
     EMPTY_TARGET,
     // A piece is trying to eat a piece of the same type (DAMA_B eats DAMA_B)
     CANNIBALISM,
-    // A damina is trying to eat a damone
+    // A piece is trying to eat itself
     TOO_BIG,
     // A piece is trying to eat a piece of the same color
     FRIENDLY_FIRE,
@@ -34,36 +33,4 @@ enum MoveReturn {
     // The user tried to segfault
     NO_MOVE,
 
-    // These are returned by UI::check_input()
-
-    // The move was too short
-    TOO_SHORT,
-    // You tried to move or eat twice in one move
-    DOUBLE_EVENT,
-    // White resigned
-    WHITE_RESIGN,
-    // Black resigned
-    BLACK_RESIGN,
-    // You tyoed nothing
-    EMPTY_MOVE,
-    // A player resigned
-    RESIGNED,
-    // You used a wrong operator (not - * x)
-    WRONG_OPERATOR,
-    // You are trying to move a piece of the wrong color (white moves black pieces)
-    WRONG_COLOR,
-    // The input received is invalid (e.g. J8-LK)
-    MISINPUT,
-    // The user used a help page
-    HELP_PAGE,
-    // The player has requested a summary command
-    SUMMARY,
-    // Someone has offered a draw
-    DRAW_OFFER,
-    // White has offered a draw
-    W_DRAW_OFFER,
-    // Black offered a draw
-    B_DRAW_OFFER,
-    // The user wrote a move with the wrong lenght
-    LENGHT_ERROR
 };

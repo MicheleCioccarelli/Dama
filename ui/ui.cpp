@@ -1,6 +1,6 @@
 #include "ui.h"
 
-MoveReturn UI::get_move(Move& move, GameEngine& engine, const PlayerColor& currentPlayer) {
+MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& currentPlayer) {
     std::string input;
 
     move = Move(currentPlayer);
@@ -24,7 +24,7 @@ MoveReturn UI::get_move(Move& move, GameEngine& engine, const PlayerColor& curre
     move.type.moveType = UNINITIALIZED;
     move.type.moveReturn = LENGHT_ERROR;
 
-    MoveReturn result = check_input(input);
+    MoveData result = check_input(input);
     // Moves with a blow in them are separeted with an _
     int _position = -1;
     switch (result) {
@@ -119,7 +119,7 @@ void UI::init(GameEngine &engine) {
     }
 }
 
-MoveReturn UI::validate_input(const Coords &coords) {
+MoveData UI::validate_input(const Coords &coords) {
     if (coords.column == Z) {
 //
 //void UI::command_to_move(const std::vector<Command>& commands, Move &move) {
@@ -211,7 +211,7 @@ void UI::input_to_move(const std::string &input, Move &move, GameEngine& engine)
     }
 }
 
-MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& engine) {
+MoveData UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& engine) {
     switch (currentPlayer)  {
         case BIANCO:
             if (engine.deduce_color(move) == NERO) {
@@ -232,7 +232,7 @@ MoveReturn UI::check_color(Move &move, PlayerColor currentPlayer, GameEngine& en
     }
 }
 
-MoveReturn UI::check_input(const std::string &input) {
+MoveData UI::check_input(const std::string &input) {
     if (input == "~") {
         // The user typed nothing
         return EMPTY_MOVE;
@@ -319,7 +319,7 @@ Coords UI::convert_coords(const std::string& toConvert) {
     return converted;
 }
 
-void UI::log_error(MoveReturn error) {
+void UI::log_error(MoveData error) {
     switch (error) {
         case VALID:
             return;

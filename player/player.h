@@ -2,7 +2,7 @@
 
 #include "../move/move.h"
 #include "../enums/PlayerColor.h"
-#include "../enums/MoveReturn.h"
+#include "../enums/MoveData.h"
 
 #include <vector>
 #include <iostream>
