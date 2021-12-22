@@ -474,7 +474,7 @@ GameState GameEngine::game_over(PlayerColor winner) {
     return GAME_NOT_OVER;
 }
 
-void GameEngine::execute_command(MoveData command) {
+const void GameEngine::execute_command(MoveData command) const {
     switch (command) {
         case HELP_PAGE:
             RenderV2::help_page();

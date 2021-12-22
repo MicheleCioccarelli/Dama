@@ -5,6 +5,7 @@
 #include "../enums/GameStyle.h"
 #include "../enums/GameState.h"
 #include "../render/render.h"
+#include "../enums/MoveIssue.h"
 
 class GameEngine {
 public:
@@ -42,13 +43,13 @@ public:
     PlayerColor deduce_color(Move &move);
 
     // Handles command execution (help page, resigning, summary)
-    void execute_command(MoveData command);
+    const void execute_command(MoveData command) const;
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();
     // TODO Blow occours even when the enemy's last move was eating
     // BUG: segfault when you try to move in a square that you blew
-    MoveData check_blow(const Coords startingCoords, const Coords endingCoords);
+    MoveIssue check_blow(const Coords startingCoords, const Coords endingCoords);
 
     // Adds the move to the respective player's log and executes it
     void dispatch_move(const Move& move, bool isBlown);

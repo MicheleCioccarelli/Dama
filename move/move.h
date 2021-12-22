@@ -20,6 +20,7 @@ public:
     PlayerColor playerColor;
 
     MoveType type;
+    // Any additional information about the move, like its type of command
     MoveData status;
     // Add a coordinate to eatenCoords
     void add_coords(const Coords & _coords);
