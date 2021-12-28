@@ -7,6 +7,9 @@
 #include "../enums/MoveData.h"
 
 class Move {
+private:
+    // Copied from GameEngine
+    Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
 public:
     std::vector<Coords> eatenCoords;
     // New pieces are added by move check functions
@@ -25,7 +28,15 @@ public:
     // Add a coordinate to eatenCoords
     void add_coords(const Coords & _coords);
 
+    // Calculates the ending coordinate, useful in an EAT move where you have startingCoords and eatenCoords
+    // Also copied from GameEngine::calculate_forward
+    void calculate_endingCoord();
+
+    bool is_empty();
+
     Move();
+
+    Move(Coords _startingCoords, MoveType _type);
 
     Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
 

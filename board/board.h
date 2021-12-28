@@ -29,7 +29,9 @@ public:
     // This function puts blownCoords in the move's blownCoords and deletes the blown coords from the board
     void blow_up(Move& move);
 
-    void edit(Coords coords, Piece _piece);
+    void edit_matrix_notation(Coords coords, Piece _piece);
+
+    void edit_human_notation(Coords coords, Piece _piece);
 
     Board();
 };

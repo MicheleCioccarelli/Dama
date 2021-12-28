@@ -37,7 +37,7 @@ public:
     // Used in end_screen() to put names in the middle of the table
     static void center_name(std::string& name, int longerName, const std::string& color = BOARD_COLOR);
 
-    static void end_screen(int whitePieces, int blackPieces, Player& whitePlayer, Player& blackPlayer, GameState result, time_t start) ;
+    static void end_screen(int whitePieces, int blackPieces, Player whitePlayer, Player blackPlayer, GameState result, time_t start) ;
 
     // Called when the executable receives wrong command line arguments
     static void cli_help_page();

@@ -29,29 +29,26 @@ Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords 
 }
 
 PlayerColor GameEngine::deduce_color(Move &move) {
-    if (move.coords.empty()) {
+    if (move.is_empty()) {
         return TRASPARENTE;
     }
-    Coords tempCoords = move.coords[0].convert_coords();
+    Coords tempCoords = move.startingCoord.convert_coords();
 
     return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
 void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
     // Assumes matrix-notation input
-
     // Add the move to the respective player
     if (move.playerColor == BIANCO) {
         whitePlayer.add_move(move);
     } else if (move.playerColor == NERO) {
         blackPlayer.add_move(move);
     }
-
     if (isBlown == true) {
         board.blow_up((Move&) move);
     }
     board.execute_move((Move&) move);
-
 }
 
 bool GameEngine::is_in_bounds(Coords coords) {
@@ -64,38 +61,117 @@ bool GameEngine::is_in_bounds(Coords coords) {
 }
 
 Coords GameEngine::calculate_forward(const Move &move) {
-    Coords tempForward = calculate_forward(move.coords[0], move.coords[1]);
-    for (int i = 2; i < move.coords.size(); i++) {
-        tempForward = calculate_forward(tempForward, move.coords[i]);
+    Coords tempForward = calculate_forward(move.startingCoord, move.eatenCoords[0]);
+    for (int i = 1; i < move.eatenCoords.size(); i++) {
+        tempForward = calculate_forward(tempForward, move.eatenCoords[i]);
     }
     return tempForward;
 }
 
-void GameEngine::timeTravel(int depth, Board &_board, const std::vector<Move>& moves) {
+bool GameEngine::time_travel(PlayerColor startingPlayer, int depth, bool goingBackwards) {
+    Player opponent;
+    int whiteIndex = whitePlayer.moves.size() - 1;
+    int blackIndex = blackPlayer.moves.size() - 1;
 
+    if (startingPlayer == BIANCO) {
+        opponent = blackPlayer;
+        // depth/2 + 1 is the number of enemy moves that will be manipulated, see if it is possible
+        if (blackPlayer.moves.size() - ((depth / 2) + depth % 2) < 0 || whitePlayer.moves.size() - (depth / 2) < 0) {
+            return false;
+        }
+    } else {
+        if (whitePlayer.moves.size() - ((depth / 2) + depth % 2) < 0 || blackPlayer.moves.size() - (depth / 2) < 0) {
+            return false;
+        }
+        opponent  = whitePlayer;
+    }
+    // Works backwards
+    if (goingBackwards) {
+        // Undo the move recursively
+        return playBack(opponent.color, depth, whiteIndex, blackIndex);
+    } else {
+        // You want to go forward in time
+        Player currentPlayer;
+        if (startingPlayer == BIANCO) {
+            // The +1 is because you want to redo the newest move as well
+            whiteIndex = (whiteIndex - depth / 2) + 1;
+            blackIndex = (blackIndex - ((depth / 2) + depth % 2)) + 1;
+
+            while (depth > 0) {
+                board.execute_move(blackPlayer.moves[whiteIndex++]);
+                depth--;
+                if (depth <= 0)
+                    break;
+
+                board.execute_move(whitePlayer.moves[blackIndex++]);
+                depth--;
+            }
+            return true;
+        } else {
+            blackIndex = (blackIndex - depth / 2) + 1;
+            whiteIndex = (whiteIndex - ((depth / 2) + depth % 2)) + 1;
+
+            while (depth > 0) {
+                board.execute_move(whitePlayer.moves[whiteIndex++]);
+                depth--;
+                if (depth <= 0)
+                    break;
+
+                board.execute_move(blackPlayer.moves[blackIndex++]);
+                depth--;
+            }
+            return true;
+        }
+    }
 }
 
-MoveData GameEngine::check_move(Move &move) {
+bool GameEngine::playBack(PlayerColor currentPlayer, int depth, int whiteIndex, int blackIndex) {
+    // Base case
+    if (depth <= 0) {
+        return true;
+    }
+    // The previous iteration did a black player if this is not the first call
+    if (currentPlayer == BIANCO) {
+        undo_move(whitePlayer.moves[whiteIndex--]);
+        return playBack(NERO, depth - 1,  whiteIndex, blackIndex);
+    } else {
+        undo_move(blackPlayer.moves[blackIndex--]);
+        return playBack(BIANCO, depth - 1,  whiteIndex, blackIndex);
+    }
+}
+
+void GameEngine::undo_move(const Move &move) {
+    // Assumes matrix-notation
+    if (move.type == EAT) {
+        // Swap starting piece and ending piece
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece =
+                board.matrix[move.endingCoord.row][move.endingCoord.column].piece;
+        board.matrix[move.endingCoord.row][move.endingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+
+        // Put eaten pieces back on the board
+        for (int i = 0; i < move.eatenPieces.size(); i++) {
+            board.matrix[move.eatenCoords[i].row][move.eatenCoords[i].column].piece = move.eatenPieces[i];
+        }
+    } else {
+        // Swap startingCoords and endingCoords
+        Move tempMove = Move(move.endingCoord, move.startingCoord, move.playerColor, MOVE);
+        board.execute_move(tempMove);
+    }
+}
+
+MoveIssue GameEngine::check_move(Move &move) {
     // Has to assume matrix-notation, then fix simulate_damina
-    Piece startingPiece;
-    Piece endingPiece;
-    Square endingSquare(Coords(Z, 10), NERA);
-    Square startingSquare(Coords(Z, 10), NERA);
-    int lastIndex = move.coords.size() - 1;
     int horizontalDistance;
     int verticalDistance;
 
-    if (!is_in_bounds(move.coords.at(0)) || !is_in_bounds(move.coords.at(1))) {
+    if (!is_in_bounds(move.startingCoord) || !is_in_bounds(move.endingCoord)) {
         return OUT_OF_BOUNDS;
     }
 
-    Coords startingCoords = move.coords[0];
-    Coords endingCoords = move.coords[lastIndex];
-
-    startingPiece = board.matrix[startingCoords.row][startingCoords.column].piece;
-    endingPiece = board.matrix[endingCoords.row][endingCoords.column].piece;
-    endingSquare = board.matrix[endingCoords.row][endingCoords.column];
-    startingSquare = board.matrix[startingCoords.row][startingCoords.column];
+    Piece startingPiece = board.matrix[move.startingCoord.row][move.startingCoord.column].piece;
+    Piece endingPiece = board.matrix[move.endingCoord.row][move.endingCoord.column].piece;
+    Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
+    Square startingSquare = board.matrix[move.startingCoord.row][move.startingCoord.column];
 
     // Distance between the starting square and the ening square
     verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
@@ -105,30 +181,28 @@ MoveData GameEngine::check_move(Move &move) {
     if (startingPiece.type == VUOTA) {
         return EMPTY_START;
     }
-
     // Check if you are going in a black square
     if (endingSquare.color != NERA) {
         return WHITE_SQUARE;
     }
-
     // Check if you are moving by one square
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
             // Check if a damina is moving forwards
             if (startingPiece.type == DAMA && startingPiece.color == BIANCO && verticalDistance == 1 ||
-            startingPiece.type == DAMA && startingPiece.color == NERO && verticalDistance == -1) {
+                startingPiece.type == DAMA && startingPiece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
             if (endingPiece.type != VUOTA && endingPiece.type != COLORATA) {
                 return POPULATED;
             }
-            return VALID;
+            return ALL_GOOD;
         }
     }
     return TOO_FAR;
 }
 
-MoveData GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
+MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     // Check square-specific details
@@ -162,7 +236,7 @@ MoveData GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bo
                 startingSquare.piece.type == DAMA && startingSquare.piece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
-            return VALID;
+            return ALL_GOOD;
         } else {
             return TOO_FAR;
         }
@@ -171,25 +245,28 @@ MoveData GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bo
     }
 }
 
-MoveData GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
+MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
     // Assumes a move with valid syntax and matrix notation
     /* When you check for multiple eatings the position you start from is actually empty because
      * this function doesn't move pieces around, dirt tells inspect_dama() to ignore the emptiness
      */
+
+    // FILL ENDINGCOORD
+
     bool dirt = true;
-    if (index == 1) {
-        // This is the first call as index defaults to 1
-        startingCoords = move.coords[0];
+    if (index == 0) {
+        // This is the first call as index defaults to 0
+        startingCoords = move.startingCoord;
         dirt = false;
-    } else if (index == move.coords.size()) {
+    } else if (index == move.eatenCoords.size()) {
         // You are at the end of the move.coords vector, everything went fine (base case)
-        return VALID;
+        return ALL_GOOD;
     }
     // This is where the dama would go if it ate endingcoords
-    Coords forwardSquare = calculate_forward(startingCoords, move.coords[index]);
+    Coords forwardSquare = calculate_forward(startingCoords, move.eatenCoords[index]);
     if (is_in_bounds(forwardSquare)) {
         // Check if the move doesn't break the rules of the game
-        MoveData result = inspect_dama(startingCoords, move.coords[index], dirt);
+        MoveIssue result = inspect_dama(startingCoords, move.eatenCoords[index], dirt);
         // If there is a dama to be eaten
         if (result == POPULATED) {
             return recursive_check_eat(move, forwardSquare, index + 1);
@@ -203,44 +280,47 @@ MoveData GameEngine::recursive_check_eat(Move move, Coords startingCoords, int i
     }
 }
 
-MoveData GameEngine::check_blow(const Coords startingCoords, const Coords endingCoords) {
-    // GUARDA SE AL TURNO PRECEDENTE SI POTEVA FARE QUELLA MOSSA
+MoveIssue GameEngine::check_blow(Move& move) {
+    if (move.type != EAT) {
+        return WRONG_TYPE;
+    }
     // Assumes in-bounds matrix-notation input
-    if (whitePlayer.moves.empty()) {
-        return ROCK_SOLID;
-    }
-    if (blackPlayer.moves.empty()) {
-        return ROCK_SOLID;
-    }
-    PlayerColor currentPlayer = board.matrix[endingCoords.row][endingCoords.column].piece.color;
-    PlayerColor enemyPlayer = board.matrix[startingCoords.row][startingCoords.column].piece.color;
-
-    // You can't blow your own pieces
-    if (currentPlayer == enemyPlayer) {
-        return ROCK_SOLID;
-    }
-    // You can only blow if the player didn't eat as it's last move
-    switch (currentPlayer) {
+    PlayerColor opponent = deduce_color(move);
+    // Dirt
+    PlayerColor playerWhoPerformedTheBlowRequest;
+    switch (opponent) {
         case BIANCO:
-            if (blackPlayer.moves[blackPlayer.moves.size() - 1].type.moveType == EAT) {
-                return ROCK_SOLID;
+            if (whitePlayer.moves[whitePlayer.moves.size() - 1].type == EAT) {
+                return WRONG_LAST_MOVE;
             }
+            playerWhoPerformedTheBlowRequest = NERO;
             break;
         case NERO:
-            if (whitePlayer.moves[whitePlayer.moves.size() - 1].type.moveType == EAT) {
-                return ROCK_SOLID;
+            if (blackPlayer.moves[blackPlayer.moves.size() - 1].type == EAT) {
+                return WRONG_LAST_MOVE;
             }
-            break;
+            playerWhoPerformedTheBlowRequest = BIANCO;
         default:
-            return ROCK_SOLID;
+            // Shouldn't happen
+            return WRONG_COLOR;
     }
-    if (recursive_check_eat(Move(startingCoords, endingCoords, EAT)) == VALID) {
+    // Go back to when before your opponent made their last move
+    if (!time_travel(playerWhoPerformedTheBlowRequest, 1, true)) {
+        // If this is false the opponent is yet to make a move
+        return NOT_ENOUGH_MOVES;
+    }
+    // Check if your opponent could have made their move
+    if (recursive_check_eat(move) == ALL_GOOD) {
+        // Re-bring the board to before check_blow was called
+        time_travel(playerWhoPerformedTheBlowRequest, 1, false);
         return BLOWABLE;
-    } else
+    } else {
+        time_travel(playerWhoPerformedTheBlowRequest, 1, false);
         return ROCK_SOLID;
+    }
 }
 
-int GameEngine::count_pieces(PlayerColor pColor) {
+int GameEngine::count_pieces(PlayerColor pColor) const {
     int returnValue = 0;
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
@@ -256,24 +336,18 @@ int GameEngine::count_pieces(PlayerColor pColor) {
     return returnValue;
 }
 
-MoveData GameEngine::submit(const Move& move) {
-    MoveData status;
+MoveIssue GameEngine::submit(const Move& move, const MoveIssue issue) {
+    MoveIssue status;
     bool isBlown;
-
-    if (move.type.moveReturn != VALID) {
-        if (move.type.moveReturn != BLOWABLE) {
-            UI::log_error(move.type.moveReturn);
-            return move.type.moveReturn;
-        }
-    }
 
     // Create a new move with it's coords converted to matrix notation, readable by check functions
     Move tempMove = move;
-    for (Coords &i : tempMove.coords) {
+    for (Coords &i : tempMove.eatenCoords) {
         i = i.convert_coords();
     }
+    tempMove.startingCoord = tempMove.startingCoord.convert_coords();
 
-    switch (move.type.moveType) {
+    switch (move.type) {
         case MOVE:
             status = check_move(tempMove);
             break;
@@ -283,13 +357,10 @@ MoveData GameEngine::submit(const Move& move) {
         default:
             status = UNDEFINED;
     }
-    if (tempMove.type.moveReturn == BLOWABLE) {
-        isBlown = true;
-    }
-    if (status == VALID) {
+    if (status == ALL_GOOD) {
         // more DIRT
-        if (tempMove.type.moveType == EAT) {
-            tempMove.add_coords(calculate_forward(tempMove));
+        if (tempMove.type == EAT) {
+            tempMove.endingCoord = calculate_forward(tempMove);
         }
         dispatch_move(tempMove, isBlown);
     }
@@ -314,9 +385,9 @@ std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor c
     Coords endingCoords = Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset),
                                  startingCoords.row + verticalOffset);
     Move move = Move(startingCoords, endingCoords, color, MOVE);
-        if (check_move(move) == VALID) {
+        if (check_move(move) == ALL_GOOD) {
             movesFound.push_back(move);
-        } else if (recursive_check_eat(move) == VALID){
+        } else if (recursive_check_eat(move) == ALL_GOOD){
             move.type = EAT;
             movesFound.push_back(move);
         }
@@ -393,13 +464,13 @@ std::vector<Move> GameEngine::simulate_damona(Coords coords) {
         return movesFound;
 }
 
-void GameEngine::resign(Move& move) {
+void GameEngine::resign(MoveData command) {
     int whitePieces = count_pieces(BIANCO);
     int blackPieces = count_pieces(NERO);
 
-    if (move.type.moveReturn == WHITE_RESIGN) {
+    if (command == WHITE_RESIGN) {
         RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED, start);
-    } else if (move.type.moveReturn == BLACK_RESIGN) {
+    } else if (command == BLACK_RESIGN) {
         RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED, start);
     }
 }
@@ -474,7 +545,7 @@ GameState GameEngine::game_over(PlayerColor winner) {
     return GAME_NOT_OVER;
 }
 
-const void GameEngine::execute_command(MoveData command) const {
+void GameEngine::execute_command(MoveData command) const {
     switch (command) {
         case HELP_PAGE:
             RenderV2::help_page();

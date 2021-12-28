@@ -14,14 +14,27 @@ public:
     Player blackPlayer;
     Board board;
 
-    // Repeats the moves vector backwards
-    void timeTravel(int depth, Board& _board, const std::vector<Move>& moves);
+    /**
+     * If goingBackwards is true a depth-number of moves will be played backwards. If depth is 1 startingPlayer's last
+     * move will be played, if it is 2 also the opposite player's last move will be repeated an so on.
+     * If goingBackwards is false you want to get back to the original board position after having gone back, depth should be the same.
+     * Returns false if depth is bigger than the moves vector in one of the players
+     * */
+    bool time_travel(PlayerColor startingPlayer, int depth = 1, bool goingBackwards = true);
 
-    MoveData recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 1);
+    /**
+     * The recursive part of time_travel(), playes the moves backwards. The indexes
+     * are used to navigate currentPlayer.moves[] because you have to switch player at every iteration
+     * */
+    bool playBack(PlayerColor currentPlayer, int depth, int whiteIndex, int blackIndex);
+
+    void undo_move(const Move& move);
+
+    MoveIssue recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 0);
 
     // Check all the general parameters for a move (squares must not be white, must move by 1, ...)
     // For more info on the dirt see recursive_check_eat()
-    MoveData inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
+    MoveIssue inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
 
     // Determines if a coordinate isn't out of the board
     static bool is_in_bounds(Coords coords);
@@ -33,34 +46,38 @@ public:
     static Coords calculate_forward(const Move& move);
 
     // Does all the checking regarding the move and logs erros if needed
-    MoveData submit(const Move& move);
+    MoveIssue submit(const Move& move, MoveIssue issue);
 
     // This tests if a move between the first and last element of coords can be performed,
     // the move's type needs to be accurate
-    MoveData check_move(Move& move);
+    MoveIssue check_move(Move& move);
 
     // Given a move returns the color of the player who made it
     PlayerColor deduce_color(Move &move);
 
     // Handles command execution (help page, resigning, summary)
-    const void execute_command(MoveData command) const;
+    void execute_command(MoveData command) const;
 
     // You have to pass in the input flagged as blowable by the user, this function tells
     // you wheter it can be blown, if yes you should call Board::blow_up();
     // TODO Blow occours even when the enemy's last move was eating
     // BUG: segfault when you try to move in a square that you blew
-    MoveIssue check_blow(const Coords startingCoords, const Coords endingCoords);
+    /**
+     * The move you pass in is what the opponent should have eaten, if it could have been done and
+     * the enemy didn't eat on their last turn the piece that should have committed murder gets deleted
+     * */
+    MoveIssue check_blow(Move& move);
 
     // Adds the move to the respective player's log and executes it
     void dispatch_move(const Move& move, bool isBlown);
     RenderV2 render;
 
-    int count_pieces(PlayerColor pColor);
+    int count_pieces(PlayerColor pColor) const;
 
     void promote();
 
     // End the game
-    void resign(Move& move);
+    void resign(MoveData command);
 
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over

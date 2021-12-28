@@ -1,6 +1,4 @@
 #include "colorMatrix.h"
-
-
 ColorMatrix::ColorMatrix() {
     matrix.resize(ROWS);
 
@@ -113,13 +111,13 @@ void ColorMatrix::flip_board() {
 }
 
 void ColorMatrix::color_board(Move &move) {
-    Coords currentCoords = move.coords[0].convert_coords();
+    Coords currentCoords = move.startingCoord.convert_coords();
 
     // Painting the first square of the move as a moving square
     paint_square(currentCoords, MOVE_COLOR);
 
-    currentCoords = move.coords[1].convert_coords();
-    switch (move.type.moveType) {
+    currentCoords = move.eatenCoords[0].convert_coords();
+    switch (move.type) {
         case MOVE:
             paint_square(currentCoords, MOVE_COLOR);
             break;
@@ -127,10 +125,10 @@ void ColorMatrix::color_board(Move &move) {
             int horizontalDistance = 0;
             int verticalDistance = 0;
             // If there are multiple eatings
-            for (int i = 1; i < move.coords.size(); i++) {
+            for (int i = 0; i < move.eatenCoords.size(); i++) {
                 // See wiki for a detailed explanation
-                currentCoords = move.coords[i].convert_coords();
-                Coords previousCoords = move.coords[i - 1].convert_coords();
+                currentCoords = move.eatenCoords[i].convert_coords();
+                Coords previousCoords = move.eatenCoords[i - 1].convert_coords();
 
                 // Used to calculate where the damina ends up (also used in check_eat)
                 if (i == 1) {
@@ -148,7 +146,7 @@ void ColorMatrix::color_board(Move &move) {
             }
             break;
     }
-    if (move.blownCoord != Coords(Z, 9)) {
+    if (!move.blownCoord.is_uninitialized()) {
         currentCoords = move.blownCoord.convert_coords();
         paint_square(currentCoords, BLOW_COLOR);
     }

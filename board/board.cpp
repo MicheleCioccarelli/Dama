@@ -58,6 +58,8 @@ void Board::empty_game_initialization() {}
 
 // ====== MOVE EXECUTION ======
 void Board::execute_move(Move& move) {
+    // YOU CAN USE ENDINGCOORD, also fill
+    // Should not fill move vectors
     // Input is assumed as matrix-notation
     Square endingSquare = matrix[move.coords.at(1).row][move.coords.at(1).column];
     Square startingSquare = matrix[move.coords.at(0).row][move.coords.at(0).column];
@@ -85,9 +87,13 @@ void Board::execute_move(Move& move) {
 }
 
 void Board::blow_up(Move& move) {
-    edit(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
+    edit_human_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 
-void Board::edit(Coords coords, Piece _piece) {
+void Board::edit_matrix_notation(Coords coords, Piece _piece) {
+    matrix[coords.row][coords.column].piece = _piece;
+}
+
+void Board::edit_human_notation(Coords coords, Piece _piece) {
     matrix[coords.row - 1][coords.column].piece = _piece;
 }

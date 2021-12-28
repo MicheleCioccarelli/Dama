@@ -164,7 +164,7 @@ void RenderV2::center_name(std::string& name, int longerName, const std::string&
     }
 }
 
-void RenderV2::end_screen(int whitePieces, int blackPieces, Player &whitePlayer, Player &blackPlayer, GameState result, time_t start) {
+void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, Player blackPlayer, GameState result, time_t start) {
      std::vector<std::string> strings;
      strings.emplace_back("Nome");
      strings.emplace_back("Pezzi");
