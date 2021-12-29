@@ -160,46 +160,43 @@ void GameEngine::undo_move(const Move &move) {
 }
 
 MoveIssue GameEngine::check_move(Move &move) {
-    // Has to assume matrix-notation, then fix simulate_damina
-    int horizontalDistance;
-    int verticalDistance;
-
     if (!is_in_bounds(move.startingCoord) || !is_in_bounds(move.endingCoord)) {
         return OUT_OF_BOUNDS;
     }
 
-    Piece startingPiece = board.matrix[move.startingCoord.row][move.startingCoord.column].piece;
-    Piece endingPiece = board.matrix[move.endingCoord.row][move.endingCoord.column].piece;
-    Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
     Square startingSquare = board.matrix[move.startingCoord.row][move.startingCoord.column];
+    Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
 
-    // Distance between the starting square and the ening square
-    verticalDistance = startingSquare.coords.row - endingSquare.coords.row;
-    horizontalDistance = startingSquare.coords.column - endingSquare.coords.column;
-
-    // Check if ou arre actually moving a piece, not just air
-    if (startingPiece.type == VUOTA) {
+    // Check square-specific details
+    if (startingSquare.piece.type == VUOTA) {
         return EMPTY_START;
     }
-    // Check if you are going in a black square
-    if (endingSquare.color != NERA) {
+    if (startingSquare.color == BIANCA || endingSquare.color == BIANCA) {
         return WHITE_SQUARE;
     }
+    // COLORATA is used for debugging purposes and will not show up in a regular game
+    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
+        return POPULATED;
+    }
+
+    int verticalDistance = move.startingCoord.row - move.endingCoord.row;
+    int horizontalDistance = move.startingCoord.column - move.endingCoord.column;
+
     // Check if you are moving by one square
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
             // Check if a damina is moving forwards
-            if (startingPiece.type == DAMA && startingPiece.color == BIANCO && verticalDistance == 1 ||
-                startingPiece.type == DAMA && startingPiece.color == NERO && verticalDistance == -1) {
+            if (startingSquare.piece.type == DAMA && startingSquare.piece.color == BIANCO && verticalDistance == 1 ||
+                startingSquare.piece.type == DAMA && startingSquare.piece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
-            if (endingPiece.type != VUOTA && endingPiece.type != COLORATA) {
-                return POPULATED;
-            }
             return ALL_GOOD;
+        } else {
+            return TOO_FAR;
         }
+    } else {
+        return TOO_FAR;
     }
-    return TOO_FAR;
 }
 
 MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {

@@ -59,8 +59,6 @@ void Board::damone_game_initialization() {
 void Board::empty_game_initialization() {}
 
 void Board::execute_move(Move& move) {
-    // YOU CAN USE ENDINGCOORD (Calculate it if it is not present)
-    // Should not fill move vectors
     // Input is assumed as matrix-notation
     Square startingSquare = matrix[move.startingCoord.row][move.startingCoord.column];
     if (move.type == EAT) {

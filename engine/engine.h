@@ -32,7 +32,7 @@ public:
 
     MoveIssue recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 0);
 
-    // Check all the general parameters for a move (squares must not be white, must move by 1, ...)
+    // Check all the general parameters for an EAT type move (squares must not be white, must move by 1, ...)
     // For more info on the dirt see recursive_check_eat()
     MoveIssue inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt = false);
 
@@ -48,8 +48,9 @@ public:
     // Does all the checking regarding the move and logs erros if needed
     MoveIssue submit(const Move& move, MoveIssue issue);
 
-    // This tests if a move between the first and last element of coords can be performed,
-    // the move's type needs to be accurate
+    /**
+     * Checks if a move can be executed, if not returns the reason why
+     * */
     MoveIssue check_move(Move& move);
 
     // Given a move returns the color of the player who made it
