@@ -45,8 +45,8 @@ public:
     // Given an eat type move calculates where the damina will end up in the end
     static Coords calculate_forward(const Move& move);
 
-    // Does all the checking regarding the move and logs erros if needed
-    MoveIssue submit(const Move& move, MoveIssue issue);
+    // Does all the checking regarding the move and logs erros if needed TODO Fix isBlown
+    MoveIssue submit(Move& move);
 
     /**
      * Checks if a move can be executed, if not returns the reason why
@@ -58,11 +58,6 @@ public:
 
     // Handles command execution (help page, resigning, summary)
     void execute_command(MoveData command) const;
-
-    // You have to pass in the input flagged as blowable by the user, this function tells
-    // you wheter it can be blown, if yes you should call Board::blow_up();
-    // TODO Blow occours even when the enemy's last move was eating
-    // BUG: segfault when you try to move in a square that you blew
     /**
      * The move you pass in is what the opponent should have eaten, if it could have been done and
      * the enemy didn't eat on their last turn the piece that should have committed murder gets deleted
@@ -70,7 +65,7 @@ public:
     MoveIssue check_blow(Move& move);
 
     // Adds the move to the respective player's log and executes it
-    void dispatch_move(const Move& move, bool isBlown);
+    void dispatch_move(const Move& move);
     RenderV2 render;
 
     int count_pieces(PlayerColor pColor) const;
@@ -78,7 +73,7 @@ public:
     void promote();
 
     // End the game
-    void resign(MoveData command);
+    void resign(MoveData command) const;
 
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over

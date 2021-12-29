@@ -15,7 +15,7 @@ public:
     // Convert coords from human notation to matrix notation
     Coords convert_coords() const;
 
-    bool is_uninitialized();
+    bool is_uninitialized() const;
 
     Coords(ColumnNotation _column = Z, int _row = 9)
     : column(_column), row(_row) {}

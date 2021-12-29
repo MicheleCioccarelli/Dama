@@ -37,7 +37,7 @@ PlayerColor GameEngine::deduce_color(Move &move) {
     return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
-void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
+void GameEngine::dispatch_move(const Move& move) {
     // Assumes matrix-notation input
     // Add the move to the respective player
     if (move.playerColor == BIANCO) {
@@ -45,7 +45,7 @@ void GameEngine::dispatch_move(const Move& move, const bool isBlown) {
     } else if (move.playerColor == NERO) {
         blackPlayer.add_move(move);
     }
-    if (isBlown == true) {
+    if (move.blownCoord.is_uninitialized()) {
         board.blow_up((Move&) move);
     }
     board.execute_move((Move&) move);
@@ -278,11 +278,20 @@ MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int 
 }
 
 MoveIssue GameEngine::check_blow(Move& move) {
-    if (move.type != EAT) {
+    // Assumes human-notation
+    Move tempMove = move;
+    tempMove.convert_all();
+    if (tempMove.is_misinput()) {
+        return MISINPUT;
+    }
+    if (tempMove.type != EAT) {
         return WRONG_TYPE;
     }
     // Assumes in-bounds matrix-notation input
-    PlayerColor opponent = deduce_color(move);
+    PlayerColor opponent = deduce_color(tempMove);
+    if (tempMove.playerColor == opponent) {
+        return WRONG_COLOR;
+    }
     // Dirt
     PlayerColor playerWhoPerformedTheBlowRequest;
     switch (opponent) {
@@ -307,7 +316,7 @@ MoveIssue GameEngine::check_blow(Move& move) {
         return NOT_ENOUGH_MOVES;
     }
     // Check if your opponent could have made their move
-    if (recursive_check_eat(move) == ALL_GOOD) {
+    if (recursive_check_eat(tempMove) == ALL_GOOD) {
         // Re-bring the board to before check_blow was called
         time_travel(playerWhoPerformedTheBlowRequest, 1, false);
         return BLOWABLE;
@@ -333,16 +342,14 @@ int GameEngine::count_pieces(PlayerColor pColor) const {
     return returnValue;
 }
 
-MoveIssue GameEngine::submit(const Move& move, const MoveIssue issue) {
+MoveIssue GameEngine::submit(Move& move) {
+    // Assumes human-notation
+    // If this is called the move has no syntactical errors
     MoveIssue status;
-    bool isBlown;
 
-    // Create a new move with it's coords converted to matrix notation, readable by check functions
+    // Create a new move with it's coords converted to matrix notation, this makes it readable by check functions
     Move tempMove = move;
-    for (Coords &i : tempMove.eatenCoords) {
-        i = i.convert_coords();
-    }
-    tempMove.startingCoord = tempMove.startingCoord.convert_coords();
+    tempMove.convert_all();
 
     switch (move.type) {
         case MOVE:
@@ -355,13 +362,10 @@ MoveIssue GameEngine::submit(const Move& move, const MoveIssue issue) {
             status = UNDEFINED;
     }
     if (status == ALL_GOOD) {
-        // more DIRT
-        if (tempMove.type == EAT) {
-            tempMove.endingCoord = calculate_forward(tempMove);
-        }
-        dispatch_move(tempMove, isBlown);
+        dispatch_move(tempMove);
+    } else {
+        UI::log_error(status);
     }
-    UI::log_error(status);
     return status;
 }
 
@@ -461,7 +465,7 @@ std::vector<Move> GameEngine::simulate_damona(Coords coords) {
         return movesFound;
 }
 
-void GameEngine::resign(MoveData command) {
+void GameEngine::resign(MoveData command) const {
     int whitePieces = count_pieces(BIANCO);
     int blackPieces = count_pieces(NERO);
 

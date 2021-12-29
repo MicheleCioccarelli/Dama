@@ -13,6 +13,7 @@ void GameHandler::cli_error(cliCase error) {
 
 int GameHandler::two_player_game(GameEngine& engine) {
     PlayerColor current_color = BIANCO;
+    MoveData issue;
 
     engine.render.render_board(engine.board, BIANCO);
 
@@ -22,17 +23,17 @@ int GameHandler::two_player_game(GameEngine& engine) {
         move.playerColor = current_color;
 
         // Get player input
-        UI::get_move(move, engine, current_color);
+        issue = UI::get_move(move, engine, current_color);
 
         // If the move was invalid/was a command ask for another move
-        while (engine.submit(move) != VALID) {
+        while (issue != VALID || engine.submit(move) != ALL_GOOD) {
             if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
                 engine.resign(move);
                 return 1;
             } if (move.type.moveReturn == DRAW_OFFER) {
                 // Someone has offered a draw
             }
-            UI::get_move(move, engine, current_color);
+            issue = UI::get_move(move, engine, current_color);
         }
 
         // See if a piece has gotten to the end, if so promote it

@@ -40,6 +40,8 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
                 break;
             }
         }
+        // The move is legitimate
+        move.playerColor = currentPlayer;
         if (_position == -1) {
             // There is no blow-type move
             issue = input_to_move(input, move, engine);
@@ -102,6 +104,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
                 // The original input contained 2 eat-type moves or 2 move-type moves
                 return DOUBLE_EVENT;
             }
+
             move.type = MOVE;
             move.startingCoord = convert_coords(input.substr(0, 2));
             move.endingCoord = convert_coords(input.substr(3, 5));
@@ -110,6 +113,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
             if (move.type != UNINITIALIZED) {
                 return DOUBLE_EVENT;
             }
+
             move.type = EAT;
             move.startingCoord = convert_coords(input.substr(0, 2));
             // Add the coords which were eaten
@@ -117,13 +121,21 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
                 // You can eat up to 3 pieces at a time
                 move.eatenCoords.push_back(convert_coords(input.substr(i, i + 1)));
             }
+            move.calculate_endingCoord();
             break;
         case '*':
-            if (engine.check_blow(convert_coords(input.substr(0, 2)),
-                                  convert_coords(input.substr(3, 5))) == BLOWABLE) {
+            if (!move.blownCoord.is_uninitialized()) {
+                return DOUBLE_EVENT;
+            }
+
+            Move tempMove = Move(convert_coords(input.substr(0, 2)),
+                                 convert_coords(input.substr(3, 5)), move.playerColor, EAT);
+            MoveIssue result = engine.check_blow(tempMove);
+            // engine said the move was correct
+            if (result == BLOWABLE) {
                 move.blownCoord = convert_coords(input.substr(3, 5));
             } else {
-                return ROCK_SOLID;
+                return result;
             }
         }
     for (Coords currentCoord : move.eatenCoords) {
@@ -138,28 +150,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
 }
 
 void UI::handle_issue(MoveIssue issue) {
-    switch (issue) {
-        case EMPTY_MOVE:
-            UI::log_error(NO_MOVE);
-            break;
-        case TOO_SHORT:
-            UI::log_error(TOO_SHORT);
-            break;
-        case MISINPUT:
-            UI::log_error(MISINPUT);
-            break;
-        case NO_MOVE:
-            UI::log_error(NO_MOVE);
-            break;
-        case WRONG_COLOR:
-            UI::log_error(WRONG_COLOR);
-            break;
-        case DOUBLE_EVENT:
-            UI::log_error(DOUBLE_EVENT);
-            break;
-        default:
-            break;
-    }
+    UI::log_error(issue);
 }
 
 void UI::handle_command(MoveData command, const GameEngine& engine) {
@@ -305,6 +296,7 @@ void UI::log_error(MoveIssue error) {
         case MISINPUT:
             std::cout << ERROR_COLOR << "Le coordinate della messa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
             break;
+        case EMPTY_MOVE:
         case NO_MOVE:
             std::cout << ERROR_COLOR << "Non hai inserito nessuna mossa" << RESET;
             break;

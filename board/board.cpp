@@ -82,7 +82,7 @@ void Board::execute_move(Move& move) {
 }
 
 void Board::blow_up(Move& move) {
-    edit_human_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
+    edit_matrix_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 
 void Board::edit_matrix_notation(Coords coords, Piece _piece) {

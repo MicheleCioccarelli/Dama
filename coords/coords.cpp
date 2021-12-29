@@ -6,7 +6,7 @@ Coords Coords::convert_coords() const {
 
 Coords &Coords::operator=(const Coords &rhs) = default;
 
-bool Coords::is_uninitialized() {
+bool Coords::is_uninitialized() const {
     if (row == 9 || column == Z) {
         return true;
     }
