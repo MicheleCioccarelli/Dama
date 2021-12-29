@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cppcoreguidelines-narrowing-conversions"
 #include "board.h"
 
 Board::Board() {
@@ -56,34 +58,29 @@ void Board::damone_game_initialization() {
 
 void Board::empty_game_initialization() {}
 
-// ====== MOVE EXECUTION ======
 void Board::execute_move(Move& move) {
-    // YOU CAN USE ENDINGCOORD, also fill
+    // YOU CAN USE ENDINGCOORD (Calculate it if it is not present)
     // Should not fill move vectors
     // Input is assumed as matrix-notation
-    Square endingSquare = matrix[move.coords.at(1).row][move.coords.at(1).column];
-    Square startingSquare = matrix[move.coords.at(0).row][move.coords.at(0).column];
-    int lastIndex = move.coords.size() - 1;
-
-    if (move.type == MOVE) {
-        endingSquare.piece = startingSquare.piece;
-        startingSquare.piece = Piece(TRASPARENTE, VUOTA);
-        matrix[move.coords.at(1).row][move.coords.at(1).column]= endingSquare;
-        matrix[move.coords.at(0).row][move.coords.at(0).column] = startingSquare;
-    } else if (move.type == EAT) {
-        startingSquare = matrix[move.coords[0].row][move.coords[0].column];
-        endingSquare = matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column];
-        // Eat all the target pieces
-        for (int i = 1; i < lastIndex; i++) {
-            matrix[move.coords.at(i).row][move.coords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
+    Square startingSquare = matrix[move.startingCoord.row][move.startingCoord.column];
+    if (move.type == EAT) {
+        if (move.endingCoord.is_uninitialized()) {
+            // If this move has type EAT or wasn't constructed properly
+            move.calculate_endingCoord();
         }
-        // Move the starting square's piece and null the first square out
-        endingSquare.piece = startingSquare.piece;
-        startingSquare.piece = Piece(TRASPARENTE, VUOTA);
+        Square endingSquare = matrix[move.endingCoord.row][move.endingCoord.column];
 
-        matrix[move.coords[0].row][move.coords[0].column].piece = startingSquare.piece;
-        matrix[move.coords.at(lastIndex).row][move.coords.at(lastIndex).column].piece = endingSquare.piece;
+        // Eat all the target pieces
+        for (int i = 0; i < move.eatenCoords.size(); i++) {
+            // Save the piece you destroy: used in GameEngine::time_machine()
+            move.eatenPieces.push_back(matrix[move.eatenCoords.at(i).row][move.eatenCoords.at(i).column].piece);
+            // Destroy the pieces
+            matrix[move.eatenCoords.at(i).row][move.eatenCoords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
+        }
     }
+    // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
+    matrix[move.endingCoord.row][move.endingCoord.column].piece = startingSquare.piece;
+    matrix[move.startingCoord.row][move.startingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
 }
 
 void Board::blow_up(Move& move) {
@@ -97,3 +94,4 @@ void Board::edit_matrix_notation(Coords coords, Piece _piece) {
 void Board::edit_human_notation(Coords coords, Piece _piece) {
     matrix[coords.row - 1][coords.column].piece = _piece;
 }
+#pragma clang diagnostic pop
