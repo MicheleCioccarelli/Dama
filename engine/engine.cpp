@@ -1,3 +1,5 @@
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cppcoreguidelines-narrowing-conversions"
 #include "engine.h"
 #include "../ui/ui.h"
 
@@ -395,7 +397,7 @@ std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor c
     return movesFound;
 }
 
-std::vector<Move> GameEngine::simulate_damina(PlayerColor color, Coords coords) {
+std::vector<Move> GameEngine::simulate_damina(PlayerColor daminaColor, Coords coords) {
     // Input coords are assumed to be in matrix notation
     std::vector<Move> movesFound;
     std::vector<Move> tempMoves;
@@ -409,7 +411,7 @@ std::vector<Move> GameEngine::simulate_damina(PlayerColor color, Coords coords) 
     int verticalOffset;
     int horizontalOffset;
 
-    switch (color) {
+    switch (daminaColor) {
         case BIANCO:
             tempMoves = branch_damina(coords, BIANCO, 1, -1);
             // Save the moves found, if any
@@ -476,77 +478,58 @@ void GameEngine::resign(MoveData command) const {
     }
 }
 
-GameState GameEngine::game_over(PlayerColor winner) {
-    if (winner != TRASPARENTE) {
-        if (winner == BIANCO) {
-            return WHITE_WIN;
-        } else if (winner == NERO) {
-            return BLACK_WIN;
-        }
-    }
-
-    // The number of possible moves for each color
-    int blackMoves = 0;
+GameState GameEngine::game_over() {
+    // The game was not ended by a command
     int whiteMoves = 0;
+    int blackMoves = 0;
 
-    Move move(TRASPARENTE);
-
-    // Look at every piece on the board and see what moves they can do,
-    // if none is found then the game is over
-    for (int row = 0; row <= ROWS - 1; row++) {
-        for (int col = 0; col <= COLUMNS - 1; col++) {
-            // Coords are already using matrix notation
-            switch (board.matrix[row][col].piece.type) {
-                case VUOTA:
-                    break;
+    // Check how many moves each piece can make
+    for (int i = 0; i < ROWS; i++) {
+        for (int j = 0; j < COLUMNS; j++) {
+            switch(board.matrix[i][j].piece.type) {
                 case DAMA:
-                    switch (board.matrix[row][col].piece.color) {
+                    switch (board.matrix[i][j].piece.color) {
                         case BIANCO:
-                            if (!simulate_damina(BIANCO,Coords((ColumnNotation)col, row)).empty()) {
-                                whiteMoves++;
-                            }
+                            // simulate_damina returns the vector of oves that damina can perform
+                            whiteMoves += simulate_damina(BIANCO, Coords((ColumnNotation) j, i)).size();
                             break;
                         case NERO:
-                            if (!simulate_damina(NERO,Coords((ColumnNotation)col, row)).empty()) {
-                                blackMoves++;
-                            }
+                            blackMoves += simulate_damina(NERO, Coords((ColumnNotation) j, i)).size();
+                            break;
+                        default:
                             break;
                     }
-                    break;
                 case DAMONE:
-                    switch (board.matrix[row][col].piece.color) {
+                    switch (board.matrix[i][j].piece.color) {
                         case BIANCO:
-                            if (!simulate_damona(Coords((ColumnNotation)col, row)).empty()) {
-                                whiteMoves++;
-                            }
-                        break;
+                            // simulate_damina returns the vector of oves that damina can perform
+                            whiteMoves += simulate_damona(Coords((ColumnNotation) j, i)).size();
+                            break;
                         case NERO:
-                            if (!simulate_damona(Coords((ColumnNotation)col, row)).empty()) {
-                                blackMoves++;
-                            }
+                            blackMoves += simulate_damona( Coords((ColumnNotation) j, i)).size();
+                            break;
+                        default:
                             break;
                     }
+                default:
+                    break;
             }
         }
     }
-
-    if (count_pieces(BIANCO) > 0 && whiteMoves == 0){
-        return STALEMATE;
-    } else if (count_pieces(NERO) > 0 && blackMoves == 0){
-        return STALEMATE;
-    }  else if (count_pieces(BIANCO) == 0
-        && count_pieces(NERO) > 0) {
-        return BLACK_WIN;
-    } else if (count_pieces(NERO) == 0
-        && count_pieces(BIANCO) > 0) {
+    if (whiteMoves > 0 && blackMoves > 0) {
+        return GAME_NOT_OVER;
+    } else if (blackMoves == 0 && whiteMoves > 0) {
         return WHITE_WIN;
-    } else if (blackMoves == 0 && whiteMoves == 0) {
+    } else if (whiteMoves == 0 && blackMoves > 0) {
+        return BLACK_WIN;
+    } else if (whiteMoves == 0 && blackMoves == 0) {
         return STALEMATE;
     }
+    // Should not reach this point
     return GAME_NOT_OVER;
 }
 
-void GameEngine::execute_command(MoveData command) const {
+bool GameEngine::execute_command(MoveData command) const {
     switch (command) {
         case HELP_PAGE:
             RenderV2::help_page();
@@ -558,3 +541,5 @@ void GameEngine::execute_command(MoveData command) const {
             break;
     }
 }
+
+#pragma clang diagnostic pop

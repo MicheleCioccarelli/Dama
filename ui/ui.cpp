@@ -55,8 +55,8 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
         // Now a move has been created with the input provided, if there are problems they are in issue
     } else {
         if (validate_command(input, currentPlayer, move) != INVALID) {
-            // If the input was a command handle it
-            handle_command(validate_command(input, currentPlayer, move), engine);
+            // If the input was a command return it. GameHandler will take care of it
+            return validate_command(input, currentPlayer, move);
             }
         }
 
@@ -64,7 +64,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
         issue = WRONG_COLOR;
     }
     if (issue != ALL_GOOD) {
-        // There was a problem with the move
+        // There was a syntactic error
         handle_issue(issue);
         return INVALID;
     }

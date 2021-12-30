@@ -12,6 +12,7 @@ void GameHandler::cli_error(cliCase error) {
 }
 
 int GameHandler::two_player_game(GameEngine& engine) {
+    // Assumes that GameEngine has already been initialized
     PlayerColor current_color = BIANCO;
     MoveData issue;
 
@@ -19,14 +20,22 @@ int GameHandler::two_player_game(GameEngine& engine) {
 
     Move move = Move(BIANCO);
 
+    // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
         move.playerColor = current_color;
 
-        // Get player input
+        // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);
 
-        // If the move was invalid/was a command ask for another move
+        // If issue is valid the move is not a command and does not have syntax errors
+        // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
         while (issue != VALID || engine.submit(move) != ALL_GOOD) {
+            // If issue isn't INVALID then the move was a command
+            if (issue != INVALID) {
+                if (engine.execute_command(issue)) {
+                    break;
+                }
+            }
             if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
                 engine.resign(move);
                 return 1;

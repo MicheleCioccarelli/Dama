@@ -56,8 +56,11 @@ public:
     // Given a move returns the color of the player who made it
     PlayerColor deduce_color(Move &move);
 
-    // Handles command execution (help page, resigning, summary)
-    void execute_command(MoveData command) const;
+    /**
+     * Handles command execution (help page, resigning, summary).
+     * Returns true if the game should be ended and changes gameResult to tell game_over() what to do
+     * */
+    bool execute_command(MoveData command) const;
     /**
      * The move you pass in is what the opponent should have eaten, if it could have been done and
      * the enemy didn't eat on their last turn the piece that should have committed murder gets deleted
@@ -77,10 +80,10 @@ public:
 
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over
-    GameState game_over(PlayerColor winner = TRASPARENTE);
+    GameState game_over();
 
     // Given a certain piece, looks for all possible moves and returns them in a vector
-    std::vector<Move> simulate_damina(PlayerColor color, Coords coords);
+    std::vector<Move> simulate_damina(PlayerColor daminaColor, Coords coords);
     // Returns a vectors with all the moves the damona could make
     std::vector<Move> simulate_damona(Coords coords);
     /* Used by simulate damina, given a direction (offsets) and starting position calculates if
