@@ -530,15 +530,45 @@ GameState GameEngine::game_over() {
 }
 
 bool GameEngine::execute_command(MoveData command) const {
+    char input;
+    // Returns true if the game should be ended
     switch (command) {
         case HELP_PAGE:
             RenderV2::help_page();
-            break;
+            return false;
         case SUMMARY:
             RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO), whitePlayer, blackPlayer, GAME_NOT_OVER, start);
-            break;
-        default:
-            break;
+            return false;
+        case WHITE_RESIGN:
+            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
+                                 whitePlayer, blackPlayer, WHITE_RESIGNED, start);
+            return true;
+        case BLACK_RESIGN:
+            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
+                                 whitePlayer, blackPlayer, BLACK_RESIGNED, start);
+            return true;
+        case W_DRAW_OFFER:
+            std::cout << blackPlayer.name << " accetta il pareggio? [s/n]\n";
+            std::cin >> input;
+            if (input == 's') {
+                RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
+                                     whitePlayer, blackPlayer, DRAW, start);
+                return true;
+            } else {
+                std::cout << "Niente pareggio\n";
+                return false;
+            }
+        case B_DRAW_OFFER:
+            std::cout << whitePlayer.name << " accetta il pareggio? [s/n]\n";
+            std::cin >> input;
+            if (input == 's') {
+                RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
+                                     whitePlayer, blackPlayer, DRAW, start);
+                return true;
+            } else {
+                std::cout << "Niente pareggio\n";
+                return false;
+            }
     }
 }
 

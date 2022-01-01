@@ -11,10 +11,11 @@ void GameHandler::cli_error(cliCase error) {
     }
 }
 
-int GameHandler::two_player_game(GameEngine& engine) {
+void GameHandler::two_player_game(GameEngine& engine) {
     // Assumes that GameEngine has already been initialized
     PlayerColor current_color = BIANCO;
     MoveData issue;
+    bool gameWasEndedByCommand = false;
 
     engine.render.render_board(engine.board, BIANCO);
 
@@ -33,104 +34,102 @@ int GameHandler::two_player_game(GameEngine& engine) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
                 if (engine.execute_command(issue)) {
+                    // Execute command handled formatting the end screen
+                    gameWasEndedByCommand = true;
                     break;
                 }
             }
-            if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
-                engine.resign(move);
-                return 1;
-            } if (move.type.moveReturn == DRAW_OFFER) {
-                // Someone has offered a draw
-            }
             issue = UI::get_move(move, engine, current_color);
         }
+        if (!gameWasEndedByCommand) {
+            // See if a piece has gotten to the end, if so promote it
+            engine.promote();
 
-        // See if a piece has gotten to the end, if so promote it
-        engine.promote();
+            // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
+            engine.render.render_board(engine.board, current_color, move);
 
-        // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
-        engine.render.render_board(engine.board, current_color, move);
-
-        // Switch player every turn, used both for colors and for move logs
-        switch (current_color) {
-            case BIANCO:
-                current_color = engine.blackPlayer.color;
-                break;
-            case NERO:
-                current_color = engine.whitePlayer.color;
-                break;
-            default:
-                break;
+            // Switch player every turn, used both for colors and for move logs
+            switch (current_color) {
+                case BIANCO:
+                    current_color = engine.blackPlayer.color;
+                    break;
+                case NERO:
+                    current_color = engine.whitePlayer.color;
+                    break;
+                default:
+                    break;
+            }
+            engine.render.render_board(engine.board, current_color, move);
         }
-        engine.render.render_board(engine.board, current_color, move);
-    }
 
-    // When the game is over
-    engine.render.render_board(engine.board, current_color);
+        // When the game is over
+        engine.render.render_board(engine.board, current_color);
 
-    int whitePieces = engine.count_pieces(BIANCO);
-    int blackPieces = engine.count_pieces(NERO);
-    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+        int whitePieces = engine.count_pieces(BIANCO);
+        int blackPieces = engine.count_pieces(NERO);
+        RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
-    return 0;
+    }
 }
 
 void GameHandler::debug(GameEngine &engine) {
     // Requires empty Engine initialization
-    Player currentPlayer;
-    currentPlayer.color = NERO;
+    // Assumes that GameEngine has already been initialized
+    PlayerColor current_color = BIANCO;
+    MoveData issue;
+    bool gameWasEndedByCommand = false;
 
-    engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
-    engine.board.edit(Coords(C, 3), Piece(NERO, DAMA));
-    engine.board.edit(Coords(D, 4), Piece(BIANCO, DAMA));
-    engine.board.edit(Coords(F, 6), Piece(BIANCO, DAMA));
     engine.render.render_board(engine.board, BIANCO);
 
-    Move move (Coords(C, 2), Coords(D, 3), EAT);
-    move.add_coords(Coords(F, 5));
-    engine.recursive_check_eat(move);
+    Move move = Move(BIANCO);
 
-// Main loop
+    // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
-// Switch player every turn, used both for colors and for move logs
-        switch (currentPlayer.color) {
-            case BIANCO:
-                currentPlayer = engine.blackPlayer;
-                break;
-            case NERO:
-                currentPlayer = engine.whitePlayer;
-                break;
-            default:
-                break;
-        }
-// Switch player colors
-        Move move(currentPlayer.color);
+        move.playerColor = current_color;
 
-// Get player input
-        UI::get_move(move, engine, currentPlayer.color);
+        // Get player input (move/command) and handle syntax errors
+        issue = UI::get_move(move, engine, current_color);
 
-// If the move was invalid/was a command ask for another move
-        while (engine.submit(move) != VALID) {
-            if (move.type.moveReturn == WHITE_RESIGN || move.type.moveReturn == BLACK_RESIGN) {
-                engine.resign(move);
-                return;
+        // If issue is valid the move is not a command and does not have syntax errors
+        // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
+        while (issue != VALID || engine.submit(move) != ALL_GOOD) {
+            // If issue isn't INVALID then the move was a command
+            if (issue != INVALID) {
+                if (engine.execute_command(issue)) {
+                    // Execute command handled formatting the end screen
+                    gameWasEndedByCommand = true;
+                    break;
+                }
             }
-            UI::get_move(move, engine, currentPlayer.color);
+            issue = UI::get_move(move, engine, current_color);
+        }
+        if (!gameWasEndedByCommand) {
+            // See if a piece has gotten to the end, if so promote it
+            engine.promote();
+
+            // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
+            engine.render.render_board(engine.board, current_color, move);
+
+            // Switch player every turn, used both for colors and for move logs
+            switch (current_color) {
+                case BIANCO:
+                    current_color = engine.blackPlayer.color;
+                    break;
+                case NERO:
+                    current_color = engine.whitePlayer.color;
+                    break;
+                default:
+                    break;
+            }
+            engine.render.render_board(engine.board, current_color, move);
         }
 
-// See if a piece has gotten to the end, if so promote it
-        engine.promote();
+        // When the game is over
+        engine.render.render_board(engine.board, current_color);
 
-// Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
-        engine.render.render_board(engine.board, currentPlayer.color, move);
-        engine.render.render_board(engine.board, currentPlayer.other_color(), move);
-    }
-
-// When the game is over
-    engine.render.render_board(engine.board, currentPlayer.color);
-
-    int whitePieces = engine.count_pieces(BIANCO);
-    int blackPieces = engine.count_pieces(NERO);
-    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+        int whitePieces = engine.count_pieces(BIANCO);
+        int blackPieces = engine.count_pieces(NERO);
+        RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
+    }
 }
