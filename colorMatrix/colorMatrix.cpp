@@ -42,73 +42,22 @@ void ColorMatrix::paint_square(Coords coords, std::string color) {
     }
     matrix[coords.row][coords.column].color.westColor = color;
     matrix[coords.row][coords.column].color.southColor = color;
+    matrix[coords.row][coords.column].color.northColor = color;
+    matrix[coords.row][coords.column].color.eastColor = color;
 }
 
-void ColorMatrix::flip_board() {
-    // This is where the changes are stored
-    std::vector<std::vector<RenderSquare>> tempMatrix;
-    tempMatrix = matrix;
 
-    for (int row = 0; row < ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
-            // Only proceed if the square is colored, and therefore needs to be moved
-            if (matrix[row][col].color.southColor != BOARD_COLOR) {
-                std::string color = matrix[row][col].color.southColor;
-                // CLEANUP
-                // Wiping the squares near the colored one: undoing some of paint_square()
-                if (row < ROWS - 1) {
-                    // Since the board is drawn from top to bottom the square above the one being colored has its southern side painted
-                    tempMatrix[row + 1][col].color.southColor = BOARD_COLOR;
-                    matrix[row + 1][col].color.southColor = BOARD_COLOR;
-                } else {
-                    tempMatrix[row][col].color.northColor = BOARD_COLOR;
-                    matrix[row][col].color.northColor = BOARD_COLOR;
-                }
-                if (col < COLUMNS - 1) {
-                    // Same as before because the board is drawn kinda from right to left
-                    tempMatrix[row][col + 1].color.westColor = BOARD_COLOR;
-                    matrix[row][col + 1].color.westColor = BOARD_COLOR;
-                } else {
-                    tempMatrix[row][col].color.eastColor = BOARD_COLOR;
-                    matrix[row][col].color.eastColor = BOARD_COLOR;
-                }
-                tempMatrix[row][col].color.southColor = BOARD_COLOR;
-                tempMatrix[row][col].color.westColor = BOARD_COLOR;
-
-                // FLIPPING
-                int newRow = ROWS - 1;
-                int newCol = COLUMNS - 1;
-
-                if (row != 0 && row != ROWS - 1) {
-                    newRow = ROWS - 1 - row;
-                } else if (row == ROWS - 1) {
-                    newRow = 0;
-                }
-                if (col != 0 && col != COLUMNS - 1) {
-                    newCol = COLUMNS - 1 - col;
-                } else if (col == COLUMNS - 1) {
-                    newCol = 0;
-                }
-                // RE COLORING
-                tempMatrix[newRow][newCol].color = matrix[row][col].color;
-
-                if (newRow < ROWS - 1) {
-                    tempMatrix[newRow + 1][newCol].color.southColor = color;
-                } else {
-                    tempMatrix[newRow][newCol].color.northColor = color;
-                }
-                if (newCol < COLUMNS - 1) {
-                    tempMatrix[newRow][newCol + 1].color.westColor = color;
-                } else {
-                    tempMatrix[newRow][newCol].color.eastColor = color;
-                }
-                matrix[row][col].color.southColor = BOARD_COLOR;
-                matrix[row][col].color.westColor = BOARD_COLOR;
-            }
-        }
+void ColorMatrix::flip_board(const Move& move) {
+    // Flips the move you enter and colors the board according to it, effectively flipping the board in a simple way
+    Move tempMove = move;
+    tempMove.endingCoord = move.startingCoord;
+    tempMove.startingCoord = move.endingCoord;
+    for (int i = move.eatenCoords.size() - 1; i > 0; i--) {
+        tempMove.eatenCoords[move.eatenCoords.size() - i - 1] = move.eatenCoords[i];
     }
-    matrix = tempMatrix;
+    color_board(tempMove);
 }
+
 
 void ColorMatrix::color_board(Move &move) {
     Coords currentCoords = move.startingCoord.convert_coords();
@@ -116,35 +65,35 @@ void ColorMatrix::color_board(Move &move) {
     // Painting the first square of the move as a moving square
     paint_square(currentCoords, MOVE_COLOR);
 
-    currentCoords = move.eatenCoords[0].convert_coords();
-    switch (move.type) {
-        case MOVE:
-            paint_square(currentCoords, MOVE_COLOR);
-            break;
-        case EAT:
-            int horizontalDistance = 0;
-            int verticalDistance = 0;
-            // If there are multiple eatings
-            for (int i = 0; i < move.eatenCoords.size(); i++) {
-                // See wiki for a detailed explanation
-                currentCoords = move.eatenCoords[i].convert_coords();
-                Coords previousCoords = move.eatenCoords[i - 1].convert_coords();
-
-                // Used to calculate where the damina ends up (also used in check_eat)
-                if (i == 1) {
-                    verticalDistance = (currentCoords.row - previousCoords.row);
-                    horizontalDistance = (currentCoords.column - previousCoords.column);
-                } else {
-                    verticalDistance = (currentCoords.row - previousCoords.row) / 2;
-                    horizontalDistance = (currentCoords.column - previousCoords.column) / 2;
-                }
-
-                Coords forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
-                                               currentCoords.row + verticalDistance);
-                paint_square(forwardCoords, MOVE_COLOR);
-                paint_square(currentCoords, EAT_COLOR);
+    currentCoords = move.endingCoord.convert_coords();
+    paint_square(currentCoords, MOVE_COLOR);
+    if (move.type == EAT) {
+        Coords previousCoords;
+        int horizontalDistance = 0;
+        int verticalDistance = 0;
+        // If there are multiple eatings
+        for (int i = 0; i < move.eatenCoords.size(); i++) {
+            currentCoords = move.eatenCoords[i].convert_coords();
+            if (i >= 1) {
+                previousCoords = move.eatenCoords[i - 1].convert_coords();
+            } else {
+                previousCoords = move.startingCoord.convert_coords();
             }
-            break;
+
+            // Used to calculate where the damina ends up (also used in check_eat)
+            if (i == 0) {
+                verticalDistance = (currentCoords.row - previousCoords.row);
+                horizontalDistance = (currentCoords.column - previousCoords.column);
+            } else {
+                verticalDistance = (currentCoords.row - previousCoords.row) / 2;
+                horizontalDistance = (currentCoords.column - previousCoords.column) / 2;
+            }
+
+            Coords forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+                                          currentCoords.row + verticalDistance);
+            paint_square(forwardCoords, MOVE_COLOR);
+            paint_square(currentCoords, EAT_COLOR);
+        }
     }
     if (!move.blownCoord.is_uninitialized()) {
         currentCoords = move.blownCoord.convert_coords();

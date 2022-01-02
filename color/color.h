@@ -13,6 +13,8 @@ public:
     void operator=(std::string& rhs);
     Color& operator=(const Color &rhs);
 
+    bool operator==(const std::string& rhs);
+
     Color& operator=(Color& rhs);
 
     Color();

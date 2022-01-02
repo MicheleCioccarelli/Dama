@@ -61,6 +61,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
             }
             engine.render.render_board(engine.board, current_color, move);
         }
+    }
 
         // When the game is over
         engine.render.render_board(engine.board, current_color);
@@ -69,7 +70,6 @@ void GameHandler::two_player_game(GameEngine& engine) {
         int blackPieces = engine.count_pieces(NERO);
         RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
-    }
 }
 
 void GameHandler::debug(GameEngine &engine) {
@@ -78,6 +78,12 @@ void GameHandler::debug(GameEngine &engine) {
     PlayerColor current_color = BIANCO;
     MoveData issue;
     bool gameWasEndedByCommand = false;
+
+    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 6), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 1), Piece(BIANCO, DAMA));
 
     engine.render.render_board(engine.board, BIANCO);
 
@@ -123,6 +129,7 @@ void GameHandler::debug(GameEngine &engine) {
             }
             engine.render.render_board(engine.board, current_color, move);
         }
+    }
 
         // When the game is over
         engine.render.render_board(engine.board, current_color);
@@ -131,5 +138,4 @@ void GameHandler::debug(GameEngine &engine) {
         int blackPieces = engine.count_pieces(NERO);
         RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                              engine.start);
-    }
 }

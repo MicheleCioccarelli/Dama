@@ -75,9 +75,6 @@ public:
 
     void promote();
 
-    // End the game
-    void resign(MoveData command) const;
-
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over
     GameState game_over();
@@ -86,7 +83,7 @@ public:
     std::vector<Move> simulate_damina(PlayerColor daminaColor, Coords coords);
     // Returns a vectors with all the moves the damona could make
     std::vector<Move> simulate_damona(Coords coords);
-    /* Used by simulate damina, given a direction (offsets) and starting position calculates if
+    /** Used by simulate damina, given a direction (offsets) and starting position calculates if
      * it can move/eat in that direction and returns what it can do. It does calculations based on the piece
      * in board at the coordinates + offsets
      */

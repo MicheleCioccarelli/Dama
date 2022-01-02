@@ -47,7 +47,7 @@ void GameEngine::dispatch_move(const Move& move) {
     } else if (move.playerColor == NERO) {
         blackPlayer.add_move(move);
     }
-    if (move.blownCoord.is_uninitialized()) {
+    if (!move.blownCoord.is_uninitialized()) {
         board.blow_up((Move&) move);
     }
     board.execute_move((Move&) move);
@@ -249,9 +249,6 @@ MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int 
     /* When you check for multiple eatings the position you start from is actually empty because
      * this function doesn't move pieces around, dirt tells inspect_dama() to ignore the emptiness
      */
-
-    // FILL ENDINGCOORD
-
     bool dirt = true;
     if (index == 0) {
         // This is the first call as index defaults to 0
@@ -385,15 +382,22 @@ void GameEngine::promote() {
 
 std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset) {
     std::vector<Move> movesFound;
-    Coords endingCoords = Coords(static_cast<ColumnNotation>(startingCoords.column + horizontalOffset),
+    // The square the starting damina would move to
+    Coords endingCoords = Coords((ColumnNotation)(startingCoords.column + horizontalOffset),
                                  startingCoords.row + verticalOffset);
-    Move move = Move(startingCoords, endingCoords, color, MOVE);
-        if (check_move(move) == ALL_GOOD) {
+    Move move = Move(startingCoords, endingCoords, color);
+    MoveIssue result = check_move(move);
+    switch (result) {
+        case ALL_GOOD:
+            // A move-type move can be executed
+            move.type = MOVE;
             movesFound.push_back(move);
-        } else if (recursive_check_eat(move) == ALL_GOOD){
-            move.type = EAT;
-            movesFound.push_back(move);
-        }
+            break;
+        case POPULATED:
+            // There is a dama in the ending square
+        // MISSING STUFF
+            break;
+    }
     return movesFound;
 }
 
@@ -407,12 +411,14 @@ std::vector<Move> GameEngine::simulate_damina(PlayerColor daminaColor, Coords co
      * (add 1 to the row for white and leave black because check_eat already subtracts 1)
      * The damone are also checked behind
      * */
-    // Used when checking if you can eat, increased ever while loop, so you can check for eating multiple pieces
-    int verticalOffset;
-    int horizontalOffset;
+
 
     switch (daminaColor) {
         case BIANCO:
+            // Bounds check
+            if ((int)coords.column - 1 < 0) {
+                break;
+            }
             tempMoves = branch_damina(coords, BIANCO, 1, -1);
             // Save the moves found, if any
             if (!tempMoves.empty()) {
@@ -428,11 +434,17 @@ std::vector<Move> GameEngine::simulate_damina(PlayerColor daminaColor, Coords co
             }
             break;
         case NERO:
+            if (coords.row - 1 < 0) {
+                break;
+            }
             tempMoves = branch_damina(coords, NERO, -1, 1);
             if (!tempMoves.empty()) {
                 for (const auto &i: tempMoves) {
                     movesFound.push_back(i);
                 }
+            }
+            if (coords.row - 1 < 0) {
+                break;
             }
             tempMoves = branch_damina(coords, NERO, -1, -1);
             if (!tempMoves.empty()) {
@@ -467,17 +479,6 @@ std::vector<Move> GameEngine::simulate_damona(Coords coords) {
         return movesFound;
 }
 
-void GameEngine::resign(MoveData command) const {
-    int whitePieces = count_pieces(BIANCO);
-    int blackPieces = count_pieces(NERO);
-
-    if (command == WHITE_RESIGN) {
-        RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, WHITE_RESIGNED, start);
-    } else if (command == BLACK_RESIGN) {
-        RenderV2::end_screen(whitePieces, blackPieces, whitePlayer, blackPlayer, BLACK_RESIGNED, start);
-    }
-}
-
 GameState GameEngine::game_over() {
     // The game was not ended by a command
     int whiteMoves = 0;
@@ -491,7 +492,7 @@ GameState GameEngine::game_over() {
                     switch (board.matrix[i][j].piece.color) {
                         case BIANCO:
                             // simulate_damina returns the vector of oves that damina can perform
-                            whiteMoves += simulate_damina(BIANCO, Coords((ColumnNotation) j, i)).size();
+                            whiteMoves += simulate_damina(BIANCO, Coords((ColumnNotation)j, i)).size();
                             break;
                         case NERO:
                             blackMoves += simulate_damina(NERO, Coords((ColumnNotation) j, i)).size();
@@ -499,6 +500,7 @@ GameState GameEngine::game_over() {
                         default:
                             break;
                     }
+                    break;
                 case DAMONE:
                     switch (board.matrix[i][j].piece.color) {
                         case BIANCO:

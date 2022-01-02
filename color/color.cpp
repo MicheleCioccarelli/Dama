@@ -7,6 +7,13 @@ Color::Color() {
     westColor = BOARD_COLOR;
 }
 
+bool Color::operator==(const std::string &rhs) {
+    if (northColor == rhs && southColor == rhs && eastColor == rhs && westColor == rhs) {
+        return true;
+    }
+    return false;
+}
+
 Color &Color::operator=(Color &rhs) {
     northColor = rhs.northColor;
     southColor = rhs.southColor;

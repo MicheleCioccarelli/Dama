@@ -83,9 +83,11 @@
 //Reset
 #define RESET "\e[0m"
 
+#define ANNOUNCMENT_COLOR HMAG
 #define ERROR_COLOR RED
+
 #define PLAYER_COLOR HGRN
-#define BOARD_COLOR WHT
+#define BOARD_COLOR HWHT
 #define PIECE_COLOR HWHT
 
 #define DRAW_COLOR HMAG

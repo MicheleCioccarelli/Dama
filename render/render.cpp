@@ -61,7 +61,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     if (move.playerColor != TRASPARENTE) {
         colorMatrix.color_board(move);
         if (color == NERO) {
-            colorMatrix.flip_board();
+            colorMatrix.flip_board(move);
         }
     }
     std::cout << "    ";
@@ -217,7 +217,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
      }
 
      padding(3);
-     center_name(strings[3], longerName + 13);
+     center_name(strings[3], longerName + 13, ANNOUNCMENT_COLOR);
      std::cout << std::endl << std::endl;
 
      padding(5);
