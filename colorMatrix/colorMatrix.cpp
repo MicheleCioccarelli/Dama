@@ -20,6 +20,7 @@ void ColorMatrix::clear() {
             matrix[row][col].color.southColor = BOARD_COLOR;
             matrix[row][col].color.eastColor = BOARD_COLOR;
             matrix[row][col].color.westColor = BOARD_COLOR;
+            matrix[row][col].metaColor = BOARD_COLOR;
         }
     }
 }
@@ -73,7 +74,7 @@ void ColorMatrix::flip_board() {
                     newCol = 0;
                 }
                 // RE COLORING
-                tempMatrix.matrix[newRow][newCol].color = matrix[row][col].color;
+                tempMatrix.matrix[newRow][newCol].metaColor = matrix[row][col].metaColor;
 
                 if (newRow < ROWS - 1) {
                     tempMatrix.matrix[newRow + 1][newCol].color.southColor = color;
@@ -85,6 +86,8 @@ void ColorMatrix::flip_board() {
                 } else {
                     tempMatrix.matrix[newRow][newCol].color.eastColor = color;
                 }
+                tempMatrix.matrix[newRow][newCol].color.westColor = color;
+                tempMatrix.matrix[newRow][newCol].color.southColor = color;
             }
         }
     }
