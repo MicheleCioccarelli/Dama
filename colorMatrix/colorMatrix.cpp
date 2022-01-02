@@ -44,20 +44,52 @@ void ColorMatrix::paint_square(Coords coords, std::string color) {
     matrix[coords.row][coords.column].color.southColor = color;
     matrix[coords.row][coords.column].color.northColor = color;
     matrix[coords.row][coords.column].color.eastColor = color;
+    matrix[coords.row][coords.column].metaColor = color;
 }
 
 
-void ColorMatrix::flip_board(const Move& move) {
-    // Flips the move you enter and colors the board according to it, effectively flipping the board in a simple way
-    Move tempMove = move;
-    tempMove.endingCoord = move.startingCoord;
-    tempMove.startingCoord = move.endingCoord;
-    for (int i = move.eatenCoords.size() - 1; i > 0; i--) {
-        tempMove.eatenCoords[move.eatenCoords.size() - i - 1] = move.eatenCoords[i];
+void ColorMatrix::flip_board() {
+    // This is where the changes are stored
+    ColorMatrix tempMatrix;
+
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+            // Only proceed if the square is colored, and therefore needs to be moved
+            if (matrix[row][col].metaColor != BOARD_COLOR) {
+                std::string color = matrix[row][col].metaColor;
+
+                // FLIPPING
+                int newRow = ROWS - 1;
+                int newCol = COLUMNS - 1;
+
+                if (row != 0 && row != ROWS - 1) {
+                    newRow = ROWS - 1 - row;
+                } else if (row == ROWS - 1) {
+                    newRow = 0;
+                }
+                if (col != 0 && col != COLUMNS - 1) {
+                    newCol = COLUMNS - 1 - col;
+                } else if (col == COLUMNS - 1) {
+                    newCol = 0;
+                }
+                // RE COLORING
+                tempMatrix.matrix[newRow][newCol].color = matrix[row][col].color;
+
+                if (newRow < ROWS - 1) {
+                    tempMatrix.matrix[newRow + 1][newCol].color.southColor = color;
+                } else {
+                    tempMatrix.matrix[newRow][newCol].color.northColor = color;
+                }
+                if (newCol < COLUMNS - 1) {
+                    tempMatrix.matrix[newRow][newCol + 1].color.westColor = color;
+                } else {
+                    tempMatrix.matrix[newRow][newCol].color.eastColor = color;
+                }
+            }
+        }
     }
-    color_board(tempMove);
+    matrix = tempMatrix.matrix;
 }
-
 
 void ColorMatrix::color_board(Move &move) {
     Coords currentCoords = move.startingCoord.convert_coords();
@@ -67,6 +99,7 @@ void ColorMatrix::color_board(Move &move) {
 
     currentCoords = move.endingCoord.convert_coords();
     paint_square(currentCoords, MOVE_COLOR);
+    Coords forwardCoords;
     if (move.type == EAT) {
         Coords previousCoords;
         int horizontalDistance = 0;
@@ -85,11 +118,11 @@ void ColorMatrix::color_board(Move &move) {
                 verticalDistance = (currentCoords.row - previousCoords.row);
                 horizontalDistance = (currentCoords.column - previousCoords.column);
             } else {
-                verticalDistance = (currentCoords.row - previousCoords.row) / 2;
-                horizontalDistance = (currentCoords.column - previousCoords.column) / 2;
+                verticalDistance = (currentCoords.row - forwardCoords.row);
+                horizontalDistance = (currentCoords.column - forwardCoords.column);
             }
 
-            Coords forwardCoords = Coords(static_cast<ColumnNotation>(currentCoords.column + horizontalDistance),
+            forwardCoords = Coords((ColumnNotation)(currentCoords.column + horizontalDistance),
                                           currentCoords.row + verticalDistance);
             paint_square(forwardCoords, MOVE_COLOR);
             paint_square(currentCoords, EAT_COLOR);

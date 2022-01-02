@@ -2,6 +2,7 @@
 
 RenderSquare::RenderSquare(Coords _coords) {
     coords = _coords;
+    metaColor = BOARD_COLOR;
     // Format special squares depending on their position in the board
     switch (coords.row) {
         case 0:

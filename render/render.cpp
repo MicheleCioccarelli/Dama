@@ -61,7 +61,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     if (move.playerColor != TRASPARENTE) {
         colorMatrix.color_board(move);
         if (color == NERO) {
-            colorMatrix.flip_board(move);
+            colorMatrix.flip_board();
         }
     }
     std::cout << "    ";

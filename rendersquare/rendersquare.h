@@ -16,6 +16,9 @@ public:
     // Stores information about what the sides of the square should look like
     Color color;
 
+    // The color a square is supposed to be renderd as, regardless of what the other colors say
+    std::string metaColor;
+
     std::string topLeftCorner;
     std::string topRightCorner;
     std::string bottomLeftCorner;

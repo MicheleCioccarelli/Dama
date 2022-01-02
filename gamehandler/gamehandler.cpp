@@ -79,10 +79,10 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMONE));
     engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
     engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(F, 6), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 4), Piece(NERO, DAMA));
     engine.board.edit_human_notation(Coords(C, 1), Piece(BIANCO, DAMA));
 
     engine.render.render_board(engine.board, BIANCO);
