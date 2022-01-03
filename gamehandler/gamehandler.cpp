@@ -12,6 +12,7 @@ void GameHandler::cli_error(cliCase error) {
 }
 
 void GameHandler::two_player_game(GameEngine& engine) {
+    // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
     PlayerColor current_color = BIANCO;
     MoveData issue;
@@ -60,16 +61,18 @@ void GameHandler::two_player_game(GameEngine& engine) {
                     break;
             }
             engine.render.render_board(engine.board, current_color, move);
+        } else {
+            return;
         }
     }
 
-        // When the game is over
-        engine.render.render_board(engine.board, current_color);
+    // When the game is over
+    engine.render.render_board(engine.board, current_color);
 
-        int whitePieces = engine.count_pieces(BIANCO);
-        int blackPieces = engine.count_pieces(NERO);
-        RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
-                             engine.start);
+    int whitePieces = engine.count_pieces(BIANCO);
+    int blackPieces = engine.count_pieces(NERO);
+    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+                         engine.start);
 }
 
 void GameHandler::debug(GameEngine &engine) {
@@ -79,11 +82,13 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMONE));
-    engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 3), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 3), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 4), Piece(BIANCO, DAMA));
+
     engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(F, 4), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(C, 1), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(A, 7), Piece(NERO, DAMA));
 
     engine.render.render_board(engine.board, BIANCO);
 
@@ -128,6 +133,8 @@ void GameHandler::debug(GameEngine &engine) {
                     break;
             }
             engine.render.render_board(engine.board, current_color, move);
+        } else {
+            return;
         }
     }
 

@@ -189,14 +189,8 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
          case BLACK_WIN:
              strings.emplace_back("Vittoria nera");
              WHITE_COLOR = LOSER_COLOR;
-             break;
-         case STALEMATE:
-             strings.emplace_back("Pareggio");
-             WHITE_COLOR = DRAW_COLOR;
-             BLACK_COLOR = DRAW_COLOR;
-             break;
          case DRAW:
-             strings.emplace_back("Draw");
+             strings.emplace_back("Pareggio");
              WHITE_COLOR = DRAW_COLOR;
              BLACK_COLOR = DRAW_COLOR;
              break;
@@ -216,7 +210,8 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
          longerName = 5;
      }
 
-     padding(3);
+     std::cout << "\n\n";
+     padding(4);
      center_name(strings[3], longerName + 13, ANNOUNCMENT_COLOR);
      std::cout << std::endl << std::endl;
 
@@ -375,27 +370,31 @@ void RenderV2::help_page() {
     padding(3);
     std::cout << BLOW_COLOR << "*" << RESET;
     padding(3);
-    std::cout << "Soffio, deve essere il primo comando se è usato";
-    padding(2);
-    std::cout << "|  Sintassi: A3" << BLOW_COLOR << "*" << RESET << "B4 C3" << MOVE_COLOR << "-" << RESET << "D4" << std::endl;
+    std::cout << "Soffio, deve essere separato da altri comandi";
+    padding(4);
+    std::cout << "|  Sintassi: A3" << BLOW_COLOR << "*" << RESET << "B4_C3" << MOVE_COLOR << "-" << RESET << "D4" << std::endl;
     padding(7);
-    std::cout << "Per usarlo bisogna scrivere la mossa che il ";
-    padding(5);
+    std::cout << "con '_'. Per usarlo bisogna scrivere la mossa";
+    padding(4);
     std::cout << "|  Esempio: il nemico non ha fatto A3" << EAT_COLOR << "x" << RESET << "B4," << std::endl;
     padding(7);
-    std::cout << "nemico non ha fatto, con un " << BLOW_COLOR << "*" << RESET;
-    padding(20);
+    std::cout << "che il nemico non ha fatto, con un " << BLOW_COLOR << "*" << RESET;
+    padding(13);
     std::cout << "|  quindi si soffia con A3" << BLOW_COLOR << "*" << RESET << "B4" << std::endl;
     padding(7);
     std::cout << std::endl;
 
     std::cout << "Comandi:" << std::endl;
     padding(3);
-    std::cout << "resign:  il giocatore che scrive \"resign\" si arrende";
+    std::cout << COMMAND_COLOR << "Resign" << RESET << ":  il giocatore che scrive \"resign\" si arrende";
     std::cout << std::endl;
     padding(3);
-    std::cout << "summary: fornisce i dettagli della partita";
+    std::cout << COMMAND_COLOR << "Summary" << RESET << ": fornisce i dettagli della partita";
     std::cout << std::endl;
+    padding(3);
+    std::cout << COMMAND_COLOR << "Draw" << RESET << ":    si offre un pareggio";
+    std::cout << std::endl;
+
 
     for (int i = 1; i < 22; i++) {
         std::cout << "════";

@@ -40,6 +40,8 @@ public:
 
     Move();
 
+    Move(Coords _startingCoords, PlayerColor _color, MoveType _type);
+
     Move(Coords _startingCoords, MoveType _type);
 
     Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);

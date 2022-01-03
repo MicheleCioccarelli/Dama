@@ -6,7 +6,7 @@ class ColorMatrix {
 public:
     std::vector<std::vector<RenderSquare>> matrix;
 
-    void paint_square(Coords coords, std::string color);
+    void paint_square(Coords coords, const std::string& color);
 
     // Flips the board colors from white POV to black POV
     void flip_board();

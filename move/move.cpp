@@ -44,6 +44,9 @@ Move::Move(Coords _startingCoords, MoveType _type)
 Move::Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _type)
         : startingCoord(_startingCoord), endingCoord(_endingCoord), playerColor(_color), type(_type) {}
 
+Move::Move(Coords _startingCoords, PlayerColor _color, MoveType _type)
+        : startingCoord(_startingCoords), playerColor(_color), type(_type) {}
+
 void Move::convert_all() {
     startingCoord = startingCoord.convert_coords();
     if (!endingCoord.is_uninitialized()) {

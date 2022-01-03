@@ -9,6 +9,7 @@ public:
     int row;
 
     Coords &operator=(const Coords &rhs);
+
     bool operator==(const Coords &rhs) const;
     bool operator!=(const Coords &rhs) const;
 

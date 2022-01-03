@@ -30,7 +30,8 @@ Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords 
     return {(ColumnNotation)(endingCoords.column - horizontalDistance), endingCoords.row - verticalDistance};
 }
 
-PlayerColor GameEngine::deduce_color(Move &move) {
+PlayerColor GameEngine::deduce_color_human_notation(Move &move) {
+
     if (move.is_empty()) {
         return TRASPARENTE;
     }
@@ -39,7 +40,16 @@ PlayerColor GameEngine::deduce_color(Move &move) {
     return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
-void GameEngine::dispatch_move(const Move& move) {
+PlayerColor GameEngine::deduce_color_matrix_notation(Move &move) {
+    if (move.is_empty()) {
+        return TRASPARENTE;
+    }
+    Coords tempCoords = move.startingCoord;
+
+    return board.matrix[tempCoords.row][tempCoords.column].piece.color;
+}
+
+void GameEngine::dispatch_move(Move& move) {
     // Assumes matrix-notation input
     // Add the move to the respective player
     if (move.playerColor == BIANCO) {
@@ -48,6 +58,7 @@ void GameEngine::dispatch_move(const Move& move) {
         blackPlayer.add_move(move);
     }
     if (!move.blownCoord.is_uninitialized()) {
+        move.blownCoord = move.blownCoord.convert_coords();
         board.blow_up((Move&) move);
     }
     board.execute_move((Move&) move);
@@ -287,7 +298,7 @@ MoveIssue GameEngine::check_blow(Move& move) {
         return WRONG_TYPE;
     }
     // Assumes in-bounds matrix-notation input
-    PlayerColor opponent = deduce_color(tempMove);
+    PlayerColor opponent = deduce_color_matrix_notation(tempMove);
     if (tempMove.playerColor == opponent) {
         return WRONG_COLOR;
     }
@@ -307,7 +318,7 @@ MoveIssue GameEngine::check_blow(Move& move) {
             playerWhoPerformedTheBlowRequest = BIANCO;
         default:
             // Shouldn't happen
-            return WRONG_COLOR;
+            return MISINPUT;
     }
     // Go back to when before your opponent made their last move
     if (!time_travel(playerWhoPerformedTheBlowRequest, 1, true)) {
@@ -557,7 +568,8 @@ bool GameEngine::execute_command(MoveData command) const {
                                      whitePlayer, blackPlayer, DRAW, start);
                 return true;
             } else {
-                std::cout << "Niente pareggio\n";
+                std::cout << "Niente pareggio\n" << std::endl;
+                std::cin.ignore(1);
                 return false;
             }
         case B_DRAW_OFFER:
@@ -568,10 +580,12 @@ bool GameEngine::execute_command(MoveData command) const {
                                      whitePlayer, blackPlayer, DRAW, start);
                 return true;
             } else {
-                std::cout << "Niente pareggio\n";
+                std::cout << "Niente pareggio" << std::endl;
+                std::cin.ignore(1);
                 return false;
             }
     }
+    return false;
 }
 
 #pragma clang diagnostic pop

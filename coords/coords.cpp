@@ -4,7 +4,10 @@ Coords Coords::convert_coords() const {
     return {column, row - 1};
 }
 
-Coords &Coords::operator=(const Coords &rhs) = default;
+Coords &Coords::operator=(const Coords &rhs) {
+    column = rhs.column;
+    row = rhs.row;
+}
 
 bool Coords::is_uninitialized() const {
     if (row == 9 || column == Z) {

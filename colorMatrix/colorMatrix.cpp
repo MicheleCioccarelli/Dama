@@ -25,7 +25,7 @@ void ColorMatrix::clear() {
     }
 }
 
-void ColorMatrix::paint_square(Coords coords, std::string color) {
+void ColorMatrix::paint_square(Coords coords, const std::string& color) {
     // To better understand this look at how the board is drawn in RenderV2::render_middle()
 
     // If the square isn't at the top of the board

@@ -82,6 +82,7 @@ void Board::execute_move(Move& move) {
 }
 
 void Board::blow_up(Move& move) {
+    // Assumes matrix notation
     edit_matrix_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 

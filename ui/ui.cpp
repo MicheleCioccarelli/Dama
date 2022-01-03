@@ -10,6 +10,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     } else if (currentPlayer == NERO) {
         std::cout << "Mossa di " << PLAYER_COLOR << engine.blackPlayer.name << RESET << " > ";
     }
+
     getline(std::cin, raw_input);
     std::stringstream stream(raw_input);
 
@@ -49,7 +50,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             // Separate the 2 moves
             issue = input_to_move(input.substr(0, _position), move, engine);
             if (issue == ALL_GOOD) {
-                input_to_move(input.substr(_position + 1, input.size() - _position), move, engine);
+                issue = input_to_move(input.substr(_position + 1, input.size() - _position), move, engine);
             }
         }
         // Now a move has been created with the input provided, if there are problems they are in issue
@@ -59,10 +60,21 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             return validate_command(input, currentPlayer, move);
             }
         }
-
-    if (engine.deduce_color(move) != currentPlayer) {
-        issue = WRONG_COLOR;
+// WRONG_LAST_MOVE
+    if (issue == MISINPUT) {
+        // There was a syntactic error
+        handle_issue(issue);
+        return INVALID;
+    } else if (issue == WRONG_LAST_MOVE) {
+        handle_issue(WRONG_LAST_MOVE);
+        return INVALID;
+    } else if (issue == EMPTY_MOVE) {
+        handle_issue(issue);
+        return INVALID;
     }
+//    if (engine.deduce_color_human_notation(move) != currentPlayer) {
+//        issue = WRONG_COLOR;
+//    }
     if (issue != ALL_GOOD) {
         // There was a syntactic error
         handle_issue(issue);
@@ -128,12 +140,12 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
                 return DOUBLE_EVENT;
             }
 
-            Move tempMove = Move(convert_coords(input.substr(0, 2)),
-                                 convert_coords(input.substr(3, 5)), move.playerColor, EAT);
+            Move tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
+            tempMove.add_coords(convert_coords(input.substr(3, 5)));
             MoveIssue result = engine.check_blow(tempMove);
             // engine said the move was correct
             if (result == BLOWABLE) {
-                move.blownCoord = convert_coords(input.substr(3, 5));
+                move.blownCoord = tempMove.startingCoord;
             } else {
                 return result;
             }
@@ -143,7 +155,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
             return MISINPUT;
         }
     }
-    if (move.startingCoord.is_uninitialized()) {
+    if (move.startingCoord.is_uninitialized() && move.type != UNINITIALIZED) {
         return MISINPUT;
     }
     return ALL_GOOD;
@@ -186,7 +198,7 @@ MoveData UI::check_input(const std::string &input) {
 }
 
 MoveData UI::validate_command(std::string &command, PlayerColor currentPlayer, Move& move) {
-    if (command == "HELP") {
+    if (command == "AIUTO") {
         return HELP_PAGE;
     } else if (command == "RESIGN") {
         if (currentPlayer == BIANCO) {
@@ -294,14 +306,22 @@ void UI::log_error(MoveIssue error) {
             std::cout << ERROR_COLOR << "Stai provando a muovere pezzi del colore sbagliato, scrivi aiuto per informazioni" << RESET;
             break;
         case MISINPUT:
-            std::cout << ERROR_COLOR << "Le coordinate della messa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Le coordinate della mossa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
             break;
         case EMPTY_MOVE:
         case NO_MOVE:
-            std::cout << ERROR_COLOR << "Non hai inserito nessuna mossa" << RESET;
+            std::cout << ERROR_COLOR << "Non hai inserito nessuna mossa, scrivi aiuto per informazioni" << RESET;
             break;
-        default:
-            std::cout << HYEL << "Ho hittato un default" << RESET;
+        case WRONG_LAST_MOVE:
+            std::cout << ERROR_COLOR << "L'ultima mossa dell'altro giocatore non permette di soffiare, scrivi aiuto per informazioni" << RESET;
+            break;
+        case NOT_ENOUGH_MOVES:
+            // Only appears if you blow on the first turn
+            std::cout << ERROR_COLOR << "Calmaaaaaaaa" << RESET;
+            break;
+        case DOUBLE_EVENT:
+            std::cout << ERROR_COLOR << "Hai provato a muovere/mangiare 2 volte nella stessa mossa, scrivi aiuto per informazioni" << RESET;
+            break;
     }
     std::cout << std::endl;
 }
