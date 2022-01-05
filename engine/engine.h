@@ -13,6 +13,8 @@ public:
     Player whitePlayer;
     Player blackPlayer;
     Board board;
+    RenderV2 render;
+
 
     /**
      * If goingBackwards is true a depth-number of moves will be played backwards. If depth is 1 startingPlayer's last
@@ -48,6 +50,9 @@ public:
     // Does all the checking regarding the move and logs erros if needed TODO Fix isBlown
     MoveIssue submit(Move& move);
 
+    // Promotes a piece if the move puts it on the edge of the board
+    void precise_promote(const Move& move);
+
     /**
      * Checks if a move can be executed, if not returns the reason why
      * */
@@ -56,7 +61,7 @@ public:
     // Given a move returns the color of the player who made it
     PlayerColor deduce_color_human_notation(Move &move);
 
-    PlayerColor deduce_color_matrix_notation(Move &move);
+    PlayerColor deduce_color_matrix_notation(const Move &move);
 
     /**
      * Handles command execution (help page, resigning, summary).
@@ -69,13 +74,10 @@ public:
      * */
     MoveIssue check_blow(Move& move);
 
-    // Adds the move to the respective player's log and executes it
-    void dispatch_move(Move& move);
-    RenderV2 render;
+    // Adds a move to the players' list of moves
+    void add_move(const Move& move);
 
     int count_pieces(PlayerColor pColor) const;
-
-    void promote();
 
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over

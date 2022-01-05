@@ -43,9 +43,6 @@ void GameHandler::two_player_game(GameEngine& engine) {
             issue = UI::get_move(move, engine, current_color);
         }
         if (!gameWasEndedByCommand) {
-            // See if a piece has gotten to the end, if so promote it
-            engine.promote();
-
             // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
             engine.render.render_board(engine.board, current_color, move);
 
@@ -60,6 +57,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
                 default:
                     break;
             }
+            engine.add_move(move);
             engine.render.render_board(engine.board, current_color, move);
         } else {
             return;
@@ -82,7 +80,7 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(G, 3), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 7), Piece(BIANCO, DAMA));
     engine.board.edit_human_notation(Coords(C, 3), Piece(BIANCO, DAMA));
     engine.board.edit_human_notation(Coords(F, 4), Piece(BIANCO, DAMA));
 
@@ -93,14 +91,13 @@ void GameHandler::debug(GameEngine &engine) {
     engine.render.render_board(engine.board, BIANCO);
 
     Move move = Move(BIANCO);
-
+int i = 0;
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
         move.playerColor = current_color;
 
         // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);
-
         // If issue is valid the move is not a command and does not have syntax errors
         // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
         while (issue != VALID || engine.submit(move) != ALL_GOOD) {
@@ -115,11 +112,15 @@ void GameHandler::debug(GameEngine &engine) {
             issue = UI::get_move(move, engine, current_color);
         }
         if (!gameWasEndedByCommand) {
-            // See if a piece has gotten to the end, if so promote it
-            engine.promote();
-
             // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
             engine.render.render_board(engine.board, current_color, move);
+            if (i == 1) {
+
+                i = 0;
+            } else {
+                i++;
+                std::cout << i << std::endl;
+            }
 
             // Switch player every turn, used both for colors and for move logs
             switch (current_color) {
@@ -132,6 +133,7 @@ void GameHandler::debug(GameEngine &engine) {
                 default:
                     break;
             }
+            engine.time_travel(current_color);
             engine.render.render_board(engine.board, current_color, move);
         } else {
             return;

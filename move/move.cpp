@@ -7,7 +7,7 @@ Move::Move() {
     playerColor = TRASPARENTE;
 }
 
-bool Move::is_misinput() {
+bool Move::is_misinput() const {
     if (startingCoord.is_uninitialized()) {
         return true;
     }
@@ -19,7 +19,7 @@ bool Move::is_misinput() {
     return false;
 }
 
-bool Move::is_empty() {
+bool Move::is_empty() const {
     if (startingCoord.is_uninitialized() && endingCoord.is_uninitialized() &&
     blownCoord.is_uninitialized() && eatenCoords.empty() && eatenPieces.empty()) {
         return true;

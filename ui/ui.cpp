@@ -72,9 +72,9 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
         handle_issue(issue);
         return INVALID;
     }
-//    if (engine.deduce_color_human_notation(move) != currentPlayer) {
-//        issue = WRONG_COLOR;
-//    }
+    if (engine.deduce_color_human_notation(move) != currentPlayer) {
+        issue = WRONG_COLOR;
+    }
     if (issue != ALL_GOOD) {
         // There was a syntactic error
         handle_issue(issue);

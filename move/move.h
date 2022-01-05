@@ -11,6 +11,8 @@ private:
     // Copied from GameEngine
     static Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
 public:
+    // If this move lead to a promotion of its piece
+    bool wasPromotion = false;
     std::vector<Coords> eatenCoords;
     // New pieces are added by move check functions
     std::vector<Piece> eatenPieces;
@@ -34,9 +36,9 @@ public:
     // Convert all the coordinates in the move from human-notation to matrix-notation
     void convert_all();
 
-    bool is_empty();
+    bool is_empty() const;
 
-    bool is_misinput();
+    bool is_misinput() const;
 
     Move();
 

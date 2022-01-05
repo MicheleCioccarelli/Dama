@@ -66,17 +66,25 @@ void Board::execute_move(Move& move) {
             // If this move has type EAT or wasn't constructed properly
             move.calculate_endingCoord();
         }
+        if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
+            move.wasPromotion = true;
+        } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
+            move.wasPromotion = true;
+        }
         Square endingSquare = matrix[move.endingCoord.row][move.endingCoord.column];
 
         // Eat all the target pieces
-        for (int i = 0; i < move.eatenCoords.size(); i++) {
+        for (Coords &currentCoord : move.eatenCoords) {
             // Save the piece you destroy: used in GameEngine::time_machine()
-            move.eatenPieces.push_back(matrix[move.eatenCoords.at(i).row][move.eatenCoords.at(i).column].piece);
+            move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].piece);
             // Destroy the pieces
-            matrix[move.eatenCoords.at(i).row][move.eatenCoords.at(i).column].piece = Piece(TRASPARENTE, VUOTA);
+            matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
         }
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
+    if (move.wasPromotion) {
+        startingSquare.piece.type = DAMONE;
+    }
     matrix[move.endingCoord.row][move.endingCoord.column].piece = startingSquare.piece;
     matrix[move.startingCoord.row][move.startingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
 }

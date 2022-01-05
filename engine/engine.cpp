@@ -40,7 +40,7 @@ PlayerColor GameEngine::deduce_color_human_notation(Move &move) {
     return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
-PlayerColor GameEngine::deduce_color_matrix_notation(Move &move) {
+PlayerColor GameEngine::deduce_color_matrix_notation(const Move &move) {
     if (move.is_empty()) {
         return TRASPARENTE;
     }
@@ -49,19 +49,21 @@ PlayerColor GameEngine::deduce_color_matrix_notation(Move &move) {
     return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
-void GameEngine::dispatch_move(Move& move) {
-    // Assumes matrix-notation input
-    // Add the move to the respective player
+void GameEngine::precise_promote(const Move &move) {
+    // Assumes matrix-notation
+    if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
+    } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
+    }
+}
+
+void GameEngine::add_move(const Move &move) {
     if (move.playerColor == BIANCO) {
         whitePlayer.add_move(move);
-    } else if (move.playerColor == NERO) {
+    } else {
         blackPlayer.add_move(move);
     }
-    if (!move.blownCoord.is_uninitialized()) {
-        move.blownCoord = move.blownCoord.convert_coords();
-        board.blow_up((Move&) move);
-    }
-    board.execute_move((Move&) move);
 }
 
 bool GameEngine::is_in_bounds(Coords coords) {
@@ -111,12 +113,13 @@ bool GameEngine::time_travel(PlayerColor startingPlayer, int depth, bool goingBa
             blackIndex = (blackIndex - ((depth / 2) + depth % 2)) + 1;
 
             while (depth > 0) {
-                board.execute_move(blackPlayer.moves[whiteIndex++]);
+                precise_promote(blackPlayer.moves[blackIndex]);
+                board.execute_move(blackPlayer.moves[blackIndex++]);
                 depth--;
                 if (depth <= 0)
                     break;
-
-                board.execute_move(whitePlayer.moves[blackIndex++]);
+                precise_promote(whitePlayer.moves[whiteIndex]);
+                board.execute_move(whitePlayer.moves[whiteIndex++]);
                 depth--;
             }
             return true;
@@ -125,11 +128,12 @@ bool GameEngine::time_travel(PlayerColor startingPlayer, int depth, bool goingBa
             whiteIndex = (whiteIndex - ((depth / 2) + depth % 2)) + 1;
 
             while (depth > 0) {
+                precise_promote(whitePlayer.moves[whiteIndex]);
                 board.execute_move(whitePlayer.moves[whiteIndex++]);
                 depth--;
                 if (depth <= 0)
                     break;
-
+                precise_promote(blackPlayer.moves[blackIndex]);
                 board.execute_move(blackPlayer.moves[blackIndex++]);
                 depth--;
             }
@@ -155,6 +159,10 @@ bool GameEngine::playBack(PlayerColor currentPlayer, int depth, int whiteIndex, 
 
 void GameEngine::undo_move(const Move &move) {
     // Assumes matrix-notation
+    if (move.wasPromotion) {
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMA;
+        board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
+    }
     if (move.type == EAT) {
         // Swap starting piece and ending piece
         board.matrix[move.startingCoord.row][move.startingCoord.column].piece =
@@ -169,6 +177,12 @@ void GameEngine::undo_move(const Move &move) {
         // Swap startingCoords and endingCoords
         Move tempMove = Move(move.endingCoord, move.startingCoord, move.playerColor, MOVE);
         board.execute_move(tempMove);
+        // If the piece was promoted, demote it
+        if (move.endingCoord.row == ROWS - 1 && deduce_color_matrix_notation(move) == BIANCO) {
+            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
+        } else if (move.endingCoord.row == 0 && deduce_color_matrix_notation(move) == NERO) {
+            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
+        }
     }
 }
 
@@ -372,23 +386,17 @@ MoveIssue GameEngine::submit(Move& move) {
             status = UNDEFINED;
     }
     if (status == ALL_GOOD) {
-        dispatch_move(tempMove);
+        // Dispatch the move
+        if (!move.blownCoord.is_uninitialized()) {
+            move.blownCoord = move.blownCoord.convert_coords();
+            board.blow_up((Move&) tempMove);
+        }
+        board.execute_move((Move&) tempMove);
+        add_move(tempMove);
     } else {
         UI::log_error(status);
     }
     return status;
-}
-
-void GameEngine::promote() {
-    for (int row = 0; row <= ROWS; row += 7) {
-        for (int col = 0; col < COLUMNS; col++) {
-            if (board.matrix[row][col].piece.color == NERO && board.matrix[row][col].piece.type == DAMA && row == 0)
-                board.matrix[row][col].piece.type = DAMONE;
-            else if (board.matrix[row][col].piece.color == BIANCO && board.matrix[row][col].piece.type == DAMA && row == 7) {
-                board.matrix[row][col].piece.type = DAMONE;
-            }
-        }
-    }
 }
 
 std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset) {

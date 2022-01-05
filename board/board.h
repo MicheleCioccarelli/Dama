@@ -23,7 +23,7 @@ public:
 
     // Every square is empty
     void empty_game_initialization();
-
+    // After a move gets executed it's perfect, every parameter is in place.
     void execute_move(Move& move);
 
     // This function puts blownCoords in the move's blownCoords and deletes the blown coords from the board
