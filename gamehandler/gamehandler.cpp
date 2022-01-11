@@ -57,7 +57,6 @@ void GameHandler::two_player_game(GameEngine& engine) {
                 default:
                     break;
             }
-            engine.add_move(move);
             engine.render.render_board(engine.board, current_color, move);
         } else {
             return;

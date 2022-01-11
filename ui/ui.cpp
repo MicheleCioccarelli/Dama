@@ -86,7 +86,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
 void UI::init(GameEngine &engine) {
     std::string playerName;
 
-    std::cout << MAG << "Benvenuto nella dama" << RESET << std::endl << std::endl;
+    std::cout << MAG << "Benvenuto nella dama (v 0.1)" << RESET << std::endl << std::endl;
 
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);

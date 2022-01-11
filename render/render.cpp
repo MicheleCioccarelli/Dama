@@ -378,8 +378,8 @@ void RenderV2::help_page() {
     padding(4);
     std::cout << "|  Esempio: il nemico non ha fatto A3" << EAT_COLOR << "x" << RESET << "B4," << std::endl;
     padding(7);
-    std::cout << "che il nemico non ha fatto, con un " << BLOW_COLOR << "*" << RESET;
-    padding(13);
+    std::cout << "che il nemico non ha fatto con un " << BLOW_COLOR << "*" << RESET << " invece di " << EAT_COLOR << "x" << RESET;
+    padding(2);
     std::cout << "|  quindi si soffia con A3" << BLOW_COLOR << "*" << RESET << "B4" << std::endl;
     padding(7);
     std::cout << std::endl;
