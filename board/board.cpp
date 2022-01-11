@@ -3,17 +3,14 @@
 #include "board.h"
 
 Board::Board() {
-    // Initialize vector
-    matrix.resize(ROWS);
-
     // Give color and coords to every square
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
             Coords currentCoords = Coords((ColumnNotation) col, row);
             if ((col + row) % 2 == 0) {
-                matrix[row].emplace_back(currentCoords, NERA);
+                matrix[row][col] = Square(currentCoords, NERA);
             } else {
-                matrix[row].emplace_back(currentCoords, BIANCA);
+                matrix[row][col] = Square(currentCoords, BIANCA);
             }
         }
     }

@@ -6,11 +6,11 @@
 
 #include "../constants/number_constants.h"
 
-#include <vector>
+#include <array>
 
 class Board {
 public:
-    std::vector<std::vector<Square>> matrix;
+    std::array<std::array<Square, COLUMNS>, ROWS> matrix;
 
     // Put white peaces in rows 1 ~ 3 and black in the upper three
     void standard_game_initialization();
