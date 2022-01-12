@@ -394,9 +394,12 @@ void RenderV2::help_page() {
     padding(3);
     std::cout << COMMAND_COLOR << "Draw" << RESET << ":    si offre un pareggio";
     std::cout << std::endl;
+    padding(3);
+    std::cout << COMMAND_COLOR << "Quit" << RESET << ":    il programma termina l'esecuzione";
+    std::cout << std::endl;
 
 
     for (int i = 1; i < 22; i++) {
         std::cout << "════";
-    } std::cout << std::endl;
+    } std::cout << "\n";
 }

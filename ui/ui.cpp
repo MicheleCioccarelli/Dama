@@ -86,7 +86,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
 void UI::init(GameEngine &engine) {
     std::string playerName;
 
-    std::cout << MAG << "Benvenuto nella dama (v 0.1)" << RESET << std::endl << std::endl;
+    std::cout << MAG << "Benvenuto nella dama (v 0.2)" << RESET << std::endl << std::endl;
 
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
@@ -110,6 +110,8 @@ void UI::init(GameEngine &engine) {
 }
 
 MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& engine) {
+    MoveIssue result;
+    Move tempMove;
     switch (input[2]) {
         case '-':
             if (move.type != UNINITIALIZED) {
@@ -140,15 +142,18 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
                 return DOUBLE_EVENT;
             }
 
-            Move tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
+            tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
             tempMove.add_coords(convert_coords(input.substr(3, 5)));
-            MoveIssue result = engine.check_blow(tempMove);
+            result = engine.check_blow(tempMove);
             // engine said the move was correct
             if (result == BLOWABLE) {
                 move.blownCoord = tempMove.startingCoord;
             } else {
                 return result;
             }
+            break;
+        default:
+            return MISINPUT;
         }
     for (Coords currentCoord : move.eatenCoords) {
         if (currentCoord.is_uninitialized()) {
@@ -174,6 +179,8 @@ MoveData UI::check_input(const std::string &input) {
         return SUMMARY;
     } else if (input == "DRAW") {
         return DRAW_OFFER;
+    } else if (input == "QUIT") {
+        return QUIT;
     }
     return VALID;
 }
@@ -195,6 +202,8 @@ MoveData UI::validate_command(std::string &command, PlayerColor currentPlayer, M
         } else if (currentPlayer == NERO) {
             return B_DRAW_OFFER;
         }
+    } else if (command == "QUIT") {
+        return QUIT;
     }
     return INVALID;
 }
@@ -242,67 +251,67 @@ Coords UI::convert_coords(const std::string& toConvert) {
 void UI::log_error(MoveIssue error) {
     switch (error) {
         case WHITE_SQUARE:
-            std::cerr << ERROR_COLOR << "Ti stai muovendo in una casella bianca, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Ti stai muovendo in una casella bianca, scrivi aiuto per informazioni" << RESET;
             break;
         case TOO_FAR:
-            std::cerr << ERROR_COLOR << "Non puoi muoverti di piu di una casella alla volta, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi muoverti di piu di una casella alla volta, scrivi aiuto per informazioni" << RESET;
             break;
         case BEHIND:
-            std::cerr << ERROR_COLOR << "La damina non puomuoversi indietro, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "La damina non puomuoversi indietro, scrivi aiuto per informazioni" << RESET;
             break;
         case POPULATED:
-            std::cerr << ERROR_COLOR << "La casella che vuoi occupare è occupata, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "La casella che vuoi occupare è occupata, scrivi aiuto per informazioni" << RESET;
             break;
         case EMPTY_START:
-            std::cerr << ERROR_COLOR << "La casella di partenza è vuota, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "La casella di partenza è vuota, scrivi aiuto per informazioni" << RESET;
             break;
         case EMPTY_TARGET:
-            std::cerr << ERROR_COLOR << "Non puoi mangiare il niente, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi mangiare il niente, scrivi aiuto per informazioni" << RESET;
             break;
         case CANNIBALISM:
-            std::cerr << ERROR_COLOR << "Non commettere cannibalismo, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non commettere cannibalismo, scrivi aiuto per informazioni" << RESET;
             break;
         case TOO_BIG:
-            std::cerr << ERROR_COLOR << "La tua damina è troppo ambiziosa, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "La tua damina è troppo ambiziosa, scrivi aiuto per informazioni" << RESET;
             break;
         case FRIENDLY_FIRE:
-            std::cerr << ERROR_COLOR << "Fuoco amico non attivo, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Fuoco amico non attivo, scrivi aiuto per informazioni" << RESET;
             break;
         case OUT_OF_BOUNDS:
-            std::cerr << ERROR_COLOR << "Andresti fuori dalla scacchiera, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Andresti fuori dalla scacchiera, scrivi aiuto per informazioni" << RESET;
             break;
         case ROCK_SOLID:
-            std::cerr << ERROR_COLOR << "Non puoi soffiare in questo caso, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi soffiare in questo caso, scrivi aiuto per informazioni" << RESET;
             break;
         case UNDEFINED:
-            std::cerr << ERROR_COLOR << "Non puoi soffiare e basta, scrivi aiuto per informazioni sulla sintassi delle mosse" << RESET;
+            std::cout << ERROR_COLOR << "Non puoi soffiare e basta, scrivi aiuto per informazioni sulla sintassi delle mosse" << RESET;
             break;
         case TOO_SHORT:
-            std::cerr << ERROR_COLOR << "La mossa è troppo corta, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "La mossa è troppo corta, scrivi aiuto per informazioni" << RESET;
             break;
         case WRONG_OPERATOR:
-            std::cerr << ERROR_COLOR << "Hai sbagliato operatore, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Hai sbagliato operatore, scrivi aiuto per informazioni" << RESET;
             break;
         case WRONG_COLOR:
-            std::cerr << ERROR_COLOR << "Stai provando a muovere pezzi del colore sbagliato, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Stai provando a muovere pezzi del colore sbagliato, scrivi aiuto per informazioni" << RESET;
             break;
         case MISINPUT:
-            std::cerr << ERROR_COLOR << "Le coordinate della mossa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Le coordinate della mossa in input sono sbagliate, scrivi aiuto per informazioni" << RESET;
             break;
         case EMPTY_MOVE:
         case NO_MOVE:
-            std::cerr << ERROR_COLOR << "Non hai inserito nessuna mossa, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Non hai inserito nessuna mossa, scrivi aiuto per informazioni" << RESET;
             break;
         case WRONG_LAST_MOVE:
-            std::cerr << ERROR_COLOR << "L'ultima mossa dell'altro giocatore non permette di soffiare, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "L'ultima mossa dell'altro giocatore non permette di soffiare, scrivi aiuto per informazioni" << RESET;
             break;
         case NOT_ENOUGH_MOVES:
             // Only appears if you blow on the first turn
-            std::cerr << ERROR_COLOR << "Calmaaaaaaaa" << RESET;
+            std::cout << ERROR_COLOR << "Calmaaaaaaaa" << RESET;
             break;
         case DOUBLE_EVENT:
-            std::cerr << ERROR_COLOR << "Hai provato a muovere/mangiare 2 volte nella stessa mossa, scrivi aiuto per informazioni" << RESET;
+            std::cout << ERROR_COLOR << "Hai provato a muovere/mangiare 2 volte nella stessa mossa, scrivi aiuto per informazioni" << RESET;
             break;
     }
-    std::cout << std::endl;
+    std::cout << "\n";
 }

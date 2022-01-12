@@ -592,6 +592,8 @@ bool GameEngine::execute_command(MoveData command) const {
                 std::cin.ignore(1);
                 return false;
             }
+        case QUIT:
+            return true;
     }
     return false;
 }

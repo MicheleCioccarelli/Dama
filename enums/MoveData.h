@@ -20,4 +20,6 @@ enum MoveData {
     W_DRAW_OFFER,
     // Black offered a draw
     B_DRAW_OFFER,
+    // You want to terminate the program
+    QUIT,
 };
