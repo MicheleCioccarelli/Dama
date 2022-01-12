@@ -7,6 +7,10 @@ Move::Move() {
     playerColor = TRASPARENTE;
 }
 
+void Move::pop_coords() {
+    eatenPieces.erase(eatenPieces.end() - 1);
+}
+
 bool Move::is_misinput() const {
     if (startingCoord.is_uninitialized()) {
         return true;
@@ -41,7 +45,7 @@ Move &Move::operator=(const Move& rhs) {
 Move::Move(Coords _startingCoords, MoveType _type)
         : startingCoord(_startingCoords), type(_type) {}
 
-Move::Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _type)
+Move::Move(Coords _startingCoord, Coords _endingCoord, MoveType _type, PlayerColor _color)
         : startingCoord(_startingCoord), endingCoord(_endingCoord), playerColor(_color), type(_type) {}
 
 Move::Move(Coords _startingCoords, PlayerColor _color, MoveType _type)
@@ -57,7 +61,7 @@ void Move::convert_all() {
     }
 }
 
-void Move::add_coords(const Coords &_coords) {
+void Move::push_coords(const Coords &_coords) {
     eatenCoords.push_back(_coords);
 }
 

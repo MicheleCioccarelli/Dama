@@ -143,7 +143,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
             }
 
             tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
-            tempMove.add_coords(convert_coords(input.substr(3, 5)));
+            tempMove.push_coords(convert_coords(input.substr(3, 5)));
             result = engine.check_blow(tempMove);
             // engine said the move was correct
             if (result == BLOWABLE) {

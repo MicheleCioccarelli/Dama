@@ -399,6 +399,76 @@ MoveIssue GameEngine::submit(Move& move) {
     return status;
 }
 
+// ==== GOOD STUFF INCOMING ====
+
+std::vector<Move> GameEngine::simulate_piece(Coords& coords) {
+    std::vector<Move> moves_found;
+    std::vector<Move> temp_moves = simulate_move_piece(coords);
+    // Append the moves
+    moves_found.insert( moves_found.end(), temp_moves.begin(), temp_moves.end());
+}
+
+bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords coords, int index) {
+    if (index == -1) {
+        // This is the first call
+        movesFound.emplace_back(Move(coords, EAT));
+        index++;
+    }
+    // If you found more than one way to eat from a certain spot you add another move to the vector.
+    bool found_a_path = false;
+
+    // The piece you intend to eat
+    Coords eatenCoord;
+    // See all 4 directions
+    for (int verticalOffset = 1; verticalOffset >= -1; verticalOffset -= 2) {
+        for (int horizontalOffset = 1; horizontalOffset >= -1; horizontalOffset -= 2) {
+
+            eatenCoord = Coords((ColumnNotation)(coords.column + horizontalOffset), coords.row + verticalOffset);
+
+            // If the current move has already gone forward you need to add a new move to the vector
+            if (found_a_path) {
+                movesFound.push_back(movesFound[index]);
+                index++;
+                found_a_path = false;
+            }
+
+            movesFound[index].push_coords(eatenCoord);
+
+            if (recursive_check_eat(movesFound[index])) {
+                // If you found an edible dama keep on going
+                found_a_path = true;
+
+                simulate_eat_piece(movesFound, calculate_forward(movesFound[index]), index);
+            } else {
+                // The coordinates were non-edible, so you take them away from the move
+                movesFound[index].pop_coords();
+            }
+        }
+    }
+}
+
+std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {
+    std::vector<Move> movesFound;
+    Coords endingCoords;
+    Move tempMove;
+
+    // See all 4 directions
+    for (int verticalOffset = 1; verticalOffset >= -1; verticalOffset -= 2) {
+        for (int horizontalOffset = 1; horizontalOffset >= -1; horizontalOffset -= 2) {
+            // The square the starting damina would move to
+            endingCoords = Coords((ColumnNotation)(coords.column + horizontalOffset), coords.row + verticalOffset);
+
+            tempMove = Move(coords, endingCoords, MOVE);
+
+            if (check_move(tempMove) == ALL_GOOD) {
+                movesFound.push_back(tempMove);
+            }
+        }
+    }
+
+    return movesFound;
+}
+
 std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset) {
     std::vector<Move> movesFound;
     // The square the starting damina would move to

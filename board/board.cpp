@@ -68,14 +68,19 @@ void Board::execute_move(Move& move) {
         } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
             move.wasPromotion = true;
         }
-        Square endingSquare = matrix[move.endingCoord.row][move.endingCoord.column];
-
-        // Eat all the target pieces
-        for (Coords &currentCoord : move.eatenCoords) {
-            // Save the piece you destroy: used in GameEngine::time_machine()
-            move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].piece);
-            // Destroy the pieces
-            matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+        if (move.eatenPieces.empty()) {
+            // Eat all the target pieces
+            for (Coords &currentCoord: move.eatenCoords) {
+                // Save the piece you destroy: used in GameEngine::time_machine()
+                move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].piece);
+                // Destroy the pieces
+                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+            }
+        } else {
+            for (Coords &currentCoord: move.eatenCoords) {
+                // Destroy the pieces
+                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+            }
         }
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves

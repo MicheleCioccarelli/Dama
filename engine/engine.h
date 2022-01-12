@@ -32,6 +32,7 @@ public:
 
     void undo_move(const Move& move);
 
+    // Given a move of EAT type, checks if it can be executed (bounds checking, piece compatibility, ...)
     MoveIssue recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 0);
 
     // Check all the general parameters for an EAT type move (squares must not be white, must move by 1, ...)
@@ -83,15 +84,40 @@ public:
     // if nothing can be done the game is over
     GameState game_over();
 
-    // Given a certain piece, looks for all possible moves and returns them in a vector
+    /**
+     * Returns the vector of moves the piece situated in board.matrix[coords] could make, assuming it is a damina
+     * this means that it only looks in front of itself and cannot eat damoni
+     * */
     std::vector<Move> simulate_damina(PlayerColor daminaColor, Coords coords);
-    // Returns a vectors with all the moves the damona could make
+
+    /**
+     * Returns the vector of all the moves a damona could make, if there are concatenated moves it goes
+     * for as long as it can eat pieces, the different vectors span from different turns it could take
+     * */
     std::vector<Move> simulate_damona(Coords coords);
     /** Used by simulate damina, given a direction (offsets) and starting position calculates if
      * it can move/eat in that direction and returns what it can do. It does calculations based on the piece
-     * in board at the coordinates + offsets
+     * in board at the coordinates + offsets.
      */
     std::vector<Move> branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset);
+
+
+    /**
+     * Returns the vector of all the moves the piece in matrix[coords] could make, if there are concatenated moves it goes
+     * for as long as it can eat pieces, the different vectors span from different turns it could take.
+     * Works for both damine and damoni
+     * */
+    std::vector<Move> simulate_piece(Coords& coords);
+
+    /**
+     *  Calculate if a piece can move in any of the four directions and returns the resulting moves in a vector
+     */
+    std::vector<Move> simulate_move_piece(Coords& coords);
+
+    /**
+     * Fills the vector with all the possible eat chains starting from coords, returns false if none are available
+     * */
+    bool simulate_eat_piece(std::vector<Move>& movesFound, Coords coords, int index = -1);
 
     explicit GameEngine(GameStyle gameStyle = STANDARD);
 };

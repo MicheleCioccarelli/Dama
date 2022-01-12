@@ -28,7 +28,10 @@ public:
     // Any additional information about the move, like its type of command
     MoveData status;
     // Add a coordinate to eatenCoords
-    void add_coords(const Coords & _coords);
+    void push_coords(const Coords & _coords);
+
+    // Delete  a coordinate from eatenCoords
+    void pop_coords();
 
     // Calculates the ending coordinate, useful in an EAT move where you have startingCoords and eatenCoords
     // Also copied from GameEngine::calculate_forward
@@ -46,7 +49,7 @@ public:
 
     Move(Coords _startingCoords, MoveType _type);
 
-    Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
+    Move(Coords _startingCoord, Coords _endingCoord, MoveType _type = EAT, PlayerColor _color = TRASPARENTE);
 
     explicit Move(PlayerColor _color, MoveType _type = UNINITIALIZED);
 
