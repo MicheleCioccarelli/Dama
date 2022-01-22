@@ -408,43 +408,54 @@ std::vector<Move> GameEngine::simulate_piece(Coords& coords) {
     moves_found.insert( moves_found.end(), temp_moves.begin(), temp_moves.end());
 }
 
-bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords coords, int index) {
+bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index) {
+    // If this is false you don't make a new element in movesFound when you find a dama to eat.
+    bool alreadyBranched = false;
+    // Tells you if you are trying to eat something your move already ate
+    bool alreadyEaten;
     if (index == -1) {
-        // This is the first call
-        movesFound.emplace_back(Move(coords, EAT));
+        // This is the first call, initialize the vector
+        movesFound.emplace_back(Move(startingCoords, EAT));
         index++;
     }
-    // If you found more than one way to eat from a certain spot you add another move to the vector.
-    bool found_a_path = false;
 
     // The piece you intend to eat
     Coords eatenCoord;
-    // See all 4 directions
+
+    // The for loops allow the function to see in all 4 directions
     for (int verticalOffset = 1; verticalOffset >= -1; verticalOffset -= 2) {
         for (int horizontalOffset = 1; horizontalOffset >= -1; horizontalOffset -= 2) {
 
-            eatenCoord = Coords((ColumnNotation)(coords.column + horizontalOffset), coords.row + verticalOffset);
-
-            // If the current move has already gone forward you need to add a new move to the vector
-            if (found_a_path) {
+            // One of the four squares surrounding the starting damina
+            eatenCoord = Coords((ColumnNotation)(startingCoords.column + horizontalOffset), startingCoords.row + verticalOffset);
+            // See if you run into a square you have already eaten
+            for (Coords i : movesFound[index].eatenCoords) {
+                if (eatenCoord == i) {
+                    alreadyEaten = true;
+                }
+            }
+            if (alreadyBranched) {
+                // If your target can be exmined add it to the current move
                 movesFound.push_back(movesFound[index]);
-                index++;
-                found_a_path = false;
+                movesFound[++index].push_coords(eatenCoord);
             }
 
-            movesFound[index].push_coords(eatenCoord);
-
-            if (recursive_check_eat(movesFound[index])) {
-                // If you found an edible dama keep on going
-                found_a_path = true;
-
+            if (alreadyEaten == false && recursive_check_eat(movesFound[index]) == ALL_GOOD) {
+                if (!alreadyBranched) {
+                    // The next piece you find will be put on a new move
+                    alreadyBranched = true;
+                }
+                // If you found an edible dama, investigate that branch
                 simulate_eat_piece(movesFound, calculate_forward(movesFound[index]), index);
             } else {
+                alreadyEaten = false;
                 // The coordinates were non-edible, so you take them away from the move
                 movesFound[index].pop_coords();
             }
         }
     }
+    // Base case is just when you have checked all 4 directions
+    return !movesFound.empty();
 }
 
 std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {

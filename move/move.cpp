@@ -8,7 +8,7 @@ Move::Move() {
 }
 
 void Move::pop_coords() {
-    eatenPieces.erase(eatenPieces.end() - 1);
+    eatenCoords.erase(eatenCoords.end() - 1);
 }
 
 bool Move::is_misinput() const {
@@ -41,6 +41,9 @@ Move &Move::operator=(const Move& rhs) {
     type = rhs.type;
     return *this;
 }
+
+Move::Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _type)
+        : startingCoord(_startingCoord), endingCoord(_endingCoord), playerColor(_color), type(_type) {}
 
 Move::Move(Coords _startingCoords, MoveType _type)
         : startingCoord(_startingCoords), type(_type) {}

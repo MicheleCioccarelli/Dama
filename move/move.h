@@ -51,6 +51,8 @@ public:
 
     Move(Coords _startingCoord, Coords _endingCoord, MoveType _type = EAT, PlayerColor _color = TRASPARENTE);
 
+    Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
+
     explicit Move(PlayerColor _color, MoveType _type = UNINITIALIZED);
 
     Move& operator= (const Move& rhs);

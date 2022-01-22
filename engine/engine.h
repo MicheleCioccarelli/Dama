@@ -117,7 +117,7 @@ public:
     /**
      * Fills the vector with all the possible eat chains starting from coords, returns false if none are available
      * */
-    bool simulate_eat_piece(std::vector<Move>& movesFound, Coords coords, int index = -1);
+    bool simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index = -1);
 
     explicit GameEngine(GameStyle gameStyle = STANDARD);
 };
