@@ -79,14 +79,16 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(B, 2), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 2), Piece(BIANCO, DAMA));
 
     engine.board.edit_human_notation(Coords(C, 3), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(C, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(E, 3), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(E, 5), Piece(NERO, DAMA));
     engine.render.render_board(engine.board, BIANCO);
     std::vector<Move> movesFound;
 
-    engine.simulate_eat_piece(movesFound, Coords(B, 1));
+    engine.simulate_eat_piece(movesFound, Coords(D, 1));
     engine.render.render_board(engine.board, BIANCO);
     Move move = Move(BIANCO);/*
 int i = 0;
