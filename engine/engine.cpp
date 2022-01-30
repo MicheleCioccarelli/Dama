@@ -285,6 +285,9 @@ MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int 
     }
     // This is where the dama would go if it ate endingcoords
     Coords forwardSquare = calculate_forward(startingCoords, move.eatenCoords[index]);
+    if (board.matrix[forwardSquare.row][forwardSquare.column].piece.type != VUOTA) {
+        return POPULATED;
+    }
     if (is_in_bounds(forwardSquare)) {
         // Check if the move doesn't break the rules of the game
         MoveIssue result = inspect_dama(startingCoords, move.eatenCoords[index], dirt);
@@ -475,7 +478,7 @@ std::vector<Move> GameEngine::simulate_piece(Coords& coords) {
 //    return !movesFound.empty();
 //}
 
-bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index) {
+void GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index) {
     // Tells you if you are trying to eat something your move already ate
     bool alreadyEaten = false;
     // The first time you find a new piece to eat append it to the current move, next time make a new one
@@ -521,6 +524,10 @@ bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords starti
                 }
             }
         }
+    }
+    if (movesFound[index].eatenCoords.empty()) {
+        // If you found nothing delete the move
+        movesFound.erase(movesFound.end() - 1);
     }
 }
 
