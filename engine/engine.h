@@ -85,29 +85,11 @@ public:
     GameState game_over();
 
     /**
-     * Returns the vector of moves the piece situated in board.matrix[coords] could make, assuming it is a damina
-     * this means that it only looks in front of itself and cannot eat damoni
-     * */
-    std::vector<Move> simulate_damina(PlayerColor daminaColor, Coords coords);
-
-    /**
-     * Returns the vector of all the moves a damona could make, if there are concatenated moves it goes
-     * for as long as it can eat pieces, the different vectors span from different turns it could take
-     * */
-    std::vector<Move> simulate_damona(Coords coords);
-    /** Used by simulate damina, given a direction (offsets) and starting position calculates if
-     * it can move/eat in that direction and returns what it can do. It does calculations based on the piece
-     * in board at the coordinates + offsets.
-     */
-    std::vector<Move> branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset);
-
-
-    /**
      * Returns the vector of all the moves the piece in matrix[coords] could make, if there are concatenated moves it goes
      * for as long as it can eat pieces, the different vectors span from different turns it could take.
      * Works for both damine and damoni
      * */
-    std::vector<Move> simulate_piece(Coords& coords);
+    std::vector<Move> simulate_piece(Coords coords);
 
     /**
      *  Calculate if a piece can move in any of the four directions and returns the resulting moves in a vector

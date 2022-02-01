@@ -79,21 +79,21 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMA));
-
-    engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(F, 6), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(B, 4), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(B, 6), Piece(NERO, DAMA));
-
-    engine.render.render_board(engine.board, BIANCO);
-    std::vector<Move> movesFound;
-
-    engine.simulate_eat_piece(movesFound, Coords(A, 0));
-    engine.render.render_board(engine.board, BIANCO);
-    Move move = Move(BIANCO);/*
-int i = 0;
+//    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMONE));
+//
+////    engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(D, 2), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(B, 4), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(F, 4), Piece(NERO, DAMA));
+//
+//    engine.render.render_board(engine.board, BIANCO);
+//    std::vector<Move> movesFound = engine.simulate_piece(Coords(A, 0));
+//
+//    engine.simulate_eat_piece(movesFound, Coords(A, 0));
+//    engine.render.render_board(engine.board, BIANCO);
+    Move move = Move(BIANCO);
+    int i = 0;
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
         move.playerColor = current_color;
@@ -148,5 +148,5 @@ int i = 0;
         int whitePieces = engine.count_pieces(BIANCO);
         int blackPieces = engine.count_pieces(NERO);
         RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
-                             engine.start);*/
+                             engine.start);
 }

@@ -189,18 +189,20 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
          case BLACK_WIN:
              strings.emplace_back("Vittoria nera");
              WHITE_COLOR = LOSER_COLOR;
+         case STALEMATE:
          case DRAW:
              strings.emplace_back("Pareggio");
              WHITE_COLOR = DRAW_COLOR;
              BLACK_COLOR = DRAW_COLOR;
              break;
          case GAME_NOT_OVER:
-             strings.emplace_back("");
+             strings.emplace_back(" ");
              break;
      }
 
      // This defines the width of the table
      int longerName;
+
      if (whitePlayer.name.size() >= blackPlayer.name.size()) {
          longerName = whitePlayer.name.size();
      } else {

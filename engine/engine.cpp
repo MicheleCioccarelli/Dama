@@ -404,79 +404,17 @@ MoveIssue GameEngine::submit(Move& move) {
 
 // ==== GOOD STUFF INCOMING ====
 
-std::vector<Move> GameEngine::simulate_piece(Coords& coords) {
+std::vector<Move> GameEngine::simulate_piece(Coords coords) {
     std::vector<Move> moves_found;
+    // Put all the EAT type moves the piece can make in the vector
+    simulate_eat_piece(moves_found, coords);
+
     std::vector<Move> temp_moves = simulate_move_piece(coords);
-    // Append the moves
+
+    // Append the MOVE type moves at the end
     moves_found.insert( moves_found.end(), temp_moves.begin(), temp_moves.end());
+    return moves_found;
 }
-//
-//bool GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index) {
-//    // If this is false you don't make a new element in movesFound when you find a dama to eat.
-//    bool alreadyBranched = false;
-//    // Tells you if you are trying to eat something your move already ate
-//    bool alreadyEaten = false;
-//    // If you have already calulated recursive_check_eat don't do it again
-//    bool alreadyComputed = false;
-//    if (index == -1) {
-//        // This is the first call, initialize the vector
-//        movesFound.emplace_back(Move(startingCoords, EAT));
-//        index++;
-//    }
-//
-//    // The piece you intend to eat
-//    Coords eatenCoord;
-//
-//    // The for loops allow the function to see in all 4 directions
-//    for (int verticalOffset = 1; verticalOffset >= -1; verticalOffset -= 2) {
-//        for (int horizontalOffset = 1; horizontalOffset >= -1; horizontalOffset -= 2) {
-//
-//            // One of the four squares surrounding the starting damina
-//            eatenCoord = Coords((ColumnNotation)(startingCoords.column + horizontalOffset), startingCoords.row + verticalOffset);
-//            // See if you run into a square you have already eaten
-//            for (Coords i : movesFound[index].eatenCoords) {
-//                if (eatenCoord == i) {
-//                    alreadyEaten = true;
-//                }
-//            }
-//
-//            if (alreadyBranched) {
-//                // If your target can be examined add it to the current move
-//                Move tempMove = movesFound[index];
-//                tempMove.push_coords(eatenCoord);
-//
-//                if (recursive_check_eat(tempMove) == ALL_GOOD) {
-//                    movesFound.push_back(movesFound[index]);
-//                    movesFound[++index].push_coords(eatenCoord);
-//                    alreadyComputed = true;
-//                    // Continue on this new branch
-//                    simulate_eat_piece(movesFound, calculate_forward(movesFound[index]), index);
-//                }
-//
-//            } else {
-//                movesFound[index].push_coords(eatenCoord);
-//            }
-//
-//            if (alreadyEaten == false && !alreadyComputed && recursive_check_eat(movesFound[index]) == ALL_GOOD) {
-//                if (!alreadyBranched) {
-//                    // The next piece you find will be put on a new move
-//                    alreadyBranched = true;
-//                }
-//                // If you found an edible dama, investigate that branch
-//                simulate_eat_piece(movesFound, calculate_forward(movesFound[index]), index);
-//            } else {
-//                if (alreadyComputed) {
-//                    alreadyComputed = false;
-//                }
-//                alreadyEaten = false;
-//                // The coordinates were non-edible, so you take them away from the move
-//                movesFound[index].pop_coords();
-//            }
-//        }
-//    }
-//    // Base case is just when you have checked all 4 directions
-//    return !movesFound.empty();
-//}
 
 void GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index) {
     // Tells you if you are trying to eat something your move already ate
@@ -553,105 +491,6 @@ std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {
     return movesFound;
 }
 
-std::vector<Move> GameEngine::branch_damina(Coords startingCoords, PlayerColor color, int verticalOffset, int horizontalOffset) {
-    std::vector<Move> movesFound;
-    // The square the starting damina would move to
-    Coords endingCoords = Coords((ColumnNotation)(startingCoords.column + horizontalOffset),
-                                 startingCoords.row + verticalOffset);
-    Move move = Move(startingCoords, endingCoords, color);
-    MoveIssue result = check_move(move);
-    switch (result) {
-        case ALL_GOOD:
-            // A move-type move can be executed
-            move.type = MOVE;
-            movesFound.push_back(move);
-            break;
-        case POPULATED:
-            // There is a dama in the ending square
-        // MISSING STUFF
-            break;
-    }
-    return movesFound;
-}
-
-std::vector<Move> GameEngine::simulate_damina(PlayerColor daminaColor, Coords coords) {
-    // Input coords are assumed to be in matrix notation
-    std::vector<Move> movesFound;
-    std::vector<Move> tempMoves;
-
-    /*
-     * For the damine we check what moves are in front of them
-     * (add 1 to the row for white and leave black because check_eat already subtracts 1)
-     * The damone are also checked behind
-     * */
-
-
-    switch (daminaColor) {
-        case BIANCO:
-            // Bounds check
-            if ((int)coords.column - 1 < 0) {
-                break;
-            }
-            tempMoves = branch_damina(coords, BIANCO, 1, -1);
-            // Save the moves found, if any
-            if (!tempMoves.empty()) {
-                for (const auto &i: tempMoves) {
-                    movesFound.push_back(i);
-                }
-            }
-            tempMoves = branch_damina(coords, BIANCO, 1, 1);
-            if (!tempMoves.empty()) {
-                for (const auto &i: tempMoves) {
-                    movesFound.push_back(i);
-                }
-            }
-            break;
-        case NERO:
-            if (coords.row - 1 < 0) {
-                break;
-            }
-            tempMoves = branch_damina(coords, NERO, -1, 1);
-            if (!tempMoves.empty()) {
-                for (const auto &i: tempMoves) {
-                    movesFound.push_back(i);
-                }
-            }
-            if (coords.row - 1 < 0) {
-                break;
-            }
-            tempMoves = branch_damina(coords, NERO, -1, -1);
-            if (!tempMoves.empty()) {
-                for (const auto &i: tempMoves) {
-                    movesFound.push_back(i);
-                }
-            }
-            break;
-    }
-    return movesFound;
-}
-
-std::vector<Move> GameEngine::simulate_damona(Coords coords) {
-    // This move is constantly changed, it simulates a movement
-    Move move(TRASPARENTE);
-
-    std::vector<Move> movesFound;
-    std::vector<Move> tempMoves;
-
-    tempMoves = simulate_damina(BIANCO, coords);
-    if (!tempMoves.empty()) {
-        for (const auto &i: tempMoves) {
-            movesFound.push_back(i);
-        }
-    }
-    tempMoves = simulate_damina(NERO, coords);
-    if (!tempMoves.empty()) {
-        for (const auto &i: tempMoves) {
-            movesFound.push_back(i);
-        }
-    }
-        return movesFound;
-}
-
 GameState GameEngine::game_over() {
     // The game was not ended by a command
     int whiteMoves = 0;
@@ -660,34 +499,16 @@ GameState GameEngine::game_over() {
     // Check how many moves each piece can make
     for (int i = 0; i < ROWS; i++) {
         for (int j = 0; j < COLUMNS; j++) {
-            switch(board.matrix[i][j].piece.type) {
-                case DAMA:
-                    switch (board.matrix[i][j].piece.color) {
-                        case BIANCO:
-                            // simulate_damina returns the vector of oves that damina can perform
-                            whiteMoves += simulate_damina(BIANCO, Coords((ColumnNotation)j, i)).size();
-                            break;
-                        case NERO:
-                            blackMoves += simulate_damina(NERO, Coords((ColumnNotation) j, i)).size();
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                case DAMONE:
-                    switch (board.matrix[i][j].piece.color) {
-                        case BIANCO:
-                            // simulate_damina returns the vector of oves that damina can perform
-                            whiteMoves += simulate_damona(Coords((ColumnNotation) j, i)).size();
-                            break;
-                        case NERO:
-                            blackMoves += simulate_damona( Coords((ColumnNotation) j, i)).size();
-                            break;
-                        default:
-                            break;
-                    }
-                default:
-                    break;
+            switch (board.matrix[i][j].piece.color) {
+                   case BIANCO:
+                       // simulate_damina returns the vector of oves that damina can perform
+                       whiteMoves += simulate_piece(Coords((ColumnNotation)j, i)).size();
+                       break;
+                   case NERO:
+                       blackMoves += simulate_piece(Coords((ColumnNotation)j, i)).size();
+                       break;
+                   default:
+                       break;
             }
         }
     }

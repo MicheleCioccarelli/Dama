@@ -13,11 +13,11 @@ int main(int argc, char* argv[]) {
             // Remember to keep Apium's game engine up to date
         }
     } else {
-        GameEngine engine(EMPTY);
+        GameEngine engine(STANDARD);
 
         UI::init(engine);
 
-        GameHandler::debug(engine);
+        GameHandler::two_player_game(engine);
     }
     return 0;
 }
