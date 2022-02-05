@@ -544,7 +544,8 @@ bool GameEngine::execute_command(MoveData command) const {
                                  whitePlayer, blackPlayer, BLACK_RESIGNED, start);
             return true;
         case W_DRAW_OFFER:
-            std::cout << blackPlayer.name << " accetta il pareggio? [s/n]\n";
+            std::cout << blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
+            << RESET << "]\n";
             std::cin >> input;
             if (input == 's') {
                 RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
@@ -556,7 +557,8 @@ bool GameEngine::execute_command(MoveData command) const {
                 return false;
             }
         case B_DRAW_OFFER:
-            std::cout << whitePlayer.name << " accetta il pareggio? [s/n]\n";
+            std::cout << blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
+                      << RESET << "]\n";
             std::cin >> input;
             if (input == 's') {
                 RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),

@@ -98,3 +98,6 @@
 #define MOVE_COLOR HGRN
 #define EAT_COLOR RED
 #define BLOW_COLOR CYN
+
+#define ACCEPT_DRAW HGRN
+#define REFUSE_DRAW HRED

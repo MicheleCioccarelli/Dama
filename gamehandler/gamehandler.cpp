@@ -79,19 +79,12 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-//    engine.board.edit_human_notation(Coords(A, 1), Piece(BIANCO, DAMONE));
-//
-////    engine.board.edit_human_notation(Coords(B, 2), Piece(NERO, DAMA));
-//    engine.board.edit_human_notation(Coords(D, 2), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 1), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 8), Piece(BIANCO, DAMA));
 //    engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
 //    engine.board.edit_human_notation(Coords(B, 4), Piece(NERO, DAMA));
 //    engine.board.edit_human_notation(Coords(F, 4), Piece(NERO, DAMA));
-//
-//    engine.render.render_board(engine.board, BIANCO);
-//    std::vector<Move> movesFound = engine.simulate_piece(Coords(A, 0));
-//
-//    engine.simulate_eat_piece(movesFound, Coords(A, 0));
-//    engine.render.render_board(engine.board, BIANCO);
+    engine.render.render_board(engine.board, current_color);
     Move move = Move(BIANCO);
     int i = 0;
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
@@ -135,7 +128,6 @@ void GameHandler::debug(GameEngine &engine) {
                 default:
                     break;
             }
-            engine.time_travel(current_color);
             engine.render.render_board(engine.board, current_color, move);
         } else {
             return;

@@ -2,6 +2,7 @@
 #include <cstring>
 
 int main(int argc, char* argv[]) {
+    // Command line arguments not really implemented yet
     if (argc != 1) {
         if (argc - 1 > 1) {
             GameHandler::cli_error(TOO_MANY_ARGUMENTS);
