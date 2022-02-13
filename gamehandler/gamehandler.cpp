@@ -79,17 +79,26 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.board.edit_human_notation(Coords(C, 1), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(B, 8), Piece(BIANCO, DAMA));
-//    engine.board.edit_human_notation(Coords(D, 4), Piece(NERO, DAMA));
-//    engine.board.edit_human_notation(Coords(B, 4), Piece(NERO, DAMA));
-//    engine.board.edit_human_notation(Coords(F, 4), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(A, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(E, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(H, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
+
     engine.render.render_board(engine.board, current_color);
     Move move = Move(BIANCO);
     int i = 0;
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
         move.playerColor = current_color;
+        std::vector<Move> movesFound = engine.simulate_piece(Coords(A, 4));
 
         // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);

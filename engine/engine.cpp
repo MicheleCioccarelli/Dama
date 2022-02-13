@@ -227,6 +227,7 @@ MoveIssue GameEngine::check_move(Move &move) {
 }
 
 MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, bool dirt) {
+    // Assumes matrix-notation
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     // Check square-specific details
@@ -238,16 +239,16 @@ MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, b
     if (startingSquare.color == BIANCA || endingSquare.color == BIANCA) {
         return WHITE_SQUARE;
     }
-    // COLORATA is used for debugging purposes and will not show up in a regular game
-    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
-        return POPULATED;
-    }
-
     // Check pieces compatibility
     if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
         return TOO_BIG;
     } else if (startingSquare.piece.color == endingSquare.piece.color) {
         return FRIENDLY_FIRE;
+    }
+
+    // COLORATA is used for debugging purposes and will not show up in a regular game
+    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
+        return POPULATED;
     }
 
     int verticalDistance = startingCoords.row - endingCoords.row;
@@ -467,6 +468,9 @@ void GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords starti
         // If you found nothing delete the move
         movesFound.erase(movesFound.end() - 1);
     }
+//    if (movesFound[index] == Move(startingCoords, EAT)) {
+//
+//    }
 }
 
 std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {

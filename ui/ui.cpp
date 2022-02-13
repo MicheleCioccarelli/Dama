@@ -60,33 +60,38 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             return validate_command(input, currentPlayer, move);
             }
         }
-// WRONG_LAST_MOVE
-    if (issue == MISINPUT) {
-        // There was a syntactic error
-        handle_issue(issue);
-        return INVALID;
-    } else if (issue == WRONG_LAST_MOVE) {
-        handle_issue(WRONG_LAST_MOVE);
-        return INVALID;
-    } else if (issue == EMPTY_MOVE) {
-        handle_issue(issue);
-        return INVALID;
-    }
-    if (engine.deduce_color_human_notation(move) != currentPlayer) {
-        issue = WRONG_COLOR;
-    }
+
     if (issue != ALL_GOOD) {
         // There was a syntactic error
         handle_issue(issue);
         return INVALID;
     }
+//    if (issue == MISINPUT) {
+//        // There was a syntactic error
+//        handle_issue(issue);
+//        return INVALID;
+//    } else if (issue == WRONG_LAST_MOVE) {
+//        handle_issue(WRONG_LAST_MOVE);
+//        return INVALID;
+//    } else if (issue == EMPTY_MOVE) {
+//        handle_issue(issue);
+//        return INVALID;
+//    }
+//    if (engine.deduce_color_human_notation(move) != currentPlayer) {
+//        issue = WRONG_COLOR;
+//    }
+//    if (issue != ALL_GOOD) {
+//        // There was a syntactic error
+//        handle_issue(issue);
+//        return INVALID;
+//    }
     return VALID;
 }
 
 void UI::init(GameEngine &engine) {
     std::string playerName;
 
-    std::cout << MAG << "Benvenuto nella dama (v 0.2)" << RESET << std::endl << std::endl;
+    std::cout << MAG << "Benvenuto nella dama (v 0.3)" << RESET << std::endl << std::endl;
 
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
@@ -149,6 +154,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
             if (result == BLOWABLE) {
                 move.blownCoord = tempMove.startingCoord;
             } else {
+                result = ROCK_SOLID;
                 return result;
             }
             break;
