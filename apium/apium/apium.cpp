@@ -3,10 +3,10 @@
 float Apium::evaluate_piece(Coords pieceCoords) {
     // Expects matrix-notation
     float pieceEval = 0;
-    Piece tempPiece = engine.board.matrix[pieceCoords.row][pieceCoords.column].piece;
+    Piece tempPiece = engine.m_board.matrix[pieceCoords.row][pieceCoords.column].m_piece;
 
     // There was no piece in the position
-    if (tempPiece.type == VUOTA) {
+    if (tempPiece.m_type == VUOTA) {
         return pieceEval;
     }
 
@@ -15,8 +15,8 @@ float Apium::evaluate_piece(Coords pieceCoords) {
         // EVALUATION TABLE FOR NEUTRAL
         // DAMINA -> +1   | Increment based on position: +0.25
         // DAMONA -> +3   | Increment based on position: +0.25
-            if (tempPiece.type == DAMA) {
-                if (tempPiece.color == BIANCO) {
+            if (tempPiece.m_type == DAMA) {
+                if (tempPiece.m_color == BIANCO) {
                     // White damina
                     pieceEval++;
 

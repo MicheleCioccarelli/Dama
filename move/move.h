@@ -12,21 +12,21 @@ private:
     static Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
 public:
     // If this move lead to a promotion of its piece
-    bool wasPromotion = false;
-    std::vector<Coords> eatenCoords;
+    bool m_wasPromotion = false;
+    std::vector<Coords> m_eatenCoords;
     // New pieces are added by move check functions
-    std::vector<Piece> eatenPieces;
+    std::vector<Piece> m_eatenPieces;
 
-    Coords startingCoord;
-    Coords endingCoord;
+    Coords m_startingCoord;
+    Coords m_endingCoord;
 
-    Coords blownCoord;
+    Coords m_blownCoord;
 
-    PlayerColor playerColor;
+    PlayerColor m_playerColor;
 
-    MoveType type;
+    MoveType m_type;
     // Any additional information about the move, like its type of command
-    MoveData status;
+    MoveData m_status;
     // Add a coordinate to eatenCoords
     void push_coords(const Coords & _coords);
 
@@ -45,15 +45,15 @@ public:
 
     Move();
 
-    Move(Coords _startingCoords, PlayerColor _color, MoveType _type);
+    Move(Coords startingCoords, PlayerColor color, MoveType type);
 
-    Move(Coords _startingCoords, MoveType _type);
+    Move(Coords startingCoords, MoveType type);
 
-    Move(Coords _startingCoord, Coords _endingCoord, MoveType _type = EAT, PlayerColor _color = TRASPARENTE);
+    Move(Coords startingCoord, Coords endingCoord, MoveType type = EAT, PlayerColor color = TRASPARENTE);
 
-    Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color = TRASPARENTE, MoveType _type = EAT);
+    Move(Coords startingCoord, Coords endingCoord, PlayerColor color = TRASPARENTE, MoveType type = EAT);
 
-    explicit Move(PlayerColor _color, MoveType _type = UNINITIALIZED);
+    explicit Move(PlayerColor color, MoveType type = UNINITIALIZED);
 
     Move& operator= (const Move& rhs);
 };

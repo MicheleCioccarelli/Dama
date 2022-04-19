@@ -9,10 +9,10 @@
 
 class Player {
 public:
-    PlayerColor color;
-    std::string name;
+    PlayerColor m_color;
+    std::string m_name;
 
-    std::vector<Move> moves;
+    std::vector<Move> m_moves;
 
     void add_move(Move move);
 
@@ -21,7 +21,7 @@ public:
     // If the player is BIANCO returns NERO and vice versa
     PlayerColor other_color();
 
-    Player(): name(""), color(TRASPARENTE) {}
+    Player(): m_name(""), m_color(TRASPARENTE) {}
 
-    Player(std::string &_name, PlayerColor _color): name(_name), color(_color) {}
+    Player(std::string &name, PlayerColor color): m_name(name), m_color(color) {}
 };

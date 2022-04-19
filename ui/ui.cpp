@@ -6,9 +6,9 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     std::string raw_input;
 
     if (currentPlayer == BIANCO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.whitePlayer.name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_whitePlayer.m_name << RESET << " > ";
     } else if (currentPlayer == NERO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.blackPlayer.name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_blackPlayer.m_name << RESET << " > ";
     }
 
     getline(std::cin, raw_input);
@@ -19,8 +19,13 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     stream >> input;
     std::transform(input.begin(), input.end(), input.begin(), ::toupper);
 
-    // Tells you wether a move is a command or has lenght errors
-    MoveData result = check_input(input);
+//    // Tells you wether a move is a command or has lenght errors
+//    MoveData result = check_input(input);
+    if (validate_command(input, currentPlayer) != INVALID) {
+        // If the input was a command return it. GameHandler will take care of it
+        return validate_command(input, currentPlayer);
+    }
+
     // Stores any problems with the move
     MoveIssue issue = ALL_GOOD;
     // Moves with a blow in them are separeted with an _
@@ -33,7 +38,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
         // The move was of the wrong lenght but wasn't a command
         issue = TOO_SHORT;
     }
-    if (result == VALID && issue == ALL_GOOD) {
+    if (issue == ALL_GOOD) {
         // Find an _ if there is any. If not position remains -1
         for (int i = 0; i < input.size(); i++) {
             if (input[i] == '_') {
@@ -42,7 +47,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             }
         }
         // The move is legitimate
-        move.playerColor = currentPlayer;
+        move.m_playerColor = currentPlayer;
         if (_position == -1) {
             // There is no blow-type move
             issue = input_to_move(input, move, engine);
@@ -54,37 +59,13 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             }
         }
         // Now a move has been created with the input provided, if there are problems they are in issue
-    } else {
-        if (validate_command(input, currentPlayer, move) != INVALID) {
-            // If the input was a command return it. GameHandler will take care of it
-            return validate_command(input, currentPlayer, move);
-            }
-        }
+    }
 
     if (issue != ALL_GOOD) {
         // There was a syntactic error
         handle_issue(issue);
         return INVALID;
     }
-//    if (issue == MISINPUT) {
-//        // There was a syntactic error
-//        handle_issue(issue);
-//        return INVALID;
-//    } else if (issue == WRONG_LAST_MOVE) {
-//        handle_issue(WRONG_LAST_MOVE);
-//        return INVALID;
-//    } else if (issue == EMPTY_MOVE) {
-//        handle_issue(issue);
-//        return INVALID;
-//    }
-//    if (engine.deduce_color_human_notation(move) != currentPlayer) {
-//        issue = WRONG_COLOR;
-//    }
-//    if (issue != ALL_GOOD) {
-//        // There was a syntactic error
-//        handle_issue(issue);
-//        return INVALID;
-//    }
     return VALID;
 }
 
@@ -96,21 +77,21 @@ void UI::init(GameEngine &engine) {
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.whitePlayer.name = playerName;
-        engine.whitePlayer.color = BIANCO;
+        engine.m_whitePlayer.m_name = playerName;
+        engine.m_whitePlayer.m_color = BIANCO;
     } else {
-        engine.whitePlayer.name = "Nope";
-        engine.whitePlayer.color = BIANCO;
+        engine.m_whitePlayer.m_name = "Nope";
+        engine.m_whitePlayer.m_color = BIANCO;
     }
 
     std::cout << "Chi gioca nero?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.blackPlayer.name = playerName;
-        engine.blackPlayer.color = NERO;
+        engine.m_blackPlayer.m_name = playerName;
+        engine.m_blackPlayer.m_color = NERO;
     } else {
-        engine.blackPlayer.name = "Nope";
-        engine.blackPlayer.color = NERO;
+        engine.m_blackPlayer.m_name = "Nope";
+        engine.m_blackPlayer.m_color = NERO;
     }
 }
 
@@ -119,40 +100,40 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
     Move tempMove;
     switch (input[2]) {
         case '-':
-            if (move.type != UNINITIALIZED) {
+            if (move.m_type != UNINITIALIZED) {
                 // The original input contained 2 eat-type moves or 2 move-type moves
                 return DOUBLE_EVENT;
             }
 
-            move.type = MOVE;
-            move.startingCoord = convert_coords(input.substr(0, 2));
-            move.endingCoord = convert_coords(input.substr(3, 5));
+            move.m_type = MOVE;
+            move.m_startingCoord = convert_coords(input.substr(0, 2));
+            move.m_endingCoord = convert_coords(input.substr(3, 5));
             break;
         case 'X':
-            if (move.type != UNINITIALIZED) {
+            if (move.m_type != UNINITIALIZED) {
                 return DOUBLE_EVENT;
             }
 
-            move.type = EAT;
-            move.startingCoord = convert_coords(input.substr(0, 2));
+            move.m_type = EAT;
+            move.m_startingCoord = convert_coords(input.substr(0, 2));
             // Add the coords which were eaten
             for (int i = 3; i <= input.size(); i += 3) {
                 // You can eat up to 3 pieces at a time
-                move.eatenCoords.push_back(convert_coords(input.substr(i, i + 1)));
+                move.m_eatenCoords.push_back(convert_coords(input.substr(i, i + 1)));
             }
             move.calculate_endingCoord();
             break;
         case '*':
-            if (!move.blownCoord.is_uninitialized()) {
+            if (!move.m_blownCoord.is_uninitialized()) {
                 return DOUBLE_EVENT;
             }
 
-            tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
+            tempMove = Move(convert_coords(input.substr(0, 2)), move.m_playerColor, EAT);
             tempMove.push_coords(convert_coords(input.substr(3, 5)));
             result = engine.check_blow(tempMove);
             // engine said the move was correct
             if (result == BLOWABLE) {
-                move.blownCoord = tempMove.startingCoord;
+                move.m_blownCoord = tempMove.m_startingCoord;
             } else {
                 result = ROCK_SOLID;
                 return result;
@@ -161,12 +142,12 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
         default:
             return MISINPUT;
         }
-    for (Coords currentCoord : move.eatenCoords) {
+    for (Coords currentCoord : move.m_eatenCoords) {
         if (currentCoord.is_uninitialized()) {
             return MISINPUT;
         }
     }
-    if (move.startingCoord.is_uninitialized() && move.type != UNINITIALIZED) {
+    if (move.m_startingCoord.is_uninitialized() && move.m_type != UNINITIALIZED) {
         return MISINPUT;
     }
     return ALL_GOOD;
@@ -176,39 +157,24 @@ void UI::handle_issue(MoveIssue issue) {
     UI::log_error(issue);
 }
 
-MoveData UI::check_input(const std::string &input) {
-    if (input == "RESIGN") {
-        return RESIGNED;
-    } else if (input == "AIUTO") {
+MoveData UI::validate_command(std::string &input, PlayerColor currentPlayer) {
+    if (input == "AIUTO") {
         return HELP_PAGE;
-    } else if (input == "SUMMARY") {
-        return SUMMARY;
-    } else if (input == "DRAW") {
-        return DRAW_OFFER;
-    } else if (input == "QUIT") {
-        return QUIT;
-    }
-    return VALID;
-}
-
-MoveData UI::validate_command(std::string &command, PlayerColor currentPlayer, Move& move) {
-    if (command == "AIUTO") {
-        return HELP_PAGE;
-    } else if (command == "RESIGN") {
+    } else if (input == "RESIGN") {
         if (currentPlayer == BIANCO) {
             return WHITE_RESIGN;
         } else if (currentPlayer == NERO) {
             return BLACK_RESIGN;
         }
-    } else if (command == "SUMMARY") {
+    } else if (input == "SUMMARY") {
         return SUMMARY;
-    } else if (command == "DRAW") {
+    } else if (input == "DRAW") {
         if (currentPlayer == BIANCO) {
             return W_DRAW_OFFER;
         } else if (currentPlayer == NERO) {
             return B_DRAW_OFFER;
         }
-    } else if (command == "QUIT") {
+    } else if (input == "QUIT") {
         return QUIT;
     }
     return INVALID;

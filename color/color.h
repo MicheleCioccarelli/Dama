@@ -5,10 +5,10 @@
 
 class Color {
 public:
-    std::string northColor = BOARD_COLOR;
-    std::string southColor = BOARD_COLOR;
-    std::string eastColor = BOARD_COLOR;
-    std::string westColor = BOARD_COLOR;
+    std::string m_northColor = BOARD_COLOR;
+    std::string m_southColor = BOARD_COLOR;
+    std::string m_eastColor = BOARD_COLOR;
+    std::string m_westColor = BOARD_COLOR;
 
     void operator=(std::string& rhs);
     Color& operator=(const Color &rhs);

@@ -9,11 +9,11 @@
 
 class GameEngine {
 public:
-    time_t start;
-    Player whitePlayer;
-    Player blackPlayer;
-    Board board;
-    RenderV2 render;
+    time_t m_start;
+    Player m_whitePlayer;
+    Player m_blackPlayer;
+    Board m_board;
+    RenderV2 m_render;
 
 
     /**

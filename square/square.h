@@ -9,16 +9,16 @@
 
 class Square {
 public:
-    Coords coords;
-    SquareColor color;
-    Piece piece;
+    Coords m_coords;
+    SquareColor m_color;
+    Piece m_piece;
 
-    void set_piece(PieceType _piece, PlayerColor _color);
+    void set_piece(PieceType piece, PlayerColor color);
 
     Square &operator=(const Square &rhs);
 
     Square() = default;
 
-    Square(Coords _coords, SquareColor _color, PieceType _pieceType = VUOTA, PlayerColor _pieceColor = TRASPARENTE)
-    : coords(_coords), color(_color), piece(_pieceColor, _pieceType) {}
+    Square(Coords coords, SquareColor color, PieceType pieceType = VUOTA, PlayerColor pieceColor = TRASPARENTE)
+    : m_coords(coords), m_color(color), m_piece(pieceColor, pieceType) {}
 };

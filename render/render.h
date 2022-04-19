@@ -9,7 +9,7 @@
 #include <time.h>
 
 class RenderV2 {
-    ColorMatrix colorMatrix;
+    ColorMatrix m_colorMatrix;
 public:
     RenderV2();
 

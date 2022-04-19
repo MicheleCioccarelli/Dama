@@ -1,21 +1,21 @@
 #include "move.h"
 
-Move::Move(PlayerColor _color, MoveType _type)
-    : playerColor (_color), type (_type) {}
+Move::Move(PlayerColor color, MoveType type)
+    : m_playerColor (color), m_type (type) {}
 
 Move::Move() {
-    playerColor = TRASPARENTE;
+    m_playerColor = TRASPARENTE;
 }
 
 void Move::pop_coords() {
-    eatenCoords.erase(eatenCoords.end() - 1);
+    m_eatenCoords.erase(m_eatenCoords.end() - 1);
 }
 
 bool Move::is_misinput() const {
-    if (startingCoord.is_uninitialized()) {
+    if (m_startingCoord.is_uninitialized()) {
         return true;
     }
-    for (Coords a : eatenCoords) {
+    for (Coords a : m_eatenCoords) {
         if (a.is_uninitialized()) {
             return true;
         }
@@ -24,48 +24,48 @@ bool Move::is_misinput() const {
 }
 
 bool Move::is_empty() const {
-    if (startingCoord.is_uninitialized() && endingCoord.is_uninitialized() &&
-    blownCoord.is_uninitialized() && eatenCoords.empty() && eatenPieces.empty()) {
+    if (m_startingCoord.is_uninitialized() && m_endingCoord.is_uninitialized() &&
+        m_blownCoord.is_uninitialized() && m_eatenCoords.empty() && m_eatenPieces.empty()) {
         return true;
     }
     return false;
 }
 
 Move &Move::operator=(const Move& rhs) {
-    startingCoord = rhs.startingCoord;
-    endingCoord = rhs.endingCoord;
-    eatenCoords = rhs.eatenCoords;
-    eatenPieces = rhs.eatenPieces;
-    blownCoord = rhs.blownCoord;
-    playerColor = rhs.playerColor;
-    type = rhs.type;
+    m_startingCoord = rhs.m_startingCoord;
+    m_endingCoord = rhs.m_endingCoord;
+    m_eatenCoords = rhs.m_eatenCoords;
+    m_eatenPieces = rhs.m_eatenPieces;
+    m_blownCoord = rhs.m_blownCoord;
+    m_playerColor = rhs.m_playerColor;
+    m_type = rhs.m_type;
     return *this;
 }
 
-Move::Move(Coords _startingCoord, Coords _endingCoord, PlayerColor _color, MoveType _type)
-        : startingCoord(_startingCoord), endingCoord(_endingCoord), playerColor(_color), type(_type) {}
+Move::Move(Coords startingCoord, Coords endingCoord, PlayerColor color, MoveType type)
+        : m_startingCoord(startingCoord), m_endingCoord(endingCoord), m_playerColor(color), m_type(type) {}
 
-Move::Move(Coords _startingCoords, MoveType _type)
-        : startingCoord(_startingCoords), type(_type) {}
+Move::Move(Coords startingCoords, MoveType type)
+        : m_startingCoord(startingCoords), m_type(type) {}
 
-Move::Move(Coords _startingCoord, Coords _endingCoord, MoveType _type, PlayerColor _color)
-        : startingCoord(_startingCoord), endingCoord(_endingCoord), playerColor(_color), type(_type) {}
+Move::Move(Coords startingCoord, Coords endingCoord, MoveType type, PlayerColor color)
+        : m_startingCoord(startingCoord), m_endingCoord(endingCoord), m_playerColor(color), m_type(type) {}
 
-Move::Move(Coords _startingCoords, PlayerColor _color, MoveType _type)
-        : startingCoord(_startingCoords), playerColor(_color), type(_type) {}
+Move::Move(Coords startingCoords, PlayerColor color, MoveType type)
+        : m_startingCoord(startingCoords), m_playerColor(color), m_type(type) {}
 
 void Move::convert_all() {
-    startingCoord = startingCoord.convert_coords();
-    if (!endingCoord.is_uninitialized()) {
-        endingCoord = endingCoord.convert_coords();
+    m_startingCoord = m_startingCoord.convert_coords();
+    if (!m_endingCoord.is_uninitialized()) {
+        m_endingCoord = m_endingCoord.convert_coords();
     }
-    for (Coords& a : eatenCoords) {
+    for (Coords& a : m_eatenCoords) {
         a = a.convert_coords();
     }
 }
 
 void Move::push_coords(const Coords &_coords) {
-    eatenCoords.push_back(_coords);
+    m_eatenCoords.push_back(_coords);
 }
 
 Coords Move::calculate_forward(const Coords &startingCoords, const Coords &endingCoords) {
@@ -76,9 +76,9 @@ Coords Move::calculate_forward(const Coords &startingCoords, const Coords &endin
 }
 
 void Move::calculate_endingCoord() {
-    Coords tempForward = calculate_forward(startingCoord, eatenCoords[0]);
-    for (int i = 1; i < eatenCoords.size(); i++) {
-        tempForward = calculate_forward(tempForward, eatenCoords[i]);
+    Coords tempForward = calculate_forward(m_startingCoord, m_eatenCoords[0]);
+    for (int i = 1; i < m_eatenCoords.size(); i++) {
+        tempForward = calculate_forward(tempForward, m_eatenCoords[i]);
     }
-    endingCoord = tempForward;
+    m_endingCoord = tempForward;
 }

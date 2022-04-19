@@ -21,9 +21,9 @@ void Board::standard_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (row < 3 && matrix[row][col].color == NERA) {
+            if (row < 3 && matrix[row][col].m_color == NERA) {
                 matrix[row][col].set_piece(DAMA, BIANCO);
-            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].m_color == NERA) {
                 matrix[row][col].set_piece(DAMA, NERO);
             }
         }
@@ -33,8 +33,8 @@ void Board::standard_game_initialization() {
 void Board::colored_game_initialization() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (matrix[row][col].color == NERA) {
-                matrix[row][col].piece = Piece(TRASPARENTE, COLORATA);
+            if (matrix[row][col].m_color == NERA) {
+                matrix[row][col].m_piece = Piece(TRASPARENTE, COLORATA);
             }
         }
     }
@@ -44,9 +44,9 @@ void Board::damone_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (row < 3 && matrix[row][col].color == NERA) {
+            if (row < 3 && matrix[row][col].m_color == NERA) {
                 matrix[row][col].set_piece(DAMONE, BIANCO);
-            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].m_color == NERA) {
                 matrix[row][col].set_piece(DAMONE, NERO);
             }
         }
@@ -57,50 +57,50 @@ void Board::empty_game_initialization() {}
 
 void Board::execute_move(Move& move) {
     // Input is assumed as matrix-notation
-    Square startingSquare = matrix[move.startingCoord.row][move.startingCoord.column];
-    if (move.type == EAT) {
-        if (move.endingCoord.is_uninitialized()) {
+    Square startingSquare = matrix[move.m_startingCoord.row][move.m_startingCoord.column];
+    if (move.m_type == EAT) {
+        if (move.m_endingCoord.is_uninitialized()) {
             // If this move has type EAT or wasn't constructed properly
             move.calculate_endingCoord();
         }
-        if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
-            move.wasPromotion = true;
-        } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
-            move.wasPromotion = true;
+        if (move.m_endingCoord.row == ROWS - 1 && move.m_playerColor == BIANCO) {
+            move.m_wasPromotion = true;
+        } else if (move.m_endingCoord.row == 0 && move.m_playerColor == NERO) {
+            move.m_wasPromotion = true;
         }
-        if (move.eatenPieces.empty()) {
+        if (move.m_eatenPieces.empty()) {
             // Eat all the target pieces
-            for (Coords &currentCoord: move.eatenCoords) {
+            for (Coords &currentCoord: move.m_eatenCoords) {
                 // Save the piece you destroy: used in GameEngine::time_machine()
-                move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].piece);
+                move.m_eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].m_piece);
                 // Destroy the pieces
-                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+                matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
             }
         } else {
-            for (Coords &currentCoord: move.eatenCoords) {
+            for (Coords &currentCoord: move.m_eatenCoords) {
                 // Destroy the pieces
-                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+                matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
             }
         }
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
-    if (move.wasPromotion) {
-        startingSquare.piece.type = DAMONE;
+    if (move.m_wasPromotion) {
+        startingSquare.m_piece.m_type = DAMONE;
     }
-    matrix[move.endingCoord.row][move.endingCoord.column].piece = startingSquare.piece;
-    matrix[move.startingCoord.row][move.startingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
+    matrix[move.m_endingCoord.row][move.m_endingCoord.column].m_piece = startingSquare.m_piece;
+    matrix[move.m_startingCoord.row][move.m_startingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
 }
 
 void Board::blow_up(Move& move) {
     // Assumes matrix notation
-    edit_matrix_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
+    edit_matrix_notation(Coords(move.m_blownCoord.column, move.m_blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 
 void Board::edit_matrix_notation(Coords coords, Piece _piece) {
-    matrix[coords.row][coords.column].piece = _piece;
+    matrix[coords.row][coords.column].m_piece = _piece;
 }
 
 void Board::edit_human_notation(Coords coords, Piece _piece) {
-    matrix[coords.row - 1][coords.column].piece = _piece;
+    matrix[coords.row - 1][coords.column].m_piece = _piece;
 }
 #pragma clang diagnostic pop

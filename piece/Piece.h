@@ -5,13 +5,13 @@
 
 class Piece {
 public:
-    PlayerColor color;
-    PieceType type;
+    PlayerColor m_color;
+    PieceType m_type;
 
     Piece& operator= (const Piece& rhs);
 
     Piece()
-        : color(TRASPARENTE), type(VUOTA) {}
-    Piece(PlayerColor _color, PieceType _type)
-        : color(_color), type(_type) {}
+        : m_color(TRASPARENTE), m_type(VUOTA) {}
+    Piece(PlayerColor color, PieceType type)
+        : m_color(color), m_type(type) {}
 };

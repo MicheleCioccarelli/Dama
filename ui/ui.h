@@ -29,7 +29,7 @@ public:
     static void log_error(MoveIssue error);
 
     // Returns true if the input was actually a command and assigns the right MoveReturn to move
-    static MoveData validate_command(std::string& command, PlayerColor currentPlayer, Move& move);
+    static MoveData validate_command(std::string& input, PlayerColor currentPlayer);
 
     ~UI() = default;
 };

@@ -1,12 +1,12 @@
 #include "square.h"
 
-void Square::set_piece(PieceType _piece, PlayerColor _color) {
-    piece = Piece(_color, _piece);
+void Square::set_piece(PieceType piece, PlayerColor color) {
+    m_piece = Piece(color, piece);
 }
 
 Square &Square::operator=(const Square &rhs)  {
-    coords = rhs.coords;
-    color = rhs.color;
-    piece = rhs.piece;
+    m_coords = rhs.m_coords;
+    m_color = rhs.m_color;
+    m_piece = rhs.m_piece;
     return *this;
 }

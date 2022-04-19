@@ -1,7 +1,7 @@
 #include "Piece.h"
 
 Piece& Piece::operator=(const Piece &rhs) {
-    color = rhs.color;
-    type = rhs.type;
+    m_color = rhs.m_color;
+    m_type = rhs.m_type;
     return *this;
 }
