@@ -3,6 +3,13 @@
 
 bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
     char input;
+    // Used by the SAVE command
+    std::string gameName {};
+    std::string path {};
+    // 0, 1, or 2. It will be saved in the file
+    int deducedState {};
+    GameState gameState;
+
     // Returns true if the game should be ended
     switch (command) {
         case HELP_PAGE:
@@ -45,6 +52,49 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 std::cin.ignore(1);
                 return false;
             }
+        case SAVE:
+            // If at any point the user enters q we should quit
+            std::cout << "Comando di salvataggio [" << RED << "q" << RESET << " per uscire]\n";
+            std::cout << "Che nome vuoi dare alla partita?\n> ";
+            getline(std::cin, gameName);
+            if (gameName == "q") {
+                std::cout << "\nChiuso il menu di salvataggio";
+                return false;
+            }
+            std::cout << "Dove vuoi che il file sia salato [non scrivere nessuna path per salvare nella directory dell'eseguibile]\n> ";
+            getline(std::cin, path);
+            if (path == "q") {
+                std::cout << "\nChiuso il menu di salvataggio";
+                return false;
+            }
+            // Determine the current state of the game;
+            gameState = engine.game_over();
+            switch(gameState) {
+                case GAME_NOT_OVER:
+                    // The game is still going on
+                    deducedState = 0;
+                    break;
+                case WHITE_WIN:
+                case BLACK_RESIGNED:
+                    // White won
+                    deducedState = 1;
+                    break;
+                case BLACK_WIN:
+                case WHITE_RESIGNED:
+                    // Black won
+                    deducedState = 2;
+                    break;
+                case STALEMATE:
+                case DRAW:
+                    deducedState = 3;
+                default:
+                    deducedState = 4;
+            }
+            if (FileHandler::create_file(engine, gameName, path, deducedState) == OPENING_ISSUE) {
+                std::cout << ERROR_COLOR << "C'è stato un errore a creare il file [path sbagliata?]\n";
+                return false;
+            }
+            return false;
         case QUIT:
             return true;
     }

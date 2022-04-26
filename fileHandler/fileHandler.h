@@ -13,5 +13,5 @@ public:
      *  2 = Black won
      *  3 = Draw
      */
-    static fileIssue create_file(GameEngine& engine, const std::string& name, std::string& filePath, const int gameState);
+    static fileIssue create_file(GameEngine& engine, const std::string& gameName, std::string& filePath, const int gameState);
 };

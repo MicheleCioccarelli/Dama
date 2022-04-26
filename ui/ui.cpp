@@ -172,6 +172,8 @@ MoveData UI::validate_command(std::string &input, PlayerColor currentPlayer) {
         } else if (currentPlayer == NERO) {
             return B_DRAW_OFFER;
         }
+    } else if (input == "SAVE") {
+        return SAVE;
     } else if (input == "QUIT") {
         return QUIT;
     }

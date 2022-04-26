@@ -20,6 +20,8 @@ enum MoveData {
     W_DRAW_OFFER,
     // Black offered a draw
     B_DRAW_OFFER,
+    // The current game data should be stored in a file
+    SAVE,
     // You want to terminate the program
     QUIT,
 };

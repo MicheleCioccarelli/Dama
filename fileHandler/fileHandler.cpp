@@ -1,6 +1,11 @@
 #include "fileHandler.h"
 
-fileIssue FileHandler::create_file(GameEngine &engine, const std::string& name, std::string &filePath, const int gameState) {
+fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameName, std::string &filePath, const int gameState) {
+
+    if (filePath.find(gameName) == std::string::npos) {
+        // The user didn't already put the game name in the path
+        filePath.append(gameName);
+    }
 
     // If the file path/name did not have the right extention, add it
     if (filePath.find(".dama") == std::string::npos) {
@@ -14,10 +19,10 @@ fileIssue FileHandler::create_file(GameEngine &engine, const std::string& name, 
         // Something went wrong
         return OPENING_ISSUE;
     } else {
-        o_file << "@BLACK: " << engine.get_player_name(NERO) << "\n";
-        o_file << "@BLACK: " << engine.get_player_name(BIANCO) << "\n";
-        o_file << "@NAME: " << name << "\n";
-        o_file << "@STATE: " << gameState << "\n";
+        o_file << "@BLACK:" << engine.get_player_name(NERO) << "\n";
+        o_file << "@BLACK:" << engine.get_player_name(BIANCO) << "\n";
+        o_file << "@NAME:" << gameName << "\n";
+        o_file << "@STATE:" << gameState << "\n";
         // ADD ALL THE MOVES
     }
 
