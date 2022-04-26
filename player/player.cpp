@@ -16,6 +16,6 @@ PlayerColor Player::other_color() {
 Player &Player::operator=(const Player &rhs) {
     this->m_color = rhs.m_color;
     this->m_moves = rhs.m_moves;
-    this->m_name = rhs.m_name;
+    this->name = rhs.name;
     return *this;
 }

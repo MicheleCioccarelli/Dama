@@ -23,6 +23,14 @@ GameEngine::GameEngine(GameStyle gameStyle)
     }
 }
 
+std::string GameEngine::get_player_name(PlayerColor color) {
+    if (color == BIANCO) {
+        return m_whitePlayer.name;
+    } else {
+        return m_blackPlayer.name;
+    }
+}
+
 Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords &endingCoords) {
     int verticalDistance = startingCoords.row - endingCoords.row;
     int horizontalDistance = startingCoords.column - endingCoords.column;
@@ -524,56 +532,6 @@ GameState GameEngine::game_over() {
     }
     // Should not reach this point
     return GAME_NOT_OVER;
-}
-
-bool GameEngine::execute_command(MoveData command) const {
-    char input;
-    // Returns true if the game should be ended
-    switch (command) {
-        case HELP_PAGE:
-            RenderV2::help_page();
-            return false;
-        case SUMMARY:
-            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO), m_whitePlayer, m_blackPlayer, GAME_NOT_OVER, m_start);
-            return false;
-        case WHITE_RESIGN:
-            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
-                                 m_whitePlayer, m_blackPlayer, WHITE_RESIGNED, m_start);
-            return true;
-        case BLACK_RESIGN:
-            RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
-                                 m_whitePlayer, m_blackPlayer, BLACK_RESIGNED, m_start);
-            return true;
-        case W_DRAW_OFFER:
-            std::cout << m_blackPlayer.m_name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
-            << RESET << "]\n";
-            std::cin >> input;
-            if (input == 's') {
-                RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
-                                     m_whitePlayer, m_blackPlayer, DRAW, m_start);
-                return true;
-            } else {
-                std::cout << "Niente pareggio\n" << std::endl;
-                std::cin.ignore(1);
-                return false;
-            }
-        case B_DRAW_OFFER:
-            std::cout << m_blackPlayer.m_name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
-                      << RESET << "]\n";
-            std::cin >> input;
-            if (input == 's') {
-                RenderV2::end_screen(count_pieces(BIANCO), count_pieces(NERO),
-                                     m_whitePlayer, m_blackPlayer, DRAW, m_start);
-                return true;
-            } else {
-                std::cout << "Niente pareggio" << std::endl;
-                std::cin.ignore(1);
-                return false;
-            }
-        case QUIT:
-            return true;
-    }
-    return false;
 }
 
 #pragma clang diagnostic pop

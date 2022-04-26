@@ -203,10 +203,10 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
      // This defines the width of the table
      int longerName;
 
-     if (whitePlayer.m_name.size() >= blackPlayer.m_name.size()) {
-         longerName = whitePlayer.m_name.size();
+     if (whitePlayer.name.size() >= blackPlayer.name.size()) {
+         longerName = whitePlayer.name.size();
      } else {
-         longerName = blackPlayer.m_name.size();
+         longerName = blackPlayer.name.size();
      }
      if (longerName < 5) {
          longerName = 5;
@@ -248,7 +248,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
      std::cout << std::endl;
      padding(5);
      std::cout << VERTICAL_LINE << " ";
-     center_name(whitePlayer.m_name, longerName, WHITE_COLOR);
+     center_name(whitePlayer.name, longerName, WHITE_COLOR);
      std::cout << " " << VERTICAL_LINE;
 
      // White number of pieces
@@ -285,7 +285,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
      std::cout << std::endl;
      padding(5);
      std::cout << VERTICAL_LINE << " ";
-     center_name(blackPlayer.m_name, longerName, BLACK_COLOR);
+     center_name(blackPlayer.name, longerName, BLACK_COLOR);
      std::cout << " " << VERTICAL_LINE;
 
      if (blackPieces < 10) {

@@ -3,6 +3,7 @@
 #include "../render/render.h"
 #include "../ui/ui.h"
 #include "../enums/cliCases.h"
+#include "../commandHandler/commandHandler.h"
 
 // Runs the game
 class GameHandler {

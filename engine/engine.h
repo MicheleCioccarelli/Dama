@@ -54,6 +54,8 @@ public:
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);
 
+    std::string get_player_name(PlayerColor color);
+
     /**
      * Checks if a move can be executed, if not returns the reason why
      * */
@@ -64,11 +66,6 @@ public:
 
     PlayerColor deduce_color_matrix_notation(const Move &move);
 
-    /**
-     * Handles command execution (help page, resigning, summary).
-     * Returns true if the game should be ended and changes gameResult to tell game_over() what to do
-     * */
-    bool execute_command(MoveData command) const;
     /**
      * The move you pass in is what the opponent should have eaten, if it could have been done and
      * the enemy didn't eat on their last turn the piece that should have committed murder gets deleted

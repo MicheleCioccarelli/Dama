@@ -34,7 +34,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
         while (issue != VALID || engine.submit(move) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
-                if (engine.execute_command(issue)) {
+                if (CommandHandler::execute_command(engine, issue)) {
                     // Execute command handled formatting the end screen
                     gameWasEndedByCommand = true;
                     break;
@@ -107,7 +107,7 @@ void GameHandler::debug(GameEngine &engine) {
         while (issue != VALID || engine.submit(move) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
-                if (engine.execute_command(issue)) {
+                if (CommandHandler::execute_command(engine, issue)) {
                     // Execute command handled formatting the end screen
                     gameWasEndedByCommand = true;
                     break;

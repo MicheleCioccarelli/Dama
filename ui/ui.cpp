@@ -6,9 +6,9 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     std::string raw_input;
 
     if (currentPlayer == BIANCO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_whitePlayer.m_name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_whitePlayer.name << RESET << " > ";
     } else if (currentPlayer == NERO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_blackPlayer.m_name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_blackPlayer.name << RESET << " > ";
     }
 
     getline(std::cin, raw_input);
@@ -19,8 +19,6 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     stream >> input;
     std::transform(input.begin(), input.end(), input.begin(), ::toupper);
 
-//    // Tells you wether a move is a command or has lenght errors
-//    MoveData result = check_input(input);
     if (validate_command(input, currentPlayer) != INVALID) {
         // If the input was a command return it. GameHandler will take care of it
         return validate_command(input, currentPlayer);
@@ -77,20 +75,20 @@ void UI::init(GameEngine &engine) {
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.m_whitePlayer.m_name = playerName;
+        engine.m_whitePlayer.name = playerName;
         engine.m_whitePlayer.m_color = BIANCO;
     } else {
-        engine.m_whitePlayer.m_name = "Nope";
+        engine.m_whitePlayer.name = "Nope";
         engine.m_whitePlayer.m_color = BIANCO;
     }
 
     std::cout << "Chi gioca nero?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.m_blackPlayer.m_name = playerName;
+        engine.m_blackPlayer.name = playerName;
         engine.m_blackPlayer.m_color = NERO;
     } else {
-        engine.m_blackPlayer.m_name = "Nope";
+        engine.m_blackPlayer.name = "Nope";
         engine.m_blackPlayer.m_color = NERO;
     }
 }
