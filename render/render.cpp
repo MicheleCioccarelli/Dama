@@ -17,24 +17,24 @@ void RenderV2::render_top(int row) {
         for (int i = 0; i < COLUMNS; i++) {
             RenderSquare currentSquare = m_colorMatrix.matrix[row][i];
 
-            std::cout << BOARD_COLOR << currentSquare.m_topLeftCorner << RESET;
+            std::cout << BOARD_COLOR << currentSquare.topLeftCorner << RESET;
 
-            std::cout << currentSquare.m_color.m_northColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
+            std::cout << currentSquare.color.m_northColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
                       HORIZONTAL_LINE << HORIZONTAL_LINE << HORIZONTAL_LINE << RESET;
     }
-    std::cout << BOARD_COLOR << m_colorMatrix.matrix[row][COLUMNS - 1].m_topRightCorner << RESET;
+    std::cout << BOARD_COLOR << m_colorMatrix.matrix[row][COLUMNS - 1].topRightCorner << RESET;
 }
 
 void RenderV2::render_bottom(int row) {
     for (int i = 0; i < COLUMNS; i++) {
         RenderSquare currentSquare = m_colorMatrix.matrix[row][i];
 
-        std::cout << BOARD_COLOR << currentSquare.m_bottomLeftCorner << RESET;
+        std::cout << BOARD_COLOR << currentSquare.bottomLeftCorner << RESET;
 
-        std::cout << currentSquare.m_color.m_southColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
+        std::cout << currentSquare.color.m_southColor << HORIZONTAL_LINE << HORIZONTAL_LINE <<
                   HORIZONTAL_LINE << HORIZONTAL_LINE << HORIZONTAL_LINE << RESET;
     }
-    std::cout << BOARD_COLOR << m_colorMatrix.matrix[row][COLUMNS - 1].m_bottomRightCorner << RESET;
+    std::cout << BOARD_COLOR << m_colorMatrix.matrix[row][COLUMNS - 1].bottomRightCorner << RESET;
 }
 
 void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
@@ -47,18 +47,24 @@ void RenderV2::render_middle(int row, Board &board, PlayerColor color) {
                 currentPiece = square_resolve(Coords(ColumnNotation(7 - i), 7 - row), board);
             }
 
-            std::cout << currentColor.m_color.m_westColor << VERTICAL_LINE << RESET;
+            std::cout << currentColor.color.m_westColor << VERTICAL_LINE << RESET;
             std::cout << FILLING << FILLING;
             //Note for future (if you want to color pieces) this is where you render pieces
             std::cout << PIECE_COLOR << currentPiece << RESET;
             std::cout << FILLING << FILLING;
         }
-        std::cout << m_colorMatrix.matrix[row][COLUMNS - 1].m_color.m_eastColor << VERTICAL_LINE << RESET;
+        std::cout << m_colorMatrix.matrix[row][COLUMNS - 1].color.m_eastColor << VERTICAL_LINE << RESET;
 }
 
 void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // If move.color is TRASPARENTE the move wasn't provided and the board should be white, otherwize color according to the move
-    if (move.m_playerColor != TRASPARENTE) {
+    // Doesn't assume matrix notation
+
+    // Bad fix :C
+    if (!move.blownCoord.is_uninitialized()) {
+        move.blownCoord.row++;
+    }
+    if (move.playerColor != TRASPARENTE) {
         m_colorMatrix.color_board(move);
         if (color == NERO) {
             m_colorMatrix.flip_board();
@@ -259,10 +265,10 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
      }
 
      // White number of moves
-     if (whitePlayer.m_moves.size() <= 9) {
-         std::cout << VERTICAL_LINE << "   " << whitePlayer.m_moves.size() << "  ";
+     if (whitePlayer.moves.size() <= 9) {
+         std::cout << VERTICAL_LINE << "   " << whitePlayer.moves.size() << "  ";
      } else {
-         std::cout << VERTICAL_LINE << "  " << whitePlayer.m_moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "  " << whitePlayer.moves.size() << "  ";
      }
      std::cout << VERTICAL_LINE;
 
@@ -294,10 +300,10 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
          std::cout << "  " << blackPieces << "  ";
      }
 
-     if (blackPlayer.m_moves.size() <= 9) {
-         std::cout << VERTICAL_LINE << "   " << blackPlayer.m_moves.size() << "  ";
+     if (blackPlayer.moves.size() <= 9) {
+         std::cout << VERTICAL_LINE << "   " << blackPlayer.moves.size() << "  ";
      } else {
-         std::cout << VERTICAL_LINE << "  " << blackPlayer.m_moves.size() << "  ";
+         std::cout << VERTICAL_LINE << "  " << blackPlayer.moves.size() << "  ";
      }
      std::cout << VERTICAL_LINE << std::endl;
 

@@ -13,18 +13,21 @@ private:
 public:
     // If this move lead to a promotion of its piece
     bool m_wasPromotion = false;
-    std::vector<Coords> m_eatenCoords;
+    std::vector<Coords> eatenCoords;
     // New pieces are added by move check functions
-    std::vector<Piece> m_eatenPieces;
+    std::vector<Piece> eatenPieces;
 
-    Coords m_startingCoord;
-    Coords m_endingCoord;
+    Coords startingCoord;
+    Coords endingCoord;
 
-    Coords m_blownCoord;
+    Coords blownCoord;
 
-    PlayerColor m_playerColor;
+    PlayerColor playerColor;
 
-    MoveType m_type;
+    // Writes in the parameter a string version of the move (es "A3-B4")
+    void toString(std::string& whereToStoreTheString);
+
+    MoveType moveType;
     // Any additional information about the move, like its type of command
     MoveData m_status;
     // Add a coordinate to eatenCoords

@@ -23,8 +23,22 @@ fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameNa
         o_file << "@BLACK:" << engine.get_player_name(BIANCO) << "\n";
         o_file << "@NAME:" << gameName << "\n";
         o_file << "@STATE:" << gameState << "\n";
+        o_file << "@MOVES:";
         // ADD ALL THE MOVES
+//        for (int i = 0; i < engine.blackPlayer.moves.size(); i++) {
+//            std::cout << "[" << engine.whitePlayer.moves[i].toString() << "],";
+//            if (engine.blackPlayer.moves.size() > i) {
+//                std::cout << "[" << engine.blackPlayer.moves[i].toString() << "]";
+//                if (i < engine.blackPlayer.moves.size() - 1) {
+//                    std::cout << ",";
+//                }
+//            }
+//        }
     }
+
+
+
+    // CHECK BETTER BLOW MOVES AND REPETITION
 
     o_file.close();
     return FILE_CLOSED_CORRECTELY;

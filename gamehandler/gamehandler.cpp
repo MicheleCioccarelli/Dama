@@ -18,13 +18,13 @@ void GameHandler::two_player_game(GameEngine& engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.m_render.render_board(engine.m_board, BIANCO);
+    engine.render.render_board(engine.board, BIANCO);
 
     Move move = Move(BIANCO);
 
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
-        move.m_playerColor = current_color;
+        move.playerColor = current_color;
 
         // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);
@@ -44,32 +44,48 @@ void GameHandler::two_player_game(GameEngine& engine) {
         }
         if (!gameWasEndedByCommand) {
             // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
-            engine.m_render.render_board(engine.m_board, current_color, move);
+            engine.render.render_board(engine.board, current_color, move);
 
             // Switch player every turn, used both for colors and for move logs
             switch (current_color) {
                 case BIANCO:
-                    current_color = engine.m_blackPlayer.m_color;
+                    current_color = engine.blackPlayer.color;
                     break;
                 case NERO:
-                    current_color = engine.m_whitePlayer.m_color;
+                    current_color = engine.whitePlayer.color;
                     break;
                 default:
                     break;
             }
-            engine.m_render.render_board(engine.m_board, current_color, move);
+            engine.render.render_board(engine.board, current_color, move);
         } else {
+            std::string temp {};
+            for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
+                engine.whitePlayer.moves[i].toString(temp);
+                std::cout << "[" << temp << "]";
+                if (i < engine.whitePlayer.moves.size() - 1) {
+                    std::cout << ",";
+                }
+                if (engine.blackPlayer.moves.size() > i) {
+                    engine.blackPlayer.moves[i].toString(temp);
+                    std::cout << "[" << temp << "]";
+                    if (i < engine.blackPlayer.moves.size() - 1) {
+                        std::cout << ",";
+                    }
+                }
+            }
             return;
         }
     }
 
+
     // When the game is over
-    engine.m_render.render_board(engine.m_board, current_color);
+    engine.render.render_board(engine.board, current_color);
 
     int whitePieces = engine.count_pieces(BIANCO);
     int blackPieces = engine.count_pieces(NERO);
-    RenderV2::end_screen(whitePieces, blackPieces, engine.m_whitePlayer, engine.m_blackPlayer, engine.game_over(),
-                         engine.m_start);
+    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+                         engine.start);
 }
 
 void GameHandler::debug(GameEngine &engine) {
@@ -79,25 +95,25 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    engine.m_board.edit_human_notation(Coords(A, 7), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(B, 6), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(C, 7), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(D, 6), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(E, 7), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(F, 6), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(G, 7), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(H, 6), Piece(BIANCO, DAMA));
-    engine.m_board.edit_human_notation(Coords(B, 8), Piece(NERO, DAMA));
-    engine.m_board.edit_human_notation(Coords(D, 8), Piece(NERO, DAMA));
-    engine.m_board.edit_human_notation(Coords(F, 8), Piece(NERO, DAMA));
-    engine.m_board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(A, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(E, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 7), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(H, 6), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(B, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 8), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
 
-    engine.m_render.render_board(engine.m_board, current_color);
+    engine.render.render_board(engine.board, current_color);
     Move move = Move(BIANCO);
     int i = 0;
     // Game over is used to end the game, this can be done by using a command or by reaching a certain position
     while (engine.game_over() == GAME_NOT_OVER) {
-        move.m_playerColor = current_color;
+        move.playerColor = current_color;
         std::vector<Move> movesFound = engine.simulate_piece(Coords(A, 4));
 
         // Get player input (move/command) and handle syntax errors
@@ -117,7 +133,7 @@ void GameHandler::debug(GameEngine &engine) {
         }
         if (!gameWasEndedByCommand) {
             // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
-            engine.m_render.render_board(engine.m_board, current_color, move);
+            engine.render.render_board(engine.board, current_color, move);
             if (i == 1) {
 
                 i = 0;
@@ -129,25 +145,25 @@ void GameHandler::debug(GameEngine &engine) {
             // Switch player every turn, used both for colors and for move logs
             switch (current_color) {
                 case BIANCO:
-                    current_color = engine.m_blackPlayer.m_color;
+                    current_color = engine.blackPlayer.color;
                     break;
                 case NERO:
-                    current_color = engine.m_whitePlayer.m_color;
+                    current_color = engine.whitePlayer.color;
                     break;
                 default:
                     break;
             }
-            engine.m_render.render_board(engine.m_board, current_color, move);
+            engine.render.render_board(engine.board, current_color, move);
         } else {
             return;
         }
     }
 
         // When the game is over
-        engine.m_render.render_board(engine.m_board, current_color);
+        engine.render.render_board(engine.board, current_color);
 
         int whitePieces = engine.count_pieces(BIANCO);
         int blackPieces = engine.count_pieces(NERO);
-        RenderV2::end_screen(whitePieces, blackPieces, engine.m_whitePlayer, engine.m_blackPlayer, engine.game_over(),
-                             engine.m_start);
+        RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+                             engine.start);
 }

@@ -11,18 +11,18 @@
 
 class RenderSquare {
 public:
-    Coords m_coords;
+    Coords coords;
 
     // Stores information about what the sides of the square should look like
-    Color m_color;
+    Color color;
 
     // The color a square is supposed to be renderd as, regardless of what the other colors say
-    std::string m_metaColor;
+    std::string metaColor;
 
-    std::string m_topLeftCorner;
-    std::string m_topRightCorner;
-    std::string m_bottomLeftCorner;
-    std::string m_bottomRightCorner;
+    std::string topLeftCorner;
+    std::string topRightCorner;
+    std::string bottomLeftCorner;
+    std::string bottomRightCorner;
 
     // Colors all of the square's sides in the color
     void paint(std::string& color);

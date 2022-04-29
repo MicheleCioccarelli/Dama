@@ -1,21 +1,21 @@
 #include "player.h"
 
 void Player::add_move(Move move) {
-    m_moves.push_back(move);
+    moves.push_back(move);
 }
 
 PlayerColor Player::other_color() {
-    if (m_color == BIANCO) {
+    if (color == BIANCO) {
         return NERO;
-    } else if (m_color == NERO){
+    } else if (color == NERO){
         return BIANCO;
     }
     return TRASPARENTE;
 }
 
 Player &Player::operator=(const Player &rhs) {
-    this->m_color = rhs.m_color;
-    this->m_moves = rhs.m_moves;
+    this->color = rhs.color;
+    this->moves = rhs.moves;
     this->name = rhs.name;
     return *this;
 }

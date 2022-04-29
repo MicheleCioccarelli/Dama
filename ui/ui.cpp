@@ -6,9 +6,9 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
     std::string raw_input;
 
     if (currentPlayer == BIANCO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_whitePlayer.name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.whitePlayer.name << RESET << " > ";
     } else if (currentPlayer == NERO) {
-        std::cout << "Mossa di " << PLAYER_COLOR << engine.m_blackPlayer.name << RESET << " > ";
+        std::cout << "Mossa di " << PLAYER_COLOR << engine.blackPlayer.name << RESET << " > ";
     }
 
     getline(std::cin, raw_input);
@@ -45,7 +45,7 @@ MoveData UI::get_move(Move& move, GameEngine& engine, const PlayerColor& current
             }
         }
         // The move is legitimate
-        move.m_playerColor = currentPlayer;
+        move.playerColor = currentPlayer;
         if (_position == -1) {
             // There is no blow-type move
             issue = input_to_move(input, move, engine);
@@ -75,21 +75,21 @@ void UI::init(GameEngine &engine) {
     std::cout << "Chi gioca bianco?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.m_whitePlayer.name = playerName;
-        engine.m_whitePlayer.m_color = BIANCO;
+        engine.whitePlayer.name = playerName;
+        engine.whitePlayer.color = BIANCO;
     } else {
-        engine.m_whitePlayer.name = "Nope";
-        engine.m_whitePlayer.m_color = BIANCO;
+        engine.whitePlayer.name = "Nope";
+        engine.whitePlayer.color = BIANCO;
     }
 
     std::cout << "Chi gioca nero?" << std::endl;
     getline(std::cin, playerName);
     if (playerName.size() <= 30) {
-        engine.m_blackPlayer.name = playerName;
-        engine.m_blackPlayer.m_color = NERO;
+        engine.blackPlayer.name = playerName;
+        engine.blackPlayer.color = NERO;
     } else {
-        engine.m_blackPlayer.name = "Nope";
-        engine.m_blackPlayer.m_color = NERO;
+        engine.blackPlayer.name = "Nope";
+        engine.blackPlayer.color = NERO;
     }
 }
 
@@ -98,40 +98,40 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
     Move tempMove;
     switch (input[2]) {
         case '-':
-            if (move.m_type != UNINITIALIZED) {
+            if (move.moveType != UNINITIALIZED) {
                 // The original input contained 2 eat-type moves or 2 move-type moves
                 return DOUBLE_EVENT;
             }
 
-            move.m_type = MOVE;
-            move.m_startingCoord = convert_coords(input.substr(0, 2));
-            move.m_endingCoord = convert_coords(input.substr(3, 5));
+            move.moveType = MOVE;
+            move.startingCoord = convert_coords(input.substr(0, 2));
+            move.endingCoord = convert_coords(input.substr(3, 5));
             break;
         case 'X':
-            if (move.m_type != UNINITIALIZED) {
+            if (move.moveType != UNINITIALIZED) {
                 return DOUBLE_EVENT;
             }
 
-            move.m_type = EAT;
-            move.m_startingCoord = convert_coords(input.substr(0, 2));
+            move.moveType = EAT;
+            move.startingCoord = convert_coords(input.substr(0, 2));
             // Add the coords which were eaten
             for (int i = 3; i <= input.size(); i += 3) {
                 // You can eat up to 3 pieces at a time
-                move.m_eatenCoords.push_back(convert_coords(input.substr(i, i + 1)));
+                move.eatenCoords.push_back(convert_coords(input.substr(i, i + 1)));
             }
             move.calculate_endingCoord();
             break;
         case '*':
-            if (!move.m_blownCoord.is_uninitialized()) {
+            if (!move.blownCoord.is_uninitialized()) {
                 return DOUBLE_EVENT;
             }
 
-            tempMove = Move(convert_coords(input.substr(0, 2)), move.m_playerColor, EAT);
+            tempMove = Move(convert_coords(input.substr(0, 2)), move.playerColor, EAT);
             tempMove.push_coords(convert_coords(input.substr(3, 5)));
             result = engine.check_blow(tempMove);
             // engine said the move was correct
             if (result == BLOWABLE) {
-                move.m_blownCoord = tempMove.m_startingCoord;
+                move.blownCoord = tempMove.startingCoord;
             } else {
                 result = ROCK_SOLID;
                 return result;
@@ -140,12 +140,12 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
         default:
             return MISINPUT;
         }
-    for (Coords currentCoord : move.m_eatenCoords) {
+    for (Coords currentCoord : move.eatenCoords) {
         if (currentCoord.is_uninitialized()) {
             return MISINPUT;
         }
     }
-    if (move.m_startingCoord.is_uninitialized() && move.m_type != UNINITIALIZED) {
+    if (move.startingCoord.is_uninitialized() && move.moveType != UNINITIALIZED) {
         return MISINPUT;
     }
     return ALL_GOOD;

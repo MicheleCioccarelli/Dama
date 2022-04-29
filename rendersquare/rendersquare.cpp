@@ -1,75 +1,75 @@
 #include "rendersquare.h"
 
 RenderSquare::RenderSquare(Coords coords) {
-    m_coords = coords;
-    m_metaColor = BOARD_COLOR;
+    coords = coords;
+    metaColor = BOARD_COLOR;
     // Format special squares depending on their position in the board
-    switch (m_coords.row) {
+    switch (coords.row) {
         case 0:
-            if (m_coords.column == 0) {
-                m_bottomLeftCorner = BOTTOM_LEFT;
-                m_bottomRightCorner = DOWN_CHAIN;
-                m_topLeftCorner = LEFT_BORDER;
-                m_topRightCorner = LINK;
-            } else if (m_coords.column == COLUMNS - 1) {
-                m_bottomRightCorner = BOTTOM_RIGHT;
-                m_bottomLeftCorner = DOWN_CHAIN;
-                m_topLeftCorner = LINK;
-                m_topRightCorner = RIGHT_BORDER;
+            if (coords.column == 0) {
+                bottomLeftCorner = BOTTOM_LEFT;
+                bottomRightCorner = DOWN_CHAIN;
+                topLeftCorner = LEFT_BORDER;
+                topRightCorner = LINK;
+            } else if (coords.column == COLUMNS - 1) {
+                bottomRightCorner = BOTTOM_RIGHT;
+                bottomLeftCorner = DOWN_CHAIN;
+                topLeftCorner = LINK;
+                topRightCorner = RIGHT_BORDER;
             } else {
-                m_bottomLeftCorner = DOWN_CHAIN;
-                m_bottomRightCorner = DOWN_CHAIN;
-                m_topLeftCorner = LINK;
-                m_topRightCorner = LINK;
+                bottomLeftCorner = DOWN_CHAIN;
+                bottomRightCorner = DOWN_CHAIN;
+                topLeftCorner = LINK;
+                topRightCorner = LINK;
             }
             break;
         case ROWS - 1:
-            if (m_coords.column == 0) {
-                m_topLeftCorner = TOP_LEFT;
-                m_topRightCorner = UP_CHAIN;
-                m_bottomRightCorner = LINK;
-                m_bottomLeftCorner = LEFT_BORDER;
-            } else if (m_coords.column == COLUMNS - 1) {
-                m_topRightCorner = TOP_RIGHT;
-                m_topLeftCorner = UP_CHAIN;
-                m_bottomRightCorner = RIGHT_BORDER;
-                m_bottomLeftCorner = LINK;
+            if (coords.column == 0) {
+                topLeftCorner = TOP_LEFT;
+                topRightCorner = UP_CHAIN;
+                bottomRightCorner = LINK;
+                bottomLeftCorner = LEFT_BORDER;
+            } else if (coords.column == COLUMNS - 1) {
+                topRightCorner = TOP_RIGHT;
+                topLeftCorner = UP_CHAIN;
+                bottomRightCorner = RIGHT_BORDER;
+                bottomLeftCorner = LINK;
             } else {
-                m_topRightCorner = UP_CHAIN;
-                m_topLeftCorner = UP_CHAIN;
-                m_bottomRightCorner = LINK;
-                m_bottomLeftCorner = LINK;
+                topRightCorner = UP_CHAIN;
+                topLeftCorner = UP_CHAIN;
+                bottomRightCorner = LINK;
+                bottomLeftCorner = LINK;
             }
             break;
         default:
-            if (m_coords.column == 0) {
-                m_topLeftCorner = LEFT_BORDER;
-                m_topRightCorner = LINK;
-                m_bottomLeftCorner = LEFT_BORDER;
-                m_bottomRightCorner = LINK;
+            if (coords.column == 0) {
+                topLeftCorner = LEFT_BORDER;
+                topRightCorner = LINK;
+                bottomLeftCorner = LEFT_BORDER;
+                bottomRightCorner = LINK;
                 break;
-            } else if (m_coords.column == COLUMNS - 1) {
-                m_topLeftCorner = LINK;
-                m_topRightCorner = RIGHT_BORDER;
-                m_bottomRightCorner = RIGHT_BORDER;
-                m_bottomLeftCorner =  LINK;
+            } else if (coords.column == COLUMNS - 1) {
+                topLeftCorner = LINK;
+                topRightCorner = RIGHT_BORDER;
+                bottomRightCorner = RIGHT_BORDER;
+                bottomLeftCorner =  LINK;
                 break;
             }
-            m_topLeftCorner = LINK;
-            m_topRightCorner = LINK;
-            m_bottomRightCorner = LINK;
-            m_bottomLeftCorner = LINK;
+            topLeftCorner = LINK;
+            topRightCorner = LINK;
+            bottomRightCorner = LINK;
+            bottomLeftCorner = LINK;
             break;
     }
 }
 
 RenderSquare &RenderSquare::operator=(const RenderSquare &rhs) {
-    m_coords = rhs.m_coords;
-    m_color = rhs.m_color;
+    coords = rhs.coords;
+    color = rhs.color;
     // Wasn't like this before
-    m_topLeftCorner = rhs.m_topLeftCorner;
-    m_topRightCorner = rhs.m_topRightCorner;
-    m_bottomLeftCorner = rhs.m_bottomLeftCorner;
-    m_bottomRightCorner = rhs.m_bottomRightCorner;
+    topLeftCorner = rhs.topLeftCorner;
+    topRightCorner = rhs.topRightCorner;
+    bottomLeftCorner = rhs.bottomLeftCorner;
+    bottomRightCorner = rhs.bottomRightCorner;
     return *this;
 }

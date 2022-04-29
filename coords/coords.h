@@ -1,12 +1,16 @@
 #pragma once
 
 #include "../enums/ColumnNotatiton.h"
+#include <string>
 
 // Chess notation
 class Coords {
 public:
     ColumnNotation column;
     int row;
+
+    // Writes the acatual coordinates as a string
+    void toString(std::string& whereToStoreTheString);
 
     Coords &operator=(const Coords &rhs);
 

@@ -57,27 +57,27 @@ void Board::empty_game_initialization() {}
 
 void Board::execute_move(Move& move) {
     // Input is assumed as matrix-notation
-    Square startingSquare = matrix[move.m_startingCoord.row][move.m_startingCoord.column];
-    if (move.m_type == EAT) {
-        if (move.m_endingCoord.is_uninitialized()) {
+    Square startingSquare = matrix[move.startingCoord.row][move.startingCoord.column];
+    if (move.moveType == EAT) {
+        if (move.endingCoord.is_uninitialized()) {
             // If this move has type EAT or wasn't constructed properly
             move.calculate_endingCoord();
         }
-        if (move.m_endingCoord.row == ROWS - 1 && move.m_playerColor == BIANCO) {
+        if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
             move.m_wasPromotion = true;
-        } else if (move.m_endingCoord.row == 0 && move.m_playerColor == NERO) {
+        } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
             move.m_wasPromotion = true;
         }
-        if (move.m_eatenPieces.empty()) {
+        if (move.eatenPieces.empty()) {
             // Eat all the target pieces
-            for (Coords &currentCoord: move.m_eatenCoords) {
+            for (Coords &currentCoord: move.eatenCoords) {
                 // Save the piece you destroy: used in GameEngine::time_machine()
-                move.m_eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].m_piece);
+                move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].m_piece);
                 // Destroy the pieces
                 matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
             }
         } else {
-            for (Coords &currentCoord: move.m_eatenCoords) {
+            for (Coords &currentCoord: move.eatenCoords) {
                 // Destroy the pieces
                 matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
             }
@@ -87,13 +87,13 @@ void Board::execute_move(Move& move) {
     if (move.m_wasPromotion) {
         startingSquare.m_piece.m_type = DAMONE;
     }
-    matrix[move.m_endingCoord.row][move.m_endingCoord.column].m_piece = startingSquare.m_piece;
-    matrix[move.m_startingCoord.row][move.m_startingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
+    matrix[move.endingCoord.row][move.endingCoord.column].m_piece = startingSquare.m_piece;
+    matrix[move.startingCoord.row][move.startingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
 }
 
 void Board::blow_up(Move& move) {
     // Assumes matrix notation
-    edit_matrix_notation(Coords(move.m_blownCoord.column, move.m_blownCoord.row), Piece(TRASPARENTE, VUOTA));
+    edit_matrix_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }
 
 void Board::edit_matrix_notation(Coords coords, Piece _piece) {

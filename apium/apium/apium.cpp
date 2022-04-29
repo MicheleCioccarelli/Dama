@@ -3,7 +3,7 @@
 float Apium::evaluate_piece(Coords pieceCoords) {
     // Expects matrix-notation
     float pieceEval = 0;
-    Piece tempPiece = engine.m_board.matrix[pieceCoords.row][pieceCoords.column].m_piece;
+    Piece tempPiece = engine.board.matrix[pieceCoords.row][pieceCoords.column].m_piece;
 
     // There was no piece in the position
     if (tempPiece.m_type == VUOTA) {
