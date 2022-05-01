@@ -399,8 +399,7 @@ MoveIssue GameEngine::submit(Move& move) {
     }
     if (status == ALL_GOOD) {
         // Dispatch the move
-        if (!move.blownCoord.is_uninitialized()) {
-            move.blownCoord = move.blownCoord.convert_coords();
+        if (!tempMove.blownCoord.is_uninitialized()) {
             board.blow_up((Move&) tempMove);
         }
         board.execute_move((Move&) tempMove);

@@ -60,10 +60,6 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // If move.color is TRASPARENTE the move wasn't provided and the board should be white, otherwize color according to the move
     // Doesn't assume matrix notation
 
-    // Bad fix :C
-    if (!move.blownCoord.is_uninitialized()) {
-        move.blownCoord.row++;
-    }
     if (move.playerColor != TRASPARENTE) {
         m_colorMatrix.color_board(move);
         if (color == NERO) {
