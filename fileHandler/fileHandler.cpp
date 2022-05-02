@@ -25,15 +25,30 @@ fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameNa
         o_file << "@STATE:" << gameState << "\n";
         o_file << "@MOVES:";
         // ADD ALL THE MOVES
-//        for (int i = 0; i < engine.blackPlayer.moves.size(); i++) {
-//            std::cout << "[" << engine.whitePlayer.moves[i].toString() << "],";
-//            if (engine.blackPlayer.moves.size() > i) {
-//                std::cout << "[" << engine.blackPlayer.moves[i].toString() << "]";
-//                if (i < engine.blackPlayer.moves.size() - 1) {
-//                    std::cout << ",";
-//                }
-//            }
-//        }
+        std::string temp {};
+        int movesToPrint = engine.whitePlayer.moves.size() + engine.blackPlayer.moves.size();
+        for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
+            temp = "";
+            temp += engine.whitePlayer.moves[i].toString();
+            o_file << "[" << temp << "]";
+
+            movesToPrint--;
+
+            if (movesToPrint > 0) {
+                o_file << ",";
+            }
+            temp = "";
+            if (engine.blackPlayer.moves.size() > i) {
+                temp += engine.blackPlayer.moves[i].toString();
+                o_file << "[" << temp << "]";
+
+                movesToPrint--;
+
+                if (movesToPrint > 0) {
+                    std::cout << ",";
+                }
+            }
+        }
     }
 
 

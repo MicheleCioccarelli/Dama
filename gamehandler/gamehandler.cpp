@@ -59,25 +59,16 @@ void GameHandler::two_player_game(GameEngine& engine) {
             }
             engine.render.render_board(engine.board, current_color, move);
         } else {
-            std::string temp {};
-            for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
-                engine.whitePlayer.moves[i].toString(temp);
-                std::cout << "[" << temp << "]";
-                if (i < engine.whitePlayer.moves.size() - 1) {
-                    std::cout << ",";
-                }
-                if (engine.blackPlayer.moves.size() > i) {
-                    engine.blackPlayer.moves[i].toString(temp);
-                    std::cout << "[" << temp << "]";
-                    if (i < engine.blackPlayer.moves.size() - 1) {
-                        std::cout << ",";
-                    }
-                }
+            std::cout << "Vuoi salvare la partita? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n" << RESET << "]\n> ";
+            char choice {};
+            std::cin >> choice;
+            if (choice == 's') {
+                std::cin.ignore(100, '\n');
+                CommandHandler::execute_command(engine, SAVE);
             }
             return;
         }
     }
-
 
     // When the game is over
     engine.render.render_board(engine.board, current_color);
@@ -86,6 +77,13 @@ void GameHandler::two_player_game(GameEngine& engine) {
     int blackPieces = engine.count_pieces(NERO);
     RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                          engine.start);
+    std::cout << "Vuoi salvare la partita? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n" << RESET << "]\n> ";
+    char choice {};
+    std::cin >> choice;
+    if (choice == 's') {
+        std::cin.ignore(100, '\n');
+        CommandHandler::execute_command(engine, SAVE);
+    }
 }
 
 void GameHandler::debug(GameEngine &engine) {
@@ -95,6 +93,7 @@ void GameHandler::debug(GameEngine &engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
+    // OH BOY
     engine.board.edit_human_notation(Coords(A, 7), Piece(BIANCO, DAMA));
     engine.board.edit_human_notation(Coords(B, 6), Piece(BIANCO, DAMA));
     engine.board.edit_human_notation(Coords(C, 7), Piece(BIANCO, DAMA));

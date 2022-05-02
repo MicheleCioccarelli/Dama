@@ -4,37 +4,40 @@ Coords Coords::convert_coords() const {
     return {column, row - 1};
 }
 
-void Coords::toString(std::string& whereToStoreTheString) {
+std::string Coords::toString() {
+    std::string output {};
+
     // FIRST COORD
     switch (column) {
         case A :
-            whereToStoreTheString += "A";
+            output += "A";
             break;
         case B :
-            whereToStoreTheString += "B";
+            output += "B";
             break;
         case C :
-            whereToStoreTheString += "C";
+            output += "C";
             break;
         case D :
-            whereToStoreTheString += "D";
+            output += "D";
             break;
         case E :
-            whereToStoreTheString += "E";
+            output += "E";
             break;
         case F :
-            whereToStoreTheString += "F";
+            output += "F";
             break;
         case G :
-            whereToStoreTheString += "G";
+            output += "G";
             break;
         case H :
-            whereToStoreTheString += "H";
+            output += "H";
             break;
         default:
-            whereToStoreTheString += "?";
+            output += "?";
     }
-    whereToStoreTheString += std::to_string(row);
+    output += std::to_string(row + 1);
+    return output;
 }
 
 Coords &Coords::operator=(const Coords &rhs) {

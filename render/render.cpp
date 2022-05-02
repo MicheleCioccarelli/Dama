@@ -66,6 +66,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
             m_colorMatrix.flip_board();
         }
     }
+
     std::cout << "    ";
     render_top(ROWS - 1);
     std::cout << std::endl;
@@ -390,18 +391,19 @@ void RenderV2::help_page() {
 
     std::cout << "Comandi:" << std::endl;
     padding(3);
-    std::cout << COMMAND_COLOR << "Resign" << RESET << ":  il giocatore che scrive \"resign\" si arrende";
-    std::cout << std::endl;
-    padding(3);
-    std::cout << COMMAND_COLOR << "Summary" << RESET << ": fornisce i dettagli della partita";
-    std::cout << std::endl;
-    padding(3);
-    std::cout << COMMAND_COLOR << "Draw" << RESET << ":    si offre un pareggio";
-    std::cout << std::endl;
-    padding(3);
-    std::cout << COMMAND_COLOR << "Quit" << RESET << ":    il programma termina l'esecuzione";
-    std::cout << std::endl;
+    std::cout << COMMAND_COLOR << "Resign" << RESET << ":  il giocatore che scrive \"resign\" si arrende\n";
 
+    padding(3);
+    std::cout << COMMAND_COLOR << "Summary" << RESET << ": fornisce i dettagli della partita\n";
+
+    padding(3);
+    std::cout << COMMAND_COLOR << "Draw" << RESET << ":    si offre un pareggio\n";
+
+    padding(3);
+    std::cout << COMMAND_COLOR << "Quit" << RESET << ":    il programma termina l'esecuzione\n";
+
+    padding(3);
+    std::cout << COMMAND_COLOR << "Save" << RESET << ":    salvare i contenuti della partita in un file .dama\n";
 
     for (int i = 1; i < 22; i++) {
         std::cout << "════";

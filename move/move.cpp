@@ -11,25 +11,35 @@ void Move::pop_coords() {
     eatenCoords.erase(eatenCoords.end() - 1);
 }
 
-void Move::toString(std::string& whereToStoreTheString) {
-    whereToStoreTheString = "";
+std::string Move::toString() {
+    std::string ouput {};
 
-    startingCoord.toString(whereToStoreTheString);
+    if (!blownCoord.is_uninitialized()) {
+        ouput += blownCoord.toString();
+        ouput += "*";
+        ouput += endingBlowCoord.toString();
+        ouput += "_";
+    }
+
+    ouput += startingCoord.toString();
 
     // OPERATORS
     switch (moveType) {
         case MOVE:
-            whereToStoreTheString += "-";
+            ouput += "-";
+            ouput += endingCoord.toString();
             break;
         case EAT:
-            whereToStoreTheString += "x";
+            ouput += "x";
             for (Coords coord : eatenCoords) {
-                coord.toString(whereToStoreTheString);
-                whereToStoreTheString += "x";
+                ouput += coord.toString();
+                ouput += "x";
             }
+            // Delete the last excess "x"
+            ouput.pop_back();
             break;
     }
-    endingCoord.toString(whereToStoreTheString);
+    return ouput;
 }
 
 bool Move::is_misinput() const {

@@ -54,8 +54,7 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
             }
         case SAVE:
             // If at any point the user enters q we should quit
-            std::cout << "Comando di salvataggio [" << RED << "q" << RESET << " per uscire]\n";
-            std::cout << "Che nome vuoi dare alla partita?\n> ";
+            std::cout << "Che nome vuoi dare alla partita? [" << RED << "q" << RESET << " per uscire]\n> ";
             getline(std::cin, gameName);
             if (gameName == "q") {
                 std::cout << "\nChiuso il menu di salvataggio";

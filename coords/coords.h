@@ -9,8 +9,8 @@ public:
     ColumnNotation column;
     int row;
 
-    // Writes the acatual coordinates as a string
-    void toString(std::string& whereToStoreTheString);
+    // RETURNS HUMAN NOTATION
+    std::string toString();
 
     Coords &operator=(const Coords &rhs);
 

@@ -132,6 +132,7 @@ MoveIssue UI::input_to_move(const std::string &input, Move &move, GameEngine& en
             // engine said the move was correct
             if (result == BLOWABLE) {
                 move.blownCoord = tempMove.startingCoord;
+                move.endingBlowCoord = tempMove.eatenCoords[0];
             } else {
                 result = ROCK_SOLID;
                 return result;

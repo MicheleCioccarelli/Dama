@@ -21,11 +21,13 @@ public:
     Coords endingCoord;
 
     Coords blownCoord;
+    // The last coord of a blow move (in the move A3*B4_f6-e5 it would be B4)
+    Coords endingBlowCoord;
 
     PlayerColor playerColor;
 
     // Writes in the parameter a string version of the move (es "A3-B4")
-    void toString(std::string& whereToStoreTheString);
+    std::string toString();
 
     MoveType moveType;
     // Any additional information about the move, like its type of command
