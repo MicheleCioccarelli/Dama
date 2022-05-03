@@ -60,7 +60,7 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 std::cout << "\nChiuso il menu di salvataggio";
                 return false;
             }
-            std::cout << "Dove vuoi che il file sia salato [non scrivere nessuna path per salvare nella directory dell'eseguibile]\n> ";
+            std::cout << "Dove vuoi che il file sia salvato [non scrivere nessuna path per salvare nella directory dell'eseguibile]\n> ";
             getline(std::cin, path);
             if (path == "q") {
                 std::cout << "\nChiuso il menu di salvataggio";

@@ -4,6 +4,7 @@ fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameNa
 
     if (filePath.find(gameName) == std::string::npos) {
         // The user didn't already put the game name in the path
+        filePath.append("/");
         filePath.append(gameName);
     }
 

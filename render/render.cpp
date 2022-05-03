@@ -128,14 +128,17 @@ void RenderV2::render_rows(PlayerColor color, int row) {
 void RenderV2::render_columns(PlayerColor color) {
     int k;
     std::cout << "       ";
+
     for (int i = 0; i < COLUMNS; i++) {
         if (color == NERO) {
             k = 7 - i;
         } else {
             k = i;
         }
-        // a ASCII's value is 97
+
+        // a ASCII's value is 97        | mmh very useful comment
         char currentLetter = 'A' + k;
+
         std::cout << BOARD_COLOR << currentLetter << RESET;
         std::cout << "     ";
     }
