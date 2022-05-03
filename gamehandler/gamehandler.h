@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../render/render.h"
+#include "../helpPages/helpPages.h"
 #include "../ui/ui.h"
 #include "../enums/cliCases.h"
 #include "../commandHandler/commandHandler.h"

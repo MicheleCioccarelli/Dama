@@ -12,6 +12,8 @@ enum MoveData {
     RESIGNED,
     // The user used a help page
     HELP_PAGE,
+    // The user wants to see more info about the commands
+    COMMAND_HELP_PAGE,
     // The player has requested a summary command
     SUMMARY,
     // Someone has offered a draw, used in UI::get_move()

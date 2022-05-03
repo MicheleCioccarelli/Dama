@@ -13,7 +13,10 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
     // Returns true if the game should be ended
     switch (command) {
         case HELP_PAGE:
-            RenderV2::help_page();
+            HelpPages::help_page();
+            return false;
+        case COMMAND_HELP_PAGE:
+            HelpPages::commands_help_page();
             return false;
         case SUMMARY:
             RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO), engine.whitePlayer, engine.blackPlayer, GAME_NOT_OVER, engine.start);

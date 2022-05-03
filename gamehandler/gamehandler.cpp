@@ -4,10 +4,10 @@ void GameHandler::cli_error(cliCase error) {
     switch (error) {
         case TOO_MANY_ARGUMENTS:
             std::cout << ERROR_COLOR << "Troppi argomenti" << RESET;
-            RenderV2::cli_help_page();
+            HelpPages::cli_help_page();
         case WRONG_ARGUMENT:
             std::cout << ERROR_COLOR << "Comando non valido" << RESET;
-            RenderV2::cli_help_page();
+            HelpPages::cli_help_page();
     }
 }
 

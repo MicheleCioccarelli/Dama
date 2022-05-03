@@ -44,10 +44,4 @@ public:
     static void center_name(std::string& name, int longerName, const std::string& color = BOARD_COLOR);
 
     static void end_screen(int whitePieces, int blackPieces, Player whitePlayer, Player blackPlayer, GameState result, time_t start) ;
-
-    // Called when the executable receives wrong command line arguments
-    static void cli_help_page();
-
-    // Called when in a game someone types "aiuto"
-    static void help_page();
 };

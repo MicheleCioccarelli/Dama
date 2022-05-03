@@ -159,6 +159,8 @@ void UI::handle_issue(MoveIssue issue) {
 MoveData UI::validate_command(std::string &input, PlayerColor currentPlayer) {
     if (input == "AIUTO") {
         return HELP_PAGE;
+    } else if (input == "COMANDI") {
+        return COMMAND_HELP_PAGE;
     } else if (input == "RESIGN") {
         if (currentPlayer == BIANCO) {
             return WHITE_RESIGN;

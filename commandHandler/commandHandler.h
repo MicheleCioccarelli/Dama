@@ -2,6 +2,7 @@
 #include "../enums/MoveData.h"
 #include "../enums/MoveIssue.h"
 #include "../fileHandler/fileHandler.h"
+#include "../helpPages/helpPages.h"
 
 class CommandHandler {
 public:
