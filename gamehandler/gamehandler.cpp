@@ -18,6 +18,10 @@ void GameHandler::two_player_game(GameEngine& engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
+    std::string a {"WB3_bC5"};
+
+    BoardPos::notation_to_board(a, engine.board);
+
     engine.render.render_board(engine.board, BIANCO);
 
     Move move = Move(BIANCO);

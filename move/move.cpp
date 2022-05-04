@@ -11,7 +11,7 @@ void Move::pop_coords() {
     eatenCoords.erase(eatenCoords.end() - 1);
 }
 
-std::string Move::toString() {
+std::string Move::toString() const{
     std::string ouput {};
 
     if (!blownCoord.is_uninitialized()) {

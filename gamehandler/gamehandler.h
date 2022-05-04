@@ -4,11 +4,11 @@
 #include "../ui/ui.h"
 #include "../enums/cliCases.h"
 #include "../commandHandler/commandHandler.h"
+#include "../boardPos/boardPos.h"
 
 // Runs the game
-class GameHandler {
-public:
-    static void debug(GameEngine& engine);
-    static void two_player_game(GameEngine& engine);
-    static void cli_error(cliCase error);
+namespace GameHandler {
+    void debug(GameEngine& engine);
+    void two_player_game(GameEngine& engine);
+    void cli_error(cliCase error);
 };

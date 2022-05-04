@@ -27,7 +27,7 @@ public:
     PlayerColor playerColor;
 
     // Writes in the parameter a string version of the move (es "A3-B4")
-    std::string toString();
+    std::string toString() const;
 
     MoveType moveType;
     // Any additional information about the move, like its type of command

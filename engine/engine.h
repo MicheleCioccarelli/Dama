@@ -54,7 +54,7 @@ public:
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);
 
-    std::string get_player_name(PlayerColor color);
+    std::string get_player_name(PlayerColor color) const;
 
     /**
      * Checks if a move can be executed, if not returns the reason why

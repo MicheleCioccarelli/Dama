@@ -23,7 +23,7 @@ GameEngine::GameEngine(GameStyle gameStyle)
     }
 }
 
-std::string GameEngine::get_player_name(PlayerColor color) {
+std::string GameEngine::get_player_name(PlayerColor color) const{
     if (color == BIANCO) {
         return whitePlayer.name;
     } else {

@@ -10,7 +10,7 @@ public:
     int row;
 
     // RETURNS HUMAN NOTATION
-    std::string toString();
+    std::string toString() const;
 
     Coords &operator=(const Coords &rhs);
 

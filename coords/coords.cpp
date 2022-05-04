@@ -4,7 +4,7 @@ Coords Coords::convert_coords() const {
     return {column, row - 1};
 }
 
-std::string Coords::toString() {
+std::string Coords::toString() const{
     std::string output {};
 
     // FIRST COORD

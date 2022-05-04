@@ -18,6 +18,9 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
         case COMMAND_HELP_PAGE:
             HelpPages::commands_help_page();
             return false;
+        case MOVEORDER:
+            FileHandler::print_move_sequence(engine);
+            return false;
         case SUMMARY:
             RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO), engine.whitePlayer, engine.blackPlayer, GAME_NOT_OVER, engine.start);
             return false;

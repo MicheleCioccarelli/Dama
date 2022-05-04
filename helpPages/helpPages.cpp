@@ -94,6 +94,11 @@ void HelpPages::commands_help_page() {
     std::cout << "| il programma termina l'esecuzione\n";
 
     RenderV2::padding(3);
+    std::cout << COMMAND_COLOR << "MoveOrder" << RESET;
+    RenderV2::padding(18);
+    std::cout << "| Stampa la sequenza di mosse che hanno originato la posizione corrente\n";
+
+    RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Save" << RESET;
     RenderV2::padding(23);
     std::cout <<  "| salvare i contenuti della partita in un file .dama\n";

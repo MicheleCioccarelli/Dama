@@ -12,6 +12,9 @@ class Board {
 public:
     std::array<std::array<Square, COLUMNS>, ROWS> matrix;
 
+    // Deletes all the pieces on the board
+    void clear();
+
     // Put white peaces in rows 1 ~ 3 and black in the upper three
     void standard_game_initialization();
 

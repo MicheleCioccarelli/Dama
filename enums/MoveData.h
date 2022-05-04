@@ -16,6 +16,8 @@ enum MoveData {
     COMMAND_HELP_PAGE,
     // The player has requested a summary command
     SUMMARY,
+    // Command to print the move order that lead up to the current position
+    MOVEORDER,
     // Someone has offered a draw, used in UI::get_move()
     DRAW_OFFER,
     // White has offered a draw

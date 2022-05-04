@@ -4,8 +4,7 @@
 #include "../enums/fileIssue.h"
 #include "../engine/engine.h"
 
-class FileHandler {
-public:
+namespace FileHandler {
     /** engine provides player names and move history
      *  gameState describes the state of the game at the moment it is being saved:
      *  0 = Game is still going on
@@ -13,5 +12,7 @@ public:
      *  2 = Black won
      *  3 = Draw
      */
-    static fileIssue create_file(GameEngine& engine, const std::string& gameName, std::string& filePath, const int gameState);
+     fileIssue create_file(const GameEngine& engine, const std::string& gameName, std::string& filePath, const int gameState);
+
+     void print_move_sequence(const GameEngine& engine);
 };

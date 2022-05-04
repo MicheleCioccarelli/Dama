@@ -16,6 +16,14 @@ Board::Board() {
     }
 }
 
+void Board::clear() {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+            matrix[row][col].m_piece = Piece(TRASPARENTE, VUOTA);
+        }
+    }
+}
+
 // ======= PIECE INITIALIZATION =======
 void Board::standard_game_initialization() {
     // Initialize pieces

@@ -1,6 +1,6 @@
 #include "fileHandler.h"
 
-fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameName, std::string &filePath, const int gameState) {
+fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& gameName, std::string &filePath, const int gameState) {
 
     if (filePath.find(gameName) == std::string::npos) {
         // The user didn't already put the game name in the path
@@ -51,11 +51,37 @@ fileIssue FileHandler::create_file(GameEngine &engine, const std::string& gameNa
             }
         }
     }
-
-
-
     // CHECK BETTER BLOW MOVES AND REPETITION
 
     o_file.close();
     return FILE_CLOSED_CORRECTELY;
+}
+
+void FileHandler::print_move_sequence(const GameEngine& engine) {
+
+    std::string temp {};
+    int movesToPrint = engine.whitePlayer.moves.size() + engine.blackPlayer.moves.size();
+    for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
+        temp = "";
+        temp += engine.whitePlayer.moves[i].toString();
+        std::cout << "[" << temp << "]";
+
+        movesToPrint--;
+
+        if (movesToPrint > 0) {
+            std::cout << ",";
+        }
+        temp = "";
+        if (engine.blackPlayer.moves.size() > i) {
+            temp += engine.blackPlayer.moves[i].toString();
+            std::cout << "[" << temp << "]";
+
+            movesToPrint--;
+
+            if (movesToPrint > 0) {
+                std::cout << ",";
+            }
+        }
+    }
+    std::cout << "\n";
 }
