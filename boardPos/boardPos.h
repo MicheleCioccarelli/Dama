@@ -5,7 +5,7 @@
 
 namespace BoardPos {
     // Overwrites board with the informarion contained in notation
-    void notation_to_board(std::string& notation, Board& board);
+    bool notation_to_board(std::string& notation, Board& board);
 
     // Returns the piece associated with a letter (w, W, b, B) see wiki for more details
     Piece char_to_piece(char c);

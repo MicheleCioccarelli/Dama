@@ -18,6 +18,10 @@ enum MoveData {
     SUMMARY,
     // Command to print the move order that lead up to the current position
     MOVEORDER,
+    // Overwrite the current board using BoardPos notation
+    BOARDPOS,
+    // Command to print out the current board position using boardPos notation
+    GENERATEBOARDPOS,
     // Someone has offered a draw, used in UI::get_move()
     DRAW_OFFER,
     // White has offered a draw

@@ -3,6 +3,7 @@
 #include "../enums/MoveIssue.h"
 #include "../fileHandler/fileHandler.h"
 #include "../helpPages/helpPages.h"
+#include "../boardPos/boardPos.h"
 
 class CommandHandler {
 public:

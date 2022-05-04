@@ -18,9 +18,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
     MoveData issue;
     bool gameWasEndedByCommand = false;
 
-    std::string a {"WB3_bC5"};
-
-    BoardPos::notation_to_board(a, engine.board);
+    char choice {};
 
     engine.render.render_board(engine.board, BIANCO);
 
@@ -43,6 +41,13 @@ void GameHandler::two_player_game(GameEngine& engine) {
                     gameWasEndedByCommand = true;
                     break;
                 }
+                if (issue == BOARDPOS) {
+                    std::cout << "Vuoi stampare la configurazione corrente? [s/n]\n";
+                    std::cin >> choice;
+                    std::cin.ignore(100, '\n');
+                    if (choice == 's')
+                        engine.render.render_board(engine.board, BIANCO);
+                }
             }
             issue = UI::get_move(move, engine, current_color);
         }
@@ -64,10 +69,9 @@ void GameHandler::two_player_game(GameEngine& engine) {
             engine.render.render_board(engine.board, current_color, move);
         } else {
             std::cout << "Vuoi salvare la partita? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n" << RESET << "]\n> ";
-            char choice {};
             std::cin >> choice;
+            std::cin.ignore(100, '\n');
             if (choice == 's') {
-                std::cin.ignore(100, '\n');
                 CommandHandler::execute_command(engine, SAVE);
             }
             return;
@@ -82,10 +86,9 @@ void GameHandler::two_player_game(GameEngine& engine) {
     RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                          engine.start);
     std::cout << "Vuoi salvare la partita? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n" << RESET << "]\n> ";
-    char choice {};
     std::cin >> choice;
+    std::cin.ignore(100, '\n');
     if (choice == 's') {
-        std::cin.ignore(100, '\n');
         CommandHandler::execute_command(engine, SAVE);
     }
 }

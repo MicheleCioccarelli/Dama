@@ -4,6 +4,7 @@
 bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
     char input;
     // Used by the SAVE command
+    std::string boardPos{};
     std::string gameName {};
     std::string path {};
     // 0, 1, or 2. It will be saved in the file
@@ -58,6 +59,17 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 std::cin.ignore(1);
                 return false;
             }
+        case BOARDPOS:
+            std::cout << "Scrivi la nuova configurazione della scacchiera usando la notazione BoardPos [" << REFUSE_DRAW << "q" << RESET << " per uscire]\n";
+            std::cout << RED << "Se la notazione contiene errori la scacchiera potrebbe corrompersi\n" << RESET;
+            getline(std::cin, boardPos);
+            if (boardPos == "q") {
+                return false;
+            }
+            if (!BoardPos::notation_to_board(boardPos, engine.board)) {
+                std::cout << "La notazione scritta conteneva errori :(\n";
+            }
+            return false;
         case SAVE:
             // If at any point the user enters q we should quit
             std::cout << "Che nome vuoi dare alla partita? [" << RED << "q" << RESET << " per uscire]\n> ";

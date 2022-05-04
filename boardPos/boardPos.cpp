@@ -1,6 +1,6 @@
 #include "boardPos.h"
 
-void BoardPos::notation_to_board(std::string &notation, Board &board) {
+bool BoardPos::notation_to_board(std::string &notation, Board &board) {
     // Look for an "-", the three charachters before that are information about the piece and its location.
     // If you don't find an "_" you should process the next 3 charachters if they are present and then stop
 
@@ -34,10 +34,13 @@ void BoardPos::notation_to_board(std::string &notation, Board &board) {
 
                 // Add the piece
                 board.matrix[coords.row][coords.column].m_piece = char_to_piece(beingExamined.at(0));
+            } else {
+                return false;
             }
         }
         // Delete the inserted "_"
         notation.pop_back();
+        return true;
     }
 }
 

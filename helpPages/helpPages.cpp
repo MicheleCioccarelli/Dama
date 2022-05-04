@@ -103,6 +103,13 @@ void HelpPages::commands_help_page() {
     RenderV2::padding(23);
     std::cout <<  "| salvare i contenuti della partita in un file .dama\n";
 
+    RenderV2::padding(3);
+    std::cout << COMMAND_COLOR << "BoardPos" << RESET;
+    RenderV2::padding(19);
+    std::cout <<  "| Sovrascrive la disposizione della scacchiera corrente con una fornita\n";
+    RenderV2::padding(30);
+    std::cout << "| dall'utente usando la notazione BoardPos (vedi wiki)\n";
+
     // More cool padding
     std::cout << "\n";
     for (int i = 1; i < 22; i++) {

@@ -181,6 +181,8 @@ MoveData UI::validate_command(std::string &input, PlayerColor currentPlayer) {
         return QUIT;
     } else if (input == "MOVEORDER") {
         return MOVEORDER;
+    } else if (input == "BOARDPOS") {
+        return BOARDPOS;
     }
     return INVALID;
 }
