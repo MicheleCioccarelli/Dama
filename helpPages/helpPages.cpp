@@ -76,22 +76,22 @@ void HelpPages::commands_help_page() {
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Resign" << RESET;
     RenderV2::padding(21);
-    std::cout << "| il giocatore che scrive \"resign\" si arrende\n";
+    std::cout << "| Il giocatore che scrive \"resign\" si arrende\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Summary" << RESET;
     RenderV2::padding(20);
-    std::cout << "| si stampano i dettagli della partita\n";
+    std::cout << "| Si stampano i dettagli della partita\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Draw" << RESET;
     RenderV2::padding(23);
-    std::cout << "| offerta di pareggio che andra accettata o rifiutata\n";
+    std::cout << "| Offerta di pareggio che andra accettata o rifiutata\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Quit" << RESET;
     RenderV2::padding(23);
-    std::cout << "| il programma termina l'esecuzione\n";
+    std::cout << "| Il programma termina l'esecuzione\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "MoveOrder" << RESET;
@@ -101,14 +101,20 @@ void HelpPages::commands_help_page() {
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Save" << RESET;
     RenderV2::padding(23);
-    std::cout <<  "| salvare i contenuti della partita in un file .dama\n";
+    std::cout <<  "| Salvare i contenuti della partita in un file .dama\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "BoardPos" << RESET;
     RenderV2::padding(19);
-    std::cout <<  "| Sovrascrive la disposizione della scacchiera corrente con una fornita\n";
+    std::cout <<  "| Sovrascrive la disposizione della posizione corrente con una fornita\n";
     RenderV2::padding(30);
     std::cout << "| dall'utente usando la notazione BoardPos (vedi wiki)\n";
+
+    RenderV2::padding(3);
+    std::cout << COMMAND_COLOR << "GenerateBoardPos" << RESET;
+    RenderV2::padding(11);
+    std::cout <<  "| Stampa la notazione BoardPos per la posizione corrente\n";
+
 
     // More cool padding
     std::cout << "\n";

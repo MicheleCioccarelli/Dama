@@ -183,6 +183,8 @@ MoveData UI::validate_command(std::string &input, PlayerColor currentPlayer) {
         return MOVEORDER;
     } else if (input == "BOARDPOS") {
         return BOARDPOS;
+    } else if (input == "GENERATEBOARDPOS") {
+        return GENERATEBOARDPOS;
     }
     return INVALID;
 }

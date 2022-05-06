@@ -70,6 +70,9 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 std::cout << "La notazione scritta conteneva errori :(\n";
             }
             return false;
+        case GENERATEBOARDPOS:
+                std::cout << BoardPos::board_to_noation(engine.board) << "\n";
+            return false;
         case SAVE:
             // If at any point the user enters q we should quit
             std::cout << "Che nome vuoi dare alla partita? [" << RED << "q" << RESET << " per uscire]\n> ";

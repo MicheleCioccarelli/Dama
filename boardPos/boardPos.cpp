@@ -58,3 +58,35 @@ Piece BoardPos::char_to_piece(char c) {
             return {TRASPARENTE, VUOTA};
     }
 }
+
+std::string BoardPos::board_to_noation(const Board &board) {
+    std::string output {};
+
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = 0; col < COLUMNS; col++) {
+            switch (board.matrix[row][col].m_piece.m_color) {
+                case TRASPARENTE:
+                    break;
+                case BIANCO:
+                    board.matrix[row][col].m_piece.m_type == DAMA ? output += "w" : output += "W";
+                    // ADD COLUMN, similar expression to the one used in RenderV2::render_columns()
+
+                    output += (char)('A' + col);
+                    // "+1" is used to convert to human notation
+                    output += std::to_string(row + 1);
+                    output += '_';
+                    break;
+
+                case NERO:
+                    board.matrix[row][col].m_piece.m_type == DAMA ? output += "b" : output += "B";
+
+                    // Same as above
+                    output += (char)('A' + col);
+                    output += std::to_string(row + 1);
+                    output += '_';
+                    break;
+            }
+        }
+    }
+    return output;
+}
