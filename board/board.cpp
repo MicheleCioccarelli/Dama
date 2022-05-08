@@ -38,6 +38,20 @@ void Board::standard_game_initialization() {
     }
 }
 
+void Board::promote() {
+    for (int col = 0; col < COLUMNS; col++) {
+        if (matrix[ROWS - 1][col].m_piece.m_type == DAMA && matrix[ROWS - 1][col].m_piece.m_color == BIANCO) {
+            matrix[ROWS - 1][col].m_piece.m_type = DAMONE;
+        }
+    }
+
+    for (int col = 0; col < COLUMNS; col++) {
+        if (matrix[0][col].m_piece.m_type == DAMA && matrix[ROWS - 1][col].m_piece.m_color == NERO) {
+            matrix[0][col].m_piece.m_type = DAMONE;
+        }
+    }
+}
+
 void Board::colored_game_initialization() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {

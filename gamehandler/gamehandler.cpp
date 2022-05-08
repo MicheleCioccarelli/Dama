@@ -33,7 +33,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
 
         // If issue is valid the move is not a command and does not have syntax errors
         // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
-        while (issue != VALID || engine.submit(move) != ALL_GOOD) {
+        while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
                 if (CommandHandler::execute_command(engine, issue)) {
@@ -41,7 +41,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
                     gameWasEndedByCommand = true;
                     break;
                 }
-                if (issue == BOARDPOS) {
+                if (issue == LOADBOARDPOS) {
                     std::cout << "Vuoi stampare la configurazione corrente? [s/n]\n";
                     std::cin >> choice;
                     std::cin.ignore(100, '\n');
@@ -52,6 +52,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
             issue = UI::get_move(move, engine, current_color);
         }
         if (!gameWasEndedByCommand) {
+            engine.board.promote();
             // Renders looks for the last player's newest move for coloring, then switches the board to the opposite side
             engine.render.render_board(engine.board, current_color, move);
 
@@ -126,7 +127,7 @@ void GameHandler::debug(GameEngine &engine) {
         issue = UI::get_move(move, engine, current_color);
         // If issue is valid the move is not a command and does not have syntax errors
         // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
-        while (issue != VALID || engine.submit(move) != ALL_GOOD) {
+        while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
                 if (CommandHandler::execute_command(engine, issue)) {

@@ -378,10 +378,16 @@ int GameEngine::count_pieces(PlayerColor pColor) const {
     return returnValue;
 }
 
-MoveIssue GameEngine::submit(Move& move) {
+MoveIssue GameEngine::submit(Move& move, PlayerColor color) {
     // Assumes human-notation
     // If this is called the move has no syntactical errors
     MoveIssue status;
+
+    if (deduce_color_human_notation(move) != color) {
+        // Meh fix for being able to move enemy pieces, should be fixed in the future
+        UI::log_error(WRONG_COLOR);
+        return WRONG_COLOR;
+    }
 
     // Create a new move with it's coords converted to matrix notation, this makes it readable by check functions
     Move tempMove = move;

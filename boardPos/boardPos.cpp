@@ -8,6 +8,7 @@ bool BoardPos::notation_to_board(std::string &notation, Board &board) {
     board.clear();
 
     if (notation.size() > 4) {
+        std::transform(notation.begin(), notation.end(), notation.begin(), ::toupper);
         // If notation is not empty/invalid
         std::string beingExamined;
         Coords coords;

@@ -24,6 +24,9 @@ public:
     // Every piece is a damone
     void damone_game_initialization();
 
+    // If any damina has reached its end it gets promoted to a damona
+    void promote();
+
     // Every square is empty
     void empty_game_initialization();
     // After a move gets executed it's perfect, every parameter is in place.

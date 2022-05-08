@@ -49,7 +49,7 @@ public:
     static Coords calculate_forward(const Move& move);
 
     // Does all the checking regarding the move and logs erros if needed TODO Fix isBlown
-    MoveIssue submit(Move& move);
+    MoveIssue submit(Move& move, PlayerColor color);
 
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);

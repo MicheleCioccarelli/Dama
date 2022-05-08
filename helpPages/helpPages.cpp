@@ -76,7 +76,9 @@ void HelpPages::commands_help_page() {
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Resign" << RESET;
     RenderV2::padding(21);
-    std::cout << "| Il giocatore che scrive \"resign\" si arrende\n";
+    std::cout << "| I"
+                 ""
+                 "l giocatore che scrive \"resign\" si arrende\n";
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "Summary" << RESET;
@@ -104,7 +106,7 @@ void HelpPages::commands_help_page() {
     std::cout <<  "| Salvare i contenuti della partita in un file .dama\n";
 
     RenderV2::padding(3);
-    std::cout << COMMAND_COLOR << "BoardPos" << RESET;
+    std::cout << COMMAND_COLOR << "LoadBoardPos" << RESET;
     RenderV2::padding(19);
     std::cout <<  "| Sovrascrive la disposizione della posizione corrente con una fornita\n";
     RenderV2::padding(30);

@@ -59,10 +59,12 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 std::cin.ignore(1);
                 return false;
             }
-        case BOARDPOS:
+        case LOADBOARDPOS:
             std::cout << "Scrivi la nuova configurazione della scacchiera usando la notazione BoardPos [" << REFUSE_DRAW << "q" << RESET << " per uscire]\n";
             std::cout << RED << "Se la notazione contiene errori la scacchiera potrebbe corrompersi\n" << RESET;
+
             getline(std::cin, boardPos);
+
             if (boardPos == "q") {
                 return false;
             }
