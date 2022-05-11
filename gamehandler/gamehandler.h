@@ -5,6 +5,7 @@
 #include "../enums/cliCases.h"
 #include "../commandHandler/commandHandler.h"
 #include "../boardPos/boardPos.h"
+#include "../apium/apium/apium.h"
 
 // Runs the game
 namespace GameHandler {

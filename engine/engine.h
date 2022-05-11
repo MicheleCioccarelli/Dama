@@ -15,7 +15,6 @@ public:
     Board board;
     RenderV2 render;
 
-
     /**
      * If goingBackwards is true a depth-number of moves will be played backwards. If depth is 1 startingPlayer's last
      * move will be played, if it is 2 also the opposite player's last move will be repeated an so on.

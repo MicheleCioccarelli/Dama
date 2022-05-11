@@ -73,7 +73,7 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
             }
             return false;
         case GENERATEBOARDPOS:
-                std::cout << BoardPos::board_to_noation(engine.board) << "\n";
+                std::cout << BoardPos::board_to_noation_ignoring_white_squares(engine.board) << "\n";
             return false;
         case SAVE:
             // If at any point the user enters q we should quit

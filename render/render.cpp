@@ -89,9 +89,9 @@ void RenderV2::clear() {
 }
 
 std::string RenderV2::square_resolve(Coords coords, Board &board) {
-    switch (board.matrix[coords.row][coords.column].m_piece.m_color) {
+    switch (board.matrix[coords.row][coords.column].m_piece.color) {
         case BIANCO:
-            switch (board.matrix[coords.row][coords.column].m_piece.m_type) {
+            switch (board.matrix[coords.row][coords.column].m_piece.type) {
                 case DAMA:
                     return "●";
                 case DAMONE:
@@ -102,7 +102,7 @@ std::string RenderV2::square_resolve(Coords coords, Board &board) {
                     return "█";
             }
         case NERO:
-            switch (board.matrix[coords.row][coords.column].m_piece.m_type) {
+            switch (board.matrix[coords.row][coords.column].m_piece.type) {
                 case DAMA:
                     return "○";
                 case DAMONE:

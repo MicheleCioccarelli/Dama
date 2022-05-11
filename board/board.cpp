@@ -40,14 +40,14 @@ void Board::standard_game_initialization() {
 
 void Board::promote() {
     for (int col = 0; col < COLUMNS; col++) {
-        if (matrix[ROWS - 1][col].m_piece.m_type == DAMA && matrix[ROWS - 1][col].m_piece.m_color == BIANCO) {
-            matrix[ROWS - 1][col].m_piece.m_type = DAMONE;
+        if (matrix[ROWS - 1][col].m_piece.type == DAMA && matrix[ROWS - 1][col].m_piece.color == BIANCO) {
+            matrix[ROWS - 1][col].m_piece.type = DAMONE;
         }
     }
 
     for (int col = 0; col < COLUMNS; col++) {
-        if (matrix[0][col].m_piece.m_type == DAMA && matrix[ROWS - 1][col].m_piece.m_color == NERO) {
-            matrix[0][col].m_piece.m_type = DAMONE;
+        if (matrix[0][col].m_piece.type == DAMA && matrix[ROWS - 1][col].m_piece.color == NERO) {
+            matrix[0][col].m_piece.type = DAMONE;
         }
     }
 }
@@ -107,7 +107,7 @@ void Board::execute_move(Move& move) {
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
     if (move.m_wasPromotion) {
-        startingSquare.m_piece.m_type = DAMONE;
+        startingSquare.m_piece.type = DAMONE;
     }
     matrix[move.endingCoord.row][move.endingCoord.column].m_piece = startingSquare.m_piece;
     matrix[move.startingCoord.row][move.startingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);

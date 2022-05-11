@@ -1,7 +1,21 @@
 #include "Piece.h"
 
 Piece& Piece::operator=(const Piece &rhs) {
-    m_color = rhs.m_color;
-    m_type = rhs.m_type;
+    color = rhs.color;
+    type = rhs.type;
     return *this;
+}
+
+bool Piece::operator==(const Piece &rhs) {
+    if (color == rhs.color && type == rhs.type) {
+        return true;
+    }
+    return false;
+}
+
+bool Piece::operator!=(const Piece &rhs) {
+    if (*this == rhs) {
+        return false;
+    }
+    return true;
 }

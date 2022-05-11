@@ -193,27 +193,34 @@ Coords UI::convert_coords(const std::string& toConvert) {
     Coords converted;
     // Initialize startingColumn
     switch (toConvert[0]) {
+        case 'a':
         case 'A':
             converted.column = A;
             break;
+        case 'b':
         case 'B':
             converted.column = B;
             break;
         case 'C':
             converted.column = C;
             break;
+        case 'd':
         case 'D':
             converted.column = D;
             break;
+        case 'e':
         case 'E':
             converted.column = E;
             break;
+        case 'f':
         case 'F':
             converted.column = F;
             break;
+        case 'g':
         case 'G':
             converted.column = G;
             break;
+        case 'h':
         case 'H':
             converted.column = H;
             break;
