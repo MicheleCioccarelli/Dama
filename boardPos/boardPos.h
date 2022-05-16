@@ -1,7 +1,7 @@
 #pragma once
-#include "../engine/engine.h"
 #include "../ui/ui.h"
 
+#include "../engine/engine.h"
 
 namespace BoardPos {
     // Overwrites board with the informarion contained in notation

@@ -4,7 +4,7 @@
 #include "../player/player.h"
 #include "../enums/GameStyle.h"
 #include "../enums/GameState.h"
-#include "../render/render.h"
+#include "../helpPages/helpPages.h"
 #include "../enums/MoveIssue.h"
 
 class GameEngine {
@@ -14,6 +14,9 @@ public:
     Player blackPlayer;
     Board board;
     RenderV2 render;
+    // The boardPos of all the past positions is stored here, used for detecting move repetitionù
+    // It is updated by submit()
+    std::vector<std::string> pastPositions;
 
     /**
      * If goingBackwards is true a depth-number of moves will be played backwards. If depth is 1 startingPlayer's last
@@ -76,6 +79,9 @@ public:
 
     int count_pieces(PlayerColor pColor) const;
 
+    // Look if the boardPos passed in is already present in pastPositions<> and return how many times
+    int look_for_position(const std::string& beingSearched) const;
+
     // The color passed in wins, used when resigning. By default checks how many moves are available,
     // if nothing can be done the game is over
     GameState game_over();
@@ -97,5 +103,5 @@ public:
      * */
     void simulate_eat_piece(std::vector<Move>& movesFound, Coords startingCoords, int index = -1);
 
-    explicit GameEngine(GameStyle gameStyle = STANDARD);
+    GameEngine(GameStyle gameStyle = STANDARD);
 };

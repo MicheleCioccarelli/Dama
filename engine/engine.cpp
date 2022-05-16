@@ -1,7 +1,7 @@
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cppcoreguidelines-narrowing-conversions"
 #include "engine.h"
-#include "../ui/ui.h"
+#include "../boardPos/boardPos.h"
 
 // ====== GAME ENGINE ======
 GameEngine::GameEngine(GameStyle gameStyle)
@@ -21,6 +21,8 @@ GameEngine::GameEngine(GameStyle gameStyle)
             board.empty_game_initialization();
             break;
     }
+    // Add the default position to the past positions
+    pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
 }
 
 std::string GameEngine::get_player_name(PlayerColor color) const{
@@ -171,6 +173,7 @@ void GameEngine::undo_move(const Move &move) {
         board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece.type = DAMA;
         board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece.type = DAMA;
     }
+
     if (move.moveType == EAT) {
         // Swap starting piece and ending piece
         board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece =
@@ -409,7 +412,10 @@ MoveIssue GameEngine::submit(Move& move, PlayerColor color) {
             board.blow_up((Move&) tempMove);
         }
         board.execute_move((Move&) tempMove);
+
+        // Update moves and past positions lists
         add_move(tempMove);
+        pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
     } else {
         UI::log_error(status);
     }
@@ -505,6 +511,15 @@ std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {
     return movesFound;
 }
 
+int GameEngine::look_for_position(const std::string &beingSearched) const {
+    int returnValue {};
+    for (const std::string& pastNotation : pastPositions) {
+        if (beingSearched == pastNotation)
+            returnValue++;
+    }
+    return returnValue;
+}
+
 GameState GameEngine::game_over() {
     // The game was not ended by a command
     int whiteMoves = 0;
@@ -526,6 +541,12 @@ GameState GameEngine::game_over() {
             }
         }
     }
+
+    // Look if the current board position has occoured three times
+    if (look_for_position(pastPositions[pastPositions.size() - 1]) >= 3) {
+        return DRAW;
+    }
+
     if (whiteMoves > 0 && blackMoves > 0) {
         return GAME_NOT_OVER;
     } else if (blackMoves == 0 && whiteMoves > 0) {
