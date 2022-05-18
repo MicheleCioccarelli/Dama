@@ -11,6 +11,60 @@ void GameHandler::cli_error(cliCase error) {
     }
 }
 
+int GameHandler::play_back(const std::string& gameLocation) {
+    std::ifstream i_file {gameLocation};
+    std::string whitePlayerName {};
+    std::string blackPlayerName {};
+    std::string beingProcessed {};
+
+    if (!i_file) {
+        std::cout << ERROR_COLOR << "Problem opening file\n" << RESET;
+        return 1;
+    }
+    // Get white player and black player names
+    getline(i_file, beingProcessed);
+    // Get the position of first occurrence of :
+    std::size_t pos = beingProcessed.find(':');
+    // Check if index position is valid
+    if (pos != std::string::npos) {
+        // Remove all characters before :
+        beingProcessed = beingProcessed.substr(pos+1);
+    }
+    whitePlayerName = beingProcessed;
+
+    // Do the same but for the black player
+    getline(i_file, beingProcessed);
+    pos = beingProcessed.find(':');
+    if (pos != std::string::npos) {
+        beingProcessed = beingProcessed.substr(pos+1);
+    }
+    blackPlayerName = beingProcessed;
+
+    // Fetch the game result
+    int gameResult;
+    getline(i_file, beingProcessed);
+    // Get the position of first occurrence of :
+    pos = beingProcessed.find(':');
+    if (pos != std::string::npos) {
+        beingProcessed = beingProcessed.substr(pos+1);
+    }
+    // Convert the string to input
+    gameResult = std::stoi(beingProcessed);
+
+    std::string gameNotation{};
+    getline(i_file, beingProcessed);
+    // Get the position of first occurrence of :
+    pos = beingProcessed.find(':');
+    if (pos != std::string::npos) {
+        beingProcessed = beingProcessed.substr(pos+1);
+    }
+    gameNotation = beingProcessed;
+
+    // NOW YOU ACTUALLY PLAY BACK THE GAME
+
+    i_file.close();
+}
+
 void GameHandler::two_player_game(GameEngine& engine) {
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
