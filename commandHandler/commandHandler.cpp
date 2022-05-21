@@ -1,7 +1,7 @@
 #include "commandHandler.h"
 
 
-bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
+bool CommandHandler::execute_game_command(GameEngine& gameEngine, MoveData command) {
     char input;
     // Used by the SAVE command
     std::string boardPos{};
@@ -20,26 +20,26 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
             HelpPages::commands_help_page();
             return false;
         case MOVEORDER:
-            FileHandler::print_move_sequence(engine);
+            FileHandler::print_move_sequence(gameEngine);
             return false;
         case SUMMARY:
-            RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO), engine.whitePlayer, engine.blackPlayer, GAME_NOT_OVER, engine.start);
+            RenderV2::end_screen(gameEngine.count_pieces(BIANCO), gameEngine.count_pieces(NERO), gameEngine.whitePlayer, gameEngine.blackPlayer, GAME_NOT_OVER, gameEngine.start);
             return false;
         case WHITE_RESIGN:
-            RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO),
-                                 engine.whitePlayer, engine.blackPlayer, WHITE_RESIGNED, engine.start);
+            RenderV2::end_screen(gameEngine.count_pieces(BIANCO), gameEngine.count_pieces(NERO),
+                                 gameEngine.whitePlayer, gameEngine.blackPlayer, WHITE_RESIGNED, gameEngine.start);
             return true;
         case BLACK_RESIGN:
-            RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO),
-                                 engine.whitePlayer, engine.blackPlayer, BLACK_RESIGNED, engine.start);
+            RenderV2::end_screen(gameEngine.count_pieces(BIANCO), gameEngine.count_pieces(NERO),
+                                 gameEngine.whitePlayer, gameEngine.blackPlayer, BLACK_RESIGNED, gameEngine.start);
             return true;
         case W_DRAW_OFFER:
-            std::cout << engine.blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
+            std::cout << gameEngine.blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
                       << RESET << "]\n";
             std::cin >> input;
             if (input == 's') {
-                RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO),
-                                     engine.whitePlayer, engine.blackPlayer, DRAW, engine.start);
+                RenderV2::end_screen(gameEngine.count_pieces(BIANCO), gameEngine.count_pieces(NERO),
+                                     gameEngine.whitePlayer, gameEngine.blackPlayer, DRAW, gameEngine.start);
                 return true;
             } else {
                 std::cout << "Niente pareggio\n" << std::endl;
@@ -47,12 +47,12 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 return false;
             }
         case B_DRAW_OFFER:
-            std::cout << engine.blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
+            std::cout << gameEngine.blackPlayer.name << " accetta il pareggio? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n"
                       << RESET << "]\n";
             std::cin >> input;
             if (input == 's') {
-                RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO),
-                                     engine.whitePlayer, engine.blackPlayer, DRAW, engine.start);
+                RenderV2::end_screen(gameEngine.count_pieces(BIANCO), gameEngine.count_pieces(NERO),
+                                     gameEngine.whitePlayer, gameEngine.blackPlayer, DRAW, gameEngine.start);
                 return true;
             } else {
                 std::cout << "Niente pareggio" << std::endl;
@@ -68,12 +68,12 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
             if (boardPos == "q") {
                 return false;
             }
-            if (!BoardPos::notation_to_board(boardPos, engine.board)) {
+            if (!BoardPos::notation_to_board(boardPos, gameEngine.board)) {
                 std::cout << "La notazione scritta conteneva errori :(\n";
             }
             return false;
         case GENERATEBOARDPOS:
-                std::cout << BoardPos::board_to_noation_ignoring_white_squares(engine.board) << "\n";
+                std::cout << BoardPos::board_to_noation_ignoring_white_squares(gameEngine.board) << "\n";
             return false;
         case SAVE:
             // If at any point the user enters q we should quit
@@ -90,7 +90,7 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 return false;
             }
             // Determine the current state of the game;
-            gameState = engine.game_over();
+            gameState = gameEngine.game_over();
             switch(gameState) {
                 case GAME_NOT_OVER:
                     // The game is still going on
@@ -112,8 +112,8 @@ bool CommandHandler::execute_command(GameEngine& engine, MoveData command) {
                 default:
                     deducedState = 4;
             }
-            if (FileHandler::create_file(engine, gameName, path, deducedState) == OPENING_ISSUE) {
-                std::cout << ERROR_COLOR << "C'è stato un errore a creare il file [path sbagliata?]\n";
+            if (FileHandler::create_file(gameEngine, gameName, path, deducedState) == OPENING_ISSUE) {
+                std::cout << ERROR_COLOR << "C'è stato un errore a creare il file [path sbagliata?]\n" << RESET;
                 return false;
             }
             return false;

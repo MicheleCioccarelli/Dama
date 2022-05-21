@@ -51,7 +51,7 @@ public:
     static Coords calculate_forward(const Move& move);
 
     // Does all the checking regarding the move and logs erros if needed TODO Fix isBlown
-    MoveIssue submit(Move& move, PlayerColor color);
+    MoveIssue submit(const Move& move, PlayerColor color);
 
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);
@@ -64,7 +64,7 @@ public:
     MoveIssue check_move(Move& move);
 
     // Given a move returns the color of the player who made it
-    PlayerColor deduce_color_human_notation(Move &move);
+    PlayerColor deduce_color_human_notation(const Move &move);
 
     PlayerColor deduce_color_matrix_notation(const Move &move);
 

@@ -16,6 +16,7 @@ int GameHandler::play_back(const std::string& gameLocation) {
     std::string whitePlayerName {};
     std::string blackPlayerName {};
     std::string beingProcessed {};
+    std::string gameName {};
 
     if (!i_file) {
         std::cout << ERROR_COLOR << "Problem opening file\n" << RESET;
@@ -30,7 +31,7 @@ int GameHandler::play_back(const std::string& gameLocation) {
         // Remove all characters before :
         beingProcessed = beingProcessed.substr(pos+1);
     }
-    whitePlayerName = beingProcessed;
+    blackPlayerName = beingProcessed;
 
     // Do the same but for the black player
     getline(i_file, beingProcessed);
@@ -38,7 +39,15 @@ int GameHandler::play_back(const std::string& gameLocation) {
     if (pos != std::string::npos) {
         beingProcessed = beingProcessed.substr(pos+1);
     }
-    blackPlayerName = beingProcessed;
+    whitePlayerName = beingProcessed;
+
+    // Get the game name
+    getline(i_file, beingProcessed);
+    pos = beingProcessed.find(':');
+    if (pos != std::string::npos) {
+        beingProcessed = beingProcessed.substr(pos+1);
+    }
+    gameName = beingProcessed;
 
     // Fetch the game result
     int gameResult;
@@ -59,15 +68,62 @@ int GameHandler::play_back(const std::string& gameLocation) {
         beingProcessed = beingProcessed.substr(pos+1);
     }
     gameNotation = beingProcessed;
+    // Convert all the [moves][] from the .dama file into an actual squence of moves
+    // TODO PROBLEM IS HERE. GL :)
+    std::vector<Move> movesPlayed = FileHandler::notation_to_moves(gameNotation);
 
-    // NOW YOU ACTUALLY PLAY BACK THE GAME
+    // Engine to acutally make and render the moves
+    GameEngine engine;
+    PlayerColor playerPlaying = NERO;
+    // The side from which you render the board
+    PlayerColor playerPOV = BIANCO;
 
+    std::string input {};
+
+    for (const Move& move : movesPlayed) {
+        // Switch player color every turn
+        if (playerPlaying == NERO) {
+            playerPlaying = BIANCO;
+        } else {
+            playerPlaying = NERO;
+        }
+        engine.submit(move, playerPlaying);
+
+        engine.render.render_board(engine.board, playerPOV, move);
+        if (playerPlaying == BIANCO) {
+            std::cout << PLAYER_COLOR << whitePlayerName;
+        } else {
+            std::cout << PLAYER_COLOR << blackPlayerName;
+        }
+        std::cout << RESET << "> " << move.toString() << "\n>";
+        getline(std::cin, input);
+
+        // If you didn't just press enter see if you typed a command
+        while (input != "\n") {
+            std::transform(input.begin(), input.end(), input.begin(), ::toupper);
+            if (input == "AIUTO") {
+                HelpPages::playback_help_page();
+                break;
+            } else if (input == "SWITCH") {
+                if (playerPOV == NERO) {
+                    playerPOV = BIANCO;
+                } else {
+                    playerPOV = NERO;
+                }
+            } else if (input == "Q" || input == "QUIT") {
+                i_file.close();
+                return 1;
+            } else {
+                std::cout << ERROR_COLOR << "input invalido, scrivi aiuto per informazioni\n>" << RESET;
+                getline(std::cin, input);
+            }
+        }
+
+    }
     i_file.close();
 }
 
 void GameHandler::two_player_game(GameEngine& engine) {
-    //
-    FileHandler::notation_to_moves((std::string)"[A3xB4xB7_A1*G7][A3-B4][A3xA3xA3xA3xH7][G7-H8_D6*H7]");
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
     PlayerColor current_color = BIANCO;
@@ -91,7 +147,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
         while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
-                if (CommandHandler::execute_command(engine, issue)) {
+                if (CommandHandler::execute_game_command(engine, issue)) {
                     // Execute command handled formatting the end screen
                     gameWasEndedByCommand = true;
                     break;
@@ -128,7 +184,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
             std::cin >> choice;
             std::cin.ignore(100, '\n');
             if (choice == 's') {
-                CommandHandler::execute_command(engine, SAVE);
+                CommandHandler::execute_game_command(engine, SAVE);
             }
             return;
         }
@@ -145,7 +201,7 @@ void GameHandler::two_player_game(GameEngine& engine) {
     std::cin >> choice;
     std::cin.ignore(100, '\n');
     if (choice == 's') {
-        CommandHandler::execute_command(engine, SAVE);
+        CommandHandler::execute_game_command(engine, SAVE);
     }
 }
 
@@ -179,7 +235,7 @@ void GameHandler::debug(GameEngine &engine) {
         while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
-                if (CommandHandler::execute_command(engine, issue)) {
+                if (CommandHandler::execute_game_command(engine, issue)) {
                     // Execute command handled formatting the end screen
                     gameWasEndedByCommand = true;
                     break;
@@ -216,7 +272,7 @@ void GameHandler::debug(GameEngine &engine) {
             std::cin >> choice;
             std::cin.ignore(100, '\n');
             if (choice == 's') {
-                CommandHandler::execute_command(engine, SAVE);
+                CommandHandler::execute_game_command(engine, SAVE);
             }
             return;
         }
@@ -233,6 +289,6 @@ void GameHandler::debug(GameEngine &engine) {
     std::cin >> choice;
     std::cin.ignore(100, '\n');
     if (choice == 's') {
-        CommandHandler::execute_command(engine, SAVE);
+        CommandHandler::execute_game_command(engine, SAVE);
     }
 }

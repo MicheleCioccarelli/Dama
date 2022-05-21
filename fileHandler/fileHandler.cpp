@@ -4,7 +4,9 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
 
     if (filePath.find(gameName) == std::string::npos) {
         // The user didn't already put the game name in the path
-        filePath.append("/");
+        if (filePath.size() > gameName.size()) {
+            filePath.append("/");
+    }
         filePath.append(gameName);
     }
 
@@ -21,7 +23,7 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
         return OPENING_ISSUE;
     } else {
         o_file << "@BLACK:" << engine.get_player_name(NERO) << "\n";
-        o_file << "@BLACK:" << engine.get_player_name(BIANCO) << "\n";
+        o_file << "@WHITE:" << engine.get_player_name(BIANCO) << "\n";
         o_file << "@NAME:" << gameName << "\n";
         o_file << "@STATE:" << gameState << "\n";
         o_file << "@MOVES:";
@@ -58,7 +60,6 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
 }
 
 void FileHandler::print_move_sequence(const GameEngine& engine) {
-
     std::string temp {};
     int movesToPrint = engine.whitePlayer.moves.size() + engine.blackPlayer.moves.size();
     for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {

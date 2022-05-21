@@ -40,7 +40,7 @@ Coords GameEngine::calculate_forward(const Coords &startingCoords, const Coords 
     return {(ColumnNotation)(endingCoords.column - horizontalDistance), endingCoords.row - verticalDistance};
 }
 
-PlayerColor GameEngine::deduce_color_human_notation(Move &move) {
+PlayerColor GameEngine::deduce_color_human_notation(const Move &move) {
 
     if (move.is_empty()) {
         return TRASPARENTE;
@@ -381,7 +381,7 @@ int GameEngine::count_pieces(PlayerColor pColor) const {
     return returnValue;
 }
 
-MoveIssue GameEngine::submit(Move& move, PlayerColor color) {
+MoveIssue GameEngine::submit(const Move& move, PlayerColor color) {
     // Assumes human-notation
     // If this is called the move has no syntactical errors
     MoveIssue status;

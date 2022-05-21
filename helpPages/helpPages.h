@@ -11,4 +11,6 @@ namespace HelpPages {
 
     // Called when someone types "comandi", shows commands utilities
     void commands_help_page();
+
+    void playback_help_page();
 }

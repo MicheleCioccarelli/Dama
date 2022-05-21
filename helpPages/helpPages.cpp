@@ -125,3 +125,25 @@ void HelpPages::commands_help_page() {
     }
     std::cout << "\n";
 }
+
+void HelpPages::playback_help_page() {
+    std::cout << "\n";
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    }
+    std::cout << "\n" << HGRN <<"Pagina di aiuto del PlayBack" << RESET << "\n\n";
+
+    std::cout << "Comandi:\n";
+    std::cout << COMMAND_COLOR << "Switch";
+    RenderV2::padding(15);
+    std::cout << "| Cambia il punto di vista della scacchiera (bianco o nero)\n";
+    std::cout << COMMAND_COLOR << "q" << RESET << " o " << COMMAND_COLOR << "quit";
+    RenderV2::padding(6);
+    std::cout << "| Termina l'esecuzione del programma\n";
+
+    std::cout << "\n";
+    for (int i = 1; i < 22; i++) {
+        std::cout << "════";
+    }
+    std::cout << "\n";
+}
