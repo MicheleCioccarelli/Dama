@@ -66,6 +66,8 @@ int GameHandler::play_back(const std::string& gameLocation) {
 }
 
 void GameHandler::two_player_game(GameEngine& engine) {
+    //
+    FileHandler::notation_to_moves((std::string)"[A3xB4xB7_A1*G7][A3-B4][A3xA3xA3xA3xH7][G7-H8_D6*H7]");
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
     PlayerColor current_color = BIANCO;
@@ -84,7 +86,6 @@ void GameHandler::two_player_game(GameEngine& engine) {
 
         // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);
-
         // If issue is valid the move is not a command and does not have syntax errors
         // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
         while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {

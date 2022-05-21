@@ -18,7 +18,7 @@ int main(int argc, char* argv[]) {
 
         UI::init(engine);
 
-        GameHandler::debug(engine);
+        GameHandler::two_player_game(engine);
     }
     return 0;
 }
