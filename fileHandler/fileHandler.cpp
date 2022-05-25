@@ -48,7 +48,7 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
                 movesToPrint--;
 
                 if (movesToPrint > 0) {
-                    std::cout << ",";
+                    o_file << ",";
                 }
             }
         }
@@ -138,7 +138,6 @@ std::vector<Move> FileHandler::notation_to_moves(const std::string &notation) {
     std::vector<Move> moves;
     Move tempMove;
     std::size_t i, j, k; // Counters
-    int _position = -1; // The position of an "_" in a move
     int toShift = 0; // By how much i should be shifted after a move has been processed (the move's "lenght")
 
     for (i = 0; i < notation.size(); i++) {
@@ -151,43 +150,41 @@ std::vector<Move> FileHandler::notation_to_moves(const std::string &notation) {
                     case '-':
                         tempMove.m_status = VALID;
                         tempMove.moveType = MOVE;
-                        tempMove.startingCoord = convert_coords(notation.substr(i, i + 2));
-                        tempMove.endingCoord = convert_coords(notation.substr(i + 3, i + 5));
-                        toShift += 5;
+                        tempMove.startingCoord = convert_coords(notation.substr(i, 2));
+                        tempMove.endingCoord = convert_coords(notation.substr(i + 3, 2));
+                        toShift += 6;
                         break;
                     case 'x':
                         tempMove.m_status = VALID;
                         tempMove.moveType = EAT;
-                        tempMove.startingCoord = convert_coords(notation.substr(i, i + 2));
-                        // Add the coords which were eaten
-                        for (j = i + 3; j <= notation.size() - 1; j += 3) {
+                        tempMove.startingCoord = convert_coords(notation.substr(i, 2));
+                        // The initializer at += 3 is to skip startingCoords, which was converted above, not sure if the condition is optimal
+                        for (i += 3; i <= notation.size() - 1; i += 3) {
                             // You can eat up to 3 pieces at a time
-                            if (notation.at(j) == '[')
+                            if (notation.at(i) == '[' || notation.at(i) == ',')
                                 break;
                             // If you are blowing pieces they should not be in eatenCoords[]
-                            if (notation.at(j - 1) == '_' || notation.at(j - 1) == '*')
-                                break;
-                            tempMove.eatenCoords.push_back(convert_coords(notation.substr(j, j + 1)));
+//                            if (notation.at(j - 1) == '_' || notation.at(j - 1) == '*')
+//                                break;
+                            tempMove.eatenCoords.push_back(convert_coords(notation.substr(i, 2)));
                         }
-
                         tempMove.calculate_endingCoord();
-                        toShift += 2 + tempMove.eatenCoords.size() * 2 + tempMove.eatenCoords.size();
                         break;
                     case '_':
                     case '*':
-                        tempMove.blownCoord = convert_coords(notation.substr(i, i + 2));
-                        tempMove.endingBlowCoord = convert_coords(notation.substr(i + 3, i + 5));
+                        tempMove.blownCoord = convert_coords(notation.substr(i, 2));
+                        tempMove.endingBlowCoord = convert_coords(notation.substr(i + 3, 2));
                         toShift += 5;
                         break;
                 }
                 i += toShift;
                 toShift = 0;
-            } while (notation.at(i) != ']');
-
-            if (notation.at(i) == ']') {
+                if (i > notation.size() - 1) {
+                    break;
+                }
+            } while (notation.at(i) != ']' && notation.at(i) != '[' && notation.at(i) != ','); //  Spageth
                 moves.push_back(tempMove);
-                tempMove = Move();
-            }
+                tempMove.clear();
         }
     }
     return moves;

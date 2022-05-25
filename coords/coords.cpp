@@ -52,6 +52,11 @@ bool Coords::is_uninitialized() const {
     return false;
 }
 
+void Coords::clear() {
+    column = Z;
+    row = 9;
+}
+
 bool Coords::operator==(const Coords &rhs) const {
     if (this->column == rhs.column && this->row == rhs.row) {
         return true;

@@ -48,7 +48,7 @@ int GameHandler::play_back(const std::string& gameLocation) {
         beingProcessed = beingProcessed.substr(pos+1);
     }
     gameName = beingProcessed;
-
+    ///home/sedano/CLionProjects/Dama/playbacktest1.dama
     // Fetch the game result
     int gameResult;
     getline(i_file, beingProcessed);

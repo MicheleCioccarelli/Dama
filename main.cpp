@@ -29,3 +29,5 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
+
+// TODO BLOW FAILS AFTER [A3-B4],[H6-G5],[E3-F4],[D6-C5]

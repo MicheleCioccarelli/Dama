@@ -345,6 +345,7 @@ MoveIssue GameEngine::check_blow(Move& move) {
                 return WRONG_LAST_MOVE;
             }
             playerWhoPerformedTheBlowRequest = BIANCO;
+            break;
         default:
             // Shouldn't happen
             return MISINPUT;

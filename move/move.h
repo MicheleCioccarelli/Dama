@@ -38,6 +38,9 @@ public:
     // Delete  a coordinate from eatenCoords
     void pop_coords();
 
+    // Delete all the elements
+    void clear();
+
     // Calculates the ending coordinate, useful in an EAT move where you have startingCoords and eatenCoords
     // Also copied from GameEngine::calculate_forward
     void calculate_endingCoord();

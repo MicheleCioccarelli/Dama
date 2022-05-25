@@ -20,6 +20,9 @@ public:
     // Convert coords from human notation to matrix notation
     Coords convert_coords() const;
 
+    // Reset the variable
+    void clear();
+
     bool is_uninitialized() const;
 
     Coords(ColumnNotation _column = Z, int _row = 9)

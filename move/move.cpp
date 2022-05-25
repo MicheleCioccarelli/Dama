@@ -4,7 +4,6 @@ Move::Move(PlayerColor color, MoveType type)
     : playerColor (color), moveType (type) {}
 
 Move::Move() {
-    playerColor = TRASPARENTE;
 }
 
 void Move::pop_coords() {
@@ -60,6 +59,19 @@ bool Move::is_empty() const {
         return true;
     }
     return false;
+}
+
+void Move::clear() {
+    m_wasPromotion = false;
+    moveType = UNINITIALIZED;
+    eatenCoords.clear();
+    eatenPieces.clear();
+    startingCoord.clear();
+    eatenCoords.clear();
+    blownCoord.clear();
+    endingBlowCoord.clear();
+    playerColor = TRASPARENTE;
+    m_status = INVALID;
 }
 
 Move &Move::operator=(const Move& rhs) {
