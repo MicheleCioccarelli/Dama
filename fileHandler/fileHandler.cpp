@@ -32,7 +32,7 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
         int movesToPrint = engine.whitePlayer.moves.size() + engine.blackPlayer.moves.size();
         for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
             temp = "";
-            temp += engine.whitePlayer.moves[i].toString();
+            temp += engine.whitePlayer.moves[i].toStringHuman();
             o_file << "[" << temp << "]";
 
             movesToPrint--;
@@ -42,7 +42,7 @@ fileIssue FileHandler::create_file(const GameEngine &engine, const std::string& 
             }
             temp = "";
             if (engine.blackPlayer.moves.size() > i) {
-                temp += engine.blackPlayer.moves[i].toString();
+                temp += engine.blackPlayer.moves[i].toStringHuman();
                 o_file << "[" << temp << "]";
 
                 movesToPrint--;
@@ -64,7 +64,7 @@ void FileHandler::print_move_sequence(const GameEngine& engine) {
     int movesToPrint = engine.whitePlayer.moves.size() + engine.blackPlayer.moves.size();
     for (int i = 0; i < engine.whitePlayer.moves.size(); i++) {
         temp = "";
-        temp += engine.whitePlayer.moves[i].toString();
+        temp += engine.whitePlayer.moves[i].toStringHuman();
         std::cout << "[" << temp << "]";
 
         movesToPrint--;
@@ -74,7 +74,7 @@ void FileHandler::print_move_sequence(const GameEngine& engine) {
         }
         temp = "";
         if (engine.blackPlayer.moves.size() > i) {
-            temp += engine.blackPlayer.moves[i].toString();
+            temp += engine.blackPlayer.moves[i].toStringHuman();
             std::cout << "[" << temp << "]";
 
             movesToPrint--;
@@ -139,9 +139,16 @@ std::vector<Move> FileHandler::notation_to_moves(const std::string &notation) {
     Move tempMove;
     std::size_t i, j, k; // Counters
     int toShift = 0; // By how much i should be shifted after a move has been processed (the move's "lenght")
+    PlayerColor color = NERO;
 
     for (i = 0; i < notation.size(); i++) {
         if (notation.at(i) == '[') {
+            if (color == BIANCO) {
+                color = NERO;
+            } else {
+                color = BIANCO;
+            }
+            tempMove.playerColor = color;
             // Decode the move until you finish it
             do {
                 i++;

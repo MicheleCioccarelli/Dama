@@ -9,8 +9,10 @@ public:
     ColumnNotation column;
     int row;
 
-    // RETURNS HUMAN NOTATION
-    std::string toString() const;
+    // Adds 1 to the row number
+    std::string toStringHuman() const;
+    //Doesn't add one to the line number
+    std::string toStringMatrix() const;
 
     Coords &operator=(const Coords &rhs);
 

@@ -3,13 +3,14 @@
 
 int main(int argc, char* argv[]) {
     // Command line arguments not really implemented yet
-    std::string input {};
+    std::string input{};
     if (argc != 1) {
 //        if (strcmp(argv[1], "-apium") != 0) {
 //            // The only available argument at the moment is -apium
 //            GameHandler::cli_error(WRONG_ARGUMENT);
         /*} else */if (strcmp(argv[1], "-playback") == 0) {
             if (argc <= 2) {
+                std::cout << MAG << "Benvenuto nel visualizzatore di partite\n" << RESET;
                 std::cout << "Quale file vuoi visualizzare?\n>";
                 getline(std::cin, input);
                 GameHandler::play_back(input);
@@ -29,5 +30,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
-// TODO BLOW FAILS AFTER [A3-B4],[H6-G5],[E3-F4],[D6-C5]

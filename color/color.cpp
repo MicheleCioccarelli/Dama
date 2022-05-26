@@ -8,10 +8,7 @@ Color::Color() {
 }
 
 bool Color::operator==(const std::string &rhs) {
-    if (m_northColor == rhs && m_southColor == rhs && m_eastColor == rhs && m_westColor == rhs) {
-        return true;
-    }
-    return false;
+    return (m_northColor == rhs && m_southColor == rhs && m_eastColor == rhs && m_westColor == rhs);
 }
 
 Color &Color::operator=(Color &rhs) {

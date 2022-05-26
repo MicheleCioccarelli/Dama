@@ -4,7 +4,7 @@ Coords Coords::convert_coords() const {
     return {column, row - 1};
 }
 
-std::string Coords::toString() const{
+std::string Coords::toStringHuman() const{
     std::string output {};
 
     // FIRST COORD
@@ -40,6 +40,42 @@ std::string Coords::toString() const{
     return output;
 }
 
+std::string Coords::toStringMatrix() const {
+    std::string output {};
+
+    // FIRST COORD
+    switch (column) {
+        case A :
+            output += "A";
+            break;
+        case B :
+            output += "B";
+            break;
+        case C :
+            output += "C";
+            break;
+        case D :
+            output += "D";
+            break;
+        case E :
+            output += "E";
+            break;
+        case F :
+            output += "F";
+            break;
+        case G :
+            output += "G";
+            break;
+        case H :
+            output += "H";
+            break;
+        default:
+            output += "?";
+    }
+    output += std::to_string(row);
+    return output;
+}
+
 Coords &Coords::operator=(const Coords &rhs) {
     column = rhs.column;
     row = rhs.row;
@@ -58,11 +94,7 @@ void Coords::clear() {
 }
 
 bool Coords::operator==(const Coords &rhs) const {
-    if (this->column == rhs.column && this->row == rhs.row) {
-        return true;
-    } else {
-        return false;
-    }
+    return (column == rhs.column && row == rhs.row);
 }
 
 bool Coords::operator!=(const Coords &rhs) const {

@@ -7,6 +7,8 @@
 #include "../boardPos/boardPos.h"
 #include "../apium/apium/apium.h"
 
+#include <limits>
+
 // Runs the game
 namespace GameHandler {
     void debug(GameEngine& engine);

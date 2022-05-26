@@ -69,7 +69,6 @@ int GameHandler::play_back(const std::string& gameLocation) {
     }
     gameNotation = beingProcessed;
     // Convert all the [moves][] from the .dama file into an actual squence of moves
-    // TODO PROBLEM IS HERE. GL :)
     std::vector<Move> movesPlayed = FileHandler::notation_to_moves(gameNotation);
 
     // Engine to acutally make and render the moves
@@ -79,47 +78,58 @@ int GameHandler::play_back(const std::string& gameLocation) {
     PlayerColor playerPOV = BIANCO;
 
     std::string input {};
+    std::cout << MAG << "Premi invio per continuare" << RESET << std::endl;
+    getline(std::cin, input);
 
     for (const Move& move : movesPlayed) {
-        // Switch player color every turn
-        if (playerPlaying == NERO) {
-            playerPlaying = BIANCO;
-        } else {
-            playerPlaying = NERO;
-        }
-        engine.submit(move, playerPlaying);
-
-        engine.render.render_board(engine.board, playerPOV, move);
-        if (playerPlaying == BIANCO) {
-            std::cout << PLAYER_COLOR << whitePlayerName;
-        } else {
-            std::cout << PLAYER_COLOR << blackPlayerName;
-        }
-        std::cout << RESET << "> " << move.toString() << "\n>";
-        getline(std::cin, input);
-
-        // If you didn't just press enter see if you typed a command
-        while (input != "\n") {
-            std::transform(input.begin(), input.end(), input.begin(), ::toupper);
-            if (input == "AIUTO") {
-                HelpPages::playback_help_page();
-                break;
-            } else if (input == "SWITCH") {
-                if (playerPOV == NERO) {
-                    playerPOV = BIANCO;
-                } else {
-                    playerPOV = NERO;
-                }
-            } else if (input == "Q" || input == "QUIT") {
-                i_file.close();
-                return 1;
+        printTheMove:
+        if (input == "") {
+            // The user wants to proceed with the game
+            if (playerPlaying == NERO) {
+                playerPlaying = BIANCO;
             } else {
-                std::cout << ERROR_COLOR << "input invalido, scrivi aiuto per informazioni\n>" << RESET;
+                playerPlaying = NERO;
+            }
+            engine.submit(move, playerPlaying);
+
+            engine.render.render_board(engine.board, playerPOV, move);
+            if (playerPlaying == BIANCO) {
+                std::cout << PLAYER_COLOR << whitePlayerName;
+            } else {
+                std::cout << PLAYER_COLOR << blackPlayerName;
+            }
+            std::cout << RESET << ": " << move.toStringMatrix() << "\n>"; //playbacktest1.dama
+            getline(std::cin, input);
+        } else {
+            while (input != "") {
+                // The user typed a command or something wrong
+                std::transform(input.begin(), input.end(), input.begin(), ::toupper); // Make everything uppercase
+                // Check for commands
+                if (input == "AIUTO") {
+                    HelpPages::playback_help_page();
+                } else if (input == "SWITCH") {
+                    if (playerPOV == NERO) {
+                        playerPOV = BIANCO;
+                    } else {
+                        playerPOV = NERO;
+                    }
+                } else if (input == "Q" || input == "QUIT") {
+                    i_file.close();
+                    return 1;
+                } else { // playbacktest1.dama
+                    // There was a mistype
+                    std::cout << ERROR_COLOR
+                    << "input invalido, scrivi aiuto per informazioni (premi invio per andare alla mossa successiva)\n"<< RESET;
+                }
+                // Ask for another input
+                std::cout << ">";
                 getline(std::cin, input);
+                goto printTheMove; // :)
             }
         }
-
     }
+    RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO), engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+                         engine.start);
     i_file.close();
 }
 
@@ -281,9 +291,7 @@ void GameHandler::debug(GameEngine &engine) {
     // When the game is over
     engine.render.render_board(engine.board, current_color);
 
-    int whitePieces = engine.count_pieces(BIANCO);
-    int blackPieces = engine.count_pieces(NERO);
-    RenderV2::end_screen(whitePieces, blackPieces, engine.whitePlayer, engine.blackPlayer, engine.game_over(),
+    RenderV2::end_screen(engine.count_pieces(BIANCO), engine.count_pieces(NERO), engine.whitePlayer, engine.blackPlayer, engine.game_over(),
                          engine.start);
     std::cout << "Vuoi salvare la partita? [" << ACCEPT_DRAW << "s" << RESET << "/" << REFUSE_DRAW << "n" << RESET << "]\n> ";
     std::cin >> choice;

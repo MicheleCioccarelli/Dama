@@ -202,7 +202,7 @@ void RenderV2::end_screen(int whitePieces, int blackPieces, Player whitePlayer, 
              BLACK_COLOR = DRAW_COLOR;
              break;
          case GAME_NOT_OVER:
-             strings.emplace_back(" ");
+             strings.emplace_back("La partita non ha un vincitore");
              break;
      }
 

@@ -26,8 +26,11 @@ public:
 
     PlayerColor playerColor;
 
-    // Writes in the parameter a string version of the move (es "A3-B4")
-    std::string toString() const;
+    // Writes in the parameter a string version of the move (es "A3-B4"), adds 1 to the row number
+    std::string toStringHuman() const;
+
+    // Doesn't add 1 to the row number
+    std::string toStringMatrix() const;
 
     MoveType moveType;
     // Any additional information about the move, like its type of command

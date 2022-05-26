@@ -4,34 +4,66 @@ Move::Move(PlayerColor color, MoveType type)
     : playerColor (color), moveType (type) {}
 
 Move::Move() {
+    playerColor = TRASPARENTE;
 }
 
 void Move::pop_coords() {
     eatenCoords.erase(eatenCoords.end() - 1);
 }
 
-std::string Move::toString() const{
+std::string Move::toStringHuman() const{
     std::string ouput {};
 
     if (!blownCoord.is_uninitialized()) {
-        ouput += blownCoord.toString();
+        ouput += blownCoord.toStringHuman();
         ouput += "*";
-        ouput += endingBlowCoord.toString();
+        ouput += endingBlowCoord.toStringHuman();
         ouput += "_";
     }
 
-    ouput += startingCoord.toString();
+    ouput += startingCoord.toStringHuman();
 
     // OPERATORS
     switch (moveType) {
         case MOVE:
             ouput += "-";
-            ouput += endingCoord.toString();
+            ouput += endingCoord.toStringHuman();
             break;
         case EAT:
             ouput += "x";
             for (Coords coord : eatenCoords) {
-                ouput += coord.toString();
+                ouput += coord.toStringHuman();
+                ouput += "x";
+            }
+            // Delete the last excess "x"
+            ouput.pop_back();
+            break;
+    }
+    return ouput;
+}
+
+std::string Move::toStringMatrix() const {
+    std::string ouput {};
+
+    if (!blownCoord.is_uninitialized()) {
+        ouput += blownCoord.toStringMatrix();
+        ouput += "*";
+        ouput += endingBlowCoord.toStringMatrix();
+        ouput += "_";
+    }
+
+    ouput += startingCoord.toStringMatrix();
+
+    // OPERATORS
+    switch (moveType) {
+        case MOVE:
+            ouput += "-";
+            ouput += endingCoord.toStringMatrix();
+            break;
+        case EAT:
+            ouput += "x";
+            for (Coords coord : eatenCoords) {
+                ouput += coord.toStringMatrix();
                 ouput += "x";
             }
             // Delete the last excess "x"
