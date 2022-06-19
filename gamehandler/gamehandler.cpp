@@ -220,6 +220,8 @@ void GameHandler::debug(GameEngine &engine) {
     // Assumes that GameEngine has already been initialized
     Apium apium;
 
+    ApiumLine line;
+
     apium.minimax(3, -1000, 1000, true);
 
 }

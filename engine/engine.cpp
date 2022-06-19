@@ -24,7 +24,7 @@ GameEngine::GameEngine(GameStyle gameStyle)
     // Add the default position to the past positions
     pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
     // Initialize pieces vectors
-    refresh_piece_vectors();
+    init_piece_vectors();
 }
 
 std::string GameEngine::get_player_name(PlayerColor color) const{
@@ -564,7 +564,28 @@ GameState GameEngine::game_over() {
     return GAME_NOT_OVER;
 }
 
-void GameEngine::refresh_piece_vectors() {
+void GameEngine::refresh_piece_vectors() noexcept{
+    size_t whiteSize = whitePiecesSquares.size();
+    size_t blackSize = blackPiecesSquares.size();
+    int whiteIndex {};
+    int blackIndex {};
+
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = (row % 2); col < COLUMNS; col += 2) {
+            if (board.matrix[row][col].piece.color == BIANCO) {
+                if (whiteIndex < whitePiecesSquares.size()) {
+                    whitePiecesSquares[whiteIndex++] = board.matrix[row][col];
+                }
+            } else if (board.matrix[row][col].piece.color == NERO) {
+                if (blackIndex < blackPiecesSquares.size()) {
+                    blackPiecesSquares[blackIndex++] = board.matrix[row][col];
+                }
+            }
+        }
+    }
+}
+
+void GameEngine::init_piece_vectors() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = (row % 2); col < COLUMNS; col += 2) {
             if (board.matrix[row][col].piece.color == BIANCO) {

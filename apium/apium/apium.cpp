@@ -1,8 +1,10 @@
 #include "apium.h"
 
-Apium::Apium(GameEngine &engine) {
-    m_engine = engine;
-}
+Apium::Apium(GameEngine &engine)
+    : m_engine(engine) {}
+
+Apium::Apium(GameEngine &engine, Playstyle playstyle)
+    : m_engine(engine), m_playstyle(playstyle) {}
 
 void Apium::set_eval(float eval) {
     m_eval = eval;
@@ -10,6 +12,10 @@ void Apium::set_eval(float eval) {
 
 void Apium::setEngine(const GameEngine &rhs) {
     m_engine = rhs;
+}
+
+void Apium::set_playstyle(const Playstyle playstyle) {
+    m_playstyle = playstyle;
 }
 
 float Apium::get_eval() const { return m_eval; }
@@ -88,10 +94,10 @@ float Apium::evaluate_board_position(std::string &currentBoadPos) const {
 }
 
 // For each child of position
-float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) {
+ApiumLine Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer, std::vector<Move> currentLine) {
     if (depth == 0 || m_engine.game_over() != GAME_NOT_OVER) {
         // Return the static evaluation of the current position
-        return evaluate_current_position();
+        return {currentLine, evaluate_current_position()};
     }
     float eval, maxEval, minEval;
 
@@ -108,9 +114,15 @@ float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) 
             for (Move& currentMove : m_engine.simulate_piece(whitePieceSquare.coords)) { // generate all of its possible moves
                 // Evaluate them and repeat
                 m_engine.board.execute_move(currentMove);
+                m_engine.refresh_piece_vectors();
+
                 m_engine.render.render_board(m_engine.board, BIANCO, currentMove);
-                eval = minimax(depth - 1, alpha, beta, false);
+                currentLine.push_back(currentMove);
+                eval = minimax(depth - 1, alpha, beta, false, currentLine).get_eval();
+
                 m_engine.undo_move(currentMove);
+                currentLine.pop_back();
+
                 maxEval = std::max(maxEval, eval);
                 alpha = std::max(alpha, eval);
                 if (beta <= alpha) {
@@ -118,7 +130,7 @@ float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) 
                 }
             }
         }
-        return maxEval;
+        return {currentLine, maxEval};
 
     } else {
         // If the minimazing player is playing (BLACK)
@@ -127,9 +139,16 @@ float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) 
             for (Move& currentMove : m_engine.simulate_piece(blackPieceSquare.coords)) { // generate all of its possible moves
                 // Evaluate them and repeat
                 m_engine.board.execute_move(currentMove);
+                m_engine.refresh_piece_vectors();
+                
                 m_engine.render.render_board(m_engine.board, NERO, currentMove);
-                eval = minimax(depth - 1, alpha, beta, true);
+
+                currentLine.push_back(currentMove);
+                eval = minimax(depth - 1, alpha, beta, true, currentLine).get_eval();
+
                 m_engine.undo_move(currentMove);
+                currentLine.pop_back();
+
                 minEval = std::min(minEval, eval);
                 beta = std::min(beta, eval);
                 if (beta <= alpha) {
@@ -138,5 +157,5 @@ float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) 
             }
         }
     }
-    return minEval;
+    return {currentLine, minEval};
 }

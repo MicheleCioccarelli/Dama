@@ -1,22 +1,24 @@
 #pragma once
 
-#include "../scoredmove/scoredMove.h"
+#include "../apiumline/apiumline.h"
 #include "../../boardPos/boardPos.h"
 #include "../../engine/engine.h"
 #include "../a_piece/a_piece.h"
 #include "../../enums/playstyle.h"
-#include <math.h>
 
 class Apium {
 public:
     Apium() = default;
     Apium(GameEngine& engine);
+    Apium(GameEngine& engine, Playstyle playstyle);
 
     float get_eval() const;
     void set_eval (float eval);
 
     // Copy the rhs engine into Apium's engine
     void setEngine(const GameEngine& rhs);
+
+    void set_playstyle(Playstyle playstyle);
 
     /* Returns the value of the piece (positive for white pieces and negative for black ones).
      * The if piece is not provided, the one in m_engine.board.matrix at the coordinates provided is used
@@ -36,7 +38,7 @@ public:
     /**
      * Returns a vector of depth-lenght containing depth-number of moves along with the vector's evaluation
      * */
-    float minimax(int depth, float alpha, float beta,  bool maximizingPlayer);
+    ApiumLine minimax(int depth, float alpha, float beta, bool maximizingPlayer, std::vector<Move> currentLine = std::vector<Move>());
 private:
     float m_eval;
     // Used as a weight to calculate the position's score

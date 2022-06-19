@@ -61,7 +61,9 @@ public:
     void precise_promote(const Move& move);
 
     // Updates whitePieces and blackPieces with information from the current board TODO test if this works
-    void refresh_piece_vectors();
+    void refresh_piece_vectors() noexcept;
+
+    void init_piece_vectors();
 
     std::string get_player_name(PlayerColor color) const;
 

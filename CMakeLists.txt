@@ -12,7 +12,7 @@ add_executable(MakeDamaGreatAgain main.cpp board/board.cpp
         piece/Piece.cpp piece/Piece.h color/color.cpp color/color.h rendersquare/rendersquare.cpp
         rendersquare/rendersquare.h constants/board_assets.h constants/number_constants.h colorMatrix/colorMatrix.cpp
         colorMatrix/colorMatrix.h gamehandler/gamehandler.cpp gamehandler/gamehandler.h enums/cliCases.h
-        apium/apium/apium.cpp apium/apium/apium.h enums/MoveIssue.h apium/a_piece/a_piece.h apium/playstyle/playstyle.h fileHandler/fileHandler.cpp
+        apium/apium/apium.cpp apium/apium/apium.h enums/MoveIssue.h apium/a_piece/a_piece.h fileHandler/fileHandler.cpp
         fileHandler/fileHandler.h enums/fileIssue.h commandHandler/commandHandler.cpp commandHandler/commandHandler.h
         helpPages/helpPages.h helpPages/helpPages.cpp boardPos/boardPos.cpp boardPos/boardPos.h
         enums/playstyle.h apium/apiumline/apiumline.cpp apium/apiumline/apiumline.h)
