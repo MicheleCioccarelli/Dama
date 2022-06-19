@@ -107,7 +107,7 @@ void HelpPages::commands_help_page() {
 
     RenderV2::padding(3);
     std::cout << COMMAND_COLOR << "LoadBoardPos" << RESET;
-    RenderV2::padding(19);
+    RenderV2::padding(15);
     std::cout <<  "| Sovrascrive la disposizione della posizione corrente con una fornita\n";
     RenderV2::padding(30);
     std::cout << "| dall'utente usando la notazione BoardPos (vedi wiki)\n";
@@ -138,7 +138,7 @@ void HelpPages::playback_help_page() {
     RenderV2::padding(15);
     std::cout << "| Cambia il punto di vista della scacchiera (bianco o nero)\n";
     std::cout << COMMAND_COLOR << "q" << RESET << " o " << COMMAND_COLOR << "quit";
-    RenderV2::padding(6);
+    RenderV2::padding(13);
     std::cout << "| Termina l'esecuzione del programma\n";
 
     std::cout << "\n";

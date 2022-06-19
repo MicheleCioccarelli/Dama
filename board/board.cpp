@@ -19,7 +19,7 @@ Board::Board() {
 void Board::clear() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            matrix[row][col].m_piece = Piece(TRASPARENTE, VUOTA);
+            matrix[row][col].piece = Piece(TRASPARENTE, VUOTA);
         }
     }
 }
@@ -29,9 +29,9 @@ void Board::standard_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (row < 3 && matrix[row][col].m_color == NERA) {
+            if (row < 3 && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMA, BIANCO);
-            } else if (row >= (COLUMNS - 3) && matrix[row][col].m_color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMA, NERO);
             }
         }
@@ -40,14 +40,14 @@ void Board::standard_game_initialization() {
 
 void Board::promote() {
     for (int col = 0; col < COLUMNS; col++) {
-        if (matrix[ROWS - 1][col].m_piece.type == DAMA && matrix[ROWS - 1][col].m_piece.color == BIANCO) {
-            matrix[ROWS - 1][col].m_piece.type = DAMONE;
+        if (matrix[ROWS - 1][col].piece.type == DAMA && matrix[ROWS - 1][col].piece.color == BIANCO) {
+            matrix[ROWS - 1][col].piece.type = DAMONE;
         }
     }
 
     for (int col = 0; col < COLUMNS; col++) {
-        if (matrix[0][col].m_piece.type == DAMA && matrix[ROWS - 1][col].m_piece.color == NERO) {
-            matrix[0][col].m_piece.type = DAMONE;
+        if (matrix[0][col].piece.type == DAMA && matrix[ROWS - 1][col].piece.color == NERO) {
+            matrix[0][col].piece.type = DAMONE;
         }
     }
 }
@@ -55,8 +55,8 @@ void Board::promote() {
 void Board::colored_game_initialization() {
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (matrix[row][col].m_color == NERA) {
-                matrix[row][col].m_piece = Piece(TRASPARENTE, COLORATA);
+            if (matrix[row][col].color == NERA) {
+                matrix[row][col].piece = Piece(TRASPARENTE, COLORATA);
             }
         }
     }
@@ -66,9 +66,9 @@ void Board::damone_game_initialization() {
     // Initialize pieces
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            if (row < 3 && matrix[row][col].m_color == NERA) {
+            if (row < 3 && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMONE, BIANCO);
-            } else if (row >= (COLUMNS - 3) && matrix[row][col].m_color == NERA) {
+            } else if (row >= (COLUMNS - 3) && matrix[row][col].color == NERA) {
                 matrix[row][col].set_piece(DAMONE, NERO);
             }
         }
@@ -94,23 +94,23 @@ void Board::execute_move(Move& move) {
             // Eat all the target pieces
             for (Coords &currentCoord: move.eatenCoords) {
                 // Save the piece you destroy: used in GameEngine::time_machine()
-                move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].m_piece);
+                move.eatenPieces.push_back(matrix[currentCoord.row][currentCoord.column].piece);
                 // Destroy the pieces
-                matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
+                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
             }
         } else {
             for (Coords &currentCoord: move.eatenCoords) {
                 // Destroy the pieces
-                matrix[currentCoord.row][currentCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
+                matrix[currentCoord.row][currentCoord.column].piece = Piece(TRASPARENTE, VUOTA);
             }
         }
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
     if (move.m_wasPromotion) {
-        startingSquare.m_piece.type = DAMONE;
+        startingSquare.piece.type = DAMONE;
     }
-    matrix[move.endingCoord.row][move.endingCoord.column].m_piece = startingSquare.m_piece;
-    matrix[move.startingCoord.row][move.startingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
+    matrix[move.endingCoord.row][move.endingCoord.column].piece = startingSquare.piece;
+    matrix[move.startingCoord.row][move.startingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
 }
 
 void Board::blow_up(Move& move) {
@@ -119,10 +119,10 @@ void Board::blow_up(Move& move) {
 }
 
 void Board::edit_matrix_notation(Coords coords, Piece _piece) {
-    matrix[coords.row][coords.column].m_piece = _piece;
+    matrix[coords.row][coords.column].piece = _piece;
 }
 
 void Board::edit_human_notation(Coords coords, Piece _piece) {
-    matrix[coords.row - 1][coords.column].m_piece = _piece;
+    matrix[coords.row - 1][coords.column].piece = _piece;
 }
 #pragma clang diagnostic pop

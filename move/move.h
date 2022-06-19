@@ -47,8 +47,9 @@ public:
     // Calculates the ending coordinate, useful in an EAT move where you have startingCoords and eatenCoords
     // Also copied from GameEngine::calculate_forward
     void calculate_endingCoord();
-    // Convert all the coordinates in the move from human-notation to matrix-notation
-    void convert_all();
+    // Convert all the coordinates in the move from human-notation to matrix-notation if decrement is true.
+    // Go from matrix-notation to human if decrement is false
+    void convert_all(bool decrement = true);
 
     bool is_empty() const;
 
@@ -65,6 +66,8 @@ public:
     Move(Coords startingCoord, Coords endingCoord, PlayerColor color = TRASPARENTE, MoveType type = EAT);
 
     explicit Move(PlayerColor color, MoveType type = UNINITIALIZED);
+
+    Move(Coords startingCoords, MoveType type, PlayerColor _color);
 
     Move& operator= (const Move& rhs);
 };

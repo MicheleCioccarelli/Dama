@@ -5,16 +5,9 @@
 #include "../../engine/engine.h"
 #include "../a_piece/a_piece.h"
 #include "../../enums/playstyle.h"
+#include <math.h>
 
 class Apium {
-private:
-    float m_eval;
-    // Used as a weight to calculate the position's score
-    Playstyle m_playstyle;
-    // The moves Apium comes up with and actually performs, if the opponent does something expected you don't need to recalculate
-    std::vector<Move> m_moves;
-    // Used for simulate_functions and access enemy logs
-    GameEngine m_engine;
 public:
     Apium() = default;
     Apium(GameEngine& engine);
@@ -40,5 +33,16 @@ public:
     float evaluate_board_position(std::string& currentBoadPos) const;
 
     // This version of minimax uses Apium's internal board
+    /**
+     * Returns a vector of depth-lenght containing depth-number of moves along with the vector's evaluation
+     * */
     float minimax(int depth, float alpha, float beta,  bool maximizingPlayer);
+private:
+    float m_eval;
+    // Used as a weight to calculate the position's score
+    Playstyle m_playstyle;
+    // The moves Apium comes up with and actually performs, if the opponent does something expected you don't need to recalculate
+    std::vector<Move> m_moves;
+    // Used for simulate_functions and access enemy logs
+    GameEngine m_engine;
 };

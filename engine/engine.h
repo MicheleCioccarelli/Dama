@@ -18,6 +18,10 @@ public:
     // It is updated by submit()
     std::vector<std::string> pastPositions;
 
+    // Vectors of all the piece-containing squares, used to find them quicker in Apium's minimax()
+    std::vector<Square> whitePiecesSquares;
+    std::vector<Square> blackPiecesSquares;
+
     /**
      * If goingBackwards is true a depth-number of moves will be played backwards. If depth is 1 startingPlayer's last
      * move will be played, if it is 2 also the opposite player's last move will be repeated an so on.
@@ -50,11 +54,14 @@ public:
     // Given an eat type move calculates where the damina will end up in the end
     static Coords calculate_forward(const Move& move);
 
-    // Does all the checking regarding the move and logs erros if needed TODO Fix isBlown
+    // Does all the checking regarding the move and logs erros if needed
     MoveIssue submit(const Move& move, PlayerColor color);
 
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);
+
+    // Updates whitePieces and blackPieces with information from the current board TODO test if this works
+    void refresh_piece_vectors();
 
     std::string get_player_name(PlayerColor color) const;
 

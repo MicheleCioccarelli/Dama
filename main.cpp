@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 
         UI::init(engine);
 
-        GameHandler::two_player_game(engine);
+        GameHandler::debug(engine);
     }
     return 0;
 }

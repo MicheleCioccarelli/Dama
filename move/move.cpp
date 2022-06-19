@@ -123,22 +123,38 @@ Move::Move(Coords startingCoord, Coords endingCoord, PlayerColor color, MoveType
 Move::Move(Coords startingCoords, MoveType type)
         : startingCoord(startingCoords), moveType(type) {}
 
+Move::Move(Coords startingCoords, MoveType type, PlayerColor _color)
+        : startingCoord(startingCoords), moveType(type), playerColor(_color) {}
+
 Move::Move(Coords startingCoord, Coords endingCoord, MoveType type, PlayerColor color)
         : startingCoord(startingCoord), endingCoord(endingCoord), playerColor(color), moveType(type) {}
 
 Move::Move(Coords startingCoords, PlayerColor color, MoveType type)
         : startingCoord(startingCoords), playerColor(color), moveType(type) {}
 
-void Move::convert_all() {
-    startingCoord = startingCoord.convert_coords();
-    if (!endingCoord.is_uninitialized()) {
-        endingCoord = endingCoord.convert_coords();
-    }
-    for (Coords& a : eatenCoords) {
-        a = a.convert_coords();
-    }
-    if (!blownCoord.is_uninitialized()) {
-        blownCoord = blownCoord.convert_coords();
+void Move::convert_all(bool decrement) {
+    if (decrement) {
+        startingCoord = startingCoord.convert_coords();
+        if (!endingCoord.is_uninitialized()) {
+            endingCoord = endingCoord.convert_coords();
+        }
+        for (Coords &a: eatenCoords) {
+            a = a.convert_coords();
+        }
+        if (!blownCoord.is_uninitialized()) {
+            blownCoord = blownCoord.convert_coords();
+        }
+    } else {
+        startingCoord = startingCoord.convert_coords(false);
+        if (!endingCoord.is_uninitialized()) {
+            endingCoord = endingCoord.convert_coords(false);
+        }
+        for (Coords &a: eatenCoords) {
+            a = a.convert_coords();
+        }
+        if (!blownCoord.is_uninitialized()) {
+            blownCoord = blownCoord.convert_coords(false);
+        }
     }
 }
 

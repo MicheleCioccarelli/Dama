@@ -23,7 +23,7 @@ float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
     float pieceEval = 0;
 
     if (piece == Piece()) {
-        piece = m_engine.board.matrix[pieceCoords.row][pieceCoords.column].m_piece;
+        piece = m_engine.board.matrix[pieceCoords.row][pieceCoords.column].piece;
     }
 
     // There was no piece in the position
@@ -82,7 +82,7 @@ float Apium::evaluate_board_position(std::string &currentBoadPos) const {
     }
 
     for (const Square& square : squares) {
-        returnValue += evaluate_piece(square.m_coords, square.m_piece);
+        returnValue += evaluate_piece(square.coords, square.piece);
     }
     return returnValue;
 }
@@ -90,6 +90,53 @@ float Apium::evaluate_board_position(std::string &currentBoadPos) const {
 // For each child of position
 float Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer) {
     if (depth == 0 || m_engine.game_over() != GAME_NOT_OVER) {
-
+        // Return the static evaluation of the current position
+        return evaluate_current_position();
     }
+    float eval, maxEval, minEval;
+
+    // If the maximazing player is playing (WHITE)
+    if (maximizingPlayer) {
+        alpha = MAX_EVAL;
+        // For each child of the position
+        /**
+         * Pick one of your pieces and generate all the moves it could make, then play them
+         * one by one and evaluate all the positions, this could be optimized because the moves have to be
+         * performed both when they are generated and when they are evaluated
+         */
+        for (const Square& whitePieceSquare : m_engine.whitePiecesSquares) { // For each white piece on the board
+            for (Move& currentMove : m_engine.simulate_piece(whitePieceSquare.coords)) { // generate all of its possible moves
+                // Evaluate them and repeat
+                m_engine.board.execute_move(currentMove);
+                m_engine.render.render_board(m_engine.board, BIANCO, currentMove);
+                eval = minimax(depth - 1, alpha, beta, false);
+                m_engine.undo_move(currentMove);
+                maxEval = std::max(maxEval, eval);
+                alpha = std::max(alpha, eval);
+                if (beta <= alpha) {
+                    break; // Might be wrong, you probably need to step out of all the loops, good luck :/
+                }
+            }
+        }
+        return maxEval;
+
+    } else {
+        // If the minimazing player is playing (BLACK)
+        beta = MIN_EVAL;
+        for (const Square& blackPieceSquare : m_engine.blackPiecesSquares) { // For each white piece on the board
+            for (Move& currentMove : m_engine.simulate_piece(blackPieceSquare.coords)) { // generate all of its possible moves
+                // Evaluate them and repeat
+                m_engine.board.execute_move(currentMove);
+                m_engine.render.render_board(m_engine.board, NERO, currentMove);
+                eval = minimax(depth - 1, alpha, beta, true);
+                m_engine.undo_move(currentMove);
+                minEval = std::min(minEval, eval);
+                beta = std::min(beta, eval);
+                if (beta <= alpha) {
+                    break;
+                }
+            }
+        }
+    }
+    return minEval;
 }

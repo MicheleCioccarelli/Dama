@@ -1,7 +1,8 @@
 #include "coords.h"
 
-Coords Coords::convert_coords() const {
-    return {column, row - 1};
+Coords Coords::convert_coords(bool decrement) const {
+    if (decrement) return {column, row - 1};
+    return {column, row + 1};
 }
 
 std::string Coords::toStringHuman() const{

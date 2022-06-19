@@ -33,7 +33,7 @@ bool BoardPos::notation_to_board(std::string &notation, Board &board) {
                 coords = coords.convert_coords();
 
                 // Add the piece
-                board.matrix[coords.row][coords.column].m_piece = char_to_piece(beingExamined.at(0));
+                board.matrix[coords.row][coords.column].piece = char_to_piece(beingExamined.at(0));
             } else {
                 return false;
             }
@@ -65,11 +65,11 @@ std::string BoardPos::board_to_noation_ignoring_white_squares(const Board &board
     // This loop skips white squares since they should not have pieces on them
     for (int row = 0; row < ROWS; row++) {
         for (int col = (row % 2); col < COLUMNS; col += 2) {
-            switch (board.matrix[row][col].m_piece.color) {
+            switch (board.matrix[row][col].piece.color) {
                 case TRASPARENTE:
                     break;
                 case BIANCO:
-                    board.matrix[row][col].m_piece.type == DAMA ? output += "w" : output += "W";
+                    board.matrix[row][col].piece.type == DAMA ? output += "w" : output += "W";
                     // ADD COLUMN, similar expression to the one used in RenderV2::render_columns()
 
                     output += (char)('A' + col);
@@ -79,7 +79,7 @@ std::string BoardPos::board_to_noation_ignoring_white_squares(const Board &board
                     break;
 
                 case NERO:
-                    board.matrix[row][col].m_piece.type == DAMA ? output += "b" : output += "B";
+                    board.matrix[row][col].piece.type == DAMA ? output += "b" : output += "B";
 
                     // Same as above
                     output += (char)('A' + col);
@@ -97,11 +97,11 @@ std::string BoardPos::board_to_noation_with_white_squares(const Board &board) {
 
     for (int row = 0; row < ROWS; row++) {
         for (int col = 0; col < COLUMNS; col++) {
-            switch (board.matrix[row][col].m_piece.color) {
+            switch (board.matrix[row][col].piece.color) {
                 case TRASPARENTE:
                     break;
                 case BIANCO:
-                    board.matrix[row][col].m_piece.type == DAMA ? output += "w" : output += "W";
+                    board.matrix[row][col].piece.type == DAMA ? output += "w" : output += "W";
                     // ADD COLUMN, similar expression to the one used in RenderV2::render_columns()
 
                     output += (char)('A' + col);
@@ -111,7 +111,7 @@ std::string BoardPos::board_to_noation_with_white_squares(const Board &board) {
                     break;
 
                 case NERO:
-                    board.matrix[row][col].m_piece.type == DAMA ? output += "b" : output += "B";
+                    board.matrix[row][col].piece.type == DAMA ? output += "b" : output += "B";
 
                     // Same as above
                     output += (char)('A' + col);

@@ -19,8 +19,9 @@ public:
     bool operator==(const Coords &rhs) const;
     bool operator!=(const Coords &rhs) const;
 
-    // Convert coords from human notation to matrix notation
-    Coords convert_coords() const;
+    // Convert coords from human notation to matrix notation if decrement is true.
+    // Go from matrix notation to human notation if decrement is false
+    Coords convert_coords(bool decrement = true) const;
 
     // Reset the variable
     void clear();

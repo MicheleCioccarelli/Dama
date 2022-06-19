@@ -61,6 +61,7 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // Doesn't assume matrix notation
 
     if (move.playerColor != TRASPARENTE) {
+        move.convert_all(false); // TODO: delete this thing
         m_colorMatrix.color_board(move);
         if (color == NERO) {
             m_colorMatrix.flip_board();
@@ -89,9 +90,9 @@ void RenderV2::clear() {
 }
 
 std::string RenderV2::square_resolve(Coords coords, Board &board) {
-    switch (board.matrix[coords.row][coords.column].m_piece.color) {
+    switch (board.matrix[coords.row][coords.column].piece.color) {
         case BIANCO:
-            switch (board.matrix[coords.row][coords.column].m_piece.type) {
+            switch (board.matrix[coords.row][coords.column].piece.type) {
                 case DAMA:
                     return "●";
                 case DAMONE:
@@ -102,7 +103,7 @@ std::string RenderV2::square_resolve(Coords coords, Board &board) {
                     return "█";
             }
         case NERO:
-            switch (board.matrix[coords.row][coords.column].m_piece.type) {
+            switch (board.matrix[coords.row][coords.column].piece.type) {
                 case DAMA:
                     return "○";
                 case DAMONE:

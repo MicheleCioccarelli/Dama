@@ -23,6 +23,8 @@ GameEngine::GameEngine(GameStyle gameStyle)
     }
     // Add the default position to the past positions
     pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
+    // Initialize pieces vectors
+    refresh_piece_vectors();
 }
 
 std::string GameEngine::get_player_name(PlayerColor color) const{
@@ -47,7 +49,7 @@ PlayerColor GameEngine::deduce_color_human_notation(const Move &move) {
     }
     Coords tempCoords = move.startingCoord.convert_coords();
 
-    return board.matrix[tempCoords.row][tempCoords.column].m_piece.color;
+    return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
 PlayerColor GameEngine::deduce_color_matrix_notation(const Move &move) {
@@ -56,15 +58,15 @@ PlayerColor GameEngine::deduce_color_matrix_notation(const Move &move) {
     }
     Coords tempCoords = move.startingCoord;
 
-    return board.matrix[tempCoords.row][tempCoords.column].m_piece.color;
+    return board.matrix[tempCoords.row][tempCoords.column].piece.color;
 }
 
 void GameEngine::precise_promote(const Move &move) {
     // Assumes matrix-notation
     if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
-        board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece.type = DAMONE;
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
     } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
-        board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece.type = DAMONE;
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
     }
 }
 
@@ -170,19 +172,19 @@ bool GameEngine::playBack(PlayerColor currentPlayer, int depth, int whiteIndex, 
 void GameEngine::undo_move(const Move &move) {
     // Assumes matrix-notation
     if (move.m_wasPromotion) {
-        board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece.type = DAMA;
-        board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece.type = DAMA;
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMA;
+        board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
     }
 
     if (move.moveType == EAT) {
         // Swap starting piece and ending piece
-        board.matrix[move.startingCoord.row][move.startingCoord.column].m_piece =
-                board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece;
-        board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece = Piece(TRASPARENTE, VUOTA);
+        board.matrix[move.startingCoord.row][move.startingCoord.column].piece =
+                board.matrix[move.endingCoord.row][move.endingCoord.column].piece;
+        board.matrix[move.endingCoord.row][move.endingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
 
         // Put eaten pieces back on the board
         for (int i = 0; i < move.eatenPieces.size(); i++) {
-            board.matrix[move.eatenCoords[i].row][move.eatenCoords[i].column].m_piece = move.eatenPieces[i];
+            board.matrix[move.eatenCoords[i].row][move.eatenCoords[i].column].piece = move.eatenPieces[i];
         }
     } else {
         // Swap startingCoords and endingCoords
@@ -190,9 +192,9 @@ void GameEngine::undo_move(const Move &move) {
         board.execute_move(tempMove);
         // If the piece was promoted, demote it
         if (move.endingCoord.row == ROWS - 1 && deduce_color_matrix_notation(move) == BIANCO) {
-            board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece.type = DAMA;
+            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
         } else if (move.endingCoord.row == 0 && deduce_color_matrix_notation(move) == NERO) {
-            board.matrix[move.endingCoord.row][move.endingCoord.column].m_piece.type = DAMA;
+            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
         }
     }
 }
@@ -206,14 +208,14 @@ MoveIssue GameEngine::check_move(Move &move) {
     Square endingSquare = board.matrix[move.endingCoord.row][move.endingCoord.column];
 
     // Check square-specific details
-    if (startingSquare.m_piece.type == VUOTA) {
+    if (startingSquare.piece.type == VUOTA) {
         return EMPTY_START;
     }
-    if (startingSquare.m_color == BIANCA || endingSquare.m_color == BIANCA) {
+    if (startingSquare.color == BIANCA || endingSquare.color == BIANCA) {
         return WHITE_SQUARE;
     }
     // COLORATA is used for debugging purposes and will not show up in a regular game
-    if (endingSquare.m_piece.type != VUOTA && endingSquare.m_piece.type != COLORATA) {
+    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
         return POPULATED;
     }
 
@@ -224,8 +226,8 @@ MoveIssue GameEngine::check_move(Move &move) {
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
             // Check if a damina is moving forwards
-            if (startingSquare.m_piece.type == DAMA && startingSquare.m_piece.color == BIANCO && verticalDistance == 1 ||
-                startingSquare.m_piece.type == DAMA && startingSquare.m_piece.color == NERO && verticalDistance == -1) {
+            if (startingSquare.piece.type == DAMA && startingSquare.piece.color == BIANCO && verticalDistance == 1 ||
+                startingSquare.piece.type == DAMA && startingSquare.piece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
             return ALL_GOOD;
@@ -242,23 +244,23 @@ MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, b
     Square startingSquare = board.matrix[startingCoords.row][startingCoords.column];
     Square endingSquare = board.matrix[endingCoords.row][endingCoords.column];
     // Check square-specific details
-    if (endingSquare.m_piece.type == VUOTA) {
+    if (endingSquare.piece.type == VUOTA) {
         return EMPTY_TARGET;
-    } else if (startingSquare.m_piece.type == VUOTA && dirt == false) {
+    } else if (startingSquare.piece.type == VUOTA && dirt == false) {
         return EMPTY_START;
     }
-    if (startingSquare.m_color == BIANCA || endingSquare.m_color == BIANCA) {
+    if (startingSquare.color == BIANCA || endingSquare.color == BIANCA) {
         return WHITE_SQUARE;
     }
     // Check pieces compatibility
-    if (startingSquare.m_piece.type == DAMA && endingSquare.m_piece.type == DAMONE) {
+    if (startingSquare.piece.type == DAMA && endingSquare.piece.type == DAMONE) {
         return TOO_BIG;
-    } else if (startingSquare.m_piece.color == endingSquare.m_piece.color) {
+    } else if (startingSquare.piece.color == endingSquare.piece.color) {
         return FRIENDLY_FIRE;
     }
 
     // COLORATA is used for debugging purposes and will not show up in a regular game
-    if (endingSquare.m_piece.type != VUOTA && endingSquare.m_piece.type != COLORATA) {
+    if (endingSquare.piece.type != VUOTA && endingSquare.piece.type != COLORATA) {
         return POPULATED;
     }
 
@@ -268,8 +270,8 @@ MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, b
     if (verticalDistance == 1 || verticalDistance == -1) {
         if (horizontalDistance == 1 || horizontalDistance == -1) {
             // Check if a damina is moving forwards
-            if (startingSquare.m_piece.type == DAMA && startingSquare.m_piece.color == BIANCO && verticalDistance == 1 ||
-                startingSquare.m_piece.type == DAMA && startingSquare.m_piece.color == NERO && verticalDistance == -1) {
+            if (startingSquare.piece.type == DAMA && startingSquare.piece.color == BIANCO && verticalDistance == 1 ||
+                startingSquare.piece.type == DAMA && startingSquare.piece.color == NERO && verticalDistance == -1) {
                 return BEHIND;
             }
             return ALL_GOOD;
@@ -297,7 +299,7 @@ MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int 
     }
     // This is where the dama would go if it ate endingcoords
     Coords forwardSquare = calculate_forward(startingCoords, move.eatenCoords[index]);
-    if (board.matrix[forwardSquare.row][forwardSquare.column].m_piece.type != VUOTA) {
+    if (board.matrix[forwardSquare.row][forwardSquare.column].piece.type != VUOTA) {
         return POPULATED;
     }
     if (is_in_bounds(forwardSquare)) {
@@ -369,12 +371,12 @@ MoveIssue GameEngine::check_blow(Move& move) {
 int GameEngine::count_pieces(PlayerColor pColor) const {
     int returnValue = 0;
     for (int row = 0; row < ROWS; row++) {
-        for (int col = 0; col < COLUMNS; col++) {
+        for (int col = (row % 2); col < COLUMNS; col += 2) {
             if (pColor == BIANCO) {
-                if (board.matrix[row][col].m_piece.color == BIANCO)
+                if (board.matrix[row][col].piece.color == BIANCO)
                     returnValue++;
             } else if (pColor == NERO) {
-                if (board.matrix[row][col].m_piece.color == NERO)
+                if (board.matrix[row][col].piece.color == NERO)
                     returnValue++;
             }
         }
@@ -414,8 +416,9 @@ MoveIssue GameEngine::submit(const Move& move, PlayerColor color) {
         }
         board.execute_move((Move&) tempMove);
 
-        // Update moves and past positions lists
+        // Update moves, past positions lists and piece vectors
         add_move(tempMove);
+        refresh_piece_vectors();
         pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
     } else {
         UI::log_error(status);
@@ -446,8 +449,8 @@ void GameEngine::simulate_eat_piece(std::vector<Move>& movesFound, Coords starti
     Coords eatenCoord;
      // QUESTIONABLE
      if (index == -1) {
-        // This is the first call, initialize the vector
-        movesFound.emplace_back(Move(startingCoords, EAT));
+        // This is the first call, initialize the vector TODO Delete player color detection
+        movesFound.emplace_back(Move(startingCoords, EAT, board.matrix[startingCoords.row][startingCoords.column].piece.color));
         index++;
     }
     // Back up the current move
@@ -501,7 +504,7 @@ std::vector<Move> GameEngine::simulate_move_piece(Coords& coords) {
             // The square the starting damina would move to
             endingCoords = Coords((ColumnNotation)(coords.column + horizontalOffset), coords.row + verticalOffset);
 
-            tempMove = Move(coords, endingCoords, MOVE);
+            tempMove = Move(coords, endingCoords, MOVE, board.matrix[coords.row][coords.column].piece.color);
 
             if (check_move(tempMove) == ALL_GOOD) {
                 movesFound.push_back(tempMove);
@@ -528,8 +531,8 @@ GameState GameEngine::game_over() {
 
     // Check how many moves each piece can make
     for (int i = 0; i < ROWS; i++) {
-        for (int j = 0; j < COLUMNS; j++) {
-            switch (board.matrix[i][j].m_piece.color) {
+        for (int j = (i % 2); j < COLUMNS; j += 2) {
+            switch (board.matrix[i][j].piece.color) {
                    case BIANCO:
                        // simulate_damina returns the vector of oves that damina can perform
                        whiteMoves += simulate_piece(Coords((ColumnNotation)j, i)).size();
@@ -559,6 +562,18 @@ GameState GameEngine::game_over() {
     }
     // Should not reach this point
     return GAME_NOT_OVER;
+}
+
+void GameEngine::refresh_piece_vectors() {
+    for (int row = 0; row < ROWS; row++) {
+        for (int col = (row % 2); col < COLUMNS; col += 2) {
+            if (board.matrix[row][col].piece.color == BIANCO) {
+                whitePiecesSquares.push_back(board.matrix[row][col]);
+            } else if (board.matrix[row][col].piece.color == NERO) {
+                blackPiecesSquares.push_back(board.matrix[row][col]);
+            }
+        }
+    }
 }
 
 #pragma clang diagnostic pop
