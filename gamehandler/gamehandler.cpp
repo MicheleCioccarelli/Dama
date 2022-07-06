@@ -218,10 +218,32 @@ void GameHandler::two_player_game(GameEngine& engine) {
 void GameHandler::debug(GameEngine &engine) {
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
-    Apium apium;
+
+    engine.board.edit_human_notation(Coords(A, 3), Piece(TRASPARENTE, VUOTA));
+    engine.board.edit_human_notation(Coords(D, 6), Piece(TRASPARENTE, VUOTA));
+    engine.board.edit_human_notation(Coords(G, 3), Piece(TRASPARENTE, VUOTA));
+    engine.board.edit_human_notation(Coords(E, 3), Piece(TRASPARENTE, VUOTA));
+
+    engine.board.edit_human_notation(Coords(B, 4), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(F, 4), Piece(BIANCO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 5), Piece(NERO, DAMA));
+
+    engine.render.render_board(engine.board, BIANCO);
+
+    Apium apium(engine,NEUTRAL, BIANCO);
 
     ApiumLine line;
 
-    apium.minimax(3, -1000, 1000, true);
+    auto stuff = apium.minimax(3, -1000, 1000, true);
+
+    PlayerColor color = NERO;
+    for (auto& move : apium.bestLine.get_moves()) {
+        color == NERO ? color = BIANCO : color = NERO;
+        engine.submit(move, color);
+        engine.render.render_board(engine.board, color);
+    }
+    std::cout << ".\n";
+
 
 }

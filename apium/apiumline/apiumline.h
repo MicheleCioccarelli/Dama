@@ -10,7 +10,12 @@ public:
 
     float get_eval() const;
 
+    // Returns a vector containinf m_moves
+    std::vector<Move> get_moves() const;
+
     void set_eval(float newEval);
+
+    void set_moves(const std::vector<Move>& moves);
 
     void push_move(const Move& move) noexcept;
 
@@ -23,6 +28,6 @@ public:
 
 private:
     std::vector<Move> m_moves;
-    float m_eval;
+    float m_eval = 0;
 };
 

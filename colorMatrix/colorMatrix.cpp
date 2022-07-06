@@ -95,6 +95,7 @@ void ColorMatrix::flip_board() {
 }
 
 void ColorMatrix::color_board(Move &move) {
+    // Expects human notation
     Coords currentCoords = move.startingCoord.convert_coords();
 
     // Painting the first square of the move as a moving square

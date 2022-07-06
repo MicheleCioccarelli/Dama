@@ -1,7 +1,7 @@
 #pragma once
 
 enum Playstyle {
-    NEUTRAL,
+    NEUTRAL = 0,
     AGGRESSIVE,
     DEFENSIVE
 };
