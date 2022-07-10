@@ -199,7 +199,7 @@ void GameEngine::undo_move(const Move &move) {
     }
 }
 
-MoveIssue GameEngine::check_move(Move &move) {
+MoveIssue GameEngine::check_move(const Move& move) {
     if (!is_in_bounds(move.startingCoord) || !is_in_bounds(move.endingCoord)) {
         return OUT_OF_BOUNDS;
     }
@@ -283,7 +283,7 @@ MoveIssue GameEngine::inspect_dama(Coords startingCoords, Coords endingCoords, b
     }
 }
 
-MoveIssue GameEngine::recursive_check_eat(Move move, Coords startingCoords, int index) {
+MoveIssue GameEngine::recursive_check_eat(const Move& move, Coords startingCoords, int index) {
     // Assumes a move with valid syntax and matrix notation
     /* When you check for multiple eatings the position you start from is actually empty because
      * this function doesn't move pieces around, dirt tells inspect_dama() to ignore the emptiness
@@ -384,7 +384,7 @@ int GameEngine::count_pieces(PlayerColor pColor) const {
     return returnValue;
 }
 
-MoveIssue GameEngine::submit(const Move& move, PlayerColor color) {
+MoveIssue GameEngine::submit_human_notation(const Move& move, PlayerColor color) {
     // Assumes human-notation
     // If this is called the move has no syntactical errors
     MoveIssue status;
@@ -418,6 +418,44 @@ MoveIssue GameEngine::submit(const Move& move, PlayerColor color) {
 
         // Update moves, past positions lists and piece vectors
         add_move(tempMove);
+        refresh_piece_vectors();
+        pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
+    } else {
+        UI::log_error(status);
+    }
+    return status;
+}
+
+MoveIssue GameEngine::submit_matrix_notation(const Move& move, PlayerColor color) {
+    // Assumes human-notation
+    // If this is called the move has no syntactical errors
+    MoveIssue status;
+
+    if (deduce_color_matrix_notation(move) != color) {
+        // Meh fix for being able to move enemy pieces, should be fixed in the future
+        UI::log_error(WRONG_COLOR);
+        return WRONG_COLOR;
+    }
+
+    switch (move.moveType) {
+        case MOVE:
+            status = check_move(move);
+            break;
+        case EAT:
+            status = recursive_check_eat(move);
+            break;
+        default:
+            status = UNDEFINED;
+    }
+    if (status == ALL_GOOD) {
+        // Dispatch the move
+        if (!move.blownCoord.is_uninitialized()) {
+            board.blow_up((Move&) move);
+        }
+        board.execute_move((Move&) move);
+
+        // Update moves, past positions lists and piece vectors
+        add_move(move);
         refresh_piece_vectors();
         pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
     } else {
@@ -575,10 +613,14 @@ void GameEngine::refresh_piece_vectors() noexcept{
             if (board.matrix[row][col].piece.color == BIANCO) {
                 if (whiteIndex < whitePiecesSquares.size()) {
                     whitePiecesSquares[whiteIndex++] = board.matrix[row][col];
+                } else { // Might cause problem
+                    whitePiecesSquares.push_back(board.matrix[row][col]);
                 }
             } else if (board.matrix[row][col].piece.color == NERO) {
                 if (blackIndex < blackPiecesSquares.size()) {
                     blackPiecesSquares[blackIndex++] = board.matrix[row][col];
+                } else {
+                    blackPiecesSquares.push_back(board.matrix[row][col]);
                 }
             }
         }

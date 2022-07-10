@@ -17,19 +17,20 @@ public:
 
     float get_eval() const;
     void set_eval (float eval);
-
     // Copy the rhs engine into Apium's engine
     void setEngine(const GameEngine& rhs);
-
     void set_playstyle(Playstyle playstyle);
+
+    // Sets Apium's internal engine to be equal to the one provided as a function argument
+    void sync_engine(const GameEngine& engine);
 
     /**
     * plays a depth number of moves and decides the best combination, or line.
     * For example with depth 3 it would play 1 move on Apiums color, one move from the opponent,
-    * and one move back as Apium\n\n
+    * and one move back as Apium. returns the best line\n\n
     * This is me giving up on fancy algorithms
     * */
-    ApiumLine find_best_line(int depth);
+    void find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed = ApiumLine());
 private:
     // Runs an evaluation of the current position and evaluates the internal evaluation
     void update_eval();
@@ -43,12 +44,6 @@ private:
 
     // Evaluate a board given in BoardPos notation
     float evaluate_board_position(std::string& currentBoadPos) const;
-
-    // This version of minimax uses Apium's internal board
-    /**
-     * Returns a vector of depth-lenght containing depth-number of moves along with the vector's evaluation
-     * */
-    ApiumLine minimax(int depth, float alpha, float beta, bool maximizingPlayer, std::vector<Move> currentLine = std::vector<Move>());
     /**
      * Given the current board finds the best move for the color specified wthout looking ahead
      * if shouldCleanup is true the function automatically undoes the moves it makes, if it is false
@@ -58,7 +53,7 @@ private:
 
 private:
     PlayerColor whoIsBeingPlayed = BIANCO;
-
+    // The live eval of the game, updated with every move actually played
     float m_eval = 0;
     // Used as a weight to calculate the position's score
     Playstyle m_playstyle;

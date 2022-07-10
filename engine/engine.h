@@ -15,7 +15,7 @@ public:
     Board board;
     RenderV2 render;
     // The boardPos of all the past positions is stored here, used for detecting move repetitionù
-    // It is updated by submit()
+    // It is updated by submit_human_notation()
     std::vector<std::string> pastPositions;
 
     // Vectors of all the piece-containing squares, used to find them quicker in Apium's minimax()
@@ -39,7 +39,7 @@ public:
     void undo_move(const Move& move);
 
     // Given a move of EAT type, checks if it can be executed (bounds checking, piece compatibility, ...)
-    MoveIssue recursive_check_eat(Move move, Coords startingCoords = Coords(), int index = 0);
+    MoveIssue recursive_check_eat(const Move& move, Coords startingCoords = Coords(), int index = 0);
 
     // Check all the general parameters for an EAT type move (squares must not be white, must move by 1, ...)
     // For more info on the dirt see recursive_check_eat()
@@ -55,7 +55,8 @@ public:
     static Coords calculate_forward(const Move& move);
 
     // Does all the checking regarding the move and logs erros if needed
-    MoveIssue submit(const Move& move, PlayerColor color);
+    MoveIssue submit_human_notation(const Move& move, PlayerColor color);
+    MoveIssue submit_matrix_notation(const Move& move, PlayerColor color);
 
     // Promotes a piece if the move puts it on the edge of the board
     void precise_promote(const Move& move);
@@ -70,7 +71,7 @@ public:
     /**
      * Checks if a move can be executed, if not returns the reason why
      * */
-    MoveIssue check_move(Move& move);
+    MoveIssue check_move(const Move& move);
 
     // Given a move returns the color of the player who made it
     PlayerColor deduce_color_human_notation(const Move &move);

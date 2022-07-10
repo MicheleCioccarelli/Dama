@@ -113,7 +113,7 @@ void Board::execute_move(Move& move) {
     matrix[move.startingCoord.row][move.startingCoord.column].piece = Piece(TRASPARENTE, VUOTA);
 }
 
-void Board::blow_up(Move& move) {
+void Board::blow_up(const Move& move) {
     // Assumes matrix notation
     edit_matrix_notation(Coords(move.blownCoord.column, move.blownCoord.row), Piece(TRASPARENTE, VUOTA));
 }

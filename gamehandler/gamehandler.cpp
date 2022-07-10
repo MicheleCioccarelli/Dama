@@ -90,7 +90,7 @@ int GameHandler::play_back(const std::string& gameLocation) {
             } else {
                 playerPlaying = NERO;
             }
-            engine.submit(move, playerPlaying);
+            engine.submit_human_notation(move, playerPlaying);
 
             engine.render.render_board(engine.board, playerPOV, move);
             if (playerPlaying == BIANCO) {
@@ -153,8 +153,8 @@ void GameHandler::two_player_game(GameEngine& engine) {
         // Get player input (move/command) and handle syntax errors
         issue = UI::get_move(move, engine, current_color);
         // If issue is valid the move is not a command and does not have syntax errors
-        // If submit returns ALL_GOOD the move didn't have any semantic errors and was executed
-        while (issue != VALID || engine.submit(move, current_color) != ALL_GOOD) {
+        // If submit_human_notation returns ALL_GOOD the move didn't have any semantic errors and was executed
+        while (issue != VALID || engine.submit_human_notation(move, current_color) != ALL_GOOD) {
             // If issue isn't INVALID then the move was a command
             if (issue != INVALID) {
                 if (CommandHandler::execute_game_command(engine, issue)) {
@@ -218,29 +218,24 @@ void GameHandler::two_player_game(GameEngine& engine) {
 void GameHandler::debug(GameEngine &engine) {
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
+    engine.board.edit_human_notation(Coords(E, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(D, 4), Piece(BIANCO, DAMA));
 
-    engine.board.edit_human_notation(Coords(A, 3), Piece(TRASPARENTE, VUOTA));
-    engine.board.edit_human_notation(Coords(D, 6), Piece(TRASPARENTE, VUOTA));
-    engine.board.edit_human_notation(Coords(G, 3), Piece(TRASPARENTE, VUOTA));
-    engine.board.edit_human_notation(Coords(E, 3), Piece(TRASPARENTE, VUOTA));
-
-    engine.board.edit_human_notation(Coords(B, 4), Piece(BIANCO, DAMA));
-    engine.board.edit_human_notation(Coords(F, 4), Piece(BIANCO, DAMA));
-    engine.board.edit_human_notation(Coords(C, 5), Piece(NERO, DAMA));
-    engine.board.edit_human_notation(Coords(G, 5), Piece(NERO, DAMA));
+    engine.refresh_piece_vectors();
 
     engine.render.render_board(engine.board, BIANCO);
 
     Apium apium(engine,NEUTRAL, BIANCO);
 
-    ApiumLine line;
+    apium.sync_engine(engine);
 
-    auto stuff = apium.minimax(3, -1000, 1000, true);
+    apium.find_best_line(1, BIANCO);
 
+    auto line = apium.bestLine;
     PlayerColor color = NERO;
-    for (auto& move : apium.bestLine.get_moves()) {
+    for (auto& move : line.get_moves()) {
         color == NERO ? color = BIANCO : color = NERO;
-        engine.submit(move, color);
+        engine.submit_matrix_notation(move, color);
         engine.render.render_board(engine.board, color);
     }
     std::cout << ".\n";

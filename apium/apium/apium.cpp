@@ -27,6 +27,10 @@ void Apium::update_eval() {
     set_eval(evaluate_current_position());
 }
 
+void Apium::sync_engine(const GameEngine &engine) {
+    m_engine = engine;
+}
+
 float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
     // Expects matrix-notation
     float pieceEval = 0;
@@ -96,93 +100,6 @@ float Apium::evaluate_board_position(std::string &currentBoadPos) const {
     return returnValue;
 }
 
-// For each child of position
-ApiumLine Apium::minimax(int depth, float alpha, float beta, bool maximizingPlayer, std::vector<Move> currentLine) {
-    if (depth == 0 || m_engine.game_over() != GAME_NOT_OVER) {
-        // Needs to be tested, assigns the current best line to the one which will be played
-        if (evaluate_current_position() > bestLine.get_eval() && whoIsBeingPlayed == BIANCO) {
-            bestLine.set_eval(evaluate_current_position());
-            bestLine.set_moves(currentLine);
-        } else if (evaluate_current_position() < bestLine.get_eval() && whoIsBeingPlayed == NERO) {
-            bestLine.set_eval(evaluate_current_position());
-            bestLine.set_moves(currentLine);
-        }
-        // Return the static evaluation of the current position
-        return {currentLine, evaluate_current_position()};
-    }
-    float eval, maxEval, minEval;
-
-    // If the maximazing player is playing (WHITE)
-    if (maximizingPlayer) {
-        alpha = MAX_EVAL;
-        // For each child of the position
-        /**
-         * Pick one of your pieces and generate all the moves it could make, then play them
-         * one by one and evaluate all the positions, this could be optimized because the moves have to be
-         * performed both when they are generated and when they are evaluated
-         */
-        for (const Square& whitePieceSquare : m_engine.whitePiecesSquares) { // For each white piece on the board
-            for (Move& currentMove : m_engine.simulate_piece(whitePieceSquare.coords)) { // generate all of its possible moves
-                // Evaluate them and repeat
-                m_engine.board.execute_move(currentMove);
-                m_engine.refresh_piece_vectors();
-#ifdef DEBUG
-                m_engine.render.render_board(m_engine.board, BIANCO, currentMove);
-#endif
-                currentLine.push_back(currentMove);
-                eval = minimax(depth - 1, alpha, beta, false, currentLine).get_eval();
-
-                m_engine.undo_move(currentMove);
-                currentLine.pop_back();
-
-                maxEval = std::max(maxEval, eval);
-                alpha = std::max(alpha, eval);
-                if (beta <= alpha) {
-                    goto OUT_OF_THE_LOOP; // Used to break out of both loops
-                }
-            }
-        }
-        OUT_OF_THE_LOOP:
-        return {currentLine, maxEval};
-
-    } else {
-        // If the minimazing player is playing (BLACK)
-        beta = MIN_EVAL;
-        for (const Square& blackPieceSquare : m_engine.blackPiecesSquares) { // For each white piece on the board
-            for (Move& currentMove : m_engine.simulate_piece(blackPieceSquare.coords)) { // generate all of its possible moves
-                // Evaluate them and repeat
-                m_engine.board.execute_move(currentMove);
-                m_engine.refresh_piece_vectors();
-
-#ifdef DEBUG
-                m_engine.render.render_board(m_engine.board, NERO, currentMove);
-#endif
-
-                currentLine.push_back(currentMove);
-                eval = minimax(depth - 1, alpha, beta, true, currentLine).get_eval();
-
-                m_engine.undo_move(currentMove);
-                currentLine.pop_back();
-
-                minEval = std::min(minEval, eval);
-                beta = std::min(beta, eval);
-                if (beta <= alpha) {
-                    break;
-                }
-            }
-        }
-    }
-    // Needs to be tested, assigns the current best line to the one which will be played
-    if (evaluate_current_position() > bestLine.get_eval() && whoIsBeingPlayed == BIANCO) {
-        bestLine.set_eval(evaluate_current_position());
-        bestLine.set_moves(currentLine);
-    } else if (evaluate_current_position() < bestLine.get_eval() && whoIsBeingPlayed == NERO) {
-        bestLine.set_eval(evaluate_current_position());
-        bestLine.set_moves(currentLine);
-    }
-    return {currentLine, minEval};
-}
-
 Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
     // Keeps track of the current best score
     float bestEval = m_eval;
@@ -201,17 +118,15 @@ Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
                     firstLoop = false;
                     bestMove = currentMove;
                 }
-                m_engine.submit(currentMove, whoIsPlaying); // play currentMove
+                m_engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
 
                 newEval = evaluate_current_position();
                 if (newEval > bestEval) {
                     bestEval = newEval;
                     bestMove = currentMove;
                 }
-                if (shouldCleanup) {
-                    m_engine.undo_move(currentMove); // cleanup after you played currentMove
-                    m_engine.refresh_piece_vectors();
-                }
+                m_engine.undo_move(currentMove); // cleanup after you played currentMove
+                m_engine.refresh_piece_vectors();
             }
         }
     } else {
@@ -223,38 +138,79 @@ Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
                     firstLoop = false;
                     bestMove = currentMove;
                 }
-                m_engine.submit(currentMove, whoIsPlaying); // play currentMove
+                m_engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
 
                 newEval = evaluate_current_position();
                 if (newEval < bestEval) {
                     bestEval = newEval;
                     bestMove = currentMove;
                 }
-                if (shouldCleanup) {
-                    m_engine.undo_move(currentMove); // cleanup after you played currentMove
-                    m_engine.refresh_piece_vectors();
-                }
+                m_engine.undo_move(currentMove); // cleanup after you played currentMove
+                m_engine.refresh_piece_vectors();
             }
         }
     }
     return bestMove;
 }
 
-ApiumLine Apium::find_best_line(int depth) {
-    ApiumLine beingConstructed;
-    for (; depth > 0 || m_engine.game_over() != GAME_NOT_OVER; depth--) { // Go until the game is over or deptg is 0
-        beingConstructed.push_move(find_best_move(whoIsBeingPlayed, false));
-        // Switch player colors
-        whoIsBeingPlayed == BIANCO ? whoIsBeingPlayed = NERO : whoIsBeingPlayed = BIANCO;
+void Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
+    if (depth == 0) {
+        // This is the end of this recursive branch, evaluate where beingConstructed brings you
+        float currentEval = evaluate_current_position();
+
+        if (!bestLine.get_moves().empty()) {
+            // The check above is to avoid ending up without any moves to make if everything sucks
+            if (this->whoIsBeingPlayed == BIANCO) {
+                // Maximizing the score
+                if (currentEval > bestLine.get_eval()) {
+                    bestLine = beingConstructed;
+                    bestLine.set_eval(currentEval);
+                }
+            } else {
+                // Minimize the score
+                if (currentEval < bestLine.get_eval()) {
+                    bestLine = beingConstructed;
+                    bestLine.set_eval(currentEval);
+                }
+            }
+        } else {
+            bestLine = beingConstructed;
+            bestLine.set_eval(currentEval);
+        }
+        return;
     }
+    if (moveMaker == BIANCO) {
+        for (auto& square : m_engine.whitePiecesSquares) { // For each white piece on the board
+            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
+                // Add a move to the line being created
+                beingConstructed.push_move(currentMove);
+                // Perform the move
+                m_engine.submit_matrix_notation(currentMove, BIANCO);
+                m_engine.refresh_piece_vectors();
 
-    beingConstructed.set_eval(evaluate_current_position());
+                // Continue the recursion
+                find_best_line(depth - 1, NERO, beingConstructed);
+                // All the branches regarding currentMove have been explored, cleanup for the next move
+                beingConstructed.pop_move();
+                m_engine.undo_move(currentMove);
+                m_engine.refresh_piece_vectors();
+            }
+        }
+    } else { // Same as above, just for black
+        for (auto& square : m_engine.blackPiecesSquares) {
+            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
 
-    // Cleanup
-    for (int i = beingConstructed.get_moves().size()-1; i >= 0; i--) {
-        m_engine.undo_move(beingConstructed.get_moves().at(i));
+                beingConstructed.push_move(currentMove);
+
+                m_engine.submit_matrix_notation(currentMove, NERO);
+                m_engine.refresh_piece_vectors();
+
+                find_best_line(depth - 1, BIANCO, beingConstructed);
+
+                beingConstructed.pop_move();
+                m_engine.undo_move(currentMove);
+                m_engine.refresh_piece_vectors();
+            }
+        }
     }
-    m_engine.refresh_piece_vectors(); // The code right above might crash
-
-    return beingConstructed;
 }
