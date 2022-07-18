@@ -6,6 +6,8 @@ class ApiumLine {
 public:
     ApiumLine() = default;
 
+    ApiumLine(float eval);
+
     ApiumLine(std::vector<Move> moves, float eval);
 
     float get_eval() const;

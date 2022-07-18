@@ -150,7 +150,7 @@ void Move::convert_all(bool decrement) {
             endingCoord = endingCoord.convert_coords(false);
         }
         for (Coords &a: eatenCoords) {
-            a = a.convert_coords();
+            a = a.convert_coords(false);
         }
         if (!blownCoord.is_uninitialized()) {
             blownCoord = blownCoord.convert_coords(false);

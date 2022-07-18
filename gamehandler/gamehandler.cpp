@@ -219,6 +219,9 @@ void GameHandler::debug(GameEngine &engine) {
     // Requires empty Engine initialization
     // Assumes that GameEngine has already been initialized
     engine.board.edit_human_notation(Coords(E, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(C, 5), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(G, 7), Piece(NERO, DAMA));
+    engine.board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
     engine.board.edit_human_notation(Coords(D, 4), Piece(BIANCO, DAMA));
 
     engine.refresh_piece_vectors();
@@ -229,14 +232,14 @@ void GameHandler::debug(GameEngine &engine) {
 
     apium.sync_engine(engine);
 
-    apium.find_best_line(1, BIANCO);
-
-    auto line = apium.bestLine;
+    auto line = apium.find_best_line(2, BIANCO);
+    engine.render.render_board(engine.board, BIANCO);
     PlayerColor color = NERO;
     for (auto& move : line.get_moves()) {
         color == NERO ? color = BIANCO : color = NERO;
         engine.submit_matrix_notation(move, color);
-        engine.render.render_board(engine.board, color);
+        move.convert_all(false);
+        engine.render.render_board(engine.board, color, move);
     }
     std::cout << ".\n";
 

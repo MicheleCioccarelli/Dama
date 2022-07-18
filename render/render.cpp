@@ -61,7 +61,6 @@ void RenderV2::render_board(Board &board, PlayerColor color, Move move) {
     // Doesn't assume matrix notation
 
     if (move.playerColor != TRASPARENTE) {
-        move.convert_all(false); // TODO: delete this thing, goes from matrix notation to human notation
         m_colorMatrix.color_board(move);
         if (color == NERO) {
             m_colorMatrix.flip_board();

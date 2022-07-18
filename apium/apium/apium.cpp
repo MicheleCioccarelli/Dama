@@ -153,64 +153,118 @@ Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
     return bestMove;
 }
 
-void Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
-    if (depth == 0) {
-        // This is the end of this recursive branch, evaluate where beingConstructed brings you
-        float currentEval = evaluate_current_position();
+//void Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
+//    if (depth == 0) {
+//        // This is the end of this recursive branch, evaluate where beingConstructed brings you
+//        float currentEval = evaluate_current_position();
+//
+//        if (!bestLine.get_moves().empty()) {
+//            // The check above is to avoid ending up without any moves to make if everything sucks
+//            if (this->whoIsBeingPlayed == BIANCO) {
+//                // Maximizing the score
+//                if (currentEval > bestLine.get_eval()) {
+//                    bestLine = beingConstructed;
+//                    bestLine.set_eval(currentEval);
+//                }
+//            } else {
+//                // Minimize the score
+//                if (currentEval < bestLine.get_eval()) {
+//                    bestLine = beingConstructed;
+//                    bestLine.set_eval(currentEval);
+//                }
+//            }
+//        } else {
+//            bestLine = beingConstructed;
+//            bestLine.set_eval(currentEval);
+//        }
+//        return;
+//    }
+//    if (moveMaker == BIANCO) {
+//        for (auto& square : m_engine.whitePiecesSquares) { // For each white piece on the board
+//            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
+//                // Add a move to the line being created
+//                beingConstructed.push_move(currentMove);
+//                // Perform the move
+//                m_engine.submit_matrix_notation(currentMove, BIANCO);
+//                m_engine.refresh_piece_vectors();
+//
+//                // Continue the recursion
+//                find_best_line(depth - 1, NERO, beingConstructed);
+//                // All the branches regarding currentMove have been explored, cleanup for the next move
+//                beingConstructed.pop_move();
+//                m_engine.undo_move(currentMove);
+//                m_engine.refresh_piece_vectors();
+//            }
+//        }
+//    } else { // Same as above, just for black
+//        for (auto& square : m_engine.blackPiecesSquares) {
+//            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
+//
+//                beingConstructed.push_move(currentMove);
+//
+//                m_engine.submit_matrix_notation(currentMove, NERO);
+//                m_engine.refresh_piece_vectors();
+//
+//                find_best_line(depth - 1, BIANCO, beingConstructed);
+//
+//                beingConstructed.pop_move();
+//                m_engine.undo_move(currentMove);
+//                m_engine.refresh_piece_vectors();
+//            }
+//        }
+//    }
+//}
 
-        if (!bestLine.get_moves().empty()) {
-            // The check above is to avoid ending up without any moves to make if everything sucks
-            if (this->whoIsBeingPlayed == BIANCO) {
-                // Maximizing the score
-                if (currentEval > bestLine.get_eval()) {
-                    bestLine = beingConstructed;
-                    bestLine.set_eval(currentEval);
-                }
-            } else {
-                // Minimize the score
-                if (currentEval < bestLine.get_eval()) {
-                    bestLine = beingConstructed;
-                    bestLine.set_eval(currentEval);
-                }
-            }
-        } else {
-            bestLine = beingConstructed;
-            bestLine.set_eval(currentEval);
-        }
-        return;
+/**
+ * Idea for find_best_line()'s redesign:
+ * First, you generate a tree of all the possible position that can be reached in a certain number of moves.
+ * Once you get to the end you can start deciding which move is best out of the ones available
+ * */
+
+ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
+    if (depth == 0) {
+        return {beingConstructed.get_moves(), evaluate_current_position()};
     }
+    // The moves which can be made at this point of the recursion
+    std::vector<ApiumLine> bestLineCandidates;
+    float currentEval {};
+
     if (moveMaker == BIANCO) {
-        for (auto& square : m_engine.whitePiecesSquares) { // For each white piece on the board
-            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
-                // Add a move to the line being created
+        for (auto &square: m_engine.whitePiecesSquares) { // For each white piece on the board
+            for (const auto &currentMove: m_engine.simulate_piece(square.coords)) { // For each move a piece can make
+                // Make the move
                 beingConstructed.push_move(currentMove);
-                // Perform the move
                 m_engine.submit_matrix_notation(currentMove, BIANCO);
                 m_engine.refresh_piece_vectors();
 
-                // Continue the recursion
-                find_best_line(depth - 1, NERO, beingConstructed);
-                // All the branches regarding currentMove have been explored, cleanup for the next move
+                // Add to the candidates the move that was just checked
+                bestLineCandidates.push_back(find_best_line(depth - 1, NERO, beingConstructed));
+
+                // Cleanup
                 beingConstructed.pop_move();
                 m_engine.undo_move(currentMove);
                 m_engine.refresh_piece_vectors();
-            }
+            } // Sort all of the evaluations the possible moves create
         }
-    } else { // Same as above, just for black
-        for (auto& square : m_engine.blackPiecesSquares) {
-            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
+        return *std::max_element(bestLineCandidates.begin(), bestLineCandidates.end());
 
+    } else if (moveMaker == NERO) {
+        for (auto &square: m_engine.blackPiecesSquares) {
+            for (const auto &currentMove: m_engine.simulate_piece(square.coords)) {
+                // Make the move
                 beingConstructed.push_move(currentMove);
-
                 m_engine.submit_matrix_notation(currentMove, NERO);
                 m_engine.refresh_piece_vectors();
 
-                find_best_line(depth - 1, BIANCO, beingConstructed);
+                bestLineCandidates.push_back(find_best_line(depth - 1, BIANCO, beingConstructed));
 
+                // Cleanup
                 beingConstructed.pop_move();
                 m_engine.undo_move(currentMove);
                 m_engine.refresh_piece_vectors();
-            }
+            } // Sort all of the evaluations the possible moves create
         }
+        return *std::min_element(bestLineCandidates.begin(), bestLineCandidates.end());
     }
 }
+

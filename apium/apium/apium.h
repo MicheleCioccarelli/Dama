@@ -28,9 +28,10 @@ public:
     * plays a depth number of moves and decides the best combination, or line.
     * For example with depth 3 it would play 1 move on Apiums color, one move from the opponent,
     * and one move back as Apium. returns the best line\n\n
+    * beingConstructed is the moves made up to any point in the recursion
     * This is me giving up on fancy algorithms
     * */
-    void find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed = ApiumLine());
+    ApiumLine find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed = ApiumLine());
 private:
     // Runs an evaluation of the current position and evaluates the internal evaluation
     void update_eval();
@@ -62,5 +63,6 @@ private:
     // Used for simulate_functions and access enemy logs
     GameEngine m_engine;
 public:
+    // Moves are stored in matrix-notation
     ApiumLine bestLine;
 };
