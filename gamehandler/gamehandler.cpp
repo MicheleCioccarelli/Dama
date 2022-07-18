@@ -232,16 +232,14 @@ void GameHandler::debug(GameEngine &engine) {
 
     apium.sync_engine(engine);
 
-    auto line = apium.find_best_line(2, BIANCO);
+    auto line = apium.find_best_line(6, BIANCO);
     engine.render.render_board(engine.board, BIANCO);
     PlayerColor color = NERO;
     for (auto& move : line.get_moves()) {
         color == NERO ? color = BIANCO : color = NERO;
+        engine.precise_promote(move);
         engine.submit_matrix_notation(move, color);
         move.convert_all(false);
         engine.render.render_board(engine.board, color, move);
     }
-    std::cout << ".\n";
-
-
 }

@@ -65,8 +65,10 @@ void GameEngine::precise_promote(const Move &move) {
     // Assumes matrix-notation
     if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
         board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
+        move.wasPromotion = true;
     } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
         board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMONE;
+        move.wasPromotion = true;
     }
 }
 
@@ -171,7 +173,7 @@ bool GameEngine::playBack(PlayerColor currentPlayer, int depth, int whiteIndex, 
 
 void GameEngine::undo_move(const Move &move) {
     // Assumes matrix-notation
-    if (move.m_wasPromotion) {
+    if (move.wasPromotion) {
         board.matrix[move.startingCoord.row][move.startingCoord.column].piece.type = DAMA;
         board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
     }

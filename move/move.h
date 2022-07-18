@@ -12,7 +12,7 @@ private:
     static Coords calculate_forward(const Coords& startingCoords, const Coords& endingCoords);
 public:
     // If this move lead to a promotion of its piece
-    bool m_wasPromotion = false;
+    mutable bool wasPromotion = false;
     std::vector<Coords> eatenCoords;
     // New pieces are added by move check functions
     std::vector<Piece> eatenPieces;
@@ -34,7 +34,7 @@ public:
 
     MoveType moveType;
     // Any additional information about the move, like its type of command
-    MoveData m_status;
+    MoveData status;
     // Add a coordinate to eatenCoords
     void push_coords(const Coords & _coords);
 

@@ -246,8 +246,18 @@ ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine bein
                 m_engine.refresh_piece_vectors();
             } // Sort all of the evaluations the possible moves create
         }
-        return *std::max_element(bestLineCandidates.begin(), bestLineCandidates.end());
-
+        // Find and return the best candidate
+        if (!bestLineCandidates.empty()) {
+            auto bestCandidate = bestLineCandidates.at(0);
+            for (int i = 1; i < bestLineCandidates.size() - 1; i++) {
+                if (bestLineCandidates.at(i) > bestCandidate) {
+                    bestCandidate = bestCandidate;
+                }
+            }
+            return bestCandidate;
+        } else {
+            return {};
+        }
     } else if (moveMaker == NERO) {
         for (auto &square: m_engine.blackPiecesSquares) {
             for (const auto &currentMove: m_engine.simulate_piece(square.coords)) {
@@ -264,7 +274,17 @@ ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine bein
                 m_engine.refresh_piece_vectors();
             } // Sort all of the evaluations the possible moves create
         }
-        return *std::min_element(bestLineCandidates.begin(), bestLineCandidates.end());
+        if (!bestLineCandidates.empty()) {
+            auto bestCandidate = bestLineCandidates.at(0);
+            for (int i = 1; i < bestLineCandidates.size() - 1; i++) {
+                if (bestLineCandidates.at(i) < bestCandidate) {
+                    bestCandidate = bestCandidate;
+                }
+            }
+            return bestCandidate;
+        } else {
+            return {};
+        }
     }
 }
 

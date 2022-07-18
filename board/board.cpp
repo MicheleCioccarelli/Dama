@@ -86,9 +86,9 @@ void Board::execute_move(Move& move) {
             move.calculate_endingCoord();
         }
         if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
-            move.m_wasPromotion = true;
+            move.wasPromotion = true;
         } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
-            move.m_wasPromotion = true;
+            move.wasPromotion = true;
         }
         if (move.eatenPieces.empty()) {
             // Eat all the target pieces
@@ -106,7 +106,7 @@ void Board::execute_move(Move& move) {
         }
     }
     // This moves the piece from it's orginal square to its destination, done for both EAT and MOVE type moves
-    if (move.m_wasPromotion) {
+    if (move.wasPromotion) {
         startingSquare.piece.type = DAMONE;
     }
     matrix[move.endingCoord.row][move.endingCoord.column].piece = startingSquare.piece;

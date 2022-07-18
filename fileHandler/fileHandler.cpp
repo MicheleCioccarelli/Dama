@@ -155,14 +155,14 @@ std::vector<Move> FileHandler::notation_to_moves(const std::string &notation) {
                 // Very similar code do UI::input_to_move()
                 switch (notation[i + 2]) {
                     case '-':
-                        tempMove.m_status = VALID;
+                        tempMove.status = VALID;
                         tempMove.moveType = MOVE;
                         tempMove.startingCoord = convert_coords(notation.substr(i, 2));
                         tempMove.endingCoord = convert_coords(notation.substr(i + 3, 2));
                         toShift += 6;
                         break;
                     case 'x':
-                        tempMove.m_status = VALID;
+                        tempMove.status = VALID;
                         tempMove.moveType = EAT;
                         tempMove.startingCoord = convert_coords(notation.substr(i, 2));
                         // The initializer at += 3 is to skip startingCoords, which was converted above, not sure if the condition is optimal

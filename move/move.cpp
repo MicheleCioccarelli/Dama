@@ -94,7 +94,7 @@ bool Move::is_empty() const {
 }
 
 void Move::clear() {
-    m_wasPromotion = false;
+    wasPromotion = false;
     moveType = UNINITIALIZED;
     eatenCoords.clear();
     eatenPieces.clear();
@@ -103,7 +103,7 @@ void Move::clear() {
     blownCoord.clear();
     endingBlowCoord.clear();
     playerColor = TRASPARENTE;
-    m_status = INVALID;
+    status = INVALID;
 }
 
 Move &Move::operator=(const Move& rhs) {
