@@ -224,6 +224,11 @@ void GameHandler::debug(GameEngine &engine) {
     engine.board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
     engine.board.edit_human_notation(Coords(D, 4), Piece(BIANCO, DAMA));
 
+//    engine.board.edit_human_notation(Coords(F, 8), Piece(BIANCO, DAMONE));
+//    engine.board.edit_human_notation(Coords(H, 8), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(H, 6), Piece(NERO, DAMA));
+//    engine.board.edit_human_notation(Coords(E, 3), Piece(NERO, DAMA));
+
     engine.refresh_piece_vectors();
 
     engine.render.render_board(engine.board, BIANCO);
@@ -232,8 +237,16 @@ void GameHandler::debug(GameEngine &engine) {
 
     apium.sync_engine(engine);
 
-    auto line = apium.find_best_line(6, BIANCO);
-    engine.render.render_board(engine.board, BIANCO);
+    apium.minimax(5, BIANCO);
+
+    auto line = apium.bestLine;
+
+    // Make Apium play against itself
+
+
+
+
+
     PlayerColor color = NERO;
     for (auto& move : line.get_moves()) {
         color == NERO ? color = BIANCO : color = NERO;

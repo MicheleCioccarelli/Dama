@@ -8,6 +8,11 @@ ApiumLine::ApiumLine(std::vector<Move> moves, float eval)
 ApiumLine::ApiumLine(float eval)
     : m_eval(eval) {}
 
+ApiumLine::ApiumLine(Move move, float eval)
+    : m_eval(eval) {
+    m_moves.push_back(move);
+}
+
 bool ApiumLine::operator<(const ApiumLine &rhs) const {
     return m_eval < rhs.get_eval();
 }

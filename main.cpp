@@ -3,7 +3,7 @@
 
 
 
-// TODO: Always update Apium's m_eval
+// TODO: Always update Apium's gameEval
 
 
 int main(int argc, char* argv[]) {

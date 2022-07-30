@@ -11,15 +11,15 @@
 class Apium {
 public:
     Apium() = default;
-    Apium(GameEngine& engine);
-    Apium(GameEngine& engine, Playstyle playstyle, PlayerColor apiumColor);
-    Apium(Playstyle playStyle, PlayerColor apiumColor);
+    Apium(GameEngine& Engine);
+    Apium(GameEngine& Engine, Playstyle Playstyle, PlayerColor ApiumColor);
+    Apium(Playstyle PlayStyle, PlayerColor ApiumColor);
 
     float get_eval() const;
-    void set_eval (float eval);
+    void set_eval (float Eval);
     // Copy the rhs engine into Apium's engine
     void setEngine(const GameEngine& rhs);
-    void set_playstyle(Playstyle playstyle);
+    void set_playstyle(Playstyle Playstyle);
 
     // Sets Apium's internal engine to be equal to the one provided as a function argument
     void sync_engine(const GameEngine& engine);
@@ -32,11 +32,13 @@ public:
     * This is me giving up on fancy algorithms
     * */
     ApiumLine find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed = ApiumLine());
+    float minimax(size_t depth, PlayerColor whoIsPlaying, bool isFirstTime = true);
 private:
+
     // Runs an evaluation of the current position and evaluates the internal evaluation
     void update_eval();
     /** Returns the value of the piece (positive for white pieces and negative for black ones).
-    * The if piece is not provided, the one in m_engine.board.matrix at the coordinates provided is used
+    * The if piece is not provided, the one in engine.board.matrix at the coordinates provided is used
     */
     float evaluate_piece(Coords pieceCoords, Piece piece = Piece()) const;
 
@@ -54,14 +56,14 @@ private:
 
 private:
     PlayerColor whoIsBeingPlayed = BIANCO;
-    // The live eval of the game, updated with every move actually played
-    float m_eval = 0;
+    // The live gameEval of the game, updated with every move actually played
+    float gameEval = 0;
     // Used as a weight to calculate the position's score
-    Playstyle m_playstyle;
+    Playstyle playstyle;
     // The moves Apium comes up with and actually performs, if the opponent does something expected you don't need to recalculate
-    std::vector<Move> m_moves;
+    std::vector<Move> moves;
     // Used for simulate_functions and access enemy logs
-    GameEngine m_engine;
+    GameEngine engine;
 public:
     // Moves are stored in matrix-notation
     ApiumLine bestLine;

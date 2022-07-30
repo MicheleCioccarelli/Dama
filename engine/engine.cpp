@@ -192,12 +192,12 @@ void GameEngine::undo_move(const Move &move) {
         // Swap startingCoords and endingCoords
         Move tempMove = Move(move.endingCoord, move.startingCoord, move.playerColor, MOVE);
         board.execute_move(tempMove);
-        // If the piece was promoted, demote it
-        if (move.endingCoord.row == ROWS - 1 && deduce_color_matrix_notation(move) == BIANCO) {
-            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
-        } else if (move.endingCoord.row == 0 && deduce_color_matrix_notation(move) == NERO) {
-            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
-        }
+//        // If the piece was promoted, demote it
+//        if (move.endingCoord.row == ROWS - 1 && deduce_color_matrix_notation(move) == BIANCO) {
+//            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
+//        } else if (move.endingCoord.row == 0 && deduce_color_matrix_notation(move) == NERO) {
+//            board.matrix[move.endingCoord.row][move.endingCoord.column].piece.type = DAMA;
+//        }
     }
 }
 
@@ -570,20 +570,13 @@ GameState GameEngine::game_over() {
     int blackMoves = 0;
 
     // Check how many moves each piece can make
-    for (int i = 0; i < ROWS; i++) {
-        for (int j = (i % 2); j < COLUMNS; j += 2) {
-            switch (board.matrix[i][j].piece.color) {
-                   case BIANCO:
-                       // simulate_damina returns the vector of oves that damina can perform
-                       whiteMoves += simulate_piece(Coords((ColumnNotation)j, i)).size();
-                       break;
-                   case NERO:
-                       blackMoves += simulate_piece(Coords((ColumnNotation)j, i)).size();
-                       break;
-                   default:
-                       break;
-            }
-        }
+    for (const auto& square : whitePiecesSquares) {
+        // simulate_damina returns the vector of oves that damina can perform
+        whiteMoves += simulate_piece(square.coords).size();
+    }
+    for (const auto& square : blackPiecesSquares) {
+        // simulate_damina returns the vector of oves that damina can perform
+        blackMoves += simulate_piece(square.coords).size();
     }
 
     // Look if the current board position has occoured three times
@@ -605,25 +598,18 @@ GameState GameEngine::game_over() {
 }
 
 void GameEngine::refresh_piece_vectors() noexcept{
-    size_t whiteSize = whitePiecesSquares.size();
-    size_t blackSize = blackPiecesSquares.size();
-    int whiteIndex {};
-    int blackIndex {};
+    whitePiecesSquares.clear();
+    blackPiecesSquares.clear();
 
     for (int row = 0; row < ROWS; row++) {
         for (int col = (row % 2); col < COLUMNS; col += 2) {
+            if (board.matrix[row][col].piece.color == TRASPARENTE) {
+                continue;
+            }
             if (board.matrix[row][col].piece.color == BIANCO) {
-                if (whiteIndex < whitePiecesSquares.size()) {
-                    whitePiecesSquares[whiteIndex++] = board.matrix[row][col];
-                } else { // Might cause problem
-                    whitePiecesSquares.push_back(board.matrix[row][col]);
-                }
+                whitePiecesSquares.push_back(board.matrix[row][col]);
             } else if (board.matrix[row][col].piece.color == NERO) {
-                if (blackIndex < blackPiecesSquares.size()) {
-                    blackPiecesSquares[blackIndex++] = board.matrix[row][col];
-                } else {
-                    blackPiecesSquares.push_back(board.matrix[row][col]);
-                }
+                blackPiecesSquares.push_back(board.matrix[row][col]);
             }
         }
     }

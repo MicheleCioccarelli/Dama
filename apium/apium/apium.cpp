@@ -1,34 +1,34 @@
 #include "apium.h"
 
-Apium::Apium(GameEngine &engine)
-    : m_engine(engine) {}
+Apium::Apium(GameEngine &Engine)
+    : engine(Engine) {}
 
-Apium::Apium(GameEngine &engine, Playstyle playstyle, PlayerColor apiumColor)
-    : m_engine(engine), m_playstyle(playstyle), whoIsBeingPlayed(apiumColor) {}
+Apium::Apium(GameEngine &Engine, Playstyle Playstyle, PlayerColor ApiumColor)
+    : engine(Engine), playstyle(Playstyle), whoIsBeingPlayed(ApiumColor) {}
 
-Apium::Apium(Playstyle playStyle, PlayerColor apiumColor)
-    : m_playstyle(playStyle), whoIsBeingPlayed(apiumColor) {}
+Apium::Apium(Playstyle PlayStyle, PlayerColor ApiumColor)
+    : playstyle(PlayStyle), whoIsBeingPlayed(ApiumColor) {}
 
-void Apium::set_eval(float eval) {
-    m_eval = eval;
+void Apium::set_eval(float Eval) {
+    Eval = Eval;
 }
 
 void Apium::setEngine(const GameEngine &rhs) {
-    m_engine = rhs;
+    engine = rhs;
 }
 
-void Apium::set_playstyle(const Playstyle playstyle) {
-    m_playstyle = playstyle;
+void Apium::set_playstyle(const Playstyle Playstyle) {
+    playstyle = Playstyle;
 }
 
-float Apium::get_eval() const { return m_eval; }
+float Apium::get_eval() const { return gameEval; }
 
 void Apium::update_eval() {
     set_eval(evaluate_current_position());
 }
 
-void Apium::sync_engine(const GameEngine &engine) {
-    m_engine = engine;
+void Apium::sync_engine(const GameEngine &Engine) {
+    engine = Engine;
 }
 
 float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
@@ -36,7 +36,7 @@ float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
     float pieceEval = 0;
 
     if (piece == Piece()) {
-        piece = m_engine.board.matrix[pieceCoords.row][pieceCoords.column].piece;
+        piece = engine.board.matrix[pieceCoords.row][pieceCoords.column].piece;
     }
 
     // There was no piece in the position
@@ -44,22 +44,28 @@ float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
         return pieceEval;
     }
 
-     switch (m_playstyle) {
+    /**
+     * Ideas for improvement:
+     * Reward damone based on how close they are to a piece they can ear, delete rewarding based on
+     * normal position for them
+     * */
+
+     switch (playstyle) {
         case NEUTRAL:
         /* EVALUATION TABLE FOR NEUTRAL
-         * DAMINA -> +1   | Increment based on position: +0.25
+         * DAMINA -> +2   | Increment based on position: +0.25
          * DAMONA -> +3   | Increment based on position: +0.25
          */
             if (piece.type == DAMA) {
                 if (piece.color == BIANCO) {
-                    // White damina
-                    pieceEval++;
+                    // The base value for a damina is 2
+                    pieceEval += 2;
 
                     // Add .25 based on how close it is to being a damone (1 square closer = +.25)
                     pieceEval += pieceCoords.row * .25;
                 } else {
                     // Black damina
-                    pieceEval--;
+                    pieceEval -= 2;
 
                     // Same as above but inverted
                     pieceEval -= (7 - pieceCoords.row) * .25;
@@ -78,10 +84,10 @@ float Apium::evaluate_piece(Coords pieceCoords, Piece piece) const {
 float Apium::evaluate_current_position() const {
     float returnValue = 0;
     // Evaluate all the black pieces
-    for (auto& square : m_engine.blackPiecesSquares)
+    for (auto& square : engine.blackPiecesSquares)
                 returnValue += evaluate_piece(square.coords, square.piece);
     // evaluate all the white pieces
-    for (auto& square : m_engine.whitePiecesSquares)
+    for (auto& square : engine.whitePiecesSquares)
         returnValue += evaluate_piece(square.coords, square.piece);
     return returnValue;
 }
@@ -102,7 +108,7 @@ float Apium::evaluate_board_position(std::string &currentBoadPos) const {
 
 Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
     // Keeps track of the current best score
-    float bestEval = m_eval;
+    float bestEval = gameEval;
     float newEval = bestEval;
     Move bestMove;
     // The first time the loop runs a move gets assigned to bestMove, so that if all the moves suck the function
@@ -110,110 +116,105 @@ Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
     bool firstLoop = true;
 
     if (whoIsPlaying == BIANCO) {
-        // White is trying to maximize the eval and moves the white pieces
-        for (auto &square: m_engine.whitePiecesSquares) { // For each white piece on the board
-            for (const auto &currentMove: m_engine.simulate_piece(square.coords)) {
+        // White is trying to maximize the gameEval and moves the white pieces
+        for (auto &square: engine.whitePiecesSquares) { // For each white piece on the board
+            for (const auto &currentMove: engine.simulate_piece(square.coords)) {
                 // For each of the moves the piece could make
                 if (firstLoop) {
                     firstLoop = false;
                     bestMove = currentMove;
                 }
-                m_engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
+                engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
 
                 newEval = evaluate_current_position();
                 if (newEval > bestEval) {
                     bestEval = newEval;
                     bestMove = currentMove;
                 }
-                m_engine.undo_move(currentMove); // cleanup after you played currentMove
-                m_engine.refresh_piece_vectors();
+                engine.undo_move(currentMove); // cleanup after you played currentMove
+                engine.refresh_piece_vectors();
             }
         }
     } else {
         // Black wants to minimize the score and plays with the black pieces
-        for (auto& square : m_engine.blackPiecesSquares) { // For each black piece on the board
-            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
+        for (auto& square : engine.blackPiecesSquares) { // For each black piece on the board
+            for (const auto& currentMove : engine.simulate_piece(square.coords)) {
                 // For each of the moves the piece could make
                 if (firstLoop) {
                     firstLoop = false;
                     bestMove = currentMove;
                 }
-                m_engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
+                engine.submit_matrix_notation(currentMove, whoIsPlaying); // play currentMove
 
                 newEval = evaluate_current_position();
                 if (newEval < bestEval) {
                     bestEval = newEval;
                     bestMove = currentMove;
                 }
-                m_engine.undo_move(currentMove); // cleanup after you played currentMove
-                m_engine.refresh_piece_vectors();
+                engine.undo_move(currentMove); // cleanup after you played currentMove
+                engine.refresh_piece_vectors();
             }
         }
     }
     return bestMove;
 }
 
-//void Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
-//    if (depth == 0) {
-//        // This is the end of this recursive branch, evaluate where beingConstructed brings you
-//        float currentEval = evaluate_current_position();
-//
-//        if (!bestLine.get_moves().empty()) {
-//            // The check above is to avoid ending up without any moves to make if everything sucks
-//            if (this->whoIsBeingPlayed == BIANCO) {
-//                // Maximizing the score
-//                if (currentEval > bestLine.get_eval()) {
-//                    bestLine = beingConstructed;
-//                    bestLine.set_eval(currentEval);
-//                }
-//            } else {
-//                // Minimize the score
-//                if (currentEval < bestLine.get_eval()) {
-//                    bestLine = beingConstructed;
-//                    bestLine.set_eval(currentEval);
-//                }
-//            }
-//        } else {
-//            bestLine = beingConstructed;
-//            bestLine.set_eval(currentEval);
-//        }
-//        return;
-//    }
-//    if (moveMaker == BIANCO) {
-//        for (auto& square : m_engine.whitePiecesSquares) { // For each white piece on the board
-//            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
-//                // Add a move to the line being created
-//                beingConstructed.push_move(currentMove);
-//                // Perform the move
-//                m_engine.submit_matrix_notation(currentMove, BIANCO);
-//                m_engine.refresh_piece_vectors();
-//
-//                // Continue the recursion
-//                find_best_line(depth - 1, NERO, beingConstructed);
-//                // All the branches regarding currentMove have been explored, cleanup for the next move
-//                beingConstructed.pop_move();
-//                m_engine.undo_move(currentMove);
-//                m_engine.refresh_piece_vectors();
-//            }
-//        }
-//    } else { // Same as above, just for black
-//        for (auto& square : m_engine.blackPiecesSquares) {
-//            for (const auto& currentMove : m_engine.simulate_piece(square.coords)) {
-//
-//                beingConstructed.push_move(currentMove);
-//
-//                m_engine.submit_matrix_notation(currentMove, NERO);
-//                m_engine.refresh_piece_vectors();
-//
-//                find_best_line(depth - 1, BIANCO, beingConstructed);
-//
-//                beingConstructed.pop_move();
-//                m_engine.undo_move(currentMove);
-//                m_engine.refresh_piece_vectors();
-//            }
-//        }
-//    }
-//}
+// Ahhh shit, here we go again
+float Apium::minimax(size_t depth, PlayerColor whoIsPlaying, bool  isFirstTime) {
+    if (depth == 0 || engine.game_over() != GAME_NOT_OVER) {
+        return evaluate_current_position();
+    }
+    float eval = 0;
+    float bestEval = 0;
+
+    if (whoIsPlaying == BIANCO) {
+        float maxEval = -100000;
+        for (auto &square: engine.whitePiecesSquares) { // For each white piece on the board
+            for (const auto &currentMove: engine.simulate_piece(square.coords)) {
+                // Perform the move
+                engine.submit_matrix_notation(currentMove, BIANCO);
+                engine.refresh_piece_vectors();
+
+                eval = minimax(depth - 1, NERO, false);
+                maxEval = std::max(eval, maxEval);
+
+                // If you are at the top of the tree you can pick the best move
+                if (isFirstTime) {
+                    if (eval > bestEval) {}
+                    bestLine = ApiumLine(currentMove, bestEval);
+                }
+
+                // Cleanup
+                engine.undo_move(currentMove);
+                engine.refresh_piece_vectors();
+            }
+        }
+        return maxEval;
+    } else {
+        float minEval = 100000;
+        for (auto &square: engine.blackPiecesSquares) { // For each white piece on the board
+            for (const auto &currentMove: engine.simulate_piece(square.coords)) {
+                // Perform the move
+                engine.submit_matrix_notation(currentMove, NERO);
+                engine.refresh_piece_vectors();
+
+                eval = minimax(depth - 1, BIANCO, false);
+                minEval = std::min(eval, minEval);
+
+                // If you are at the top of the tree you can pick the best move
+                if (isFirstTime) {
+                    if (eval < bestEval) {}
+                    bestLine = ApiumLine(currentMove, bestEval);
+                }
+
+                // Cleanup
+                engine.undo_move(currentMove);
+                engine.refresh_piece_vectors();
+            }
+        }
+        return minEval;
+    }
+}
 
 /**
  * Idea for find_best_line()'s redesign:
@@ -222,6 +223,16 @@ Move Apium::find_best_move(PlayerColor whoIsPlaying, bool shouldCleanup) {
  * */
 
 ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine beingConstructed) {
+    switch (engine.game_over()) {
+        case GAME_NOT_OVER:
+            break;
+        case BLACK_WIN:
+            return {beingConstructed.get_moves(), -100000};
+        case WHITE_WIN:
+            return {beingConstructed.get_moves(), +100000};
+        default:
+            break;
+    }
     if (depth == 0) {
         return {beingConstructed.get_moves(), evaluate_current_position()};
     }
@@ -230,20 +241,20 @@ ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine bein
     float currentEval {};
 
     if (moveMaker == BIANCO) {
-        for (auto &square: m_engine.whitePiecesSquares) { // For each white piece on the board
-            for (const auto &currentMove: m_engine.simulate_piece(square.coords)) { // For each move a piece can make
+        for (auto &square: engine.whitePiecesSquares) { // For each white piece on the board
+            for (const auto &currentMove: engine.simulate_piece(square.coords)) { // For each move a piece can make
                 // Make the move
                 beingConstructed.push_move(currentMove);
-                m_engine.submit_matrix_notation(currentMove, BIANCO);
-                m_engine.refresh_piece_vectors();
+                engine.submit_matrix_notation(currentMove, BIANCO);
+                engine.refresh_piece_vectors();
 
                 // Add to the candidates the move that was just checked
                 bestLineCandidates.push_back(find_best_line(depth - 1, NERO, beingConstructed));
 
                 // Cleanup
                 beingConstructed.pop_move();
-                m_engine.undo_move(currentMove);
-                m_engine.refresh_piece_vectors();
+                engine.undo_move(currentMove);
+                engine.refresh_piece_vectors();
             } // Sort all of the evaluations the possible moves create
         }
         // Find and return the best candidate
@@ -259,26 +270,26 @@ ApiumLine Apium::find_best_line(int depth, PlayerColor moveMaker, ApiumLine bein
             return {};
         }
     } else if (moveMaker == NERO) {
-        for (auto &square: m_engine.blackPiecesSquares) {
-            for (const auto &currentMove: m_engine.simulate_piece(square.coords)) {
+        for (auto &square: engine.blackPiecesSquares) {
+            for (const auto &currentMove: engine.simulate_piece(square.coords)) {
                 // Make the move
                 beingConstructed.push_move(currentMove);
-                m_engine.submit_matrix_notation(currentMove, NERO);
-                m_engine.refresh_piece_vectors();
+                engine.submit_matrix_notation(currentMove, NERO);
+                engine.refresh_piece_vectors();
 
                 bestLineCandidates.push_back(find_best_line(depth - 1, BIANCO, beingConstructed));
 
                 // Cleanup
                 beingConstructed.pop_move();
-                m_engine.undo_move(currentMove);
-                m_engine.refresh_piece_vectors();
+                engine.undo_move(currentMove);
+                engine.refresh_piece_vectors();
             } // Sort all of the evaluations the possible moves create
         }
         if (!bestLineCandidates.empty()) {
-            auto bestCandidate = bestLineCandidates.at(0);
+            ApiumLine bestCandidate = bestLineCandidates.at(0);
             for (int i = 1; i < bestLineCandidates.size() - 1; i++) {
                 if (bestLineCandidates.at(i) < bestCandidate) {
-                    bestCandidate = bestCandidate;
+                    bestCandidate = bestLineCandidates.at(i);
                 }
             }
             return bestCandidate;

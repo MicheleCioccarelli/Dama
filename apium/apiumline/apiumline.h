@@ -10,9 +10,11 @@ public:
 
     ApiumLine(std::vector<Move> moves, float eval);
 
+    ApiumLine(Move move, float eval);
+
     float get_eval() const;
 
-    // Returns a vector containinf m_moves
+    // Returns a vector containinf moves
     std::vector<Move> get_moves() const;
 
     void set_eval(float newEval);
