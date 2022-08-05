@@ -80,15 +80,17 @@ void Board::empty_game_initialization() {}
 void Board::execute_move(Move& move) {
     // Input is assumed as matrix-notation
     Square startingSquare = matrix[move.startingCoord.row][move.startingCoord.column];
+
+    if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO && startingSquare.piece.type == DAMA) {
+        move.wasPromotion = true;
+    } else if (move.endingCoord.row == 0 && move.playerColor == NERO && startingSquare.piece.type == DAMA) {
+        move.wasPromotion = true;
+    }
+
     if (move.moveType == EAT) {
         if (move.endingCoord.is_uninitialized()) {
             // If this move has type EAT or wasn't constructed properly
             move.calculate_endingCoord();
-        }
-        if (move.endingCoord.row == ROWS - 1 && move.playerColor == BIANCO) {
-            move.wasPromotion = true;
-        } else if (move.endingCoord.row == 0 && move.playerColor == NERO) {
-            move.wasPromotion = true;
         }
         if (move.eatenPieces.empty()) {
             // Eat all the target pieces

@@ -107,6 +107,7 @@ void Move::clear() {
 }
 
 Move &Move::operator=(const Move& rhs) {
+    wasPromotion = rhs.wasPromotion;
     startingCoord = rhs.startingCoord;
     endingCoord = rhs.endingCoord;
     eatenCoords = rhs.eatenCoords;

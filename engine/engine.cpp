@@ -461,6 +461,7 @@ MoveIssue GameEngine::submit_matrix_notation(const Move& move, PlayerColor color
         refresh_piece_vectors();
         pastPositions.push_back(BoardPos::board_to_noation_ignoring_white_squares(board));
     } else {
+        render.render_board(board, BIANCO);
         UI::log_error(status);
     }
     return status;
@@ -469,6 +470,9 @@ MoveIssue GameEngine::submit_matrix_notation(const Move& move, PlayerColor color
 // ==== GOOD STUFF INCOMING ====
 
 std::vector<Move> GameEngine::simulate_piece(Coords coords) {
+//    if (coords.column == E && coords.row == 6) {
+//        std::cout << "brooo";
+//    }
     std::vector<Move> moves_found;
     // Put all the EAT type moves the piece can make in the vector
     simulate_eat_piece(moves_found, coords);

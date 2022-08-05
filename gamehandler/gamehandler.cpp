@@ -117,7 +117,7 @@ int GameHandler::play_back(const std::string& gameLocation) {
                     i_file.close();
                     return 1;
                 } else { // playbacktest1.dama
-                    // There was a mistype
+                    // There was a typo
                     std::cout << ERROR_COLOR
                     << "input invalido, scrivi aiuto per informazioni (premi invio per andare alla mossa successiva)\n"<< RESET;
                 }
@@ -237,22 +237,22 @@ void GameHandler::debug(GameEngine &engine) {
 
     apium.sync_engine(engine);
 
-    apium.minimax(5, BIANCO);
-
-    auto line = apium.bestLine;
+    Move line;
 
     // Make Apium play against itself
-
-
-
-
+    std::size_t iterations = 11;
 
     PlayerColor color = NERO;
-    for (auto& move : line.get_moves()) {
+
+    for (int i = 0; i < iterations; i++) {
         color == NERO ? color = BIANCO : color = NERO;
-        engine.precise_promote(move);
-        engine.submit_matrix_notation(move, color);
-        move.convert_all(false);
-        engine.render.render_board(engine.board, color, move);
+
+        apium.minimax(iterations - i, color);
+        line = apium.bestLine.get_moves().at(0);
+
+        engine.submit_matrix_notation(line, color);
+        apium.sync_engine(engine);
+        line.convert_all(false);
+        engine.render.render_board(engine.board, color, line);
     }
 }
